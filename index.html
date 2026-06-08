@@ -26,7 +26,7 @@
 
         <div id="loginScreen" class="block">
             <div class="flex flex-col items-center mb-8">
-                <img src="https://i.ibb.co/6wZq5R7/logo-lpmpp.png" alt="Logo LPMPP" class="w-24 h-28 object-contain mb-4"> 
+                <img src="https://i.ibb.co.com/KphQrZDB/Logo-LPMPP-ULM.png" alt="Logo LPMPP" class="w-24 h-28 object-contain mb-4">
                 <h1 class="text-2xl font-extrabold text-modernDark text-center">Sistem Presensi Pelatihan</h1>
                 <p class="text-xs text-slate-500 font-medium mt-1">LPMPP Universitas Lambung Mangkurat</p>
             </div>
@@ -193,6 +193,7 @@
             }
         }
 
+// FUNGSI 2: AMBIL JADWAL (Dilengkapi Gembok Waktu & Filter Otomatis)
         async function cekJadwal() {
             document.getElementById('userNameDisplay').innerText = session.nama;
             try {
@@ -203,9 +204,49 @@
                 });
                 const res = await response.json();
 
-                if (res.status === "success" && res.data) {
-                    const jadwalAktif = res.data[0]; 
-                    if(jadwalAktif) {
+                if (res.status === "success" && res.data && res.data.length > 0) {
+                    
+                    const now = new Date();
+                    const currentHour = now.getHours();
+                    const currentMinute = now.getMinutes();
+                    const currentTimeMinutes = (currentHour * 60) + currentMinute;
+                    
+                    // Format tanggal lokal: YYYY-MM-DD
+                    const todayStr = now.getFullYear() + "-" + 
+                                     String(now.getMonth() + 1).padStart(2, '0') + "-" + 
+                                     String(now.getDate()).padStart(2, '0');
+
+                    let jadwalAktif = null;
+
+                    // Sistem akan membedah seluruh jadwal untuk mencari yang cocok dengan detik ini
+                    for (let i = 0; i < res.data.length; i++) {
+                        const jadwal = res.data[i];
+                        
+                        // 1. Cek Kesesuaian Tanggal (Jika API mengirim data tanggal)
+                        if (jadwal.tanggal && jadwal.tanggal !== todayStr) {
+                            continue; // Lewati jadwal ini karena beda hari
+                        }
+
+                        // 2. Cek Kesesuaian Jam Sesi
+                        if (jadwal.jam_mulai && jadwal.jam_selesai) {
+                            const [startHour, startMinute] = jadwal.jam_mulai.split(':').map(Number);
+                            const startTimeMinutes = (startHour * 60) + startMinute;
+                            
+                            const [endHour, endMinute] = jadwal.jam_selesai.split(':').map(Number);
+                            const endTimeMinutes = (endHour * 60) + endMinute;
+
+                            // Jika waktu sekarang berada tepat di dalam rentang jam sesi
+                            if (currentTimeMinutes >= startTimeMinutes && currentTimeMinutes <= endTimeMinutes) {
+                                jadwalAktif = jadwal;
+                                break; // Jadwal ditemukan! Hentikan pencarian.
+                            }
+                        } else {
+                            jadwalAktif = jadwal; // Fallback jika G-Sheet tidak ada kolom jam
+                            break; 
+                        }
+                    }
+
+                    if (jadwalAktif) {
                         session.pelatihan = jadwalAktif.pelatihan;
                         session.hari = jadwalAktif.hari;
                         session.sesi = jadwalAktif.sesi;
@@ -216,10 +257,16 @@
                         
                         ubahStatusMsg("Silakan ketuk tombol Verifikasi Lokasi di bawah.", "text-modernBlue");
                         document.getElementById('btnLokasi').classList.remove('hidden');
-                        document.getElementById('btnKamera').classList.remove('hidden');
+                    } else {
+                        document.getElementById('pelatihanDisplay').innerText = "Tidak Ada Sesi Aktif";
+                        document.getElementById('sesiDisplay').innerText = "-";
+                        document.getElementById('waktuDisplay').innerText = "DITUTUP";
+                        ubahStatusMsg("❌ Sesi presensi belum dimulai atau sudah kedaluwarsa.", "text-red-500");
                     }
+
                 } else {
-                    ubahStatusMsg("❌ Tidak ada kelas yang aktif pada jam ini.", "text-red-500");
+                    document.getElementById('pelatihanDisplay').innerText = "Data Kosong";
+                    ubahStatusMsg("❌ Tidak ada jadwal pelatihan untuk Anda hari ini.", "text-red-500");
                 }
             } catch (e) {
                 ubahStatusMsg("Gagal mengambil jadwal dari server.", "text-red-500");
