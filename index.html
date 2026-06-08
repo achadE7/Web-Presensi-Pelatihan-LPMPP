@@ -171,12 +171,7 @@
                 const timeData = await timeResponse.json();
                 
                 const currentTimeMinutes = (timeData.hour * 60) + timeData.minute;
-                
-                // Konversi Tanggal dari Satelit ke format YYYY-MM-DD
-                const strYear = timeData.year;
-                const strMonth = String(timeData.month).padStart(2, '0');
-                const strDay = String(timeData.day).padStart(2, '0');
-                const realTodayStr = `${strYear}-${strMonth}-${strDay}`;
+                const realTodayStr = `${timeData.year}-${String(timeData.month).padStart(2, '0')}-${String(timeData.day).padStart(2, '0')}`;
                 
                 const response = await fetch(API_URL, { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify({ action: "get_jadwal", username: session.username }) });
                 const res = await response.json();
@@ -186,16 +181,21 @@
                     for (let i = 0; i < res.data.length; i++) {
                         const jadwal = res.data[i];
                         
-                        // FILTER TANGGAL: Jika tanggal ada, dan tidak sama dengan hari ini, LEWATI!
-                        if (jadwal.tanggal && jadwal.tanggal !== "-" && jadwal.tanggal !== realTodayStr) {
-                            continue; 
-                        }
+                        const tglSheet = jadwal.tanggal ? jadwal.tanggal.trim() : "";
+                        if (tglSheet && tglSheet !== "-" && tglSheet !== realTodayStr) continue;
 
-                        // FILTER JAM
                         if (jadwal.jam_mulai && jadwal.jam_selesai) {
                             const [startHour, startMinute] = jadwal.jam_mulai.split(':').map(Number);
+                            const startTimeMinutes = (startHour * 60) + startMinute;
+                            
                             const [endHour, endMinute] = jadwal.jam_selesai.split(':').map(Number);
-                            if (currentTimeMinutes >= (startHour * 60 + startMinute) && currentTimeMinutes <= (endHour * 60 + endMinute)) { 
+                            let endTimeMinutes = (endHour * 60) + endMinute;
+                            
+                            if (endTimeMinutes === 0) {
+                                endTimeMinutes = 24 * 60; // 1440 menit
+                            }
+
+                            if (currentTimeMinutes >= startTimeMinutes && currentTimeMinutes <= endTimeMinutes) { 
                                 jadwalAktif = jadwal; 
                                 break; 
                             }
@@ -217,10 +217,8 @@
                 } else { document.getElementById('pelatihanDisplay').innerText = "Kosong"; ubahStatusMsg("❌ Tidak ada jadwal untuk Anda.", "text-red-500"); }
             } catch (e) { 
                 ubahStatusMsg("Gagal sinkronisasi waktu satelit/server.", "text-red-500"); 
-                console.error(e);
             }
         }
-
         function verifikasiLokasi() {
             ubahStatusMsg("Mencari GPS...", "text-modernBlue");
             navigator.geolocation.getCurrentPosition(
