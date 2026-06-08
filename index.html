@@ -78,14 +78,39 @@
 
         <div id="adminJadwalScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-bold text-modernDark mb-4">Buat Jadwal Baru</h2>
-            <input type="text" id="jadwalPelatihan" placeholder="Nama Pelatihan (cth: AA Batch 3)" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300">
-            <input type="text" id="jadwalHari" placeholder="Hari/Tanggal (cth: Senin, 10 Juni)" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300">
-            <div class="flex space-x-3 mb-4">
-                <input type="time" id="jadwalMulai" class="w-1/2 px-4 py-3 rounded-xl border border-slate-300">
-                <input type="time" id="jadwalSelesai" class="w-1/2 px-4 py-3 rounded-xl border border-slate-300">
+            
+            <input type="text" id="jadwalPelatihan" placeholder="Nama Pelatihan (cth: AA Batch 3)" class="w-full px-4 py-3 mb-4 rounded-xl border border-slate-300 font-bold text-modernDark">
+            
+            <div id="wadahSesi" class="space-y-4 mb-4 overflow-y-auto max-h-64 pr-1">
+                
+                <div class="sesi-item bg-slate-50 p-4 rounded-xl border border-slate-200 relative">
+                    <button onclick="hapusSesi(this)" class="btn-hapus-sesi absolute top-2 right-3 text-red-500 font-extrabold text-lg hidden hover:text-red-700">×</button>
+                    
+                    <div class="grid grid-cols-2 gap-2 mb-2 mt-1">
+                        <input type="text" placeholder="Hari (cth: Senin)" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm input-hari">
+                        <input type="date" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm input-tanggal text-slate-500">
+                    </div>
+                    
+                    <input type="text" placeholder="Nama Sesi (cth: Sesi 1 / Pagi)" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm mb-2 input-sesi">
+                    
+                    <div class="flex space-x-2 items-center">
+                        <span class="text-xs font-bold text-slate-400">Jam:</span>
+                        <input type="time" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm input-mulai">
+                        <span class="text-xs font-bold text-slate-400">-</span>
+                        <input type="time" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm input-selesai">
+                    </div>
+                </div>
+                
             </div>
-            <button onclick="simpanDataAdmin('jadwal')" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full mb-3">➕ Simpan Jadwal</button>
-            <button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2">Kembali</button>
+
+            <button onclick="tambahSesiUI()" class="w-full border-2 border-dashed border-modernBlue text-modernBlue font-bold py-3 rounded-xl mb-6 hover:bg-modernContainer transition-colors">
+                + Tambah Sesi Lain
+            </button>
+
+            <button onclick="simpanDataAdmin('jadwal_multi')" class="w-full bg-modernBlue hover:bg-modernDark text-white font-bold py-4 rounded-full mb-3 transition-colors">
+                💾 Simpan Seluruh Jadwal
+            </button>
+            <button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2">Kembali ke Dasbor</button>
         </div>
 
         <div id="adminPengaturanScreen" class="hidden flex flex-col w-full">
@@ -218,55 +243,83 @@
             } catch (e) { alert("Kesalahan jaringan."); location.reload(); }
         }
 
-        function bukaSpreadsheet() { window.open("https://docs.google.com/spreadsheets/d/MASUKKAN_ID_SPREADSHEET_KAMU_DISINI/edit", '_blank'); }
+        function bukaSpreadsheet() { window.open("https://docs.google.com/spreadsheets/d/1d3jMjww3PinwN1U1v-yVKz79YcLp_-56jSOATBPQi9U/edit", '_blank'); }
+
+        function tambahSesiUI() {
+            const wadah = document.getElementById('wadahSesi');
+            const clone = wadah.firstElementChild.cloneNode(true);
+            clone.querySelectorAll('input').forEach(inp => inp.value = ''); // Kosongkan isian
+            wadah.appendChild(clone);
+            updateTombolHapusSesi();
+        }
+
+        function hapusSesi(btn) {
+            btn.closest('.sesi-item').remove();
+            updateTombolHapusSesi();
+        }
+
+        function updateTombolHapusSesi() {
+            const items = document.querySelectorAll('.sesi-item');
+            items.forEach(item => {
+                const btn = item.querySelector('.btn-hapus-sesi');
+                if (items.length === 1) btn.classList.add('hidden'); // Sisa 1 dilarang hapus
+                else btn.classList.remove('hidden');
+            });
+        }
 
         async function simpanDataAdmin(jenis) {
             let payload = { action: "" };
-            if (jenis === "jadwal") {
+            const btnSimpan = event.target;
+            const teksAsli = btnSimpan.innerText;
+            btnSimpan.innerText = "⏳ Menyimpan..."; btnSimpan.disabled = true;
+
+            if (jenis === "jadwal_multi") {
                 payload.action = "save_jadwal";
-                payload.pelatihan = document.getElementById("jadwalPelatihan").value; payload.hari = document.getElementById("jadwalHari").value;
-                payload.jam_mulai = document.getElementById("jadwalMulai").value; payload.jam_selesai = document.getElementById("jadwalSelesai").value;
-                if(!payload.pelatihan || !payload.hari || !payload.jam_mulai) { alert("Harap isi nama pelatihan, hari, dan jam!"); return; }
-            } else if (jenis === "pengaturan") {
+                payload.pelatihan = document.getElementById("jadwalPelatihan").value;
+                if(!payload.pelatihan) { alert("Nama Pelatihan wajib diisi!"); btnSimpan.innerText = teksAsli; btnSimpan.disabled = false; return; }
+
+                let list_sesi = [];
+                const sesiItems = document.querySelectorAll('.sesi-item');
+                for(let item of sesiItems) {
+                    const h = item.querySelector('.input-hari').value;
+                    const t = item.querySelector('.input-tanggal').value;
+                    const s = item.querySelector('.input-sesi').value;
+                    const jm = item.querySelector('.input-mulai').value;
+                    const js = item.querySelector('.input-selesai').value;
+
+                    if(!h || !s || !jm || !js) {
+                        alert("Harap lengkapi data (Hari, Sesi, Jam) di setiap kotak sesi!");
+                        btnSimpan.innerText = teksAsli; btnSimpan.disabled = false; return;
+                    }
+                    list_sesi.push({ hari: h, tanggal: t, sesi: s, jam_mulai: jm, jam_selesai: js });
+                }
+                payload.list_sesi = list_sesi;
+            } 
+            else if (jenis === "pengaturan") {
                 payload.action = "save_setting";
-                payload.lat = document.getElementById("setLat").value; payload.lng = document.getElementById("setLng").value; payload.radius = document.getElementById("setRadius").value;
+                payload.lat = document.getElementById("setLat").value; 
+                payload.lng = document.getElementById("setLng").value; 
+                payload.radius = document.getElementById("setRadius").value;
             }
 
             try {
                 const response = await fetch(API_URL, { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(payload) });
                 const res = await response.json();
+                
                 if (res.status === "success") {
                     alert("✅ " + res.message);
-                    if(jenis === 'jadwal') { document.getElementById("jadwalPelatihan").value = ""; document.getElementById("jadwalHari").value = ""; }
+                    if(jenis === 'jadwal_multi') { 
+                        document.getElementById("jadwalPelatihan").value = ""; 
+                        // Sisakan 1 sesi kosong
+                        const wadah = document.getElementById('wadahSesi');
+                        while (wadah.children.length > 1) { wadah.removeChild(wadah.lastChild); }
+                        wadah.firstElementChild.querySelectorAll('input').forEach(inp => inp.value = '');
+                        updateTombolHapusSesi();
+                    }
                 } else alert("❌ Gagal menyimpan data: " + res.message);
             } catch (e) { alert("Kesalahan koneksi saat menyimpan data."); }
-        }
-
-        async function muatGaleri() {
-            tampilLayar('adminValidasiScreen');
-            const wadah = document.getElementById('wadahGaleri'); const loading = document.getElementById('loadingGaleri');
-            wadah.innerHTML = ""; loading.classList.remove('hidden');
-
-            try {
-                const response = await fetch(API_URL, { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify({ action: "get_galeri" }) });
-                const res = await response.json();
-                
-                loading.classList.add('hidden');
-                
-                if (res.status === "success" && res.data.length > 0) {
-                    res.data.forEach(item => {
-                        const card = document.createElement('div');
-                        card.className = "bg-white border border-slate-200 p-4 rounded-xl shadow-sm flex flex-col";
-                        card.innerHTML = `
-                            <p class="text-[10px] font-bold text-modernBlue uppercase tracking-wider mb-1">${item.pelatihan} • ${item.sesi}</p>
-                            <h3 class="text-md font-extrabold text-slate-800">${item.username}</h3>
-                            <p class="text-[11px] text-slate-500 mb-3 font-medium">Jam Absen: ${new Date(item.waktu).toLocaleTimeString('id-ID')}</p>
-                            <a href="${item.foto}" target="_blank" class="w-full bg-slate-100 hover:bg-slate-200 text-modernDark text-center font-bold py-2 rounded-lg text-sm transition-colors">Lihat Foto Presensi</a>
-                        `;
-                        wadah.appendChild(card);
-                    });
-                } else { wadah.innerHTML = `<p class="text-center text-slate-500 text-sm">Belum ada data presensi.</p>`; }
-            } catch (e) { loading.innerText = "Gagal memuat galeri dari server."; }
+            
+            btnSimpan.innerText = teksAsli; btnSimpan.disabled = false;
         }
 
         function tampilLayar(idLayar) {
