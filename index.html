@@ -26,7 +26,7 @@
 
         <div id="loginScreen" class="block">
             <div class="flex flex-col items-center mb-8">
-                <img src="https://i.ibb.co.com/KphQrZDB/Logo-LPMPP-ULM.png" alt="Logo LPMPP" class="w-24 h-28 object-contain mb-4">
+                <img src="https://i.ibb.co.com/KphQrZDB/Logo-LPMPP-ULM.png" alt="Logo LPMPP" class="w-24 h-28 object-contain mb-4"> 
                 <h1 class="text-2xl font-extrabold text-modernDark text-center">Sistem Presensi Pelatihan</h1>
                 <p class="text-xs text-slate-500 font-medium mt-1">LPMPP Universitas Lambung Mangkurat</p>
             </div>
@@ -49,8 +49,7 @@
         <div id="presensiScreen" class="hidden flex flex-col items-center">
             <p class="text-sm text-slate-500 font-medium">Selamat Datang,</p>
             <h2 id="userNameDisplay" class="text-lg font-bold text-modernDark text-center mb-6">Nama Peserta</h2>
-            <h1 class="text-2xl font-extrabold text-modernDark mb-6">Konfirmasi Kehadiran</h1>
-
+            
             <div class="w-full bg-white border border-slate-100 shadow-sm rounded-2xl p-6 flex flex-col items-center mb-6">
                 <p class="text-[11px] font-bold text-modernBlue tracking-wider mb-2">KELAS AKTIF SAAT INI</p>
                 <h3 id="pelatihanDisplay" class="text-xl font-extrabold text-modernDark text-center leading-tight mb-1">Mencari Jadwal...</h3>
@@ -60,7 +59,7 @@
                 </div>
             </div>
 
-            <p id="statusMsg" class="text-sm font-semibold text-center mb-6 px-2">Memeriksa koneksi server...</p>
+            <p id="statusMsg" class="text-sm font-semibold text-center mb-6 px-2">Memeriksa keamanan jam server...</p>
 
             <button onclick="verifikasiLokasi()" id="btnLokasi" class="w-full bg-slate-200 text-slate-700 hover:bg-slate-300 font-bold py-4 rounded-full mb-3 transition-colors hidden">
                 1. Verifikasi Lokasi GPS
@@ -73,69 +72,79 @@
 
         <div id="kameraScreen" class="hidden flex flex-col items-center">
             <h2 class="text-lg font-bold text-modernDark mb-4">Posisikan Wajah Anda</h2>
-            <p class="text-xs text-center text-slate-500 mb-4">Mohon izinkan akses kamera pada browser Anda.</p>
-            
             <div class="w-full h-64 bg-black rounded-2xl overflow-hidden mb-4 relative">
                 <video id="video" class="w-full h-full object-cover" autoplay playsinline></video>
                 <canvas id="canvas" class="hidden"></canvas>
             </div>
-            
             <button onclick="jepretDanKirim()" id="btnJepret" class="w-full bg-modernBlue hover:bg-modernDark text-white font-bold py-4 rounded-full transition-colors">
                 📸 Jepret & Unggah Kehadiran
-            </button>
-            <button onclick="location.reload()" class="w-full text-slate-400 font-bold py-3 mt-2 rounded-full transition-colors text-sm">
-                Batal
             </button>
         </div>
 
         <div id="suksesScreen" class="hidden flex flex-col items-center py-8">
             <div class="text-6xl mb-4">🎉</div>
             <h1 class="text-2xl font-extrabold text-modernDark mb-2">Presensi Berhasil!</h1>
-            <p class="text-center text-sm text-slate-500 mb-8">Data kehadiran Anda telah tercatat dengan aman di server LPMPP.</p>
-            <button onclick="location.reload()" class="w-full border-2 border-modernBlue text-modernBlue hover:bg-modernContainer font-bold py-3 rounded-full transition-colors">
-                Kembali ke Awal
-            </button>
+            <p class="text-center text-sm text-slate-500 mb-8">Data kehadiran telah tercatat di server LPMPP.</p>
+            <button onclick="location.reload()" class="w-full border-2 border-modernBlue text-modernBlue hover:bg-modernContainer font-bold py-3 rounded-full transition-colors">Kembali</button>
         </div>
 
         <div id="adminScreen" class="hidden flex flex-col items-center w-full">
             <div class="flex justify-between items-center w-full mb-6 pb-4 border-b border-slate-100">
                 <div>
                     <p class="text-sm text-slate-500 font-medium">Panel Administrator</p>
-                    <h2 id="adminNameDisplay" class="text-xl font-extrabold text-modernDark">Nama Admin</h2>
+                    <h2 id="adminNameDisplay" class="text-xl font-extrabold text-modernDark">Admin</h2>
                 </div>
-                <button onclick="location.reload()" class="bg-red-50 text-red-500 px-4 py-2 rounded-xl text-sm font-bold hover:bg-red-100 transition-colors">
-                    Keluar
-                </button>
-            </div>
-
-            <div class="w-full bg-modernContainer rounded-2xl p-5 mb-6 border border-modernBlue border-opacity-20 flex items-start space-x-4">
-                <div class="text-3xl">🟢</div>
-                <div>
-                    <h3 class="text-xs font-bold text-modernBlue mb-1 tracking-wider">STATUS SISTEM: ONLINE</h3>
-                    <p class="text-sm text-modernDark font-medium leading-tight">Server web dan API Google Script berjalan normal. Siap menerima data presensi peserta.</p>
-                </div>
+                <button onclick="location.reload()" class="bg-red-50 text-red-500 px-4 py-2 rounded-xl text-sm font-bold hover:bg-red-100 transition-colors">Keluar</button>
             </div>
 
             <div class="w-full grid grid-cols-2 gap-4 mb-4">
                 <button onclick="bukaSpreadsheet()" class="bg-white border-2 border-slate-100 p-5 rounded-2xl flex flex-col items-center justify-center hover:border-modernBlue hover:shadow-md transition-all">
-                    <span class="text-4xl mb-3">📊</span>
-                    <span class="text-sm font-bold text-slate-700 text-center">Rekap Data<br>Presensi</span>
+                    <span class="text-4xl mb-3">📊</span><span class="text-sm font-bold text-slate-700 text-center">Rekap<br>G-Sheet</span>
                 </button>
-                <button onclick="alert('Fitur manajemen jadwal via Web sedang disiapkan. Sementara, atur jadwal langsung di G-Sheet atau App Android.')" class="bg-white border-2 border-slate-100 p-5 rounded-2xl flex flex-col items-center justify-center hover:border-modernBlue hover:shadow-md transition-all">
-                    <span class="text-4xl mb-3">🗓️</span>
-                    <span class="text-sm font-bold text-slate-700 text-center">Kelola<br>Jadwal</span>
+                <button onclick="tampilLayar('adminJadwalScreen')" class="bg-white border-2 border-slate-100 p-5 rounded-2xl flex flex-col items-center justify-center hover:border-modernBlue hover:shadow-md transition-all">
+                    <span class="text-4xl mb-3">🗓️</span><span class="text-sm font-bold text-slate-700 text-center">Kelola<br>Jadwal</span>
                 </button>
-                <button onclick="alert('Fitur validasi foto manual akan hadir di update berikutnya.')" class="bg-white border-2 border-slate-100 p-5 rounded-2xl flex flex-col items-center justify-center hover:border-modernBlue hover:shadow-md transition-all">
-                    <span class="text-4xl mb-3">📸</span>
-                    <span class="text-sm font-bold text-slate-700 text-center">Validasi<br>Foto</span>
+                <button onclick="tampilLayar('adminValidasiScreen')" class="bg-white border-2 border-slate-100 p-5 rounded-2xl flex flex-col items-center justify-center hover:border-modernBlue hover:shadow-md transition-all">
+                    <span class="text-4xl mb-3">📸</span><span class="text-sm font-bold text-slate-700 text-center">Validasi<br>Foto</span>
                 </button>
-                <button onclick="alert('Pengaturan parameter jarak GPS dan hak akses.')" class="bg-white border-2 border-slate-100 p-5 rounded-2xl flex flex-col items-center justify-center hover:border-modernBlue hover:shadow-md transition-all">
-                    <span class="text-4xl mb-3">⚙️</span>
-                    <span class="text-sm font-bold text-slate-700 text-center">Pengaturan<br>Sistem</span>
+                <button onclick="tampilLayar('adminPengaturanScreen')" class="bg-white border-2 border-slate-100 p-5 rounded-2xl flex flex-col items-center justify-center hover:border-modernBlue hover:shadow-md transition-all">
+                    <span class="text-4xl mb-3">⚙️</span><span class="text-sm font-bold text-slate-700 text-center">Pengaturan<br>Sistem</span>
                 </button>
             </div>
+        </div>
+
+        <div id="adminJadwalScreen" class="hidden flex flex-col w-full">
+            <h2 class="text-xl font-bold text-modernDark mb-4">Buat Jadwal Baru</h2>
+            <input type="text" id="jadwalPelatihan" placeholder="Nama Pelatihan (cth: AA Batch 3)" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300">
+            <input type="text" id="jadwalHari" placeholder="Hari/Tanggal (cth: Senin, 10 Juni)" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300">
+            <div class="flex space-x-3 mb-4">
+                <input type="time" id="jadwalMulai" class="w-1/2 px-4 py-3 rounded-xl border border-slate-300">
+                <input type="time" id="jadwalSelesai" class="w-1/2 px-4 py-3 rounded-xl border border-slate-300">
+            </div>
+            <button onclick="simpanDataAdmin('jadwal')" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full mb-3">➕ Simpan Jadwal</button>
+            <button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2">Kembali</button>
+        </div>
+
+        <div id="adminPengaturanScreen" class="hidden flex flex-col w-full">
+            <h2 class="text-xl font-bold text-modernDark mb-4">Pengaturan Sensor</h2>
+            <label class="text-xs font-bold text-slate-500 mb-1">Koordinat Latitude (Garis Lintang)</label>
+            <input type="text" id="setLat" value="-3.29687" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300">
             
-            <p class="text-xs text-center text-slate-400 mt-2 px-4">Sistem Presensi Pelatihan Terintegrasi v1.0<br>LPMPP ULM</p>
+            <label class="text-xs font-bold text-slate-500 mb-1">Koordinat Longitude (Garis Bujur)</label>
+            <input type="text" id="setLng" value="114.58823" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300">
+            
+            <label class="text-xs font-bold text-slate-500 mb-1">Radius Toleransi (Meter)</label>
+            <input type="number" id="setRadius" value="50" class="w-full px-4 py-3 mb-6 rounded-xl border border-slate-300">
+            
+            <button onclick="simpanDataAdmin('pengaturan')" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full mb-3">💾 Update Parameter</button>
+            <button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2">Kembali</button>
+        </div>
+
+        <div id="adminValidasiScreen" class="hidden flex flex-col items-center w-full">
+            <div class="text-4xl mb-4">🚧</div>
+            <h2 class="text-xl font-bold text-modernDark mb-2 text-center">Fitur Dalam Pembangunan</h2>
+            <p class="text-sm text-slate-500 text-center mb-6">Galeri foto memerlukan koneksi API baru ke Google Drive. Sementara, silakan cek foto langsung di G-Sheet.</p>
+            <button onclick="tampilLayar('adminScreen')" class="w-full bg-slate-200 text-slate-700 font-bold py-4 rounded-full">Kembali ke Dasbor</button>
         </div>
 
     </div>
@@ -143,9 +152,9 @@
     <script>
         const API_URL = "https://script.google.com/macros/s/AKfycbzkeGOglouiCbiAq5VNRXt7Wfie2NDQ8DqcJnMMZ-cOwkeokbRGCpL-W4gizcGn0IdZ/exec";
         
-        const TARGET_LAT = -3.29687;
-        const TARGET_LNG = 114.58823;
-        const RADIUS_MAX = 50; 
+        let TARGET_LAT = -3.29687;
+        let TARGET_LNG = 114.58823;
+        let RADIUS_MAX = 50; 
 
         let session = { username: "", nama: "", pelatihan: "", hari: "", sesi: "", lat: 0, lng: 0 };
         let streamKamera = null;
@@ -173,13 +182,12 @@
                     session.username = user;
                     session.nama = res.nama || user;
                     
-                    // PENGECEKAN ROLE ADMIN ADA DI SINI
                     if(res.role === "admin") {
                         document.getElementById('adminNameDisplay').innerText = session.nama;
                         tampilLayar('adminScreen');
                     } else {
                         tampilLayar('presensiScreen');
-                        cekJadwal();
+                        cekJadwalKeamananTinggi();
                     }
                 } else {
                     msg.innerText = res.message || "Username / Password salah!";
@@ -193,10 +201,18 @@
             }
         }
 
-// FUNGSI 2: AMBIL JADWAL (Dilengkapi Gembok Waktu & Filter Otomatis)
-        async function cekJadwal() {
+        async function cekJadwalKeamananTinggi() {
             document.getElementById('userNameDisplay').innerText = session.nama;
+            
             try {
+                const timeResponse = await fetch("http://worldtimeapi.org/api/timezone/Asia/Makassar");
+                const timeData = await timeResponse.json();
+                
+                const realDate = new Date(timeData.datetime);
+                const currentHour = realDate.getHours();
+                const currentMinute = realDate.getMinutes();
+                const currentTimeMinutes = (currentHour * 60) + currentMinute;
+                
                 const response = await fetch(API_URL, {
                     method: "POST",
                     headers: { "Content-Type": "text/plain" },
@@ -205,29 +221,10 @@
                 const res = await response.json();
 
                 if (res.status === "success" && res.data && res.data.length > 0) {
-                    
-                    const now = new Date();
-                    const currentHour = now.getHours();
-                    const currentMinute = now.getMinutes();
-                    const currentTimeMinutes = (currentHour * 60) + currentMinute;
-                    
-                    // Format tanggal lokal: YYYY-MM-DD
-                    const todayStr = now.getFullYear() + "-" + 
-                                     String(now.getMonth() + 1).padStart(2, '0') + "-" + 
-                                     String(now.getDate()).padStart(2, '0');
-
                     let jadwalAktif = null;
 
-                    // Sistem akan membedah seluruh jadwal untuk mencari yang cocok dengan detik ini
                     for (let i = 0; i < res.data.length; i++) {
                         const jadwal = res.data[i];
-                        
-                        // 1. Cek Kesesuaian Tanggal (Jika API mengirim data tanggal)
-                        if (jadwal.tanggal && jadwal.tanggal !== todayStr) {
-                            continue; // Lewati jadwal ini karena beda hari
-                        }
-
-                        // 2. Cek Kesesuaian Jam Sesi
                         if (jadwal.jam_mulai && jadwal.jam_selesai) {
                             const [startHour, startMinute] = jadwal.jam_mulai.split(':').map(Number);
                             const startTimeMinutes = (startHour * 60) + startMinute;
@@ -235,14 +232,10 @@
                             const [endHour, endMinute] = jadwal.jam_selesai.split(':').map(Number);
                             const endTimeMinutes = (endHour * 60) + endMinute;
 
-                            // Jika waktu sekarang berada tepat di dalam rentang jam sesi
                             if (currentTimeMinutes >= startTimeMinutes && currentTimeMinutes <= endTimeMinutes) {
                                 jadwalAktif = jadwal;
-                                break; // Jadwal ditemukan! Hentikan pencarian.
+                                break; 
                             }
-                        } else {
-                            jadwalAktif = jadwal; // Fallback jika G-Sheet tidak ada kolom jam
-                            break; 
                         }
                     }
 
@@ -255,21 +248,20 @@
                         document.getElementById('sesiDisplay').innerText = `${jadwalAktif.hari} — ${jadwalAktif.sesi}`;
                         document.getElementById('waktuDisplay').innerText = `Batas Absen: ${jadwalAktif.jam_mulai} - ${jadwalAktif.jam_selesai}`;
                         
-                        ubahStatusMsg("Silakan ketuk tombol Verifikasi Lokasi di bawah.", "text-modernBlue");
+                        ubahStatusMsg("Sistem Waktu Terverifikasi. Silakan Verifikasi Lokasi.", "text-modernBlue");
                         document.getElementById('btnLokasi').classList.remove('hidden');
                     } else {
                         document.getElementById('pelatihanDisplay').innerText = "Tidak Ada Sesi Aktif";
                         document.getElementById('sesiDisplay').innerText = "-";
                         document.getElementById('waktuDisplay').innerText = "DITUTUP";
-                        ubahStatusMsg("❌ Sesi presensi belum dimulai atau sudah kedaluwarsa.", "text-red-500");
+                        ubahStatusMsg("❌ Sesi presensi belum dimulai atau sudah lewat.", "text-red-500");
                     }
-
                 } else {
                     document.getElementById('pelatihanDisplay').innerText = "Data Kosong";
-                    ubahStatusMsg("❌ Tidak ada jadwal pelatihan untuk Anda hari ini.", "text-red-500");
+                    ubahStatusMsg("❌ Tidak ada jadwal pelatihan untuk Anda.", "text-red-500");
                 }
             } catch (e) {
-                ubahStatusMsg("Gagal mengambil jadwal dari server.", "text-red-500");
+                ubahStatusMsg("Gagal sinkronisasi waktu satelit/server.", "text-red-500");
             }
         }
 
@@ -298,16 +290,12 @@
                             btnKamera.classList.add('bg-modernBlue', 'hover:bg-modernDark');
                             btnKamera.disabled = false;
                         } else {
-                            ubahStatusMsg(`❌ Jarak Terlalu Jauh: Anda berada ${jarak} meter di luar balai pelatihan.`, "text-red-500");
+                            ubahStatusMsg(`❌ Jarak Terlalu Jauh: Anda berada ${jarak} meter di luar balai.`, "text-red-500");
                         }
                     },
-                    (error) => {
-                        ubahStatusMsg("Izinkan akses lokasi (GPS) pada browser Anda.", "text-red-500");
-                    },
+                    (error) => { ubahStatusMsg("Izinkan akses lokasi (GPS) pada browser.", "text-red-500"); },
                     { enableHighAccuracy: true }
                 );
-            } else {
-                ubahStatusMsg("Browser Anda tidak mendukung fitur GPS.", "text-red-500");
             }
         }
 
@@ -317,9 +305,7 @@
             try {
                 streamKamera = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
                 video.srcObject = streamKamera;
-            } catch (err) {
-                alert("Gagal menyalakan kamera. Pastikan browser memiliki izin kamera. Detail: " + err.message);
-            }
+            } catch (err) { alert("Gagal menyalakan kamera: " + err.message); }
         }
 
         async function jepretDanKirim() {
@@ -330,44 +316,21 @@
             const video = document.getElementById('video');
             const canvas = document.getElementById('canvas');
             const ctx = canvas.getContext('2d');
-            
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
+            canvas.width = video.videoWidth; canvas.height = video.videoHeight;
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            
             const base64FotoFinal = canvas.toDataURL('image/jpeg', 0.6).split(',')[1];
 
-            if(streamKamera) {
-                streamKamera.getTracks().forEach(track => track.stop());
-            }
+            if(streamKamera) streamKamera.getTracks().forEach(track => track.stop());
 
             try {
                 const response = await fetch(API_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "text/plain" },
-                    body: JSON.stringify({
-                        action: "presensi",
-                        username: session.username,
-                        pelatihan: session.pelatihan,
-                        hari: session.hari,
-                        sesi: session.sesi,
-                        lat: session.lat,
-                        lng: session.lng,
-                        imageBase64: base64FotoFinal
-                    })
+                    method: "POST", headers: { "Content-Type": "text/plain" },
+                    body: JSON.stringify({ action: "presensi", username: session.username, pelatihan: session.pelatihan, hari: session.hari, sesi: session.sesi, lat: session.lat, lng: session.lng, imageBase64: base64FotoFinal })
                 });
                 const res = await response.json();
-
-                if (res.status === "success") {
-                    tampilLayar('suksesScreen');
-                } else {
-                    alert("Gagal mencatat presensi: " + res.message);
-                    location.reload();
-                }
-            } catch (e) {
-                alert("Kesalahan jaringan saat mengirim data.");
-                location.reload();
-            }
+                if (res.status === "success") tampilLayar('suksesScreen');
+                else { alert("Gagal mencatat presensi: " + res.message); location.reload(); }
+            } catch (e) { alert("Kesalahan jaringan."); location.reload(); }
         }
 
         function bukaSpreadsheet() {
@@ -375,8 +338,14 @@
             window.open(linkGSheet, '_blank');
         }
 
+        function simpanDataAdmin(jenis) {
+            // Ini adalah Trigger Placeholder. 
+            // Untuk menghidupkan ini, kita harus menambahkan fungsi "action: save_jadwal" dan "action: save_setting" di dalam Code.gs
+            alert(`Siap Mengirim Data ${jenis.toUpperCase()}! \n\nLangkah Selanjutnya: Kita perlu menambahkan 10 baris kode penerima baru di file Code.gs (Google Script) agar data dari form ini bisa masuk ke Spreadsheet.`);
+        }
+
         function tampilLayar(idLayar) {
-            ['loginScreen', 'presensiScreen', 'kameraScreen', 'suksesScreen', 'adminScreen'].forEach(id => {
+            ['loginScreen', 'presensiScreen', 'kameraScreen', 'suksesScreen', 'adminScreen', 'adminJadwalScreen', 'adminPengaturanScreen', 'adminValidasiScreen'].forEach(id => {
                 document.getElementById(id).classList.add('hidden');
             });
             document.getElementById(idLayar).classList.remove('hidden');
