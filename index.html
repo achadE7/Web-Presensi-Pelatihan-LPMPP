@@ -167,11 +167,14 @@
         async function cekJadwalKeamananTinggi() {
             document.getElementById('userNameDisplay').innerText = session.nama;
             try {
-                const timeResponse = await fetch("http://worldtimeapi.org/api/timezone/Asia/Makassar");
+                // Menggunakan TimeAPI (HTTPS) agar tidak diblokir oleh keamanan browser (GitHub Pages)
+                const timeResponse = await fetch("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Makassar");
                 const timeData = await timeResponse.json();
-                const realDate = new Date(timeData.datetime);
-                const currentTimeMinutes = (realDate.getHours() * 60) + realDate.getMinutes();
-                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_jadwal", username: session.username }) });
+                
+                // Menghitung total menit saat ini langsung dari angka server
+                const currentTimeMinutes = (timeData.hour * 60) + timeData.minute;
+                
+                const response = await fetch(API_URL, { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify({ action: "get_jadwal", username: session.username }) });
                 const res = await response.json();
 
                 if (res.status === "success" && res.data && res.data.length > 0) {
@@ -189,13 +192,16 @@
                         document.getElementById('pelatihanDisplay').innerText = jadwalAktif.pelatihan;
                         document.getElementById('sesiDisplay').innerText = `${jadwalAktif.hari} — ${jadwalAktif.sesi}`;
                         document.getElementById('waktuDisplay').innerText = `Batas: ${jadwalAktif.jam_mulai} - ${jadwalAktif.jam_selesai}`;
-                        ubahStatusMsg("Waktu Sesuai. Verifikasi Lokasi.", "text-modernBlue"); document.getElementById('btnLokasi').classList.remove('hidden');
+                        ubahStatusMsg("Waktu WITA Terverifikasi. Silakan Verifikasi Lokasi.", "text-modernBlue"); document.getElementById('btnLokasi').classList.remove('hidden');
                     } else {
                         document.getElementById('pelatihanDisplay').innerText = "Tidak Ada Sesi"; document.getElementById('sesiDisplay').innerText = "-"; 
-                        document.getElementById('waktuDisplay').innerText = "DITUTUP"; ubahStatusMsg("❌ Sesi belum dimulai/sudah lewat.", "text-red-500");
+                        document.getElementById('waktuDisplay').innerText = "DITUTUP"; ubahStatusMsg("❌ Sesi belum dimulai atau sudah lewat.", "text-red-500");
                     }
-                } else { document.getElementById('pelatihanDisplay').innerText = "Kosong"; ubahStatusMsg("❌ Tidak ada jadwal.", "text-red-500"); }
-            } catch (e) { ubahStatusMsg("Gagal sinkronisasi waktu.", "text-red-500"); }
+                } else { document.getElementById('pelatihanDisplay').innerText = "Kosong"; ubahStatusMsg("❌ Tidak ada jadwal untuk Anda.", "text-red-500"); }
+            } catch (e) { 
+                ubahStatusMsg("Gagal sinkronisasi waktu satelit/server.", "text-red-500"); 
+                console.error(e);
+            }
         }
 
         function verifikasiLokasi() {
