@@ -15,6 +15,7 @@
 
     <div id="mainWadah" class="w-full max-w-md bg-white rounded-[28px] shadow-sm overflow-hidden p-8 relative transition-all duration-500 ease-in-out">
 
+        <!-- LAYER 1: HALAMAN LOGIN -->
         <div id="loginScreen" class="block">
             <div class="flex flex-col items-center mb-8">
                 <img src="https://i.ibb.co.com/KphQrZDB/Logo-LPMPP-ULM.png" alt="Logo LPMPP" class="w-24 h-28 object-contain mb-4"> 
@@ -30,10 +31,10 @@
             </div>
         </div>
 
+        <!-- LAYER 11: HALAMAN REGISTER MANDIRI & BIODATA -->
         <div id="registerScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-extrabold text-modernDark mb-1">Pendaftaran & Biodata</h2>
             <p class="text-xs text-slate-500 mb-4">Lengkapi data diri Anda di bawah ini.</p>
-
             <div class="overflow-y-auto max-h-[60vh] pr-2 mb-4 space-y-3">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div><label class="text-[10px] text-slate-500 font-bold">NAMA LENGKAP*</label><input type="text" id="regNama" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
@@ -50,7 +51,7 @@
                     <div><label class="text-[10px] text-slate-500 font-bold">JABATAN FUNGSIONAL</label><select id="regJabatan" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Jabatan</option><option value="Tidak Ada">Tidak Ada</option><option value="Asisten Ahli">Asisten Ahli</option><option value="Lektor">Lektor</option><option value="Lektor Kepala">Lektor Kepala</option><option value="Profesor">Profesor</option></select></div>
                     <div><label class="text-[10px] text-slate-500 font-bold">INSTANSI</label><select id="regInstansi" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Instansi</option><option value="Dalam ULM">Dalam ULM</option><option value="Luar ULM">Luar ULM</option></select></div>
                     <div><label class="text-[10px] text-slate-500 font-bold">NAMA INSTANSI</label><input type="text" id="regNamaInstansi" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
-                    <div><label class="text-[10px] text-slate-500 font-bold">FAKULTAS*</label><select id="regFakultas" onchange="updateProdi()" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Fakultas</option><option value="Keguruan & Ilmu Pendidikan">Keguruan & Ilmu Pendidikan</option><option value="Ekonomi & Bisnis">Ekonomi & Bisnis</option><option value="Hukum">Hukum</option><option value="Ilmu Sosial dan Ilmu Politik">Ilmu Sosial dan Ilmu Politik</option><option value="Matematika dan Ilmu Pengetahuan Alam">Matematika dan Ilmu Pengetahuan Alam</option><option value="Perikanan & Kelautan">Perikanan & Kelautan</option><option value="Kehutanan">Kehutanan</option><option value="Pertanian">Pertanian</option><option value="Teknik">Teknik</option><option value="Kedokteran">Kedokteran</option><option value="Kedokteran Gigi">Kedokteran Gigi</option><option value="Pascasarjana">Pascasarjana</option><option value="Lainnya">Lainnya</option></select></div>
+                    <div><label class="text-[10px] text-slate-500 font-bold">FAKULTAS*</label><select id="regFakultas" onchange="updateProdi('reg')" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Fakultas</option><option value="Keguruan & Ilmu Pendidikan">Keguruan & Ilmu Pendidikan</option><option value="Ekonomi & Bisnis">Ekonomi & Bisnis</option><option value="Hukum">Hukum</option><option value="Ilmu Sosial dan Ilmu Politik">Ilmu Sosial dan Ilmu Politik</option><option value="Matematika dan Ilmu Pengetahuan Alam">Matematika dan Ilmu Pengetahuan Alam</option><option value="Perikanan & Kelautan">Perikanan & Kelautan</option><option value="Kehutanan">Kehutanan</option><option value="Pertanian">Pertanian</option><option value="Teknik">Teknik</option><option value="Kedokteran">Kedokteran</option><option value="Kedokteran Gigi">Kedokteran Gigi</option><option value="Pascasarjana">Pascasarjana</option><option value="Lainnya">Lainnya</option></select></div>
                     <div><label class="text-[10px] text-slate-500 font-bold">PROGRAM STUDI*</label><select id="regProdiSelect" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Program Studi</option></select><input type="text" id="regProdiInput" placeholder="Ketik Program Studi Manual" class="hidden w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
                     <div><label class="text-[10px] text-slate-500 font-bold">GELAR DEPAN</label><input type="text" id="regGelarDepan" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
                     <div><label class="text-[10px] text-slate-500 font-bold">GELAR BELAKANG</label><input type="text" id="regGelarBelakang" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
@@ -63,10 +64,52 @@
             <button onclick="tampilLayar('loginScreen')" class="w-full text-slate-400 text-center text-sm font-bold py-2">Batal & Kembali</button>
         </div>
 
+        <!-- LAYER 13: HALAMAN EDIT BIODATA PESERTA LAMA (BARU) -->
+        <div id="userProfileScreen" class="hidden flex flex-col w-full">
+            <h2 class="text-xl font-extrabold text-modernDark mb-1">Pengaturan Profil</h2>
+            <p class="text-xs text-slate-500 mb-4">Perbarui biodata Anda jika ada perubahan.</p>
+
+            <div class="overflow-y-auto max-h-[60vh] pr-2 mb-4 space-y-3">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div><label class="text-[10px] text-slate-500 font-bold">NAMA LENGKAP*</label><input type="text" id="editNama" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
+                    
+                    <!-- EMAIL DIKUNCI (READONLY) AGAR DATABASE TIDAK KACAU -->
+                    <div><label class="text-[10px] text-slate-500 font-bold">EMAIL AKTIF (ID Utama)</label><input type="email" id="editUser" readonly class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm bg-slate-100 text-slate-500 cursor-not-allowed"></div>
+                    
+                    <div><label class="text-[10px] text-slate-500 font-bold">PASSWORD*</label><input type="text" id="editPass" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
+                    <div><label class="text-[10px] text-slate-500 font-bold">NOMOR HP</label><input type="number" id="editHP" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
+                    <div><label class="text-[10px] text-slate-500 font-bold">NIP</label><input type="text" id="editNIP" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
+                    <div><label class="text-[10px] text-slate-500 font-bold">NIDN / NIDK</label><input type="text" id="editNIDN" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
+                    <div><label class="text-[10px] text-slate-500 font-bold">TEMPAT LAHIR</label><input type="text" id="editTempatLahir" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
+                    <div><label class="text-[10px] text-slate-500 font-bold">TANGGAL LAHIR</label><input type="date" id="editTanggalLahir" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
+                    <div><label class="text-[10px] text-slate-500 font-bold">STATUS KEPEGAWAIAN*</label><select id="editStatusPegawai" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Status</option><option value="ASN">ASN</option><option value="Non ASN">Non ASN</option></select></div>
+                    <div><label class="text-[10px] text-slate-500 font-bold">JENIS KELAMIN*</label><select id="editJK" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Gender</option><option value="Laki-laki">Laki-laki</option><option value="Perempuan">Perempuan</option></select></div>
+                    <div><label class="text-[10px] text-slate-500 font-bold">PANGKAT / GOLONGAN</label><select id="editPangkat" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Golongan</option><option value="Tidak Ada">Tidak Ada</option><option value="IA/Juru Muda">IA/Juru Muda</option><option value="IB/Juru Muda Tk.1">IB/Juru Muda Tk.1</option><option value="IC/Juru">IC/Juru</option><option value="ID/Juru Tk.1">ID/Juru Tk.1</option><option value="IIA/Pengatur Muda">IIA/Pengatur Muda</option><option value="IIB/Pengatur Muda Tk.1">IIB/Pengatur Muda Tk.1</option><option value="IIC/Pengatur">IIC/Pengatur</option><option value="IID/Pengatur TK.1">IID/Pengatur TK.1</option><option value="IIIA/Penata Muda">IIIA/Penata Muda</option><option value="IIIB/Penata Muda Tk.1">IIIB/Penata Muda Tk.1</option><option value="IIIC/Penata">IIIC/Penata</option><option value="IIID/Penata Tk.1">IIID/Penata Tk.1</option><option value="IVA/Pembina">IVA/Pembina</option><option value="IVB/Pembina Tk.1">IVB/Pembina Tk.1</option><option value="IVC/Pembina Utama Muda">IVC/Pembina Utama Muda</option><option value="IVD/Pembina Utama Madya">IVD/Pembina Utama Madya</option><option value="IVE/Pembina Utama">IVE/Pembina Utama</option></select></div>
+                    <div><label class="text-[10px] text-slate-500 font-bold">JABATAN FUNGSIONAL</label><select id="editJabatan" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Jabatan</option><option value="Tidak Ada">Tidak Ada</option><option value="Asisten Ahli">Asisten Ahli</option><option value="Lektor">Lektor</option><option value="Lektor Kepala">Lektor Kepala</option><option value="Profesor">Profesor</option></select></div>
+                    <div><label class="text-[10px] text-slate-500 font-bold">INSTANSI</label><select id="editInstansi" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Instansi</option><option value="Dalam ULM">Dalam ULM</option><option value="Luar ULM">Luar ULM</option></select></div>
+                    <div><label class="text-[10px] text-slate-500 font-bold">NAMA INSTANSI</label><input type="text" id="editNamaInstansi" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
+                    <div><label class="text-[10px] text-slate-500 font-bold">FAKULTAS*</label><select id="editFakultas" onchange="updateProdi('edit')" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Fakultas</option><option value="Keguruan & Ilmu Pendidikan">Keguruan & Ilmu Pendidikan</option><option value="Ekonomi & Bisnis">Ekonomi & Bisnis</option><option value="Hukum">Hukum</option><option value="Ilmu Sosial dan Ilmu Politik">Ilmu Sosial dan Ilmu Politik</option><option value="Matematika dan Ilmu Pengetahuan Alam">Matematika dan Ilmu Pengetahuan Alam</option><option value="Perikanan & Kelautan">Perikanan & Kelautan</option><option value="Kehutanan">Kehutanan</option><option value="Pertanian">Pertanian</option><option value="Teknik">Teknik</option><option value="Kedokteran">Kedokteran</option><option value="Kedokteran Gigi">Kedokteran Gigi</option><option value="Pascasarjana">Pascasarjana</option><option value="Lainnya">Lainnya</option></select></div>
+                    <div><label class="text-[10px] text-slate-500 font-bold">PROGRAM STUDI*</label><select id="editProdiSelect" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Program Studi</option></select><input type="text" id="editProdiInput" placeholder="Ketik Program Studi Manual" class="hidden w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
+                    <div><label class="text-[10px] text-slate-500 font-bold">GELAR DEPAN</label><input type="text" id="editGelarDepan" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
+                    <div><label class="text-[10px] text-slate-500 font-bold">GELAR BELAKANG</label><input type="text" id="editGelarBelakang" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
+                    <div><label class="text-[10px] text-slate-500 font-bold">PENDIDIKAN TERAKHIR</label><select id="editPendidikan" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Pendidikan Terakhir</option><option value="D3">D3</option><option value="D4">D4</option><option value="S1">S1</option><option value="S2">S2</option><option value="S3">S3</option></select></div>
+                </div>
+                <div class="mt-2"><label class="text-[10px] text-slate-500 font-bold">ALAMAT LENGKAP</label><textarea id="editAlamat" rows="2" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></textarea></div>
+            </div>
+
+            <button onclick="prosesUpdateProfil()" id="btnSubmitEdit" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full mb-3 shadow-sm">Simpan Perubahan Biodata</button>
+            <button onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full text-slate-400 text-center text-sm font-bold py-2">Batal & Kembali</button>
+        </div>
+
         <div id="presensiScreen" class="hidden flex flex-col items-center">
             <p class="text-sm text-slate-500 font-medium">Selamat Datang,</p>
-            <h2 id="userNameDisplay" class="text-lg font-bold text-modernDark text-center mb-1">Nama Peserta</h2>
-            <button onclick="bukaModalTambahKelas()" class="text-[11px] bg-amber-50 text-amber-600 border border-amber-200 px-3 py-1 rounded-full font-bold hover:bg-amber-100 mb-4">Daftar Pelatihan Baru</button>
+            <h2 id="userNameDisplay" class="text-lg font-bold text-modernDark text-center mb-2">Nama Peserta</h2>
+            
+            <div class="flex space-x-2 mb-4 w-full px-4">
+                <button onclick="bukaModalTambahKelas()" class="w-1/2 text-[10px] bg-amber-50 text-amber-600 border border-amber-200 px-2 py-2 rounded-full font-bold hover:bg-amber-100 shadow-sm">➕ Daftar Kelas</button>
+                <button onclick="bukaHalamanProfil()" class="w-1/2 text-[10px] bg-slate-50 text-slate-600 border border-slate-200 px-2 py-2 rounded-full font-bold hover:bg-slate-100 shadow-sm">⚙️ Edit Biodata</button>
+            </div>
+
             <div class="w-full bg-white border border-slate-100 shadow-sm rounded-2xl p-6 flex flex-col items-center mb-6">
                 <p class="text-[11px] font-bold text-modernBlue tracking-wider mb-2">KELAS AKTIF SAAT INI</p>
                 <h3 id="pelatihanDisplay" class="text-xl font-extrabold text-modernDark text-center leading-tight mb-1">Mencari Jadwal...</h3>
@@ -78,6 +121,7 @@
             <button onclick="bukaKamera()" id="btnKamera" disabled class="w-full bg-modernDark opacity-50 text-white font-bold py-4 rounded-full hidden">2. Buka Kamera Presensi</button>
         </div>
 
+        <!-- LAYER 12: KELAS BARU USER LAMA -->
         <div id="userEnrollScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-extrabold text-modernDark mb-1">Ikuti Pelatihan Baru</h2>
             <p class="text-xs text-slate-500 mb-6">Pilih program pelatihan LPMPP tambahan yang ingin Anda ikuti.</p>
@@ -89,6 +133,7 @@
             <button onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full text-slate-400 text-center text-sm font-bold py-2">Kembali</button>
         </div>
 
+        <!-- LAYER 3, 4: KAMERA & SUKSES -->
         <div id="kameraScreen" class="hidden flex flex-col items-center">
             <h2 class="text-lg font-bold text-modernDark mb-4">Posisikan Wajah Anda</h2>
             <div class="w-full h-64 bg-black rounded-2xl overflow-hidden mb-4 relative"><video id="video" class="w-full h-full object-cover" autoplay playsinline></video><canvas id="canvas" class="hidden"></canvas></div>
@@ -101,6 +146,7 @@
             <button onclick="location.reload()" class="w-full border-2 border-modernBlue text-modernBlue font-bold py-3 rounded-full">Kembali Ke Awal</button>
         </div>
 
+        <!-- DASHBOARD ADMINISTRATOR (Lebar Otomatis di PC) -->
         <div id="adminScreen" class="hidden flex flex-col items-center w-full">
             <div class="flex justify-between items-center w-full mb-6 pb-4 border-b border-slate-100">
                 <div><p class="text-sm text-slate-500 font-medium">Panel Administrator</p><h2 id="adminNameDisplay" class="text-xl font-extrabold text-modernDark">Admin</h2></div>
@@ -144,28 +190,19 @@
 
         <div id="adminPesertaScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-bold text-modernDark mb-4">Daftar Peserta Pelatihan</h2>
-            
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <div class="flex space-x-2 mb-4">
-                        <select id="inputPelatihanPeserta" class="w-2/3 px-4 py-3 rounded-xl border border-slate-300 font-bold bg-white"><option value="">-- Pilih Pelatihan --</option></select>
-                        <button onclick="tarikDataPeserta()" class="w-1/3 bg-modernDark text-white font-bold rounded-xl text-sm hover:bg-slate-800">Tarik Data</button>
-                    </div>
+                    <div class="flex space-x-2 mb-4"><select id="inputPelatihanPeserta" class="w-2/3 px-4 py-3 rounded-xl border border-slate-300 font-bold bg-white"><option value="">-- Pilih Pelatihan --</option></select><button onclick="tarikDataPeserta()" class="w-1/3 bg-modernDark text-white font-bold rounded-xl text-sm hover:bg-slate-800">Tarik Data</button></div>
                     <p class="text-xs text-slate-500 mb-1">Tambah/Hapus Email (Satu per baris):</p>
                     <textarea id="areaPeserta" rows="8" class="w-full px-4 py-3 mb-2 rounded-xl border border-slate-300 text-sm" placeholder="user1@email.com&#10;user2@email.com"></textarea>
                     <button onclick="simpanDaftarPeserta()" class="w-full bg-modernBlue hover:bg-modernDark text-white font-bold py-3 rounded-xl mb-3">Update Daftar Email</button>
                 </div>
-                
                 <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex flex-col h-full">
-                    
                     <input type="text" id="cariPesertaInput" onkeyup="filterKartuPeserta()" placeholder="Cari Nama, Email, NIP, atau Instansi..." class="hidden w-full px-4 py-2 mb-3 rounded-lg border border-slate-300 text-sm focus:ring-1 focus:ring-modernBlue shadow-sm">
-                    
-                    <div id="wadahDetailPeserta" class="hidden space-y-3 overflow-y-auto max-h-[45vh] pr-1 flex-grow">
-                        </div>
+                    <div id="wadahDetailPeserta" class="hidden space-y-3 overflow-y-auto max-h-[45vh] pr-1 flex-grow"></div>
                     <p id="teksBantuPeserta" class="text-slate-400 text-sm text-center my-auto">Klik "Tarik Data" untuk melihat detail peserta.</p>
                 </div>
             </div>
-            
             <button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2 mt-4">Kembali Ke Dasbor</button>
         </div>
 
@@ -215,10 +252,10 @@
             "Kedokteran Gigi": ["Kedokteran Gigi"], "Pascasarjana": ["Pascasarjana"]
         };
 
-        function updateProdi() {
-            const fakultas = document.getElementById('regFakultas').value;
-            const prodiSelect = document.getElementById('regProdiSelect');
-            const prodiInput = document.getElementById('regProdiInput');
+        function updateProdi(prefix) {
+            const fakultas = document.getElementById(prefix + 'Fakultas').value;
+            const prodiSelect = document.getElementById(prefix + 'ProdiSelect');
+            const prodiInput = document.getElementById(prefix + 'ProdiInput');
             prodiSelect.innerHTML = '<option value="">Pilih Program Studi</option>';
             if (fakultas === "Lainnya") { prodiSelect.classList.add('hidden'); prodiInput.classList.remove('hidden'); prodiInput.value = ""; } 
             else {
@@ -231,6 +268,71 @@
             const sel = document.getElementById('jadwalPelatihanSelect').value; const inp = document.getElementById('jadwalPelatihanInput');
             if (sel === "BARU") { inp.classList.remove('hidden'); inp.value = ""; } else { inp.classList.add('hidden'); }
         }
+
+        async function bukaHalamanProfil() {
+            tampilLayar('userProfileScreen');
+            document.getElementById('btnSubmitEdit').innerText = "⏳ Memuat Data...";
+            document.getElementById('btnSubmitEdit').disabled = true;
+            try {
+                const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_user_profile", username: session.username }) })).json();
+                if(res.status === "success") {
+                    const d = res.data;
+                    document.getElementById('editNama').value = d.nama;
+                    document.getElementById('editUser').value = d.username;
+                    document.getElementById('editPass').value = d.password;
+                    document.getElementById('editHP').value = d.hp;
+                    document.getElementById('editNIP').value = d.nip;
+                    document.getElementById('editNIDN').value = d.nidn;
+                    document.getElementById('editTempatLahir').value = d.tempat_lahir;
+                    
+                    let tgl = d.tanggal_lahir;
+                    if(tgl && tgl.includes('T')) tgl = tgl.split('T')[0];
+                    document.getElementById('editTanggalLahir').value = tgl;
+
+                    document.getElementById('editStatusPegawai').value = d.status_pegawai;
+                    document.getElementById('editJK').value = d.jk;
+                    document.getElementById('editPangkat').value = d.pangkat;
+                    document.getElementById('editJabatan').value = d.jabatan;
+                    document.getElementById('editInstansi').value = d.instansi;
+                    document.getElementById('editNamaInstansi').value = d.nama_instansi;
+                    document.getElementById('editFakultas').value = d.fakultas;
+                    
+                    updateProdi('edit');
+                    
+                    if(d.fakultas === "Lainnya") { document.getElementById('editProdiInput').value = d.prodi; } 
+                    else { document.getElementById('editProdiSelect').value = d.prodi; }
+
+                    document.getElementById('editGelarDepan').value = d.gelar_depan;
+                    document.getElementById('editGelarBelakang').value = d.gelar_belakang;
+                    document.getElementById('editPendidikan').value = d.pendidikan;
+                    document.getElementById('editAlamat').value = d.alamat;
+                } else { alert("Gagal memuat profil: " + res.message); tampilLayar('presensiScreen'); }
+            } catch(e) { alert("Koneksi gagal."); tampilLayar('presensiScreen'); }
+            document.getElementById('btnSubmitEdit').innerText = "Simpan Perubahan Biodata";
+            document.getElementById('btnSubmitEdit').disabled = false;
+        }
+
+        async function prosesUpdateProfil() {
+            const fakVal = document.getElementById('editFakultas').value; 
+            const prodiVal = (fakVal === "Lainnya") ? document.getElementById('editProdiInput').value : document.getElementById('editProdiSelect').value;
+            const data = { action: "update_user_profile", nama: document.getElementById('editNama').value, username: document.getElementById('editUser').value, password: document.getElementById('editPass').value, nip: document.getElementById('editNIP').value, nidn: document.getElementById('editNIDN').value, tempat_lahir: document.getElementById('editTempatLahir').value, tanggal_lahir: document.getElementById('editTanggalLahir').value, status_pegawai: document.getElementById('editStatusPegawai').value, jk: document.getElementById('editJK').value, pangkat: document.getElementById('editPangkat').value, jabatan: document.getElementById('editJabatan').value, instansi: document.getElementById('editInstansi').value, nama_instansi: document.getElementById('editNamaInstansi').value, fakultas: fakVal, prodi: prodiVal, gelar_depan: document.getElementById('editGelarDepan').value, gelar_belakang: document.getElementById('editGelarBelakang').value, pendidikan: document.getElementById('editPendidikan').value, hp: document.getElementById('editHP').value, alamat: document.getElementById('editAlamat').value };
+            
+            const btn = document.getElementById('btnSubmitEdit');
+            if(!data.nama || !data.password || !data.status_pegawai || !data.jk || !data.fakultas || !data.prodi) { return alert("Kolom bertanda bintang (*) tidak boleh dikosongkan."); }
+            
+            btn.innerText = "⏳ Memperbarui Biodata..."; btn.disabled = true;
+            try {
+                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify(data) }); const res = await response.json();
+                if (res.status === "success") { 
+                    alert("✅ Biodata berhasil diperbarui!"); 
+                    session.nama = data.nama; // Update nama di memori session sementara
+                    tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();
+                } 
+                else alert("❌ Gagal: " + res.message);
+            } catch(e) { alert("Kesalahan koneksi."); }
+            btn.innerText = "Simpan Perubahan Biodata"; btn.disabled = false;
+        }
+
 
         async function bukaModalTambahKelas() {
             tampilLayar('userEnrollScreen'); const select = document.getElementById('enrollPelatihan'); select.innerHTML = '<option value="">-- Memuat daftar kelas... --</option>';
@@ -326,7 +428,7 @@
                     } else {
                         document.getElementById('pelatihanDisplay').innerText = "Tidak Ada Sesi"; document.getElementById('sesiDisplay').innerText = "-"; document.getElementById('waktuDisplay').innerText = "DITUTUP"; ubahStatusMsg("❌ Sesi belum dimulai atau lewat hari.", "text-red-500");
                     }
-                } else { document.getElementById('pelatihanDisplay').innerText = "Kosong"; ubahStatusMsg("❌ Tidak ada jadwal.", "text-red-500"); }
+                } else { document.getElementById('pelatihanDisplay').innerText = "Kosong"; ubahStatusMsg("❌ Tidak ada jadwal aktif.", "text-red-500"); }
             } catch (e) { ubahStatusMsg("Gagal sinkronisasi waktu.", "text-red-500"); }
         }
 
@@ -374,7 +476,8 @@
                     if(jenis === 'jadwal_multi') { document.getElementById("jadwalPelatihanSelect").value = ""; document.getElementById("jadwalPelatihanInput").value = ""; document.getElementById("jadwalPelatihanInput").classList.add('hidden'); } 
                     if(jenis === 'reward') { document.getElementById("rewardPel").value = ""; document.getElementById("rewardMin").value = ""; document.getElementById("rewardLink").value = ""; } 
                     muatDaftarPelatihanAdmin(); 
-                } else alert("❌ Gagal: " + res.message);
+                } 
+                else alert("❌ Gagal: " + res.message);
             } catch (e) { alert("Koneksi gagal."); }
             btnSimpan.innerText = teksAsli; btnSimpan.disabled = false;
         }
@@ -386,7 +489,8 @@
         }
 
         async function tarikDataPeserta() { 
-            const pel = document.getElementById('inputPelatihanPeserta').value; if(!pel) return alert("Pilih pelatihan!"); 
+            const pel = document.getElementById('inputPelatihanPeserta').value; 
+            if(!pel) return alert("Pilih pelatihan!"); 
             document.getElementById('areaPeserta').value = "Mengambil data..."; 
             const detailWadah = document.getElementById('wadahDetailPeserta'); const searchInput = document.getElementById('cariPesertaInput');
             detailWadah.innerHTML = ""; detailWadah.classList.add('hidden'); searchInput.classList.add('hidden');
@@ -397,7 +501,7 @@
                 document.getElementById('areaPeserta').value = res.emails.join('\n'); 
 
                 if(res.details && res.details.length > 0) {
-                    searchInput.classList.remove('hidden'); searchInput.value = ''; // Munculkan kolom pencarian
+                    searchInput.classList.remove('hidden'); searchInput.value = '';
                     let html = '<h3 class="text-sm font-bold text-modernDark mb-2 sticky top-0 bg-slate-50 z-10 py-1">Detail Biodata Peserta:</h3>';
                     res.details.forEach(d => {
                         html += `
@@ -428,11 +532,8 @@
             const cards = document.querySelectorAll('.kartu-peserta');
             cards.forEach(card => {
                 const textContent = card.innerText.toLowerCase();
-                if(textContent.includes(keyword)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
+                if(textContent.includes(keyword)) { card.style.display = 'block'; } 
+                else { card.style.display = 'none'; }
             });
         }
 
@@ -446,19 +547,19 @@
         }
 
         function tampilLayar(idLayar) {
-            ['loginScreen', 'presensiScreen', 'kameraScreen', 'suksesScreen', 'adminScreen', 'adminJadwalScreen', 'adminPengaturanScreen', 'adminValidasiScreen', 'adminPesertaScreen', 'adminRewardScreen', 'registerScreen', 'userEnrollScreen'].forEach(id => { document.getElementById(id).classList.add('hidden'); });
+            ['loginScreen', 'presensiScreen', 'kameraScreen', 'suksesScreen', 'adminScreen', 'adminJadwalScreen', 'adminPengaturanScreen', 'adminValidasiScreen', 'adminPesertaScreen', 'adminRewardScreen', 'registerScreen', 'userEnrollScreen', 'userProfileScreen'].forEach(id => { document.getElementById(id).classList.add('hidden'); });
             
             const wadah = document.getElementById('mainWadah');
             wadah.classList.remove('max-w-md', 'max-w-2xl', 'max-w-4xl');
             
             const adminScreens = ['adminScreen', 'adminJadwalScreen', 'adminPengaturanScreen', 'adminValidasiScreen', 'adminPesertaScreen', 'adminRewardScreen'];
             
-            if (idLayar === 'registerScreen') { 
-                wadah.classList.add('max-w-2xl');
+            if (idLayar === 'registerScreen' || idLayar === 'userProfileScreen') { 
+                wadah.classList.add('max-w-2xl'); 
             } else if (adminScreens.includes(idLayar)) {
-                wadah.classList.add('max-w-4xl');
+                wadah.classList.add('max-w-4xl'); 
             } else { 
-                wadah.classList.add('max-w-md');
+                wadah.classList.add('max-w-md');  
             }
 
             document.getElementById(idLayar).classList.remove('hidden');
