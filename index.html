@@ -33,7 +33,6 @@
         <div id="registerScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-extrabold text-modernDark mb-1">Pendaftaran & Biodata</h2>
             <p class="text-xs text-slate-500 mb-4">Lengkapi data diri Anda di bawah ini.</p>
-
             <div class="overflow-y-auto max-h-[60vh] pr-2 mb-4 space-y-3">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div><label class="text-[10px] text-slate-500 font-bold">NAMA LENGKAP*</label><input type="text" id="regNama" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
@@ -44,90 +43,33 @@
                     <div><label class="text-[10px] text-slate-500 font-bold">NIDN / NIDK</label><input type="text" id="regNIDN" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
                     <div><label class="text-[10px] text-slate-500 font-bold">TEMPAT LAHIR</label><input type="text" id="regTempatLahir" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
                     <div><label class="text-[10px] text-slate-500 font-bold">TANGGAL LAHIR</label><input type="date" id="regTanggalLahir" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
-                    
-                    <div><label class="text-[10px] text-slate-500 font-bold">STATUS KEPEGAWAIAN*</label>
-                        <select id="regStatusPegawai" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
-                            <option value="">Pilih Status Kepegawaian</option><option value="ASN">ASN</option><option value="Non ASN">Non ASN</option>
-                        </select>
-                    </div>
-                    
-                    <div><label class="text-[10px] text-slate-500 font-bold">JENIS KELAMIN*</label>
-                        <select id="regJK" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
-                            <option value="">Pilih Jenis Kelamin</option><option value="Laki-laki">Laki-laki</option><option value="Perempuan">Perempuan</option>
-                        </select>
-                    </div>
-                    
-                    <div><label class="text-[10px] text-slate-500 font-bold">PANGKAT / GOLONGAN</label>
-                        <select id="regPangkat" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
-                            <option value="">Pilih Pangkat/Golongan</option><option value="Tidak Ada">Tidak Ada</option><option value="IA/Juru Muda">IA/Juru Muda</option><option value="IB/Juru Muda Tk.1">IB/Juru Muda Tk.1</option><option value="IC/Juru">IC/Juru</option><option value="ID/Juru Tk.1">ID/Juru Tk.1</option><option value="IIA/Pengatur Muda">IIA/Pengatur Muda</option><option value="IIB/Pengatur Muda Tk.1">IIB/Pengatur Muda Tk.1</option><option value="IIC/Pengatur">IIC/Pengatur</option><option value="IID/Pengatur TK.1">IID/Pengatur TK.1</option><option value="IIIA/Penata Muda">IIIA/Penata Muda</option><option value="IIIB/Penata Muda Tk.1">IIIB/Penata Muda Tk.1</option><option value="IIIC/Penata">IIIC/Penata</option><option value="IIID/Penata Tk.1">IIID/Penata Tk.1</option><option value="IVA/Pembina">IVA/Pembina</option><option value="IVB/Pembina Tk.1">IVB/Pembina Tk.1</option><option value="IVC/Pembina Utama Muda">IVC/Pembina Utama Muda</option><option value="IVD/Pembina Utama Madya">IVD/Pembina Utama Madya</option><option value="IVE/Pembina Utama">IVE/Pembina Utama</option>
-                        </select>
-                    </div>
-                    
-                    <div><label class="text-[10px] text-slate-500 font-bold">JABATAN FUNGSIONAL</label>
-                        <select id="regJabatan" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
-                            <option value="">Pilih Jabatan Fungsional</option><option value="Tidak Ada">Tidak Ada</option><option value="Asisten Ahli">Asisten Ahli</option><option value="Lektor">Lektor</option><option value="Lektor Kepala">Lektor Kepala</option><option value="Profesor">Profesor</option>
-                        </select>
-                    </div>
-
-                    <div><label class="text-[10px] text-slate-500 font-bold">INSTANSI</label>
-                        <select id="regInstansi" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Instansi</option><option value="Dalam ULM">Dalam ULM</option><option value="Luar ULM">Luar ULM</option></select>
-                    </div>
+                    <div><label class="text-[10px] text-slate-500 font-bold">STATUS KEPEGAWAIAN*</label><select id="regStatusPegawai" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Status Kepegawaian</option><option value="ASN">ASN</option><option value="Non ASN">Non ASN</option></select></div>
+                    <div><label class="text-[10px] text-slate-500 font-bold">JENIS KELAMIN*</label><select id="regJK" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Jenis Kelamin</option><option value="Laki-laki">Laki-laki</option><option value="Perempuan">Perempuan</option></select></div>
+                    <div><label class="text-[10px] text-slate-500 font-bold">PANGKAT / GOLONGAN</label><select id="regPangkat" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Pangkat/Golongan</option><option value="Tidak Ada">Tidak Ada</option><option value="IA/Juru Muda">IA/Juru Muda</option><option value="IB/Juru Muda Tk.1">IB/Juru Muda Tk.1</option><option value="IC/Juru">IC/Juru</option><option value="ID/Juru Tk.1">ID/Juru Tk.1</option><option value="IIA/Pengatur Muda">IIA/Pengatur Muda</option><option value="IIB/Pengatur Muda Tk.1">IIB/Pengatur Muda Tk.1</option><option value="IIC/Pengatur">IIC/Pengatur</option><option value="IID/Pengatur TK.1">IID/Pengatur TK.1</option><option value="IIIA/Penata Muda">IIIA/Penata Muda</option><option value="IIIB/Penata Muda Tk.1">IIIB/Penata Muda Tk.1</option><option value="IIIC/Penata">IIIC/Penata</option><option value="IIID/Penata Tk.1">IIID/Penata Tk.1</option><option value="IVA/Pembina">IVA/Pembina</option><option value="IVB/Pembina Tk.1">IVB/Pembina Tk.1</option><option value="IVC/Pembina Utama Muda">IVC/Pembina Utama Muda</option><option value="IVD/Pembina Utama Madya">IVD/Pembina Utama Madya</option><option value="IVE/Pembina Utama">IVE/Pembina Utama</option></select></div>
+                    <div><label class="text-[10px] text-slate-500 font-bold">JABATAN FUNGSIONAL</label><select id="regJabatan" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Jabatan Fungsional</option><option value="Tidak Ada">Tidak Ada</option><option value="Asisten Ahli">Asisten Ahli</option><option value="Lektor">Lektor</option><option value="Lektor Kepala">Lektor Kepala</option><option value="Profesor">Profesor</option></select></div>
+                    <div><label class="text-[10px] text-slate-500 font-bold">INSTANSI</label><select id="regInstansi" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Instansi</option><option value="Dalam ULM">Dalam ULM</option><option value="Luar ULM">Luar ULM</option></select></div>
                     <div><label class="text-[10px] text-slate-500 font-bold">NAMA INSTANSI</label><input type="text" id="regNamaInstansi" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
-                    
-                    <div><label class="text-[10px] text-slate-500 font-bold">FAKULTAS*</label>
-                        <select id="regFakultas" onchange="updateProdi()" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
-                            <option value="">Pilih Fakultas</option>
-                            <option value="Keguruan & Ilmu Pendidikan">Keguruan & Ilmu Pendidikan</option>
-                            <option value="Ekonomi & Bisnis">Ekonomi & Bisnis</option>
-                            <option value="Hukum">Hukum</option>
-                            <option value="Ilmu Sosial dan Ilmu Politik">Ilmu Sosial dan Ilmu Politik</option>
-                            <option value="Matematika dan Ilmu Pengetahuan Alam">Matematika dan Ilmu Pengetahuan Alam</option>
-                            <option value="Perikanan & Kelautan">Perikanan & Kelautan</option>
-                            <option value="Kehutanan">Kehutanan</option>
-                            <option value="Pertanian">Pertanian</option>
-                            <option value="Teknik">Teknik</option>
-                            <option value="Kedokteran">Kedokteran</option>
-                            <option value="Kedokteran Gigi">Kedokteran Gigi</option>
-                            <option value="Pascasarjana">Pascasarjana</option>
-                            <option value="Lainnya">Lainnya</option>
-                        </select>
-                    </div>
-                    
-                    <div><label class="text-[10px] text-slate-500 font-bold">PROGRAM STUDI*</label>
-                        <select id="regProdiSelect" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
-                            <option value="">Pilih Program Studi</option>
-                        </select>
-                        <input type="text" id="regProdiInput" placeholder="Ketik Program Studi Manual" class="hidden w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
-                    </div>
-                    
+                    <div><label class="text-[10px] text-slate-500 font-bold">FAKULTAS*</label><select id="regFakultas" onchange="updateProdi()" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Fakultas</option><option value="Keguruan & Ilmu Pendidikan">Keguruan & Ilmu Pendidikan</option><option value="Ekonomi & Bisnis">Ekonomi & Bisnis</option><option value="Hukum">Hukum</option><option value="Ilmu Sosial dan Ilmu Politik">Ilmu Sosial dan Ilmu Politik</option><option value="Matematika dan Ilmu Pengetahuan Alam">Matematika dan Ilmu Pengetahuan Alam</option><option value="Perikanan & Kelautan">Perikanan & Kelautan</option><option value="Kehutanan">Kehutanan</option><option value="Pertanian">Pertanian</option><option value="Teknik">Teknik</option><option value="Kedokteran">Kedokteran</option><option value="Kedokteran Gigi">Kedokteran Gigi</option><option value="Pascasarjana">Pascasarjana</option><option value="Lainnya">Lainnya</option></select></div>
+                    <div><label class="text-[10px] text-slate-500 font-bold">PROGRAM STUDI*</label><select id="regProdiSelect" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Program Studi</option></select><input type="text" id="regProdiInput" placeholder="Ketik Program Studi Manual" class="hidden w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
                     <div><label class="text-[10px] text-slate-500 font-bold">GELAR DEPAN</label><input type="text" id="regGelarDepan" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
                     <div><label class="text-[10px] text-slate-500 font-bold">GELAR BELAKANG</label><input type="text" id="regGelarBelakang" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
-                    
-                    <div><label class="text-[10px] text-slate-500 font-bold">PENDIDIKAN TERAKHIR</label>
-                        <select id="regPendidikan" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm">
-                            <option value="">Pilih Pendidikan Terakhir</option><option value="D3">D3</option><option value="D4">D4</option><option value="S1">S1</option><option value="S2">S2</option><option value="S3">S3</option>
-                        </select>
-                    </div>
+                    <div><label class="text-[10px] text-slate-500 font-bold">PENDIDIKAN TERAKHIR</label><select id="regPendidikan" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Pendidikan Terakhir</option><option value="D3">D3</option><option value="D4">D4</option><option value="S1">S1</option><option value="S2">S2</option><option value="S3">S3</option></select></div>
                 </div>
-                <div class="mt-2">
-                    <label class="text-[10px] text-slate-500 font-bold">ALAMAT LENGKAP</label>
-                    <textarea id="regAlamat" rows="2" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></textarea>
-                </div>
-                <div class="mt-2 bg-modernContainer p-3 rounded-lg border border-modernBlue border-opacity-30">
-                    <label class="text-[10px] font-bold text-modernBlue">PILIH PELATIHAN YANG DIIKUTI:*</label>
-                    <select id="regPelatihan" class="w-full mt-1 px-3 py-2 rounded-lg border border-slate-300 text-sm bg-white font-bold text-slate-700">
-                        <option value="">-- Memuat daftar kelas... --</option>
-                    </select>
-                </div>
+                <div class="mt-2"><label class="text-[10px] text-slate-500 font-bold">ALAMAT LENGKAP</label><textarea id="regAlamat" rows="2" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></textarea></div>
+                <div class="mt-2 bg-modernContainer p-3 rounded-lg border border-modernBlue border-opacity-30"><label class="text-[10px] font-bold text-modernBlue">PILIH PELATIHAN YANG DIIKUTI:*</label><select id="regPelatihan" class="w-full mt-1 px-3 py-2 rounded-lg border border-slate-300 text-sm bg-white font-bold text-slate-700"><option value="">-- Memuat daftar kelas... --</option></select></div>
             </div>
-
-            <button onclick="prosesRegister()" id="btnSubmitRegister" class="w-full bg-modernBlue hover:bg-modernDark text-white font-bold py-4 rounded-full mb-3 shadow-sm transition-colors">Simpan Biodata & Daftar</button>
-            <button onclick="tampilLayar('loginScreen')" class="w-full text-slate-400 hover:text-slate-600 text-center text-sm font-bold py-2">Batal & Kembali</button>
+            <button onclick="prosesRegister()" id="btnSubmitRegister" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full mb-3 shadow-sm">Simpan Biodata & Daftar</button>
+            <button onclick="tampilLayar('loginScreen')" class="w-full text-slate-400 text-center text-sm font-bold py-2">Batal</button>
         </div>
 
         <div id="presensiScreen" class="hidden flex flex-col items-center">
             <p class="text-sm text-slate-500 font-medium">Selamat Datang,</p>
-            <h2 id="userNameDisplay" class="text-lg font-bold text-modernDark text-center mb-6">Nama Peserta</h2>
+            <h2 id="userNameDisplay" class="text-lg font-bold text-modernDark text-center mb-1">Nama Peserta</h2>
+            
+            <button onclick="bukaModalTambahKelas()" class="text-[11px] bg-amber-50 text-amber-600 border border-amber-200 px-3 py-1 rounded-full font-bold hover:bg-amber-100 transition-all mb-4">
+                Daftar Pelatihan Baru
+            </button>
+
             <div class="w-full bg-white border border-slate-100 shadow-sm rounded-2xl p-6 flex flex-col items-center mb-6">
                 <p class="text-[11px] font-bold text-modernBlue tracking-wider mb-2">KELAS AKTIF SAAT INI</p>
                 <h3 id="pelatihanDisplay" class="text-xl font-extrabold text-modernDark text-center leading-tight mb-1">Mencari Jadwal...</h3>
@@ -139,24 +81,30 @@
             <button onclick="bukaKamera()" id="btnKamera" disabled class="w-full bg-modernDark opacity-50 text-white font-bold py-4 rounded-full hidden">2. Buka Kamera Presensi</button>
         </div>
 
+        <div id="userEnrollScreen" class="hidden flex flex-col w-full">
+            <h2 class="text-xl font-extrabold text-modernDark mb-1">Ikuti Pelatihan Baru</h2>
+            <p class="text-xs text-slate-500 mb-6">Pilih program pelatihan LPMPP tambahan yang ingin Anda ikuti.</p>
+            
+            <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl mb-6">
+                <label class="text-[11px] font-bold text-amber-700 block mb-1">PILIH PELATIHAN AKTIF:*</label>
+                <select id="enrollPelatihan" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm bg-white font-bold text-slate-700">
+                    <option value="">-- Memuat daftar kelas... --</option>
+                </select>
+            </div>
+            
+            <button onclick="prosesEnroll()" id="btnSubmitEnroll" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full mb-3 shadow-sm">Konfirmasi Daftar Kelas</button>
+            <button onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full text-slate-400 text-center text-sm font-bold py-2">Kembali</button>
+        </div>
+
         <div id="kameraScreen" class="hidden flex flex-col items-center">
             <h2 class="text-lg font-bold text-modernDark mb-4">Posisikan Wajah Anda</h2>
-            <div class="w-full h-64 bg-black rounded-2xl overflow-hidden mb-4 relative">
-                <video id="video" class="w-full h-full object-cover" autoplay playsinline></video>
-                <canvas id="canvas" class="hidden"></canvas>
-            </div>
+            <div class="w-full h-64 bg-black rounded-2xl overflow-hidden mb-4 relative"><video id="video" class="w-full h-full object-cover" autoplay playsinline></video><canvas id="canvas" class="hidden"></canvas></div>
             <button onclick="jepretDanKirim()" id="btnJepret" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full">📸 Jepret & Unggah Kehadiran</button>
         </div>
 
         <div id="suksesScreen" class="hidden flex flex-col items-center py-8">
-            <div class="text-6xl mb-4">🎉</div>
-            <h1 class="text-2xl font-extrabold text-modernDark mb-2">Presensi Berhasil!</h1>
-            <p class="text-center text-sm text-slate-500 mb-6">Data kehadiran telah tercatat di server.</p>
-            <div id="rewardBox" class="hidden w-full bg-amber-50 border border-amber-200 rounded-2xl p-5 mb-6 flex flex-col items-center">
-                <span class="text-4xl mb-2">🎁</span><h3 class="text-sm font-extrabold text-amber-600 mb-1">REWARD TERBUKA!</h3>
-                <p class="text-[11px] text-center text-amber-700 mb-4 font-medium">Anda telah mencapai target presensi minimum. Akses materi eksklusif sekarang.</p>
-                <a id="btnReward" href="#" target="_blank" class="w-full bg-amber-500 text-white shadow-md text-center font-bold py-3 rounded-xl">Unduh Materi</a>
-            </div>
+            <div class="text-6xl mb-4">🎉</div><h1 class="text-2xl font-extrabold text-modernDark mb-2">Presensi Berhasil!</h1><p class="text-center text-sm text-slate-500 mb-6">Data kehadiran telah tercatat di server.</p>
+            <div id="rewardBox" class="hidden w-full bg-amber-50 border border-amber-200 rounded-2xl p-5 mb-6 flex flex-col items-center"><span class="text-4xl mb-2">🎁</span><h3 class="text-sm font-extrabold text-amber-600 mb-1">REWARD TERBUKA!</h3><p class="text-[11px] text-center text-amber-700 mb-4 font-medium">Anda telah mencapai target presensi minimum. Akses materi eksklusif sekarang.</p><a id="btnReward" href="#" target="_blank" class="w-full bg-amber-500 text-white text-center font-bold py-3 rounded-xl">Unduh Materi</a></div>
             <button onclick="location.reload()" class="w-full border-2 border-modernBlue text-modernBlue font-bold py-3 rounded-full">Kembali Ke Awal</button>
         </div>
 
@@ -175,18 +123,13 @@
             <button onclick="tampilLayar('adminPengaturanScreen')" class="w-full bg-white border-2 border-slate-100 p-3 rounded-2xl flex items-center justify-center space-x-2 hover:border-modernBlue"><span class="text-lg">⚙️</span><span class="text-xs font-bold text-slate-700">GPS Parameter</span></button>
         </div>
 
-        <datalist id="opsiPelatihanAdmin"></datalist>
-
         <div id="adminJadwalScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-bold text-modernDark mb-4">Buat / Hapus Jadwal</h2>
-            <input type="text" id="jadwalPelatihan" list="opsiPelatihanAdmin" placeholder="Ketik baru atau pilih dari daftar..." class="w-full px-4 py-3 mb-4 rounded-xl border border-slate-300 font-bold text-modernDark bg-slate-50 focus:bg-white">
+            <input type="text" id="jadwalPelatihan" list="opsiPelatihanAdmin" placeholder="Ketik baru atau pilih dari daftar..." class="w-full px-4 py-3 mb-4 rounded-xl border border-slate-300 font-bold text-modernDark bg-slate-50">
             <div id="wadahSesi" class="space-y-4 mb-4 overflow-y-auto max-h-48 pr-1">
                 <div class="sesi-item bg-slate-50 p-4 rounded-xl border border-slate-200 relative">
                     <button onclick="hapusSesi(this)" class="btn-hapus-sesi absolute top-2 right-3 text-red-500 font-extrabold text-lg hidden">×</button>
-                    <div class="grid grid-cols-2 gap-2 mb-2 mt-1">
-                        <input type="text" placeholder="Hari" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm input-hari">
-                        <input type="date" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm input-tanggal">
-                    </div>
+                    <div class="grid grid-cols-2 gap-2 mb-2 mt-1"><input type="text" placeholder="Hari" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm input-hari"><input type="date" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm input-tanggal"></div>
                     <input type="text" placeholder="Nama Sesi (cth: Pagi)" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm mb-2 input-sesi">
                     <div class="flex space-x-2 items-center"><input type="time" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm input-mulai"><span class="text-xs font-bold text-slate-400">-</span><input type="time" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm input-selesai"></div>
                 </div>
@@ -198,10 +141,7 @@
 
         <div id="adminPesertaScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-bold text-modernDark mb-4">Daftar Peserta Pelatihan</h2>
-            <div class="flex space-x-2 mb-4">
-                <select id="inputPelatihanPeserta" class="w-2/3 px-4 py-3 rounded-xl border border-slate-300 font-bold bg-white"><option value="">-- Pilih Pelatihan --</option></select>
-                <button onclick="tarikDataPeserta()" class="w-1/3 bg-modernDark text-white font-bold rounded-xl text-sm">Tarik Data</button>
-            </div>
+            <div class="flex space-x-2 mb-4"><select id="inputPelatihanPeserta" class="w-2/3 px-4 py-3 rounded-xl border border-slate-300 font-bold bg-white"><option value="">-- Pilih Pelatihan --</option></select><button onclick="tarikDataPeserta()" class="w-1/3 bg-modernDark text-white font-bold rounded-xl text-sm">Tarik Data</button></div>
             <textarea id="areaPeserta" rows="6" class="w-full px-4 py-3 mb-4 rounded-xl border border-slate-300 text-sm" placeholder="user1@email.com&#10;user2@email.com"></textarea>
             <button onclick="simpanDaftarPeserta()" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full mb-3">Update Peserta</button>
             <button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2">Kembali</button>
@@ -209,29 +149,19 @@
 
         <div id="adminValidasiScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-bold text-modernDark mb-3">Galeri Presensi</h2>
-            <div class="flex space-x-2 mb-3">
-                <select id="filterPelatihan" onchange="renderGaleri()" class="w-1/2 px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Semua Pelatihan</option></select>
-                <input type="text" id="filterPeserta" onkeyup="renderGaleri()" placeholder="Cari Nama..." class="w-1/2 px-3 py-2 rounded-lg border border-slate-300 text-sm">
-            </div>
-            <div id="loadingGaleri" class="text-center text-sm font-bold text-modernBlue my-4">⏳ Memuat galeri...</div>
-            <div id="wadahGaleri" class="w-full space-y-3 mb-6 overflow-y-auto max-h-72 pr-2"></div>
+            <div class="flex space-x-2 mb-3"><select id="filterPelatihan" onchange="renderGaleri()" class="w-1/2 px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Semua Pelatihan</option></select><input type="text" id="filterPeserta" onkeyup="renderGaleri()" placeholder="Cari Nama..." class="w-1/2 px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
+            <div id="loadingGaleri" class="text-center text-sm font-bold text-modernBlue my-4">⏳ Memuat galeri...</div><div id="wadahGaleri" class="w-full space-y-3 mb-6 overflow-y-auto max-h-72 pr-2"></div>
             <button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2">Kembali</button>
         </div>
 
         <div id="adminPengaturanScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-bold text-modernDark mb-4">Pengaturan GPS</h2>
-            <input type="text" id="setLat" value="-3.29687" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300"><input type="text" id="setLng" value="114.58823" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300"><input type="number" id="setRadius" value="50" class="w-full px-4 py-3 mb-6 rounded-xl border border-slate-300">
-            <button onclick="simpanDataAdmin('pengaturan')" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full mb-3">Update Parameter</button>
-            <button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2">Kembali</button>
+            <input type="text" id="setLat" value="-3.29687" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300"><input type="text" id="setLng" value="114.58823" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300"><input type="number" id="setRadius" value="50" class="w-full px-4 py-3 mb-6 rounded-xl border border-slate-300"><button onclick="simpanDataAdmin('pengaturan')" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full mb-3">💾 Update Parameter</button><button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2">Kembali</button>
         </div>
 
         <div id="adminRewardScreen" class="hidden flex flex-col w-full">
             <div class="text-4xl mb-2 text-center">🎁</div><h2 class="text-xl font-bold text-modernDark mb-4 text-center">Sistem Reward</h2>
-            <input type="text" id="rewardPel" list="opsiPelatihanAdmin" placeholder="Pilih dari daftar..." class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300 font-bold bg-slate-50 focus:bg-white">
-            <input type="number" id="rewardMin" placeholder="Target minimal absen (cth: 3)" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300">
-            <input type="text" id="rewardLink" placeholder="Paste link G-Drive materi" class="w-full px-4 py-3 mb-6 rounded-xl border border-slate-300 text-sm">
-            <button onclick="simpanDataAdmin('reward')" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 rounded-full mb-3 shadow-md">Aktifkan Reward</button>
-            <button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2">Kembali</button>
+            <input type="text" id="rewardPel" list="opsiPelatihanAdmin" placeholder="Pilih dari daftar..." class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300 font-bold bg-slate-50"><input type="number" id="rewardMin" placeholder="Target minimal absen" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300"><input type="text" id="rewardLink" placeholder="Paste link G-Drive materi" class="w-full px-4 py-3 mb-6 rounded-xl border border-slate-300 text-sm"><button onclick="simpanDataAdmin('reward')" class="w-full bg-amber-500 text-white font-bold py-4 rounded-full mb-3 shadow-md">💾 Aktifkan Reward</button><button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2">Kembali</button>
         </div>
 
     </div>
@@ -253,35 +183,24 @@
             "Pertanian": ["Agronomi", "Agroekoteknologi", "Proteksi Tanaman", "Ilmu Tanah", "Agribisnis", "Peternakan", "Teknologi Industri Pertanian"],
             "Teknik": ["Teknik Sipil", "Arsitektur", "Teknik Pertambangan", "Teknik Kimia", "Teknik Lingkungan", "Teknik Mesin", "Teknologi Informasi", "Rekayasa Elektro", "Rekayasa Geologi"],
             "Kedokteran": ["Program Studi Kedokteran", "Program Studi Kesehatan Masyarakat", "Program Studi Keperawatan", "Psikologi", "Pendidikan Dokter", "Pendidikan Profesi Dokter", "Pendidikan Dokter Spesialis", "Pendidikan Dokter Spesialis Pulmunologi", "Pendidikan Dokter Spesialis Obstetri dan Ginekologi", "Pendidikan Dokter Spesialis Ilmu Bedah", "Pendidikan Dokter Spesialis Anestesiologi", "Pendidikan Dokter Spesialis Ilmu Kesehatan Anak", "Pendidikan Dokter Spesialis Ilmu Penyakit Dalam", "Pendidikan Dokter Spesialis Orthopaedi dan Traumatologi"],
-            "Kedokteran Gigi": ["Kedokteran Gigi"],
-            "Pascasarjana": ["Pascasarjana"]
+            "Kedokteran Gigi": ["Kedokteran Gigi"], "Pascasarjana": ["Pascasarjana"]
         };
 
         function updateProdi() {
             const fakultas = document.getElementById('regFakultas').value;
             const prodiSelect = document.getElementById('regProdiSelect');
             const prodiInput = document.getElementById('regProdiInput');
-
             prodiSelect.innerHTML = '<option value="">Pilih Program Studi</option>';
-
-            if (fakultas === "Lainnya") {
-                prodiSelect.classList.add('hidden');
-                prodiInput.classList.remove('hidden');
-                prodiInput.value = "";
-            } else {
-                prodiSelect.classList.remove('hidden');
-                prodiInput.classList.add('hidden');
-                if (prodiMap[fakultas]) {
-                    prodiMap[fakultas].forEach(prodi => {
-                        prodiSelect.innerHTML += `<option value="${prodi}">${prodi}</option>`;
-                    });
-                }
+            if (fakultas === "Lainnya") { prodiSelect.classList.add('hidden'); prodiInput.classList.remove('hidden'); prodiInput.value = ""; } 
+            else {
+                prodiSelect.classList.remove('hidden'); prodiInput.classList.add('hidden');
+                if (prodiMap[fakultas]) { prodiMap[fakultas].forEach(prodi => { prodiSelect.innerHTML += `<option value="${prodi}">${prodi}</option>`; }); }
             }
         }
 
-        async function bukaHalamanRegister() {
-            tampilLayar('registerScreen');
-            const select = document.getElementById('regPelatihan');
+        async function bukaModalTambahKelas() {
+            tampilLayar('userEnrollScreen');
+            const select = document.getElementById('enrollPelatihan');
             select.innerHTML = '<option value="">-- Memuat daftar kelas... --</option>';
             try {
                 const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_public_pelatihan" }) });
@@ -292,65 +211,66 @@
             } catch(e) { select.innerHTML = '<option value="">Gagal menyinkronkan data server</option>'; }
         }
 
+        async function prosesEnroll() {
+            const pel = document.getElementById('enrollPelatihan').value;
+            const btn = document.getElementById('btnSubmitEnroll');
+            if(!pel) return alert("Silakan pilih kelas pelatihan!");
+            btn.innerText = "⏳ Memproses Pendaftaran Kelas..."; btn.disabled = true;
+            try {
+                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "enroll_training", username: session.username, pelatihan: pel }) });
+                const res = await response.json();
+                if (res.status === "success") {
+                    alert("Sukses!\nAnda berhasil terdaftar di pelatihan baru: " + pel);
+                    tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();
+                } else { alert("⚠️ " + res.message); tampilLayar('presensiScreen'); cekJadwalKeamananTinggi(); }
+            } catch(e) { alert("Kesalahan koneksi internet."); }
+            btn.innerText = "Konfirmasi Daftar Kelas"; btn.disabled = false;
+        }
+
+        async function bukaHalamanRegister() {
+            tampilLayar('registerScreen'); const select = document.getElementById('regPelatihan'); select.innerHTML = '<option value="">-- Memuat daftar kelas... --</option>';
+            try {
+                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_public_pelatihan" }) });
+                const res = await response.json();
+                if (res.status === "success" && res.data.length > 0) { select.innerHTML = '<option value="">-- Pilih Kelas Pelatihan --</option>' + res.data.map(p => `<option value="${p}">${p}</option>`).join(''); } 
+                else select.innerHTML = '<option value="">Tidak ada pelatihan aktif saat ini</option>';
+            } catch(e) { select.innerHTML = '<option value="">Gagal menyinkronkan data server</option>'; }
+        }
+
         async function prosesRegister() {
             const fakVal = document.getElementById('regFakultas').value;
             const prodiVal = (fakVal === "Lainnya") ? document.getElementById('regProdiInput').value : document.getElementById('regProdiSelect').value;
-
             const data = {
-                action: "register_user",
-                nama: document.getElementById('regNama').value, username: document.getElementById('regUser').value,
-                password: document.getElementById('regPass').value, nip: document.getElementById('regNIP').value,
-                nidn: document.getElementById('regNIDN').value, tempat_lahir: document.getElementById('regTempatLahir').value,
-                tanggal_lahir: document.getElementById('regTanggalLahir').value, status_pegawai: document.getElementById('regStatusPegawai').value,
-                jk: document.getElementById('regJK').value, pangkat: document.getElementById('regPangkat').value,
-                jabatan: document.getElementById('regJabatan').value, instansi: document.getElementById('regInstansi').value,
-                nama_instansi: document.getElementById('regNamaInstansi').value, fakultas: fakVal,
-                prodi: prodiVal, gelar_depan: document.getElementById('regGelarDepan').value,
-                gelar_belakang: document.getElementById('regGelarBelakang').value, pendidikan: document.getElementById('regPendidikan').value,
-                hp: document.getElementById('regHP').value, alamat: document.getElementById('regAlamat').value,
-                pelatihan: document.getElementById('regPelatihan').value
+                action: "register_user", nama: document.getElementById('regNama').value, username: document.getElementById('regUser').value, password: document.getElementById('regPass').value, NIP: document.getElementById('regNIP').value, NIDN: document.getElementById('regNIDN').value, tempat_lahir: document.getElementById('regTempatLahir').value, tanggal_lahir: document.getElementById('regTanggalLahir').value, status_pegawai: document.getElementById('regStatusPegawai').value, jk: document.getElementById('regJK').value, pangkat: document.getElementById('regPangkat').value, jabatan: document.getElementById('regJabatan').value, instansi: document.getElementById('regInstansi').value, nama_instansi: document.getElementById('regNamaInstansi').value, fakultas: fakVal, prodi: prodiVal, gelar_depan: document.getElementById('regGelarDepan').value, gelar_belakang: document.getElementById('regGelarBelakang').value, pendidikan: document.getElementById('regPendidikan').value, hp: document.getElementById('regHP').value, alamat: document.getElementById('regAlamat').value, pelatihan: document.getElementById('regPelatihan').value
             };
-
             const btn = document.getElementById('btnSubmitRegister');
-
-            if(!data.nama || !data.username || !data.password || !data.status_pegawai || !data.jk || !data.fakultas || !data.prodi || !data.pelatihan) {
-                return alert("Mohon lengkapi seluruh kolom yang bertanda bintang (*)");
-            }
-
-            btn.innerText = "⏳ Memproses Data & Akun..."; btn.disabled = true;
-
+            if(!data.nama || !data.username || !data.password || !data.status_pegawai || !data.jk || !data.fakultas || !data.prodi || !data.pelatihan) { return alert("Mohon lengkapi seluruh kolom yang bertanda bintang (*)"); }
+            btn.innerText = "⏳ Memproses Data..."; btn.disabled = true;
             try {
-                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify(data) });
-                const res = await response.json();
-                if (res.status === "success") {
-                    alert("Akun & Biodata Berhasil Disimpan!\nSilakan login menggunakan email dan password Anda.");
-                    document.querySelectorAll('#registerScreen input, #registerScreen select, #registerScreen textarea').forEach(el => el.value = '');
-                    tampilLayar('loginScreen');
-                } else alert("❌ Pendaftaran Gagal: " + res.message);
-            } catch(e) { alert("Kesalahan koneksi internet."); }
+                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify(data) }); const res = await response.json();
+                if (res.status === "success") { alert("Akun & Biodata Berhasil Disimpan!"); document.querySelectorAll('#registerScreen input, #registerScreen select, #registerScreen textarea').forEach(el => el.value = ''); tampilLayar('loginScreen'); } 
+                else alert("❌ Gagal: " + res.message);
+            } catch(e) { alert("Kesalahan koneksi."); }
             btn.innerText = "Simpan Biodata & Daftar"; btn.disabled = false;
         }
 
         async function muatDaftarPelatihanAdmin() {
             try {
-                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_public_pelatihan" }) });
-                const res = await response.json();
+                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_public_pelatihan" }) }); const res = await response.json();
                 if (res.status === "success") {
                     const optionsHTML = res.data.map(p => `<option value="${p}">${p}</option>`).join('');
                     if(document.getElementById('opsiPelatihanAdmin')) document.getElementById('opsiPelatihanAdmin').innerHTML = optionsHTML;
                     if(document.getElementById('inputPelatihanPeserta')) document.getElementById('inputPelatihanPeserta').innerHTML = '<option value="">-- Pilih Pelatihan --</option>' + optionsHTML;
                 }
-            } catch(e) { console.error("Gagal memuat list pelatihan."); }
+            } catch(e) { console.error("Gagal."); }
         }
 
         async function login() {
             const user = document.getElementById('username').value; const pass = document.getElementById('password').value;
-            const msg = document.getElementById('loginMsg'); const btn = document.getElementById('btnLogin');
-            if(!user || !pass) return;
+            const msg = document.getElementById('loginMsg'); const btn = document.getElementById('btnLogin'); if(!user || !pass) return;
             btn.innerText = "Sinkronisasi..."; msg.classList.add('hidden');
             try {
-                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "login", username: user, password: pass }) });
-                const res = await response.json();
+                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "login", username: user, password: pass }) }); const res = await response.json();
                 if (res.status === "success") {
                     session.username = user; session.nama = res.nama || user;
                     if(res.role === "admin") { document.getElementById('adminNameDisplay').innerText = session.nama; tampilLayar('adminScreen'); } 
@@ -362,41 +282,25 @@
         async function cekJadwalKeamananTinggi() {
             document.getElementById('userNameDisplay').innerText = session.nama;
             try {
-                const timeResponse = await fetch("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Makassar");
-                const timeData = await timeResponse.json();
+                const timeResponse = await fetch("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Makassar"); const timeData = await timeResponse.json();
                 const currentTimeMinutes = (timeData.hour * 60) + timeData.minute;
                 const realTodayStr = `${timeData.year}-${String(timeData.month).padStart(2, '0')}-${String(timeData.day).padStart(2, '0')}`;
-                
-                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_jadwal", username: session.username }) });
-                const res = await response.json();
-
+                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_jadwal", username: session.username }) }); const res = await response.json();
                 if (res.status === "success" && res.data && res.data.length > 0) {
                     let jadwalAktif = null;
                     for (let i = 0; i < res.data.length; i++) {
-                        const jadwal = res.data[i];
-                        const tglSheet = jadwal.tanggal ? jadwal.tanggal.trim() : "";
-                        if (tglSheet && tglSheet !== "-" && tglSheet !== realTodayStr) continue;
-
+                        const jadwal = res.data[i]; const tglSheet = jadwal.tanggal ? jadwal.tanggal.trim() : ""; if (tglSheet && tglSheet !== "-" && tglSheet !== realTodayStr) continue;
                         if (jadwal.jam_mulai && jadwal.jam_selesai) {
                             const [startHour, startMinute] = jadwal.jam_mulai.split(':').map(Number);
-                            const startTimeMinutes = (startHour * 60) + startMinute;
-                            const [endHour, endMinute] = jadwal.jam_selesai.split(':').map(Number);
-                            let endTimeMinutes = (endHour * 60) + endMinute;
-                            if (endTimeMinutes === 0) endTimeMinutes = 24 * 60; 
-
-                            if (currentTimeMinutes >= startTimeMinutes && currentTimeMinutes <= endTimeMinutes) { jadwalAktif = jadwal; break; }
+                            const [endHour, endMinute] = jadwal.jam_selesai.split(':').map(Number); let endTimeMinutes = (endHour * 60) + endMinute; if (endTimeMinutes === 0) endTimeMinutes = 24 * 60;
+                            if (currentTimeMinutes >= (startHour * 60 + startMinute) && currentTimeMinutes <= endTimeMinutes) { jadwalAktif = jadwal; break; }
                         }
                     }
-
                     if (jadwalAktif) {
                         session.pelatihan = jadwalAktif.pelatihan; session.hari = jadwalAktif.hari; session.sesi = jadwalAktif.sesi;
-                        document.getElementById('pelatihanDisplay').innerText = jadwalAktif.pelatihan;
-                        document.getElementById('sesiDisplay').innerText = `${jadwalAktif.hari} — ${jadwalAktif.sesi}`;
-                        document.getElementById('waktuDisplay').innerText = `Batas: ${jadwalAktif.jam_mulai} - ${jadwalAktif.jam_selesai}`;
-                        ubahStatusMsg("Waktu Terverifikasi. Silakan Verifikasi Lokasi.", "text-modernBlue"); document.getElementById('btnLokasi').classList.remove('hidden');
+                        document.getElementById('pelatihanDisplay').innerText = jadwalAktif.pelatihan; document.getElementById('sesiDisplay').innerText = `${jadwalAktif.hari} — ${jadwalAktif.sesi}`; document.getElementById('waktuDisplay').innerText = `Batas: ${jadwalAktif.jam_mulai} - ${jadwalAktif.jam_selesai}`; ubahStatusMsg("Waktu Terverifikasi. Silakan Verifikasi Lokasi.", "text-modernBlue"); document.getElementById('btnLokasi').classList.remove('hidden');
                     } else {
-                        document.getElementById('pelatihanDisplay').innerText = "Tidak Ada Sesi"; document.getElementById('sesiDisplay').innerText = "-"; 
-                        document.getElementById('waktuDisplay').innerText = "DITUTUP"; ubahStatusMsg("❌ Sesi belum dimulai atau lewat hari.", "text-red-500");
+                        document.getElementById('pelatihanDisplay').innerText = "Tidak Ada Sesi"; document.getElementById('sesiDisplay').innerText = "-"; document.getElementById('waktuDisplay').innerText = "DITUTUP"; ubahStatusMsg("❌ Sesi belum dimulai atau lewat hari.", "text-red-500");
                     }
                 } else { document.getElementById('pelatihanDisplay').innerText = "Kosong"; ubahStatusMsg("❌ Tidak ada jadwal.", "text-red-500"); }
             } catch (e) { ubahStatusMsg("Gagal sinkronisasi waktu.", "text-red-500"); }
@@ -407,151 +311,60 @@
             navigator.geolocation.getCurrentPosition(
                 (pos) => {
                     session.lat = pos.coords.latitude; session.lng = pos.coords.longitude;
-                    const c = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin((session.lat - TARGET_LAT)*Math.PI/360), 2) + Math.cos(TARGET_LAT*Math.PI/180)*Math.cos(session.lat*Math.PI/180)*Math.pow(Math.sin((session.lng - TARGET_LNG)*Math.PI/360), 2)));
-                    const jarak = Math.floor(6371e3 * c);
-                    if (jarak <= RADIUS_MAX) {
-                        ubahStatusMsg("✅ Radius Valid.", "text-green-600");
-                        document.getElementById('btnKamera').classList.remove('hidden');
-                        document.getElementById('btnKamera').classList.replace('opacity-50', 'bg-modernBlue'); document.getElementById('btnKamera').disabled = false;
-                    } else ubahStatusMsg(`❌ Terlalu Jauh (${jarak}m).`, "text-red-500");
+                    const c = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin((session.lat - TARGET_LAT)*Math.PI/360), 2) + Math.cos(TARGET_LAT*Math.PI/180)*Math.cos(session.lat*Math.PI/180)*Math.pow(Math.sin((session.lng - TARGET_LNG)*Math.PI/360), 2))); const jarak = Math.floor(6371e3 * c);
+                    if (jarak <= RADIUS_MAX) { ubahStatusMsg("✅ Radius Valid.", "text-green-600"); document.getElementById('btnKamera').classList.remove('hidden'); document.getElementById('btnKamera').classList.replace('opacity-50', 'bg-modernBlue'); document.getElementById('btnKamera').disabled = false; } 
+                    else ubahStatusMsg(`❌ Terlalu Jauh (${jarak}m).`, "text-red-500");
                 }, (e) => { ubahStatusMsg("Izinkan GPS browser.", "text-red-500"); }, { enableHighAccuracy: true }
             );
         }
 
-        async function bukaKamera() {
-            tampilLayar('kameraScreen'); const video = document.getElementById('video');
-            try { streamKamera = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } }); video.srcObject = streamKamera; } 
-            catch (err) { alert("Gagal kamera: " + err.message); }
-        }
+        async function bukaKamera() { tampilLayar('kameraScreen'); const video = document.getElementById('video'); try { streamKamera = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } }); video.srcObject = streamKamera; } catch (err) { alert("Gagal kamera: " + err.message); } }
 
         async function jepretDanKirim() {
             document.getElementById('btnJepret').innerText = "Mengunggah..."; document.getElementById('btnJepret').disabled = true;
-            const video = document.getElementById('video'); const canvas = document.getElementById('canvas');
-            canvas.width = video.videoWidth; canvas.height = video.videoHeight; canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-            const b64 = canvas.toDataURL('image/jpeg', 0.6).split(',')[1];
-            if(streamKamera) streamKamera.getTracks().forEach(t => t.stop());
+            const video = document.getElementById('video'); const canvas = document.getElementById('canvas'); canvas.width = video.videoWidth; canvas.height = video.videoHeight; canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height); const b64 = canvas.toDataURL('image/jpeg', 0.6).split(',')[1]; if(streamKamera) streamKamera.getTracks().forEach(t => t.stop());
             try {
                 const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "presensi", ...session, imageBase64: b64 }) })).json();
-                if (res.status === "success") {
-                    if (res.reward_link) { document.getElementById('rewardBox').classList.remove('hidden'); document.getElementById('btnReward').href = res.reward_link; }
-                    tampilLayar('suksesScreen');
-                } else { alert(res.message); location.reload(); }
+                if (res.status === "success") { if (res.reward_link) { document.getElementById('rewardBox').classList.remove('hidden'); document.getElementById('btnReward').href = res.reward_link; } tampilLayar('suksesScreen'); } 
+                else { alert(res.message); location.reload(); }
             } catch (e) { alert("Kesalahan jaringan."); location.reload(); }
         }
 
-        // ===================================
-        // PANEL CONTROL ADMINISTRATOR
-        // ===================================
-        function bukaSpreadsheet() { window.open("https://docs.google.com/spreadsheets/d/MASUKKAN_ID_SPREADSHEET_KAMU_DISINI/edit", '_blank'); }
+        function bukaSpreadsheet() { window.open("https://docs.google.com/spreadsheets/d/1d3jMjww3PinwN1U1v-yVKz79YcLp_-56jSOATBPQi9U/edit", '_blank'); }
 
-        function tambahSesiUI() {
-            const wadah = document.getElementById('wadahSesi'); const clone = wadah.firstElementChild.cloneNode(true);
-            clone.querySelectorAll('input').forEach(inp => inp.value = ''); wadah.appendChild(clone);
-            document.querySelectorAll('.btn-hapus-sesi').forEach(b => b.classList.remove('hidden'));
-        }
-        function hapusSesi(btn) {
-            btn.closest('.sesi-item').remove();
-            if(document.querySelectorAll('.sesi-item').length === 1) document.querySelector('.btn-hapus-sesi').classList.add('hidden');
-        }
+        function tambahSesiUI() { const wadah = document.getElementById('wadahSesi'); const clone = wadah.firstElementChild.cloneNode(true); clone.querySelectorAll('input').forEach(inp => inp.value = ''); wadah.appendChild(clone); document.querySelectorAll('.btn-hapus-sesi').forEach(b => b.classList.remove('hidden')); }
+        function hapusSesi(btn) { btn.closest('.sesi-item').remove(); if(document.querySelectorAll('.sesi-item').length === 1) document.querySelector('.btn-hapus-sesi').classList.add('hidden'); }
 
         async function simpanDataAdmin(jenis) {
-            let payload = { action: "" }; const btnSimpan = event.target; const teksAsli = btnSimpan.innerText;
-            btnSimpan.innerText = "⏳ Proses..."; btnSimpan.disabled = true;
-
+            let payload = { action: "" }; const btnSimpan = event.target; const teksAsli = btnSimpan.innerText; btnSimpan.innerText = "⏳ Proses..."; btnSimpan.disabled = true;
             if (jenis === "jadwal_multi") {
-                payload.action = "save_jadwal"; payload.pelatihan = document.getElementById("jadwalPelatihan").value;
-                if(!payload.pelatihan) { alert("Nama Pelatihan wajib diisi!"); btnSimpan.innerText = teksAsli; btnSimpan.disabled = false; return; }
-                payload.list_sesi = Array.from(document.querySelectorAll('.sesi-item')).map(item => ({
-                    hari: item.querySelector('.input-hari').value, tanggal: item.querySelector('.input-tanggal').value,
-                    sesi: item.querySelector('.input-sesi').value, jam_mulai: item.querySelector('.input-mulai').value, jam_selesai: item.querySelector('.input-selesai').value
-                }));
-            } else if (jenis === "pengaturan") {
-                payload.action = "save_setting"; payload.lat = document.getElementById("setLat").value; payload.lng = document.getElementById("setLng").value; payload.radius = document.getElementById("setRadius").value;
-            } else if (jenis === "reward") {
-                payload.action = "save_reward"; payload.pelatihan = document.getElementById("rewardPel").value; payload.minimal = document.getElementById("rewardMin").value; payload.link = document.getElementById("rewardLink").value;
-                if(!payload.pelatihan || !payload.minimal || !payload.link) { alert("Mohon lengkapi semua data!"); btnSimpan.innerText = teksAsli; btnSimpan.disabled = false; return; }
-            }
-
+                payload.action = "save_jadwal"; payload.pelatihan = document.getElementById("jadwalPelatihan").value; if(!payload.pelatihan) { alert("Nama Pelatihan wajib diisi!"); btnSimpan.innerText = teksAsli; btnSimpan.disabled = false; return; }
+                payload.list_sesi = Array.from(document.querySelectorAll('.sesi-item')).map(item => ({ hari: item.querySelector('.input-hari').value, tanggal: item.querySelector('.input-tanggal').value, sesi: item.querySelector('.input-sesi').value, jam_mulai: item.querySelector('.input-mulai').value, jam_selesai: item.querySelector('.input-selesai').value }));
+            } else if (jenis === "pengaturan") { payload.action = "save_setting"; payload.lat = document.getElementById("setLat").value; payload.lng = document.getElementById("setLng").value; payload.radius = document.getElementById("setRadius").value; } 
+            else if (jenis === "reward") { payload.action = "save_reward"; payload.pelatihan = document.getElementById("rewardPel").value; payload.minimal = document.getElementById("rewardMin").value; payload.link = document.getElementById("rewardLink").value; if(!payload.pelatihan || !payload.minimal || !payload.link) { alert("Mohon lengkapi semua data!"); btnSimpan.innerText = teksAsli; btnSimpan.disabled = false; return; } }
             try {
                 const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify(payload) })).json();
-                if (res.status === "success") {
-                    alert("✅ " + res.message);
-                    if(jenis === 'jadwal_multi') document.getElementById("jadwalPelatihan").value = ""; 
-                    if(jenis === 'reward') { document.getElementById("rewardPel").value = ""; document.getElementById("rewardMin").value = ""; document.getElementById("rewardLink").value = ""; }
-                    muatDaftarPelatihanAdmin();
-                } else alert("❌ Gagal: " + res.message);
+                if (res.status === "success") { alert("✅ " + res.message); if(jenis === 'jadwal_multi') document.getElementById("jadwalPelatihan").value = ""; if(jenis === 'reward') { document.getElementById("rewardPel").value = ""; document.getElementById("rewardMin").value = ""; document.getElementById("rewardLink").value = ""; } muatDaftarPelatihanAdmin(); } 
+                else alert("❌ Gagal: " + res.message);
             } catch (e) { alert("Koneksi gagal."); }
             btnSimpan.innerText = teksAsli; btnSimpan.disabled = false;
         }
 
-        async function hapusJadwalLama() {
-            const namaPelatihan = document.getElementById("jadwalPelatihan").value;
-            if(!namaPelatihan) return alert("Pilih / Ketik nama pelatihan yang ingin dihapus.");
-            if(!confirm(`Yakin MENGHAPUS SELURUH SESI untuk "${namaPelatihan}"?`)) return;
-            try {
-                const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "delete_pelatihan", pelatihan: namaPelatihan }) })).json();
-                if(res.status === "success"){
-                    alert("✅ Berhasil Dihapus!"); document.getElementById("jadwalPelatihan").value = ""; muatDaftarPelatihanAdmin();
-                } else alert("❌ Gagal: " + res.message);
-            } catch(e) { alert("Koneksi gagal."); }
-        }
-
-        async function tarikDataPeserta() {
-            const pel = document.getElementById('inputPelatihanPeserta').value; if(!pel) return alert("Pilih nama pelatihan terlebih dahulu!");
-            document.getElementById('areaPeserta').value = "Mengambil data...";
-            try {
-                const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_peserta", pelatihan: pel }) })).json();
-                document.getElementById('areaPeserta').value = res.data.join('\n');
-            } catch(e) { document.getElementById('areaPeserta').value = ""; alert("Gagal mengambil data."); }
-        }
-
-        async function simpanDaftarPeserta() {
-            const pel = document.getElementById('inputPelatihanPeserta').value; const users = document.getElementById('areaPeserta').value.split('\n').filter(u => u.trim() !== "");
-            if(!pel || users.length === 0) return alert("Pilih pelatihan dan isi daftar peserta!");
-            event.target.innerText = "⏳ Menyimpan...";
-            try {
-                const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "save_peserta", pelatihan: pel, usernames: users }) })).json();
-                alert(res.status === "success" ? "✅ Tersimpan!" : "❌ Gagal.");
-            } catch(e) { alert("Koneksi gagal."); }
-            event.target.innerText = "Update Peserta";
-        }
-
-        async function muatGaleri() {
-            tampilLayar('adminValidasiScreen');
-            document.getElementById('wadahGaleri').innerHTML = ""; document.getElementById('loadingGaleri').classList.remove('hidden');
-            try {
-                const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_galeri" }) })).json();
-                if (res.status === "success") {
-                    dataGaleriGlobal = res.data;
-                    const listPelatihan = [...new Set(res.data.map(i => i.pelatihan))];
-                    document.getElementById('filterPelatihan').innerHTML = '<option value="">Semua Pelatihan</option>' + listPelatihan.map(p => `<option value="${p}">${p}</option>`).join('');
-                    renderGaleri();
-                }
-            } catch (e) { document.getElementById('loadingGaleri').innerText = "Gagal memuat galeri."; }
-            document.getElementById('loadingGaleri').classList.add('hidden');
-        }
+        async function hapusJadwalLama() { const namaPelatihan = document.getElementById("jadwalPelatihan").value; if(!namaPelatihan) return alert("Pilih / Ketik nama pelatihan."); if(!confirm(`Yakin hapus seluruh sesi untuk "${namaPelatihan}"?`)) return; try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "delete_pelatihan", pelatihan: namaPelatihan }) })).json(); if(res.status === "success"){ alert("✅ Berhasil!"); document.getElementById("jadwalPelatihan").value = ""; muatDaftarPelatihanAdmin(); } else alert("❌ Gagal: " + res.message); } catch(e) { alert("Gagal."); } }
+        async function tarikDataPeserta() { const pel = document.getElementById('inputPelatihanPeserta').value; if(!pel) return alert("Pilih pelatihan!"); document.getElementById('areaPeserta').value = "Mengambil data..."; try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_peserta", pelatihan: pel }) })).json(); document.getElementById('areaPeserta').value = res.data.join('\n'); } catch(e) { document.getElementById('areaPeserta').value = ""; alert("Gagal."); } }
+        async function simpanDaftarPeserta() { const pel = document.getElementById('inputPelatihanPeserta').value; const users = document.getElementById('areaPeserta').value.split('\n').filter(u => u.trim() !== ""); if(!pel || users.length === 0) return alert("Lengkapi isian!"); event.target.innerText = "⏳ Menyimpan..."; try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "save_peserta", pelatihan: pel, usernames: users }) })).json(); alert(res.status === "success" ? "✅ Tersimpan!" : "❌ Gagal."); } catch(e) { alert("Gagal."); } event.target.innerText = "💾 Update Peserta"; }
+        async function muatGaleri() { tampilLayar('adminValidasiScreen'); document.getElementById('wadahGaleri').innerHTML = ""; document.getElementById('loadingGaleri').classList.remove('hidden'); try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_galeri" }) })).json(); if (res.status === "success") { dataGaleriGlobal = res.data; const listPelatihan = [...new Set(res.data.map(i => i.pelatihan))]; document.getElementById('filterPelatihan').innerHTML = '<option value="">Semua Pelatihan</option>' + listPelatihan.map(p => `<option value="${p}">${p}</option>`).join(''); renderGaleri(); } } catch (e) { document.getElementById('loadingGaleri').innerText = "Gagal memuat."; } document.getElementById('loadingGaleri').classList.add('hidden'); }
 
         function renderGaleri() {
-            const filterPel = document.getElementById('filterPelatihan').value.toLowerCase(); const filterNama = document.getElementById('filterPeserta').value.toLowerCase();
-            const wadah = document.getElementById('wadahGaleri'); wadah.innerHTML = "";
-            const terfilter = dataGaleriGlobal.filter(i => i.pelatihan.toLowerCase().includes(filterPel) && i.username.toLowerCase().includes(filterNama));
-            if (terfilter.length === 0) { wadah.innerHTML = `<p class="text-center text-slate-500 text-sm">Tidak ada data cocok.</p>`; return; }
-            terfilter.forEach(item => {
-                const wkt = new Date(item.waktu); const jamFormat = String(wkt.getHours()).padStart(2, '0') + ":" + String(wkt.getMinutes()).padStart(2, '0');
-                wadah.innerHTML += `<div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm flex flex-col"><p class="text-[10px] font-bold text-modernBlue uppercase mb-1">${item.pelatihan} • ${item.sesi}</p><h3 class="text-md font-extrabold text-slate-800">${item.username}</h3><p class="text-[11px] text-slate-500 mb-3 font-medium">Jam Absen: ${jamFormat} WITA</p><a href="${item.foto}" target="_blank" class="w-full bg-slate-100 hover:bg-slate-200 text-modernDark text-center font-bold py-2 rounded-lg text-sm">Lihat Foto</a></div>`;
-            });
+            const filterPel = document.getElementById('filterPelatihan').value.toLowerCase(); const filterNama = document.getElementById('filterPeserta').value.toLowerCase(); const wadah = document.getElementById('wadahGaleri'); wadah.innerHTML = ""; const terfilter = dataGaleriGlobal.filter(i => i.pelatihan.toLowerCase().includes(filterPel) && i.username.toLowerCase().includes(filterNama)); if (terfilter.length === 0) { wadah.innerHTML = `<p class="text-center text-slate-500 text-sm">Tidak ada data cocok.</p>`; return; }
+            terfilter.forEach(item => { const wkt = new Date(item.waktu); const jamFormat = String(wkt.getHours()).padStart(2, '0') + ":" + String(wkt.getMinutes()).padStart(2, '0'); wadah.innerHTML += `<div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm flex flex-col"><p class="text-[10px] font-bold text-modernBlue uppercase mb-1">${item.pelatihan} • ${item.sesi}</p><h3 class="text-md font-extrabold text-slate-800">${item.username}</h3><p class="text-[11px] text-slate-500 mb-3 font-medium">Jam Absen: ${jamFormat} WITA</p><a href="${item.foto}" target="_blank" class="w-full bg-slate-100 text-modernDark text-center font-bold py-2 rounded-lg text-sm">Lihat Foto</a></div>`; });
         }
 
         function tampilLayar(idLayar) {
-            ['loginScreen', 'presensiScreen', 'kameraScreen', 'suksesScreen', 'adminScreen', 'adminJadwalScreen', 'adminPengaturanScreen', 'adminValidasiScreen', 'adminPesertaScreen', 'adminRewardScreen', 'registerScreen'].forEach(id => { document.getElementById(id).classList.add('hidden'); });
-            
+            ['loginScreen', 'presensiScreen', 'kameraScreen', 'suksesScreen', 'adminScreen', 'adminJadwalScreen', 'adminPengaturanScreen', 'adminValidasiScreen', 'adminPesertaScreen', 'adminRewardScreen', 'registerScreen', 'userEnrollScreen'].forEach(id => { document.getElementById(id).classList.add('hidden'); });
             const wadah = document.getElementById('mainWadah');
-            if (idLayar === 'registerScreen') {
-                wadah.classList.remove('max-w-md'); wadah.classList.add('max-w-2xl');
-            } else {
-                wadah.classList.remove('max-w-2xl'); wadah.classList.add('max-w-md');
-            }
-
+            if (idLayar === 'registerScreen') { wadah.classList.remove('max-w-md'); wadah.classList.add('max-w-2xl'); } 
+            else { wadah.classList.remove('max-w-2xl'); wadah.classList.add('max-w-md'); }
             document.getElementById(idLayar).classList.remove('hidden');
             if (['adminJadwalScreen', 'adminPesertaScreen', 'adminRewardScreen'].includes(idLayar)) muatDaftarPelatihanAdmin();
         }
