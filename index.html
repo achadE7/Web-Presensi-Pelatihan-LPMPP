@@ -25,10 +25,7 @@
                 <input type="text" id="username" placeholder="Username / Email" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-1 focus:ring-modernBlue">
                 <input type="password" id="password" placeholder="Kata Sandi Akun" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-1 focus:ring-modernBlue">
                 <button onclick="login()" id="btnLogin" class="w-full bg-modernBlue hover:bg-modernDark text-white font-bold py-4 rounded-full mt-2 transition-colors">Masuk Ke Aplikasi</button>
-                
-                <p class="text-center text-xs text-slate-500 mt-2">
-                    Belum terdaftar? <a href="#" onclick="bukaHalamanRegister()" class="text-modernBlue font-bold hover:underline">Buat Akun Baru</a>
-                </p>
+                <p class="text-center text-xs text-slate-500 mt-2">Belum terdaftar? <a href="#" onclick="bukaHalamanRegister()" class="text-modernBlue font-bold hover:underline">Buat Akun Baru</a></p>
                 <p id="loginMsg" class="text-sm font-bold text-red-500 text-center mt-4 hidden"></p>
             </div>
         </div>
@@ -36,19 +33,16 @@
         <div id="registerScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-extrabold text-modernDark mb-1">Pendaftaran Peserta</h2>
             <p class="text-xs text-slate-500 mb-6">Silakan buat akun untuk memulai presensi digital.</p>
-            
             <div class="space-y-3 mb-6">
                 <input type="text" id="regNama" placeholder="Nama Lengkap beserta Gelar" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm">
                 <input type="text" id="regUser" placeholder="Email Aktif (untuk akses materi)" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm">
                 <input type="password" id="regPass" placeholder="Buat Kata Sandi Akun" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm">
-                
                 <label class="text-[11px] font-bold text-slate-400 block ml-1 mt-2">PILIH PELATIHAN YANG DIIKUTI:</label>
                 <select id="regPelatihan" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm bg-white text-slate-600 font-medium">
                     <option value="">-- Memuat daftar kelas... --</option>
                 </select>
             </div>
-            
-            <button onclick="prosesRegister()" id="btnSubmitRegister" class="w-full bg-modernBlue hover:bg-modernDark text-white font-bold py-4 rounded-full mb-3 shadow-sm transition-colors">🚀 Buat Akun & Daftar</button>
+            <button onclick="prosesRegister()" id="btnSubmitRegister" class="w-full bg-modernBlue hover:bg-modernDark text-white font-bold py-4 rounded-full mb-3 shadow-sm transition-colors">Buat Akun & Daftar</button>
             <button onclick="tampilLayar('loginScreen')" class="w-full text-slate-400 hover:text-slate-600 text-center text-sm font-bold py-2">Kembali ke Login</button>
         </div>
 
@@ -102,9 +96,13 @@
             <button onclick="tampilLayar('adminPengaturanScreen')" class="w-full bg-white border-2 border-slate-100 p-3 rounded-2xl flex items-center justify-center space-x-2 hover:border-modernBlue"><span class="text-lg">⚙️</span><span class="text-xs font-bold text-slate-700">GPS Parameter</span></button>
         </div>
 
+        <datalist id="opsiPelatihanAdmin"></datalist>
+
         <div id="adminJadwalScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-bold text-modernDark mb-4">Buat / Hapus Jadwal</h2>
-            <input type="text" id="jadwalPelatihan" placeholder="Nama Pelatihan (Ketik persis)" class="w-full px-4 py-3 mb-4 rounded-xl border border-slate-300 font-bold text-modernDark">
+            
+            <input type="text" id="jadwalPelatihan" list="opsiPelatihanAdmin" placeholder="Ketik baru atau pilih dari daftar..." class="w-full px-4 py-3 mb-4 rounded-xl border border-slate-300 font-bold text-modernDark bg-slate-50 focus:bg-white">
+            
             <div id="wadahSesi" class="space-y-4 mb-4 overflow-y-auto max-h-48 pr-1">
                 <div class="sesi-item bg-slate-50 p-4 rounded-xl border border-slate-200 relative">
                     <button onclick="hapusSesi(this)" class="btn-hapus-sesi absolute top-2 right-3 text-red-500 font-extrabold text-lg hidden">×</button>
@@ -118,17 +116,25 @@
             </div>
             <button onclick="tambahSesiUI()" class="w-full border-2 border-dashed border-modernBlue text-modernBlue font-bold py-2 rounded-xl mb-4 hover:bg-modernContainer">+ Tambah Sesi Lain</button>
             <div class="flex space-x-2 mb-3">
-                <button onclick="simpanDataAdmin('jadwal_multi')" class="w-2/3 bg-modernBlue text-white font-bold py-3 rounded-xl">💾 Simpan Baru</button>
-                <button onclick="hapusJadwalLama()" class="w-1/3 bg-red-100 text-red-600 font-bold py-3 rounded-xl">🗑️ Hapus</button>
+                <button onclick="simpanDataAdmin('jadwal_multi')" class="w-2/3 bg-modernBlue text-white font-bold py-3 rounded-xl">Simpan Baru</button>
+                <button onclick="hapusJadwalLama()" class="w-1/3 bg-red-100 text-red-600 font-bold py-3 rounded-xl">Hapus</button>
             </div>
             <button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2">Kembali</button>
         </div>
 
         <div id="adminPesertaScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-bold text-modernDark mb-4">Daftar Peserta Pelatihan</h2>
-            <div class="flex space-x-2 mb-4"><input type="text" id="inputPelatihanPeserta" placeholder="Nama Pelatihan" class="w-2/3 px-4 py-3 rounded-xl border border-slate-300 font-bold"><button onclick="tarikDataPeserta()" class="w-1/3 bg-modernDark text-white font-bold rounded-xl text-sm">Tarik Data</button></div>
+            
+            <div class="flex space-x-2 mb-4">
+                <!-- Menggunakan DROPDOWN (Select) Murni -->
+                <select id="inputPelatihanPeserta" class="w-2/3 px-4 py-3 rounded-xl border border-slate-300 font-bold bg-white">
+                    <option value="">-- Pilih Pelatihan --</option>
+                </select>
+                <button onclick="tarikDataPeserta()" class="w-1/3 bg-modernDark text-white font-bold rounded-xl text-sm">Tarik Data</button>
+            </div>
+            
             <textarea id="areaPeserta" rows="6" class="w-full px-4 py-3 mb-4 rounded-xl border border-slate-300 text-sm" placeholder="user1@email.com&#10;user2@email.com"></textarea>
-            <button onclick="simpanDaftarPeserta()" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full mb-3">💾 Update Peserta</button>
+            <button onclick="simpanDaftarPeserta()" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full mb-3">Update Peserta</button>
             <button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2">Kembali</button>
         </div>
 
@@ -146,16 +152,16 @@
         <div id="adminPengaturanScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-bold text-modernDark mb-4">Pengaturan GPS</h2>
             <input type="text" id="setLat" value="-3.29687" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300"><input type="text" id="setLng" value="114.58823" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300"><input type="number" id="setRadius" value="50" class="w-full px-4 py-3 mb-6 rounded-xl border border-slate-300">
-            <button onclick="simpanDataAdmin('pengaturan')" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full mb-3">💾 Update Parameter</button>
+            <button onclick="simpanDataAdmin('pengaturan')" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full mb-3">Update Parameter</button>
             <button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2">Kembali</button>
         </div>
 
         <div id="adminRewardScreen" class="hidden flex flex-col w-full">
             <div class="text-4xl mb-2 text-center">🎁</div><h2 class="text-xl font-bold text-modernDark mb-4 text-center">Sistem Reward</h2>
-            <input type="text" id="rewardPel" placeholder="Nama pelatihan" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300 font-bold">
+            <input type="text" id="rewardPel" list="opsiPelatihanAdmin" placeholder="Pilih dari daftar..." class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300 font-bold bg-slate-50 focus:bg-white">
             <input type="number" id="rewardMin" placeholder="Target minimal absen (cth: 3)" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300">
             <input type="text" id="rewardLink" placeholder="Paste link G-Drive materi" class="w-full px-4 py-3 mb-6 rounded-xl border border-slate-300 text-sm">
-            <button onclick="simpanDataAdmin('reward')" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 rounded-full mb-3 shadow-md">💾 Aktifkan Reward</button>
+            <button onclick="simpanDataAdmin('reward')" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 rounded-full mb-3 shadow-md">Aktifkan Reward</button>
             <button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2">Kembali</button>
         </div>
 
@@ -167,48 +173,55 @@
         let session = { username: "", nama: "", pelatihan: "", hari: "", sesi: "", lat: 0, lng: 0 };
         let streamKamera = null; let dataGaleriGlobal = [];
 
+        async function muatDaftarPelatihanAdmin() {
+            try {
+                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_public_pelatihan" }) });
+                const res = await response.json();
+                if (res.status === "success") {
+                    const optionsHTML = res.data.map(p => `<option value="${p}">${p}</option>`).join('');
+                    
+                    // Isi Combo Box (Jadwal & Reward)
+                    const datalist = document.getElementById('opsiPelatihanAdmin');
+                    if(datalist) datalist.innerHTML = optionsHTML;
+
+                    // Isi Dropdown Murni (Peserta)
+                    const selectPeserta = document.getElementById('inputPelatihanPeserta');
+                    if(selectPeserta) selectPeserta.innerHTML = '<option value="">-- Pilih Pelatihan --</option>' + optionsHTML;
+                }
+            } catch(e) { console.error("Gagal memuat list pelatihan."); }
+        }
+
         async function bukaHalamanRegister() {
             tampilLayar('registerScreen');
             const select = document.getElementById('regPelatihan');
             select.innerHTML = '<option value="">-- Memuat daftar kelas... --</option>';
-            
             try {
                 const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_public_pelatihan" }) });
                 const res = await response.json();
                 if (res.status === "success" && res.data.length > 0) {
-                    select.innerHTML = '<option value="">-- Pilih Kelas Pelatihan --</option>' + 
-                                       res.data.map(p => `<option value="${p}">${p}</option>`).join('');
-                } else {
-                    select.innerHTML = '<option value="">Tidak ada pelatihan yang aktif saat ini</option>';
-                }
-            } catch(e) {
-                select.innerHTML = '<option value="">Gagal menyinkronkan data server</option>';
-            }
+                    select.innerHTML = '<option value="">-- Pilih Kelas Pelatihan --</option>' + res.data.map(p => `<option value="${p}">${p}</option>`).join('');
+                } else select.innerHTML = '<option value="">Tidak ada pelatihan yang aktif saat ini</option>';
+            } catch(e) { select.innerHTML = '<option value="">Gagal menyinkronkan data server</option>'; }
         }
 
         async function prosesRegister() {
-            const nama = document.getElementById('regNama').value;
-            const user = document.getElementById('regUser').value;
-            const pass = document.getElementById('regPass').value;
-            const pel = document.getElementById('regPelatihan').value;
+            const nama = document.getElementById('regNama').value; const user = document.getElementById('regUser').value;
+            const pass = document.getElementById('regPass').value; const pel = document.getElementById('regPelatihan').value;
             const btn = document.getElementById('btnSubmitRegister');
 
             if(!nama || !user || !pass || !pel) return alert("Mohon lengkapi seluruh formulir pendaftaran!");
-            
             btn.innerText = "⏳ Memproses Akun Baru..."; btn.disabled = true;
 
             try {
                 const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "register_user", nama: nama, username: user, password: pass, pelatihan: pel }) });
                 const res = await response.json();
                 if (res.status === "success") {
-                    alert("🎉 Akun Berhasil Dibuat!\nSilakan login menggunakan email dan password Anda.");
+                    alert("Akun Berhasil Dibuat!\nSilakan login menggunakan email dan password Anda.");
                     document.getElementById('regNama').value = ""; document.getElementById('regUser').value = ""; document.getElementById('regPass').value = "";
                     tampilLayar('loginScreen');
-                } else {
-                    alert("❌ Pendaftaran Gagal: " + res.message);
-                }
+                } else alert("❌ Pendaftaran Gagal: " + res.message);
             } catch(e) { alert("Kesalahan koneksi internet."); }
-            btn.innerText = "🚀 Buat Akun & Daftar"; btn.disabled = false;
+            btn.innerText = "Buat Akun & Daftar"; btn.disabled = false;
         }
 
         async function login() {
@@ -343,6 +356,7 @@
                     alert("✅ " + res.message);
                     if(jenis === 'jadwal_multi') document.getElementById("jadwalPelatihan").value = ""; 
                     if(jenis === 'reward') { document.getElementById("rewardPel").value = ""; document.getElementById("rewardMin").value = ""; document.getElementById("rewardLink").value = ""; }
+                    muatDaftarPelatihanAdmin(); // Update list otomatis setelah save
                 } else alert("❌ Gagal: " + res.message);
             } catch (e) { alert("Koneksi gagal."); }
             btnSimpan.innerText = teksAsli; btnSimpan.disabled = false;
@@ -350,16 +364,20 @@
 
         async function hapusJadwalLama() {
             const namaPelatihan = document.getElementById("jadwalPelatihan").value;
-            if(!namaPelatihan) return alert("Ketik nama pelatihan yang ingin dihapus.");
+            if(!namaPelatihan) return alert("Pilih / Ketik nama pelatihan yang ingin dihapus.");
             if(!confirm(`Yakin MENGHAPUS SELURUH SESI untuk "${namaPelatihan}"?`)) return;
             try {
                 const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "delete_pelatihan", pelatihan: namaPelatihan }) })).json();
-                alert(res.status === "success" ? "✅ Berhasil Dihapus!" : "❌ Gagal: " + res.message);
+                if(res.status === "success"){
+                    alert("✅ Berhasil Dihapus!");
+                    document.getElementById("jadwalPelatihan").value = "";
+                    muatDaftarPelatihanAdmin(); // Refresh list dropdown
+                } else alert("❌ Gagal: " + res.message);
             } catch(e) { alert("Koneksi gagal."); }
         }
 
         async function tarikDataPeserta() {
-            const pel = document.getElementById('inputPelatihanPeserta').value; if(!pel) return alert("Isi nama pelatihan!");
+            const pel = document.getElementById('inputPelatihanPeserta').value; if(!pel) return alert("Pilih nama pelatihan terlebih dahulu!");
             document.getElementById('areaPeserta').value = "Mengambil data...";
             try {
                 const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_peserta", pelatihan: pel }) })).json();
@@ -369,13 +387,13 @@
 
         async function simpanDaftarPeserta() {
             const pel = document.getElementById('inputPelatihanPeserta').value; const users = document.getElementById('areaPeserta').value.split('\n').filter(u => u.trim() !== "");
-            if(!pel || users.length === 0) return alert("Isian tidak boleh kosong!");
+            if(!pel || users.length === 0) return alert("Pilih pelatihan dan isi daftar peserta!");
             event.target.innerText = "⏳ Menyimpan...";
             try {
                 const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "save_peserta", pelatihan: pel, usernames: users }) })).json();
                 alert(res.status === "success" ? "✅ Tersimpan!" : "❌ Gagal.");
             } catch(e) { alert("Koneksi gagal."); }
-            event.target.innerText = "💾 Update Peserta";
+            event.target.innerText = "Update Peserta";
         }
 
         async function muatGaleri() {
@@ -407,6 +425,10 @@
         function tampilLayar(idLayar) {
             ['loginScreen', 'presensiScreen', 'kameraScreen', 'suksesScreen', 'adminScreen', 'adminJadwalScreen', 'adminPengaturanScreen', 'adminValidasiScreen', 'adminPesertaScreen', 'adminRewardScreen', 'registerScreen'].forEach(id => { document.getElementById(id).classList.add('hidden'); });
             document.getElementById(idLayar).classList.remove('hidden');
+
+            if (['adminJadwalScreen', 'adminPesertaScreen', 'adminRewardScreen'].includes(idLayar)) {
+                muatDaftarPelatihanAdmin();
+            }
         }
         function ubahStatusMsg(text, colorClass) { document.getElementById('statusMsg').innerText = text; document.getElementById('statusMsg').className = `text-sm font-semibold text-center mb-6 px-2 ${colorClass}`; }
     </script>
