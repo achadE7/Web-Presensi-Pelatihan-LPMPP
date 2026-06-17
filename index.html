@@ -26,7 +26,7 @@
                 
                 <div class="relative">
                     <input type="password" id="password" placeholder="Kata Sandi Akun" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-1 focus:ring-modernBlue pr-12">
-                    <button type="button" onclick="togglePassword('password', this)" class="absolute right-4 top-1/2 -translate-y-1/2 focus:outline-none text-base">👁️</button>
+                    <button type="button" onclick="togglePassword('password', this)" class="absolute right-4 top-1/2 -translate-y-1/2 focus:outline-none text-base">👁</button>
                 </div>
 
                 <button onclick="login()" id="btnLogin" class="w-full bg-modernBlue hover:bg-modernDark text-white font-bold py-4 rounded-full mt-2 transition-colors">Masuk Ke Aplikasi</button>
@@ -48,7 +48,7 @@
                         <label class="text-[10px] text-slate-500 font-bold">PASSWORD*</label>
                         <div class="relative">
                             <input type="password" id="regPass" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm pr-10">
-                            <button type="button" onclick="togglePassword('regPass', this)" class="absolute right-3 top-1/2 -translate-y-1/2 focus:outline-none text-sm">👁️</button>
+                            <button type="button" onclick="togglePassword('regPass', this)" class="absolute right-3 top-1/2 -translate-y-1/2 focus:outline-none text-sm">👁</button>
                         </div>
                     </div>
 
@@ -89,7 +89,7 @@
                         <label class="text-[10px] text-slate-500 font-bold">PASSWORD*</label>
                         <div class="relative">
                             <input type="password" id="editPass" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm pr-10">
-                            <button type="button" onclick="togglePassword('editPass', this)" class="absolute right-3 top-1/2 -translate-y-1/2 focus:outline-none text-sm">👁️</button>
+                            <button type="button" onclick="togglePassword('editPass', this)" class="absolute right-3 top-1/2 -translate-y-1/2 focus:outline-none text-sm">👁</button>
                         </div>
                     </div>
 
@@ -267,10 +267,10 @@
             const el = document.getElementById(idField);
             if (el.type === "password") {
                 el.type = "text";
-                btn.innerText = "👁️";
+                btn.innerText = "👁";
             } else {
                 el.type = "password";
-                btn.innerText = "👁️";
+                btn.innerText = "👁";
             }
         }
 
