@@ -38,6 +38,7 @@
         <div id="registerScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-extrabold text-modernDark mb-1">Pendaftaran & Biodata</h2>
             <p class="text-xs text-slate-500 mb-4">Lengkapi data diri Anda di bawah ini.</p>
+
             <div class="overflow-y-auto max-h-[60vh] pr-2 mb-4 space-y-3">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div><label class="text-[10px] text-slate-500 font-bold">NAMA LENGKAP*</label><input type="text" id="regNama" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
@@ -67,14 +68,19 @@
             <button onclick="tampilLayar('loginScreen')" class="w-full text-slate-400 text-center text-sm font-bold py-2">Batal & Kembali</button>
         </div>
 
-        <!-- LAYER 15: HALAMAN SUKSES PENDAFTARAN & GRUP WA (BARU) -->
+        <!-- LAYER 15: HALAMAN SUKSES PENDAFTARAN & GRUP WA (UPDATE DENGAN PERINGATAN TEGAS) -->
         <div id="suksesDaftarScreen" class="hidden flex flex-col items-center py-8">
             <h1 class="text-2xl font-extrabold text-modernDark mb-2 text-center">Pendaftaran Berhasil!</h1>
             <p class="text-center text-sm text-slate-500 mb-6" id="msgSuksesDaftar">Anda telah terdaftar di pelatihan.</p>
             
-            <!-- WADAH TOMBOL WHATSAPP (Muncul jika ada link) -->
             <div id="wadahLinkWA" class="hidden w-full mb-6">
                 <p class="text-[11px] text-center text-slate-500 mb-2 font-bold uppercase tracking-wider">Langkah Selanjutnya:</p>
+                
+                <!-- KOTAK PERINGATAN DILARANG SHARE LINK -->
+                <div class="bg-red-50 border border-red-200 p-3 rounded-xl mb-3 shadow-sm">
+                    <p class="text-[9px] text-red-600 font-bold text-center leading-tight">⚠️ DILARANG MENYEBARKAN LINK GRUP WHATSAPP INI, TERMASUK KE SESAMA PESERTA. PESERTA HANYA DIIZINKAN MASUK KE DALAM GRUP MELALUI SISTEM INI.</p>
+                </div>
+
                 <a id="btnLinkWA" href="#" target="_blank" class="w-full flex items-center justify-center space-x-2 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-4 rounded-2xl shadow-md transition-colors">
                     <span class="text-2xl">💬</span><span>Gabung Grup WhatsApp</span>
                 </a>
@@ -89,7 +95,7 @@
             <p class="text-xs text-slate-500 mb-4">Perbarui biodata Anda jika ada perubahan.</p>
             <div class="overflow-y-auto max-h-[60vh] pr-2 mb-4 space-y-3">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div><label class="text-[10px] text-slate-500 font-bold">NAMA LENGKAP*</label><input type="text" id="editNama" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
+                    <div><label class="text-[10px] text-slate-500 font-bold">NAMA LENGKAP (SERTA GELAR)*</label><input type="text" id="editNama" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
                     <div><label class="text-[10px] text-slate-500 font-bold">EMAIL AKTIF (ID Utama)</label><input type="email" id="editUser" readonly class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm bg-slate-100 text-slate-500 cursor-not-allowed"></div>
                     <div><label class="text-[10px] text-slate-500 font-bold">PASSWORD*</label><div class="relative"><input type="password" id="editPass" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm pr-10"><button type="button" onclick="togglePassword('editPass', this)" class="absolute right-3 top-1/2 -translate-y-1/2 focus:outline-none text-sm">👁️</button></div></div>
                     <div><label class="text-[10px] text-slate-500 font-bold">NOMOR HP</label><input type="number" id="editHP" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
@@ -113,15 +119,21 @@
             <button onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full text-slate-400 text-center text-sm font-bold py-2">Batal & Kembali</button>
         </div>
 
-        <!-- LAYER 2: HALAMAN PRESENSI PESERTA -->
+        <!-- LAYER 2: HALAMAN PRESENSI PESERTA (DIUBAH MENJADI 4 TOMBOL) -->
         <div id="presensiScreen" class="hidden flex flex-col items-center">
             <p class="text-sm text-slate-500 font-medium">Selamat Datang,</p>
             <h2 id="userNameDisplay" class="text-lg font-bold text-modernDark text-center mb-4">Nama Peserta</h2>
-            <div class="grid grid-cols-3 gap-2 mb-4 w-full px-2">
-                <button onclick="bukaModalTambahKelas()" class="text-[10px] bg-amber-50 text-amber-600 border border-amber-200 py-2 rounded-xl font-bold hover:bg-amber-100 shadow-sm flex flex-col items-center justify-center text-center"><span class="text-base mb-1">➕</span>Daftar Kelas</button>
-                <button onclick="bukaHalamanProfil()" class="text-[10px] bg-slate-50 text-slate-600 border border-slate-200 py-2 rounded-xl font-bold hover:bg-slate-100 shadow-sm flex flex-col items-center justify-center text-center"><span class="text-base mb-1">⚙️</span>Edit Biodata</button>
-                <button onclick="bukaHalamanRewardKu()" class="text-[10px] bg-green-50 text-green-600 border border-green-200 py-2 rounded-xl font-bold hover:bg-green-100 shadow-sm flex flex-col items-center justify-center text-center"><span class="text-base mb-1">🎁</span>Materi Saya</button>
+            
+            <!-- GRID 2x2 UNTUK MENU PESERTA -->
+            <div class="grid grid-cols-2 gap-2 mb-4 w-full px-2">
+                <button onclick="bukaModalTambahKelas()" class="text-[10px] bg-amber-50 text-amber-600 border border-amber-200 py-3 rounded-xl font-bold hover:bg-amber-100 shadow-sm flex flex-col items-center justify-center text-center"><span class="text-base mb-1">➕</span>Daftar Kelas</button>
+                <button onclick="bukaHalamanProfil()" class="text-[10px] bg-slate-50 text-slate-600 border border-slate-200 py-3 rounded-xl font-bold hover:bg-slate-100 shadow-sm flex flex-col items-center justify-center text-center"><span class="text-base mb-1">⚙️</span>Edit Biodata</button>
+                <button onclick="bukaHalamanRewardKu()" class="text-[10px] bg-blue-50 text-blue-600 border border-blue-200 py-3 rounded-xl font-bold hover:bg-blue-100 shadow-sm flex flex-col items-center justify-center text-center">Materi Saya</button>
+                
+                <!-- TOMBOL MENU GRUP WA -->
+                <button onclick="bukaHalamanGrupWA()" class="text-[10px] bg-[#25D366] bg-opacity-10 text-[#1da851] border border-[#25D366] border-opacity-30 py-3 rounded-xl font-bold hover:bg-opacity-20 shadow-sm flex flex-col items-center justify-center text-center"><span class="text-base mb-1">💬</span>Grup WA</button>
             </div>
+
             <div class="w-full bg-white border border-slate-100 shadow-sm rounded-2xl p-6 flex flex-col items-center mb-6 mt-2">
                 <p class="text-[11px] font-bold text-modernBlue tracking-wider mb-2">KELAS AKTIF SAAT INI</p>
                 <h3 id="pelatihanDisplay" class="text-xl font-extrabold text-modernDark text-center leading-tight mb-1">Mencari Jadwal...</h3>
@@ -131,6 +143,18 @@
             <p id="statusMsg" class="text-sm font-semibold text-center mb-6 px-2">Memeriksa keamanan jam server...</p>
             <button onclick="verifikasiLokasi()" id="btnLokasi" class="w-full bg-slate-200 text-slate-700 font-bold py-4 rounded-full mb-3 hidden">1. Verifikasi Lokasi GPS</button>
             <button onclick="bukaKamera()" id="btnKamera" disabled class="w-full bg-modernDark opacity-50 text-white font-bold py-4 rounded-full hidden">2. Buka Kamera Presensi</button>
+        </div>
+
+        <!-- LAYER 16: HALAMAN GRUP WA SAYA (BARU, BISA DIAKSES KAPAN SAJA) -->
+        <div id="myGroupScreen" class="hidden flex flex-col w-full">
+            <div class="text-4xl mb-2 text-center">💬</div>
+            <h2 class="text-xl font-extrabold text-modernDark mb-1 text-center">Grup WhatsApp</h2>
+            <p class="text-xs text-slate-500 mb-6 text-center">Daftar tautan grup WhatsApp untuk pelatihan yang Anda ikuti.</p>
+
+            <div id="loadingGroupKu" class="text-center text-sm font-bold text-modernBlue my-4">⏳ Memuat daftar grup...</div>
+            <div id="wadahGroupKu" class="w-full space-y-3 mb-6 overflow-y-auto max-h-[50vh] pr-2"></div>
+
+            <button onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full text-slate-400 text-center text-sm font-bold py-2">Kembali Ke Dasbor</button>
         </div>
 
         <!-- LAYER 12: KELAS BARU USER LAMA -->
@@ -152,11 +176,11 @@
             <button onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full text-slate-400 text-center text-sm font-bold py-2">Kembali Ke Dasbor</button>
         </div>
 
-        <!-- LAYER 3, 4: KAMERA & SUKSES PRESENSI -->
+        <!-- LAYER 3, 4: KAMERA & SUKSES -->
         <div id="kameraScreen" class="hidden flex flex-col items-center">
             <h2 class="text-lg font-bold text-modernDark mb-4">Posisikan Wajah Anda</h2>
             <div class="w-full h-64 bg-black rounded-2xl overflow-hidden mb-4 relative"><video id="video" class="w-full h-full object-cover" autoplay playsinline></video><canvas id="canvas" class="hidden"></canvas></div>
-            <button onclick="jepretDanKirim()" id="btnJepret" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full">Jepret & Unggah Kehadiran</button>
+            <button onclick="jepretDanKirim()" id="btnJepret" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full">Selfie & Unggah Kehadiran</button>
         </div>
 
         <div id="suksesScreen" class="hidden flex flex-col items-center py-8">
@@ -165,7 +189,7 @@
             <button onclick="location.reload()" class="w-full border-2 border-modernBlue text-modernBlue font-bold py-3 rounded-full">Kembali Ke Awal</button>
         </div>
 
-        <!-- DASHBOARD ADMINISTRATOR -->
+        <!-- DASHBOARD ADMINISTRATOR (Lebar Otomatis di PC) -->
         <div id="adminScreen" class="hidden flex flex-col items-center w-full">
             <div class="flex justify-between items-center w-full mb-6 pb-4 border-b border-slate-100">
                 <div><p class="text-sm text-slate-500 font-medium">Panel Administrator</p><h2 id="adminNameDisplay" class="text-xl font-extrabold text-modernDark">Admin</h2></div>
@@ -185,14 +209,11 @@
 
         <datalist id="opsiPelatihanAdmin"></datalist>
 
-        <!-- ADMIN JADWAL DENGAN INPUT LINK WA BARU -->
         <div id="adminJadwalScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-bold text-modernDark mb-4">Buat / Hapus Jadwal</h2>
             <select id="jadwalPelatihanSelect" onchange="cekPilihPelatihanJadwal()" class="w-full px-4 py-3 mb-2 rounded-xl border border-slate-300 font-bold text-modernDark bg-slate-50 focus:bg-white"><option value="">-- Pilih Pelatihan --</option><option value="BARU">+ Buat Pelatihan Baru...</option></select>
             <input type="text" id="jadwalPelatihanInput" placeholder="Ketik nama pelatihan baru..." class="hidden w-full px-4 py-3 mb-2 rounded-xl border border-slate-300 font-bold text-modernDark bg-white">
-            
             <input type="url" id="jadwalWALink" placeholder="Tautan / Link Grup WhatsApp (Opsional)" class="w-full px-4 py-3 mb-4 rounded-xl border border-green-300 text-sm bg-green-50 placeholder-green-600 focus:bg-white">
-
             <div id="wadahSesi" class="space-y-4 mb-4 overflow-y-auto max-h-[40vh] pr-1">
                 <div class="sesi-item bg-slate-50 p-4 rounded-xl border border-slate-200 relative">
                     <button onclick="hapusSesi(this)" class="btn-hapus-sesi absolute top-2 right-3 text-red-500 font-extrabold text-lg hidden">×</button>
@@ -206,7 +227,6 @@
             <button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2">Kembali Ke Dasbor</button>
         </div>
 
-        <!-- ADMIN LAINNYA -->
         <div id="adminPesertaScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-bold text-modernDark mb-4">Daftar Peserta Pelatihan</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -246,6 +266,23 @@
 
         function cekPilihPelatihanJadwal() { const sel = document.getElementById('jadwalPelatihanSelect').value; const inp = document.getElementById('jadwalPelatihanInput'); if (sel === "BARU") { inp.classList.remove('hidden'); inp.value = ""; } else { inp.classList.add('hidden'); } }
 
+        // MUNCULKAN MENU DAFTAR GRUP WA (24 JAM BISA DIAKSES)
+        async function bukaHalamanGrupWA() {
+            tampilLayar('myGroupScreen'); document.getElementById('wadahGroupKu').innerHTML = ""; document.getElementById('loadingGroupKu').classList.remove('hidden');
+            try {
+                const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_my_groups", username: session.username }) })).json();
+                document.getElementById('loadingGroupKu').classList.add('hidden'); const wadah = document.getElementById('wadahGroupKu');
+                if (res.status === "success" && res.data.length > 0) {
+                    res.data.forEach(item => {
+                        if(item.link && item.link.trim() !== "") {
+                            wadah.innerHTML += `<div class="bg-[#25D366] bg-opacity-10 border border-[#25D366] p-4 rounded-xl shadow-sm flex flex-col items-center text-center"><h3 class="text-sm font-extrabold text-modernDark mb-2 uppercase">${item.pelatihan}</h3><p class="text-[9px] text-red-500 font-bold mb-3 bg-white p-1 rounded border border-red-100 shadow-sm">⚠️ DILARANG MENYEBARKAN LINK GRUP INI</p><a href="${item.link}" target="_blank" class="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-[11px] font-bold py-3 rounded-lg transition-colors flex items-center justify-center space-x-2"><span class="text-lg">💬</span><span>Gabung Grup</span></a></div>`;
+                        }
+                    });
+                    if(wadah.innerHTML === "") wadah.innerHTML = `<p class="text-center text-slate-500 text-sm">Belum ada link grup WhatsApp yang ditambahkan oleh Admin untuk pelatihan Anda.</p>`;
+                } else { wadah.innerHTML = `<p class="text-center text-slate-500 text-sm">Anda belum terdaftar di pelatihan manapun atau belum ada link grup yang tersedia.</p>`; }
+            } catch (e) { document.getElementById('loadingGroupKu').innerText = "Gagal memuat data grup."; }
+        }
+
         async function bukaHalamanRewardKu() { tampilLayar('myRewardScreen'); document.getElementById('wadahRewardKu').innerHTML = ""; document.getElementById('loadingRewardKu').classList.remove('hidden'); try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_my_rewards", username: session.username }) })).json(); document.getElementById('loadingRewardKu').classList.add('hidden'); const wadah = document.getElementById('wadahRewardKu'); if (res.status === "success" && res.data.length > 0) { res.data.forEach(item => { wadah.innerHTML += `<div class="bg-amber-50 border border-amber-200 p-4 rounded-xl shadow-sm flex flex-col items-center text-center"><h3 class="text-sm font-extrabold text-modernDark mb-1 uppercase">${item.pelatihan}</h3><a href="${item.link}" target="_blank" class="mt-2 w-full bg-amber-500 hover:bg-amber-600 text-white text-[11px] font-bold py-3 rounded-lg transition-colors">Unduh Materi</a></div>`; }); } else { wadah.innerHTML = `<p class="text-center text-slate-500 text-sm">Belum ada materi/reward yang terbuka. Silakan penuhi target presensi terlebih dahulu.</p>`; } } catch (e) { document.getElementById('loadingRewardKu').innerText = "Gagal memuat data materi."; } }
 
         async function bukaHalamanProfil() { tampilLayar('userProfileScreen'); document.getElementById('btnSubmitEdit').innerText = "⏳ Memuat Data..."; document.getElementById('btnSubmitEdit').disabled = true; try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_user_profile", username: session.username }) })).json(); if(res.status === "success") { const d = res.data; document.getElementById('editNama').value = d.nama; document.getElementById('editUser').value = d.username; document.getElementById('editPass').value = d.password; document.getElementById('editHP').value = d.hp; document.getElementById('editNIP').value = d.nip; document.getElementById('editNIDN').value = d.nidn; document.getElementById('editTempatLahir').value = d.tempat_lahir; let tgl = d.tanggal_lahir; if(tgl && tgl.includes('T')) tgl = tgl.split('T')[0]; document.getElementById('editTanggalLahir').value = tgl; document.getElementById('editStatusPegawai').value = d.status_pegawai; document.getElementById('editJK').value = d.jk; document.getElementById('editPangkat').value = d.pangkat; document.getElementById('editJabatan').value = d.jabatan; document.getElementById('editInstansi').value = d.instansi; document.getElementById('editNamaInstansi').value = d.nama_instansi; document.getElementById('editFakultas').value = d.fakultas; updateProdi('edit'); if(d.fakultas === "Lainnya") { document.getElementById('editProdiInput').value = d.prodi; } else { document.getElementById('editProdiSelect').value = d.prodi; } document.getElementById('editGelarDepan').value = d.gelar_depan; document.getElementById('editGelarBelakang').value = d.gelar_belakang; document.getElementById('editPendidikan').value = d.pendidikan; document.getElementById('editAlamat').value = d.alamat; } else { alert("Gagal memuat profil: " + res.message); tampilLayar('presensiScreen'); } } catch(e) { alert("Koneksi gagal."); tampilLayar('presensiScreen'); } document.getElementById('btnSubmitEdit').innerText = "Simpan Perubahan Biodata"; document.getElementById('btnSubmitEdit').disabled = false; }
@@ -260,13 +297,8 @@
             try { 
                 const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "enroll_training", username: session.username, pelatihan: pel }) }); const res = await response.json(); 
                 if (res.status === "success") { 
-                    tampilLayar('suksesDaftarScreen');
-                    document.getElementById('msgSuksesDaftar').innerText = "Anda berhasil terdaftar di kelas:\n" + pel;
-                    
-                    if(res.wa_link && res.wa_link.trim() !== "") {
-                        document.getElementById('wadahLinkWA').classList.remove('hidden'); document.getElementById('btnLinkWA').href = res.wa_link;
-                    } else { document.getElementById('wadahLinkWA').classList.add('hidden'); }
-                    
+                    tampilLayar('suksesDaftarScreen'); document.getElementById('msgSuksesDaftar').innerText = "Anda berhasil terdaftar di kelas:\n" + pel;
+                    if(res.wa_link && res.wa_link.trim() !== "") { document.getElementById('wadahLinkWA').classList.remove('hidden'); document.getElementById('btnLinkWA').href = res.wa_link; } else { document.getElementById('wadahLinkWA').classList.add('hidden'); }
                     document.getElementById('btnLanjutSetelahDaftar').onclick = function() { tampilLayar('presensiScreen'); cekJadwalKeamananTinggi(); };
                 } else { alert("⚠️ " + res.message); tampilLayar('presensiScreen'); cekJadwalKeamananTinggi(); } 
             } catch(e) { alert("Kesalahan koneksi internet."); } 
@@ -282,13 +314,8 @@
                 const response = await fetch(API_URL, { method: "POST", body: JSON.stringify(data) }); const res = await response.json(); 
                 if (res.status === "success") { 
                     document.querySelectorAll('#registerScreen input, #registerScreen select, #registerScreen textarea').forEach(el => el.value = ''); 
-                    tampilLayar('suksesDaftarScreen');
-                    document.getElementById('msgSuksesDaftar').innerText = "Akun & Biodata Anda berhasil disimpan.";
-                    
-                    if(res.wa_link && res.wa_link.trim() !== "") {
-                        document.getElementById('wadahLinkWA').classList.remove('hidden'); document.getElementById('btnLinkWA').href = res.wa_link;
-                    } else { document.getElementById('wadahLinkWA').classList.add('hidden'); }
-                    
+                    tampilLayar('suksesDaftarScreen'); document.getElementById('msgSuksesDaftar').innerText = "Akun & Biodata Anda berhasil disimpan.";
+                    if(res.wa_link && res.wa_link.trim() !== "") { document.getElementById('wadahLinkWA').classList.remove('hidden'); document.getElementById('btnLinkWA').href = res.wa_link; } else { document.getElementById('wadahLinkWA').classList.add('hidden'); }
                     document.getElementById('btnLanjutSetelahDaftar').onclick = function() { tampilLayar('loginScreen'); };
                 } else alert("❌ Gagal: " + res.message); 
             } catch(e) { alert("Kesalahan koneksi."); } 
@@ -307,7 +334,7 @@
 
         async function jepretDanKirim() { document.getElementById('btnJepret').innerText = "Mengunggah..."; document.getElementById('btnJepret').disabled = true; const video = document.getElementById('video'); const canvas = document.getElementById('canvas'); canvas.width = video.videoWidth; canvas.height = video.videoHeight; canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height); const b64 = canvas.toDataURL('image/jpeg', 0.6).split(',')[1]; if(streamKamera) streamKamera.getTracks().forEach(t => t.stop()); try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "presensi", ...session, imageBase64: b64 }) })).json(); if (res.status === "success") { if (res.reward_link) { document.getElementById('rewardBox').classList.remove('hidden'); document.getElementById('btnReward').href = res.reward_link; } tampilLayar('suksesScreen'); } else { alert(res.message); location.reload(); } } catch (e) { alert("Kesalahan jaringan."); location.reload(); } }
 
-        function bukaSpreadsheet() { window.open("https://docs.google.com/spreadsheets/d/MASUKKAN_ID_SPREADSHEET_KAMU_DISINI/edit", '_blank'); }
+        function bukaSpreadsheet() { window.open("https://docs.google.com/spreadsheets/d/1d3jMjww3PinwN1U1v-yVKz79YcLp_-56jSOATBPQi9U/edit", '_blank'); }
 
         function tambahSesiUI() { const wadah = document.getElementById('wadahSesi'); const clone = wadah.firstElementChild.cloneNode(true); clone.querySelectorAll('input').forEach(inp => inp.value = ''); wadah.appendChild(clone); document.querySelectorAll('.btn-hapus-sesi').forEach(b => b.classList.remove('hidden')); }
         function hapusSesi(btn) { btn.closest('.sesi-item').remove(); if(document.querySelectorAll('.sesi-item').length === 1) document.querySelector('.btn-hapus-sesi').classList.add('hidden'); }
@@ -316,8 +343,7 @@
             let payload = { action: "" }; const btnSimpan = event.target; const teksAsli = btnSimpan.innerText; btnSimpan.innerText = "⏳ Proses..."; btnSimpan.disabled = true;
             if (jenis === "jadwal_multi") {
                 let pName = document.getElementById("jadwalPelatihanSelect").value; if(pName === "BARU") pName = document.getElementById("jadwalPelatihanInput").value;
-                payload.action = "save_jadwal"; payload.pelatihan = pName; 
-                payload.wa_link = document.getElementById("jadwalWALink").value; 
+                payload.action = "save_jadwal"; payload.pelatihan = pName; payload.wa_link = document.getElementById("jadwalWALink").value; 
                 if(!payload.pelatihan) { alert("Nama Pelatihan wajib diisi!"); btnSimpan.innerText = teksAsli; btnSimpan.disabled = false; return; }
                 payload.list_sesi = Array.from(document.querySelectorAll('.sesi-item')).map(item => ({ hari: item.querySelector('.input-hari').value, tanggal: item.querySelector('.input-tanggal').value, sesi: item.querySelector('.input-sesi').value, jam_mulai: item.querySelector('.input-mulai').value, jam_selesai: item.querySelector('.input-selesai').value }));
             } else if (jenis === "pengaturan") { payload.action = "save_setting"; payload.lat = document.getElementById("setLat").value; payload.lng = document.getElementById("setLng").value; payload.radius = document.getElementById("setRadius").value; } 
@@ -340,14 +366,14 @@
 
         function filterKartuPeserta() { const keyword = document.getElementById('cariPesertaInput').value.toLowerCase(); const cards = document.querySelectorAll('.kartu-peserta'); cards.forEach(card => { const textContent = card.innerText.toLowerCase(); if(textContent.includes(keyword)) { card.style.display = 'block'; } else { card.style.display = 'none'; } }); }
 
-        async function simpanDaftarPeserta() { const pel = document.getElementById('inputPelatihanPeserta').value; const users = document.getElementById('areaPeserta').value.split('\n').filter(u => u.trim() !== ""); if(!pel || users.length === 0) return alert("Lengkapi isian!"); event.target.innerText = "⏳ Menyimpan..."; try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "save_peserta", pelatihan: pel, usernames: users }) })).json(); alert(res.status === "success" ? "✅ Tersimpan!" : "❌ Gagal."); tarikDataPeserta(); } catch(e) { alert("Gagal."); } event.target.innerText = "💾 Update Daftar Email"; }
+        async function simpanDaftarPeserta() { const pel = document.getElementById('inputPelatihanPeserta').value; const users = document.getElementById('areaPeserta').value.split('\n').filter(u => u.trim() !== ""); if(!pel || users.length === 0) return alert("Lengkapi isian!"); event.target.innerText = "⏳ Menyimpan..."; try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "save_peserta", pelatihan: pel, usernames: users }) })).json(); alert(res.status === "success" ? "✅ Tersimpan!" : "❌ Gagal."); tarikDataPeserta(); } catch(e) { alert("Gagal."); } event.target.innerText = "Update Daftar Email"; }
         
         async function muatGaleri() { tampilLayar('adminValidasiScreen'); document.getElementById('wadahGaleri').innerHTML = ""; document.getElementById('loadingGaleri').classList.remove('hidden'); try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_galeri" }) })).json(); if (res.status === "success") { dataGaleriGlobal = res.data; const listPelatihan = [...new Set(res.data.map(i => i.pelatihan))]; document.getElementById('filterPelatihan').innerHTML = '<option value="">Semua Pelatihan</option>' + listPelatihan.map(p => `<option value="${p}">${p}</option>`).join(''); renderGaleri(); } } catch (e) { document.getElementById('loadingGaleri').innerText = "Gagal memuat."; } document.getElementById('loadingGaleri').classList.add('hidden'); }
 
         function renderGaleri() { const filterPel = document.getElementById('filterPelatihan').value.toLowerCase(); const filterNama = document.getElementById('filterPeserta').value.toLowerCase(); const wadah = document.getElementById('wadahGaleri'); wadah.innerHTML = ""; const terfilter = dataGaleriGlobal.filter(i => i.pelatihan.toLowerCase().includes(filterPel) && i.username.toLowerCase().includes(filterNama)); if (terfilter.length === 0) { wadah.innerHTML = `<p class="text-center text-slate-500 text-sm col-span-full">Tidak ada data cocok.</p>`; return; } terfilter.forEach(item => { const wkt = new Date(item.waktu); const jamFormat = String(wkt.getHours()).padStart(2, '0') + ":" + String(wkt.getMinutes()).padStart(2, '0'); wadah.innerHTML += `<div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm flex flex-col hover:border-modernBlue transition-colors"><p class="text-[10px] font-bold text-modernBlue uppercase mb-1">${item.pelatihan} • ${item.sesi}</p><h3 class="text-md font-extrabold text-slate-800">${item.username}</h3><p class="text-[11px] text-slate-500 mb-3 font-medium">Jam Absen: ${jamFormat} WITA</p><a href="${item.foto}" target="_blank" class="w-full bg-slate-100 text-modernDark text-center font-bold py-2 rounded-lg text-sm hover:bg-slate-200">Lihat Foto</a></div>`; }); }
 
         function tampilLayar(idLayar) {
-            ['loginScreen', 'presensiScreen', 'kameraScreen', 'suksesScreen', 'adminScreen', 'adminJadwalScreen', 'adminPengaturanScreen', 'adminValidasiScreen', 'adminPesertaScreen', 'adminRewardScreen', 'registerScreen', 'userEnrollScreen', 'userProfileScreen', 'myRewardScreen', 'suksesDaftarScreen'].forEach(id => { document.getElementById(id).classList.add('hidden'); });
+            ['loginScreen', 'presensiScreen', 'kameraScreen', 'suksesScreen', 'adminScreen', 'adminJadwalScreen', 'adminPengaturanScreen', 'adminValidasiScreen', 'adminPesertaScreen', 'adminRewardScreen', 'registerScreen', 'userEnrollScreen', 'userProfileScreen', 'myRewardScreen', 'suksesDaftarScreen', 'myGroupScreen'].forEach(id => { document.getElementById(id).classList.add('hidden'); });
             const wadah = document.getElementById('mainWadah'); wadah.classList.remove('max-w-md', 'max-w-2xl', 'max-w-4xl');
             const adminScreens = ['adminScreen', 'adminJadwalScreen', 'adminPengaturanScreen', 'adminValidasiScreen', 'adminPesertaScreen', 'adminRewardScreen'];
             
