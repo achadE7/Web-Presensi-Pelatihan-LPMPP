@@ -15,6 +15,7 @@
 
     <div id="mainWadah" class="w-full max-w-md bg-white rounded-[28px] shadow-sm overflow-hidden p-8 relative transition-all duration-500 ease-in-out">
 
+        <!-- LAYER 1: HALAMAN LOGIN -->
         <div id="loginScreen" class="block">
             <div class="flex flex-col items-center mb-8">
                 <img src="https://i.ibb.co.com/KphQrZDB/Logo-LPMPP-ULM.png" alt="Logo LPMPP" class="w-24 h-28 object-contain mb-4"> 
@@ -23,35 +24,25 @@
             </div>
             <div class="space-y-4">
                 <input type="text" id="username" placeholder="Username / Email" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-1 focus:ring-modernBlue">
-                
                 <div class="relative">
                     <input type="password" id="password" placeholder="Kata Sandi Akun" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-1 focus:ring-modernBlue pr-12">
-                    <button type="button" onclick="togglePassword('password', this)" class="absolute right-4 top-1/2 -translate-y-1/2 focus:outline-none text-base">👁</button>
+                    <button type="button" onclick="togglePassword('password', this)" class="absolute right-4 top-1/2 -translate-y-1/2 focus:outline-none text-base">👁️</button>
                 </div>
-
                 <button onclick="login()" id="btnLogin" class="w-full bg-modernBlue hover:bg-modernDark text-white font-bold py-4 rounded-full mt-2 transition-colors">Masuk Ke Aplikasi</button>
                 <p class="text-center text-xs text-slate-500 mt-2">Belum terdaftar? <a href="#" onclick="bukaHalamanRegister()" class="text-modernBlue font-bold hover:underline cursor-pointer">Buat Akun Baru</a></p>
                 <p id="loginMsg" class="text-sm font-bold text-red-500 text-center mt-4 hidden"></p>
             </div>
         </div>
 
+        <!-- LAYER 11: HALAMAN REGISTER MANDIRI & BIODATA -->
         <div id="registerScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-extrabold text-modernDark mb-1">Pendaftaran & Biodata</h2>
             <p class="text-xs text-slate-500 mb-4">Lengkapi data diri Anda di bawah ini.</p>
-
             <div class="overflow-y-auto max-h-[60vh] pr-2 mb-4 space-y-3">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div><label class="text-[10px] text-slate-500 font-bold">NAMA LENGKAP*</label><input type="text" id="regNama" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
                     <div><label class="text-[10px] text-slate-500 font-bold">EMAIL AKTIF*</label><input type="email" id="regUser" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
-                    
-                    <div>
-                        <label class="text-[10px] text-slate-500 font-bold">PASSWORD*</label>
-                        <div class="relative">
-                            <input type="password" id="regPass" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm pr-10">
-                            <button type="button" onclick="togglePassword('regPass', this)" class="absolute right-3 top-1/2 -translate-y-1/2 focus:outline-none text-sm">👁</button>
-                        </div>
-                    </div>
-
+                    <div><label class="text-[10px] text-slate-500 font-bold">PASSWORD*</label><div class="relative"><input type="password" id="regPass" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm pr-10"><button type="button" onclick="togglePassword('regPass', this)" class="absolute right-3 top-1/2 -translate-y-1/2 focus:outline-none text-sm">👁️</button></div></div>
                     <div><label class="text-[10px] text-slate-500 font-bold">NOMOR HP</label><input type="number" id="regHP" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
                     <div><label class="text-[10px] text-slate-500 font-bold">NIP</label><input type="text" id="regNIP" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
                     <div><label class="text-[10px] text-slate-500 font-bold">NIDN / NIDK</label><input type="text" id="regNIDN" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
@@ -76,23 +67,31 @@
             <button onclick="tampilLayar('loginScreen')" class="w-full text-slate-400 text-center text-sm font-bold py-2">Batal & Kembali</button>
         </div>
 
+        <!-- LAYER 15: HALAMAN SUKSES PENDAFTARAN & GRUP WA (BARU) -->
+        <div id="suksesDaftarScreen" class="hidden flex flex-col items-center py-8">
+            <h1 class="text-2xl font-extrabold text-modernDark mb-2 text-center">Pendaftaran Berhasil!</h1>
+            <p class="text-center text-sm text-slate-500 mb-6" id="msgSuksesDaftar">Anda telah terdaftar di pelatihan.</p>
+            
+            <!-- WADAH TOMBOL WHATSAPP (Muncul jika ada link) -->
+            <div id="wadahLinkWA" class="hidden w-full mb-6">
+                <p class="text-[11px] text-center text-slate-500 mb-2 font-bold uppercase tracking-wider">Langkah Selanjutnya:</p>
+                <a id="btnLinkWA" href="#" target="_blank" class="w-full flex items-center justify-center space-x-2 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-4 rounded-2xl shadow-md transition-colors">
+                    <span class="text-2xl">💬</span><span>Gabung Grup WhatsApp</span>
+                </a>
+            </div>
+
+            <button id="btnLanjutSetelahDaftar" class="w-full border-2 border-modernBlue text-modernBlue font-bold py-3 rounded-full">Lanjut</button>
+        </div>
+
+        <!-- LAYER 13: HALAMAN EDIT BIODATA PESERTA LAMA -->
         <div id="userProfileScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-extrabold text-modernDark mb-1">Pengaturan Profil</h2>
             <p class="text-xs text-slate-500 mb-4">Perbarui biodata Anda jika ada perubahan.</p>
-
             <div class="overflow-y-auto max-h-[60vh] pr-2 mb-4 space-y-3">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div><label class="text-[10px] text-slate-500 font-bold">NAMA LENGKAP*</label><input type="text" id="editNama" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
                     <div><label class="text-[10px] text-slate-500 font-bold">EMAIL AKTIF (ID Utama)</label><input type="email" id="editUser" readonly class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm bg-slate-100 text-slate-500 cursor-not-allowed"></div>
-                    
-                    <div>
-                        <label class="text-[10px] text-slate-500 font-bold">PASSWORD*</label>
-                        <div class="relative">
-                            <input type="password" id="editPass" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm pr-10">
-                            <button type="button" onclick="togglePassword('editPass', this)" class="absolute right-3 top-1/2 -translate-y-1/2 focus:outline-none text-sm">👁</button>
-                        </div>
-                    </div>
-
+                    <div><label class="text-[10px] text-slate-500 font-bold">PASSWORD*</label><div class="relative"><input type="password" id="editPass" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm pr-10"><button type="button" onclick="togglePassword('editPass', this)" class="absolute right-3 top-1/2 -translate-y-1/2 focus:outline-none text-sm">👁️</button></div></div>
                     <div><label class="text-[10px] text-slate-500 font-bold">NOMOR HP</label><input type="number" id="editHP" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
                     <div><label class="text-[10px] text-slate-500 font-bold">NIP</label><input type="text" id="editNIP" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
                     <div><label class="text-[10px] text-slate-500 font-bold">NIDN / NIDK</label><input type="text" id="editNIDN" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
@@ -106,8 +105,6 @@
                     <div><label class="text-[10px] text-slate-500 font-bold">NAMA INSTANSI</label><input type="text" id="editNamaInstansi" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
                     <div><label class="text-[10px] text-slate-500 font-bold">FAKULTAS*</label><select id="editFakultas" onchange="updateProdi('edit')" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Fakultas</option><option value="Keguruan & Ilmu Pendidikan">Keguruan & Ilmu Pendidikan</option><option value="Ekonomi & Bisnis">Ekonomi & Bisnis</option><option value="Hukum">Hukum</option><option value="Ilmu Sosial dan Ilmu Politik">Ilmu Sosial dan Ilmu Politik</option><option value="Matematika dan Ilmu Pengetahuan Alam">Matematika dan Ilmu Pengetahuan Alam</option><option value="Perikanan & Kelautan">Perikanan & Kelautan</option><option value="Kehutanan">Kehutanan</option><option value="Pertanian">Pertanian</option><option value="Teknik">Teknik</option><option value="Kedokteran">Kedokteran</option><option value="Kedokteran Gigi">Kedokteran Gigi</option><option value="Pascasarjana">Pascasarjana</option><option value="Lainnya">Lainnya</option></select></div>
                     <div><label class="text-[10px] text-slate-500 font-bold">PROGRAM STUDI*</label><select id="editProdiSelect" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Program Studi</option></select><input type="text" id="editProdiInput" placeholder="Ketik Program Studi Manual" class="hidden w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
-                    <div><label class="text-[10px] text-slate-500 font-bold">GELAR DEPAN</label><input type="text" id="editGelarDepan" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
-                    <div><label class="text-[10px] text-slate-500 font-bold">GELAR BELAKANG</label><input type="text" id="editGelarBelakang" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
                     <div><label class="text-[10px] text-slate-500 font-bold">PENDIDIKAN TERAKHIR</label><select id="editPendidikan" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Pendidikan Terakhir</option><option value="D3">D3</option><option value="D4">D4</option><option value="S1">S1</option><option value="S2">S2</option><option value="S3">S3</option></select></div>
                 </div>
                 <div class="mt-2"><label class="text-[10px] text-slate-500 font-bold">ALAMAT LENGKAP</label><textarea id="editAlamat" rows="2" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></textarea></div>
@@ -116,16 +113,15 @@
             <button onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full text-slate-400 text-center text-sm font-bold py-2">Batal & Kembali</button>
         </div>
 
+        <!-- LAYER 2: HALAMAN PRESENSI PESERTA -->
         <div id="presensiScreen" class="hidden flex flex-col items-center">
             <p class="text-sm text-slate-500 font-medium">Selamat Datang,</p>
             <h2 id="userNameDisplay" class="text-lg font-bold text-modernDark text-center mb-4">Nama Peserta</h2>
-            
             <div class="grid grid-cols-3 gap-2 mb-4 w-full px-2">
                 <button onclick="bukaModalTambahKelas()" class="text-[10px] bg-amber-50 text-amber-600 border border-amber-200 py-2 rounded-xl font-bold hover:bg-amber-100 shadow-sm flex flex-col items-center justify-center text-center"><span class="text-base mb-1">➕</span>Daftar Kelas</button>
                 <button onclick="bukaHalamanProfil()" class="text-[10px] bg-slate-50 text-slate-600 border border-slate-200 py-2 rounded-xl font-bold hover:bg-slate-100 shadow-sm flex flex-col items-center justify-center text-center"><span class="text-base mb-1">⚙️</span>Edit Biodata</button>
                 <button onclick="bukaHalamanRewardKu()" class="text-[10px] bg-green-50 text-green-600 border border-green-200 py-2 rounded-xl font-bold hover:bg-green-100 shadow-sm flex flex-col items-center justify-center text-center"><span class="text-base mb-1">🎁</span>Materi Saya</button>
             </div>
-
             <div class="w-full bg-white border border-slate-100 shadow-sm rounded-2xl p-6 flex flex-col items-center mb-6 mt-2">
                 <p class="text-[11px] font-bold text-modernBlue tracking-wider mb-2">KELAS AKTIF SAAT INI</p>
                 <h3 id="pelatihanDisplay" class="text-xl font-extrabold text-modernDark text-center leading-tight mb-1">Mencari Jadwal...</h3>
@@ -137,6 +133,7 @@
             <button onclick="bukaKamera()" id="btnKamera" disabled class="w-full bg-modernDark opacity-50 text-white font-bold py-4 rounded-full hidden">2. Buka Kamera Presensi</button>
         </div>
 
+        <!-- LAYER 12: KELAS BARU USER LAMA -->
         <div id="userEnrollScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-extrabold text-modernDark mb-1">Ikuti Pelatihan Baru</h2>
             <p class="text-xs text-slate-500 mb-6">Pilih program pelatihan LPMPP tambahan yang ingin Anda ikuti.</p>
@@ -148,20 +145,18 @@
             <button onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full text-slate-400 text-center text-sm font-bold py-2">Kembali</button>
         </div>
 
+        <!-- LAYER 14: HALAMAN MATERI / REWARD SAYA -->
         <div id="myRewardScreen" class="hidden flex flex-col w-full">
-            <h2 class="text-xl font-extrabold text-modernDark mb-1 text-center">Materi Pelatihan</h2>
-            <p class="text-xs text-slate-500 mb-6 text-center">Daftar materi eksklusif yang berhasil Anda buka berdasarkan riwayat presensi.</p>
-
-            <div id="loadingRewardKu" class="text-center text-sm font-bold text-modernBlue my-4">⏳ Memeriksa data...</div>
-            <div id="wadahRewardKu" class="w-full space-y-3 mb-6 overflow-y-auto max-h-[50vh] pr-2"></div>
-
+            <h2 class="text-xl font-extrabold text-modernDark mb-1 text-center">Materi Pelatihan</h2><p class="text-xs text-slate-500 mb-6 text-center">Daftar materi eksklusif yang berhasil Anda buka berdasarkan riwayat presensi.</p>
+            <div id="loadingRewardKu" class="text-center text-sm font-bold text-modernBlue my-4">⏳ Memeriksa data...</div><div id="wadahRewardKu" class="w-full space-y-3 mb-6 overflow-y-auto max-h-[50vh] pr-2"></div>
             <button onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full text-slate-400 text-center text-sm font-bold py-2">Kembali Ke Dasbor</button>
         </div>
 
+        <!-- LAYER 3, 4: KAMERA & SUKSES PRESENSI -->
         <div id="kameraScreen" class="hidden flex flex-col items-center">
             <h2 class="text-lg font-bold text-modernDark mb-4">Posisikan Wajah Anda</h2>
             <div class="w-full h-64 bg-black rounded-2xl overflow-hidden mb-4 relative"><video id="video" class="w-full h-full object-cover" autoplay playsinline></video><canvas id="canvas" class="hidden"></canvas></div>
-            <button onclick="jepretDanKirim()" id="btnJepret" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full">📸 Jepret & Unggah Kehadiran</button>
+            <button onclick="jepretDanKirim()" id="btnJepret" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full">Jepret & Unggah Kehadiran</button>
         </div>
 
         <div id="suksesScreen" class="hidden flex flex-col items-center py-8">
@@ -170,19 +165,18 @@
             <button onclick="location.reload()" class="w-full border-2 border-modernBlue text-modernBlue font-bold py-3 rounded-full">Kembali Ke Awal</button>
         </div>
 
+        <!-- DASHBOARD ADMINISTRATOR -->
         <div id="adminScreen" class="hidden flex flex-col items-center w-full">
             <div class="flex justify-between items-center w-full mb-6 pb-4 border-b border-slate-100">
                 <div><p class="text-sm text-slate-500 font-medium">Panel Administrator</p><h2 id="adminNameDisplay" class="text-xl font-extrabold text-modernDark">Admin</h2></div>
                 <button onclick="location.reload()" class="bg-red-50 text-red-500 px-4 py-2 rounded-xl text-sm font-bold">Keluar</button>
             </div>
-            
             <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                 <button onclick="bukaSpreadsheet()" class="bg-white border-2 border-slate-100 p-5 rounded-2xl flex flex-col items-center hover:border-modernBlue transition-colors"><span class="text-4xl mb-2">📊</span><span class="text-sm font-bold text-slate-700">Database</span></button>
                 <button onclick="tampilLayar('adminJadwalScreen')" class="bg-white border-2 border-slate-100 p-5 rounded-2xl flex flex-col items-center hover:border-modernBlue transition-colors"><span class="text-4xl mb-2">🗓️</span><span class="text-sm font-bold text-slate-700">Jadwal</span></button>
                 <button onclick="tampilLayar('adminPesertaScreen')" class="bg-white border-2 border-slate-100 p-5 rounded-2xl flex flex-col items-center hover:border-modernBlue transition-colors"><span class="text-4xl mb-2">👥</span><span class="text-sm font-bold text-slate-700">Peserta</span></button>
                 <button onclick="muatGaleri()" class="bg-white border-2 border-slate-100 p-5 rounded-2xl flex flex-col items-center hover:border-modernBlue transition-colors"><span class="text-4xl mb-2">📸</span><span class="text-sm font-bold text-slate-700">Validasi</span></button>
             </div>
-            
             <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
                 <button onclick="tampilLayar('adminRewardScreen')" class="w-full bg-amber-50 border-2 border-amber-200 p-5 rounded-2xl flex items-center justify-center space-x-3 hover:border-amber-400 transition-all"><span class="text-2xl">🎁</span><span class="text-sm font-bold text-amber-700">Gamifikasi (Reward)</span></button>
                 <button onclick="tampilLayar('adminPengaturanScreen')" class="w-full bg-white border-2 border-slate-100 p-5 rounded-2xl flex items-center justify-center space-x-2 hover:border-modernBlue transition-all"><span class="text-2xl">⚙️</span><span class="text-sm font-bold text-slate-700">GPS Parameter</span></button>
@@ -191,13 +185,14 @@
 
         <datalist id="opsiPelatihanAdmin"></datalist>
 
+        <!-- ADMIN JADWAL DENGAN INPUT LINK WA BARU -->
         <div id="adminJadwalScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-bold text-modernDark mb-4">Buat / Hapus Jadwal</h2>
-            <select id="jadwalPelatihanSelect" onchange="cekPilihPelatihanJadwal()" class="w-full px-4 py-3 mb-2 rounded-xl border border-slate-300 font-bold text-modernDark bg-slate-50 focus:bg-white">
-                <option value="">-- Pilih Pelatihan --</option><option value="BARU">+ Buat Pelatihan Baru...</option>
-            </select>
-            <input type="text" id="jadwalPelatihanInput" placeholder="Ketik nama pelatihan baru..." class="hidden w-full px-4 py-3 mb-4 rounded-xl border border-slate-300 font-bold text-modernDark bg-white">
+            <select id="jadwalPelatihanSelect" onchange="cekPilihPelatihanJadwal()" class="w-full px-4 py-3 mb-2 rounded-xl border border-slate-300 font-bold text-modernDark bg-slate-50 focus:bg-white"><option value="">-- Pilih Pelatihan --</option><option value="BARU">+ Buat Pelatihan Baru...</option></select>
+            <input type="text" id="jadwalPelatihanInput" placeholder="Ketik nama pelatihan baru..." class="hidden w-full px-4 py-3 mb-2 rounded-xl border border-slate-300 font-bold text-modernDark bg-white">
             
+            <input type="url" id="jadwalWALink" placeholder="Tautan / Link Grup WhatsApp (Opsional)" class="w-full px-4 py-3 mb-4 rounded-xl border border-green-300 text-sm bg-green-50 placeholder-green-600 focus:bg-white">
+
             <div id="wadahSesi" class="space-y-4 mb-4 overflow-y-auto max-h-[40vh] pr-1">
                 <div class="sesi-item bg-slate-50 p-4 rounded-xl border border-slate-200 relative">
                     <button onclick="hapusSesi(this)" class="btn-hapus-sesi absolute top-2 right-3 text-red-500 font-extrabold text-lg hidden">×</button>
@@ -211,236 +206,108 @@
             <button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2">Kembali Ke Dasbor</button>
         </div>
 
+        <!-- ADMIN LAINNYA -->
         <div id="adminPesertaScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-bold text-modernDark mb-4">Daftar Peserta Pelatihan</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <div class="flex space-x-2 mb-4"><select id="inputPelatihanPeserta" class="w-2/3 px-4 py-3 rounded-xl border border-slate-300 font-bold bg-white"><option value="">-- Pilih Pelatihan --</option></select><button onclick="tarikDataPeserta()" class="w-1/3 bg-modernDark text-white font-bold rounded-xl text-sm hover:bg-slate-800">Tarik Data</button></div>
-                    <p class="text-xs text-slate-500 mb-1">Tambah/Hapus Email (Satu per baris):</p>
-                    <textarea id="areaPeserta" rows="8" class="w-full px-4 py-3 mb-2 rounded-xl border border-slate-300 text-sm" placeholder="user1@email.com&#10;user2@email.com"></textarea>
-                    <button onclick="simpanDaftarPeserta()" class="w-full bg-modernBlue hover:bg-modernDark text-white font-bold py-3 rounded-xl mb-3">Update Daftar Email</button>
-                </div>
-                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex flex-col h-full">
-                    <input type="text" id="cariPesertaInput" onkeyup="filterKartuPeserta()" placeholder="Cari Nama, Email, NIP, atau Instansi..." class="hidden w-full px-4 py-2 mb-3 rounded-lg border border-slate-300 text-sm focus:ring-1 focus:ring-modernBlue shadow-sm">
-                    <div id="wadahDetailPeserta" class="hidden space-y-3 overflow-y-auto max-h-[45vh] pr-1 flex-grow"></div>
-                    <p id="teksBantuPeserta" class="text-slate-400 text-sm text-center my-auto">Klik "Tarik Data" untuk melihat detail peserta.</p>
-                </div>
-            </div>
-            <button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2 mt-4">Kembali Ke Dasbor</button>
+                <div><div class="flex space-x-2 mb-4"><select id="inputPelatihanPeserta" class="w-2/3 px-4 py-3 rounded-xl border border-slate-300 font-bold bg-white"><option value="">-- Pilih Pelatihan --</option></select><button onclick="tarikDataPeserta()" class="w-1/3 bg-modernDark text-white font-bold rounded-xl text-sm hover:bg-slate-800">Tarik Data</button></div><p class="text-xs text-slate-500 mb-1">Tambah/Hapus Email (Satu per baris):</p><textarea id="areaPeserta" rows="8" class="w-full px-4 py-3 mb-2 rounded-xl border border-slate-300 text-sm" placeholder="user1@email.com&#10;user2@email.com"></textarea><button onclick="simpanDaftarPeserta()" class="w-full bg-modernBlue hover:bg-modernDark text-white font-bold py-3 rounded-xl mb-3">Update Daftar Email</button></div>
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex flex-col h-full"><input type="text" id="cariPesertaInput" onkeyup="filterKartuPeserta()" placeholder="Cari Nama, Email, NIP, atau Instansi..." class="hidden w-full px-4 py-2 mb-3 rounded-lg border border-slate-300 text-sm focus:ring-1 focus:ring-modernBlue shadow-sm"><div id="wadahDetailPeserta" class="hidden space-y-3 overflow-y-auto max-h-[45vh] pr-1 flex-grow"></div><p id="teksBantuPeserta" class="text-slate-400 text-sm text-center my-auto">Klik "Tarik Data" untuk melihat detail peserta.</p></div>
+            </div><button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2 mt-4">Kembali Ke Dasbor</button>
         </div>
 
         <div id="adminValidasiScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-bold text-modernDark mb-3">Galeri Presensi</h2>
             <div class="flex space-x-2 mb-3"><select id="filterPelatihan" onchange="renderGaleri()" class="w-1/2 px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Semua Pelatihan</option></select><input type="text" id="filterPeserta" onkeyup="renderGaleri()" placeholder="Cari Nama..." class="w-1/2 px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
-            <div id="loadingGaleri" class="text-center text-sm font-bold text-modernBlue my-4">⏳ Memuat galeri...</div>
-            <div id="wadahGaleri" class="w-full grid grid-cols-1 md:grid-cols-2 gap-3 mb-6 overflow-y-auto max-h-[50vh] pr-2"></div>
-            <button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2">Kembali Ke Dasbor</button>
+            <div id="loadingGaleri" class="text-center text-sm font-bold text-modernBlue my-4">⏳ Memuat galeri...</div><div id="wadahGaleri" class="w-full grid grid-cols-1 md:grid-cols-2 gap-3 mb-6 overflow-y-auto max-h-[50vh] pr-2"></div><button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2">Kembali Ke Dasbor</button>
         </div>
 
         <div id="adminPengaturanScreen" class="hidden flex flex-col w-full">
-            <h2 class="text-xl font-bold text-modernDark mb-4">Pengaturan GPS</h2>
-            <input type="text" id="setLat" value="-3.29687" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300"><input type="text" id="setLng" value="114.58823" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300"><input type="number" id="setRadius" value="50" class="w-full px-4 py-3 mb-6 rounded-xl border border-slate-300">
-            <button onclick="simpanDataAdmin('pengaturan')" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full mb-3">Update Parameter</button>
-            <button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2">Kembali</button>
+            <h2 class="text-xl font-bold text-modernDark mb-4">Pengaturan GPS</h2><input type="text" id="setLat" value="-3.29687" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300"><input type="text" id="setLng" value="114.58823" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300"><input type="number" id="setRadius" value="50" class="w-full px-4 py-3 mb-6 rounded-xl border border-slate-300"><button onclick="simpanDataAdmin('pengaturan')" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full mb-3">Update Parameter</button><button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2">Kembali</button>
         </div>
 
         <div id="adminRewardScreen" class="hidden flex flex-col w-full">
-            <h2 class="text-xl font-bold text-modernDark mb-4 text-center">Sistem Reward</h2>
-            <select id="rewardPel" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300 font-bold bg-white"><option value="">-- Pilih Pelatihan --</option></select>
-            <input type="number" id="rewardMin" placeholder="Target minimal absen (cth: 3)" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300">
-            <input type="text" id="rewardLink" placeholder="Paste link G-Drive materi" class="w-full px-4 py-3 mb-6 rounded-xl border border-slate-300 text-sm">
-            <button onclick="simpanDataAdmin('reward')" class="w-full bg-amber-500 text-white font-bold py-4 rounded-full mb-3 shadow-md">Aktifkan Reward</button>
-            <button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2">Kembali</button>
+            <h2 class="text-xl font-bold text-modernDark mb-4 text-center">Sistem Reward</h2><select id="rewardPel" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300 font-bold bg-white"><option value="">-- Pilih Pelatihan --</option></select><input type="number" id="rewardMin" placeholder="Target minimal absen (cth: 3)" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300"><input type="text" id="rewardLink" placeholder="Paste link G-Drive materi" class="w-full px-4 py-3 mb-6 rounded-xl border border-slate-300 text-sm"><button onclick="simpanDataAdmin('reward')" class="w-full bg-amber-500 text-white font-bold py-4 rounded-full mb-3 shadow-md">Aktifkan Reward</button><button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2">Kembali</button>
         </div>
 
     </div>
 
+    <!-- LOGIKA JAVASCRIPT MASTER UTUH -->
     <script>
         const API_URL = "https://script.google.com/macros/s/AKfycbzkeGOglouiCbiAq5VNRXt7Wfie2NDQ8DqcJnMMZ-cOwkeokbRGCpL-W4gizcGn0IdZ/exec";
-        let TARGET_LAT = -3.4464846; let TARGET_LNG = 114.8466105; let RADIUS_MAX = 50; 
+        let TARGET_LAT = -3.29687; let TARGET_LNG = 114.58823; let RADIUS_MAX = 50; 
         let session = { username: "", nama: "", pelatihan: "", hari: "", sesi: "", lat: 0, lng: 0 };
         let streamKamera = null; let dataGaleriGlobal = [];
 
-        const prodiMap = { "Keguruan & Ilmu Pendidikan": ["Pendidikan Sejarah", "PKN", "Pendidikan Ekonomi", "Pendidikan Sosiologi", "Pendidikan Geografi", "Pendidikan Bahasa & Sastra Indonesia", "Pendidikan Bahasa Inggris", "Pendidikan Seni Pertunjukan", "Pendidikan Matematika", "Pendidikan Biologi", "Pendidikan Kimia", "Pendidikan Fisika", "Pendidikan Jasmani", "Bimbingan & Konseling", "PGSD", "PGPAUD", "Pendidikan IPA", "Pendidikan IPS", "Teknologi Pendidikan", "Pendidikan Khusus"], "Ekonomi & Bisnis": ["S1 Prodi Manajemen", "S1 Prodi Akuntansi", "S1 Ilmu Ekonomi dan Studi Pembangunan"], "Hukum": ["S1 Hukum"], "Ilmu Sosial dan Ilmu Politik": ["Ilmu Pemerintahan", "Administrasi Publik", "Administrasi Bisnis", "Sosiologi", "Geografi", "Ilmu Komunikasi"], "Matematika dan Ilmu Pengetahuan Alam": ["S1 Matematika", "S1 Kimia", "S1 Biologi", "S1 Fisika", "S1 Farmasi", "S1 Ilmu Komputer", "S1 Statistika"], "Perikanan & Kelautan": ["Akuakultur", "Manajemen Sumberdaya Perairan", "Teknologi Hasil Perikanan", "Perikanan Tangkap", "Sosial Ekonomi Perikanan", "Ilmu Kelautan"], "Kehutanan": ["Kehutanan", "Ilmu Lingkungan"], "Pertanian": ["Agronomi", "Agroekoteknologi", "Proteksi Tanaman", "Ilmu Tanah", "Agribisnis", "Peternakan", "Teknologi Industri Pertanian"], "Teknik": ["Teknik Sipil", "Arsitektur", "Teknik Pertambangan", "Teknik Kimia", "Teknik Lingkungan", "Teknik Mesin", "Teknologi Informasi", "Rekayasa Elektro", "Rekayasa Geologi"], "Kedokteran": ["Program Studi Kedokteran", "Program Studi Kesehatan Masyarakat", "Program Studi Keperawatan", "Psikologi", "Pendidikan Dokter", "Pendidikan Profesi Dokter", "Pendidikan Dokter Spesialis", "Pendidikan Dokter Spesialis Pulmunologi", "Pendidikan Dokter Spesialis Obstetri dan Ginekologi", "Pendidikan Dokter Spesialis Ilmu Bedah", "Pendidikan Dokter Spesialis Anestesiologi", "Pendidikan Dokter Spesialis Ilmu Kesehatan Anak", "Pendidikan Dokter Spesialis Ilmu Penyakit Dalam", "Pendidikan Dokter Spesialis Orthopaedi dan Traumatologi"], "Kedokteran Gigi": ["Kedokteran Gigi"], "Pascasarjana": ["Pascasarjana"] };
+        const prodiMap = { "Keguruan & Ilmu Pendidikan": ["Pendidikan Sejarah", "PKN", "Pendidikan Ekonomi", "Pendidikan Sosiologi", "Pendidikan Geografi", "Pendidikan Bahasa & Sastra Indonesia", "Pendidikan Bahasa Inggris", "Pendidikan Seni Pertunjukan", "Pendidikan Matematika", "Pendidikan Biologi", "Pendidikan Kimia", "Pendidikan Fisika", "Pendidikan Jasmani", "Bimbingan & Konseling", "PGSD", "PGPAUD", "Pendidikan IPA", "Pendidikan IPS", "Teknologi Pendidikan", "Pendidikan Khusus"], "Ekonomi & Bisnis": ["S1 Prodi Manajemen", "S1 Prodi Akuntansi", "S1 Ilmu Ekonomi dan Studi Pembangunan"], "Hukum": ["S1 Hukum"], "Ilmu Sosial dan Ilmu Politik": ["Ilmu Pemerintahan", "Administrasi Publik", "Administrasi Bisnis", "Sosiologi", "Geografi", "Ilmu Komunikasi"], "Matematika dan Ilmu Pengetahuan Alam": ["S1 Matematika", "S1 Kimia", "S1 Biologi", "S1 Fisika", "S1 Farmasi", "S1 Ilmu Komputer", "S1 Statistika"], "Perikanan & Kelautan": ["Akuakultur", "Manajemen Sumberdaya Perairan", "Teknologi Hasil Perikanan", "Perikanan Tangkap", "Sosial Ekonomi Perikanan", "Ilmu Kelautan"], "Kehutanan": ["Kehutanan"], "Pertanian": ["Agronomi", "Agroekoteknologi", "Proteksi Tanaman", "Ilmu Tanah", "Agribisnis", "Peternakan", "Teknologi Industri Pertanian"], "Teknik": ["Teknik Sipil", "Arsitektur", "Teknik Pertambangan", "Teknik Kimia", "Teknik Lingkungan", "Teknik Mesin", "Teknologi Informasi", "Rekayasa Elektro", "Rekayasa Geologi"], "Kedokteran": ["Program Studi Kedokteran", "Program Studi Kesehatan Masyarakat", "Program Studi Keperawatan", "Psikologi", "Pendidikan Dokter", "Pendidikan Profesi Dokter", "Pendidikan Dokter Spesialis", "Pendidikan Dokter Spesialis Pulmunologi", "Pendidikan Dokter Spesialis Obstetri dan Ginekologi", "Pendidikan Dokter Spesialis Ilmu Bedah", "Pendidikan Dokter Spesialis Anestesiologi", "Pendidikan Dokter Spesialis Ilmu Kesehatan Anak", "Pendidikan Dokter Spesialis Ilmu Penyakit Dalam", "Pendidikan Dokter Spesialis Orthopaedi dan Traumatologi"], "Kedokteran Gigi": ["Kedokteran Gigi"], "Pascasarjana": ["Pascasarjana"] };
 
-        function togglePassword(idField, btn) {
-            const el = document.getElementById(idField);
-            if (el.type === "password") {
-                el.type = "text";
-                btn.innerText = "👁";
-            } else {
-                el.type = "password";
-                btn.innerText = "👁";
-            }
+        function togglePassword(idField, btn) { const el = document.getElementById(idField); if (el.type === "password") { el.type = "text"; btn.innerText = "👁️"; } else { el.type = "password"; btn.innerText = "👁️"; } }
+
+        function updateProdi(prefix) { const fakultas = document.getElementById(prefix + 'Fakultas').value; const prodiSelect = document.getElementById(prefix + 'ProdiSelect'); const prodiInput = document.getElementById(prefix + 'ProdiInput'); prodiSelect.innerHTML = '<option value="">Pilih Program Studi</option>'; if (fakultas === "Lainnya") { prodiSelect.classList.add('hidden'); prodiInput.classList.remove('hidden'); prodiInput.value = ""; } else { prodiSelect.classList.remove('hidden'); prodiInput.classList.add('hidden'); if (prodiMap[fakultas]) { prodiMap[fakultas].forEach(prodi => { prodiSelect.innerHTML += `<option value="${prodi}">${prodi}</option>`; }); } } }
+
+        function cekPilihPelatihanJadwal() { const sel = document.getElementById('jadwalPelatihanSelect').value; const inp = document.getElementById('jadwalPelatihanInput'); if (sel === "BARU") { inp.classList.remove('hidden'); inp.value = ""; } else { inp.classList.add('hidden'); } }
+
+        async function bukaHalamanRewardKu() { tampilLayar('myRewardScreen'); document.getElementById('wadahRewardKu').innerHTML = ""; document.getElementById('loadingRewardKu').classList.remove('hidden'); try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_my_rewards", username: session.username }) })).json(); document.getElementById('loadingRewardKu').classList.add('hidden'); const wadah = document.getElementById('wadahRewardKu'); if (res.status === "success" && res.data.length > 0) { res.data.forEach(item => { wadah.innerHTML += `<div class="bg-amber-50 border border-amber-200 p-4 rounded-xl shadow-sm flex flex-col items-center text-center"><h3 class="text-sm font-extrabold text-modernDark mb-1 uppercase">${item.pelatihan}</h3><a href="${item.link}" target="_blank" class="mt-2 w-full bg-amber-500 hover:bg-amber-600 text-white text-[11px] font-bold py-3 rounded-lg transition-colors">Unduh Materi</a></div>`; }); } else { wadah.innerHTML = `<p class="text-center text-slate-500 text-sm">Belum ada materi/reward yang terbuka. Silakan penuhi target presensi terlebih dahulu.</p>`; } } catch (e) { document.getElementById('loadingRewardKu').innerText = "Gagal memuat data materi."; } }
+
+        async function bukaHalamanProfil() { tampilLayar('userProfileScreen'); document.getElementById('btnSubmitEdit').innerText = "⏳ Memuat Data..."; document.getElementById('btnSubmitEdit').disabled = true; try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_user_profile", username: session.username }) })).json(); if(res.status === "success") { const d = res.data; document.getElementById('editNama').value = d.nama; document.getElementById('editUser').value = d.username; document.getElementById('editPass').value = d.password; document.getElementById('editHP').value = d.hp; document.getElementById('editNIP').value = d.nip; document.getElementById('editNIDN').value = d.nidn; document.getElementById('editTempatLahir').value = d.tempat_lahir; let tgl = d.tanggal_lahir; if(tgl && tgl.includes('T')) tgl = tgl.split('T')[0]; document.getElementById('editTanggalLahir').value = tgl; document.getElementById('editStatusPegawai').value = d.status_pegawai; document.getElementById('editJK').value = d.jk; document.getElementById('editPangkat').value = d.pangkat; document.getElementById('editJabatan').value = d.jabatan; document.getElementById('editInstansi').value = d.instansi; document.getElementById('editNamaInstansi').value = d.nama_instansi; document.getElementById('editFakultas').value = d.fakultas; updateProdi('edit'); if(d.fakultas === "Lainnya") { document.getElementById('editProdiInput').value = d.prodi; } else { document.getElementById('editProdiSelect').value = d.prodi; } document.getElementById('editGelarDepan').value = d.gelar_depan; document.getElementById('editGelarBelakang').value = d.gelar_belakang; document.getElementById('editPendidikan').value = d.pendidikan; document.getElementById('editAlamat').value = d.alamat; } else { alert("Gagal memuat profil: " + res.message); tampilLayar('presensiScreen'); } } catch(e) { alert("Koneksi gagal."); tampilLayar('presensiScreen'); } document.getElementById('btnSubmitEdit').innerText = "Simpan Perubahan Biodata"; document.getElementById('btnSubmitEdit').disabled = false; }
+
+        async function prosesUpdateProfil() { const fakVal = document.getElementById('editFakultas').value; const prodiVal = (fakVal === "Lainnya") ? document.getElementById('editProdiInput').value : document.getElementById('editProdiSelect').value; const data = { action: "update_user_profile", nama: document.getElementById('editNama').value, username: document.getElementById('editUser').value, password: document.getElementById('editPass').value, nip: document.getElementById('editNIP').value, nidn: document.getElementById('editNIDN').value, tempat_lahir: document.getElementById('editTempatLahir').value, tanggal_lahir: document.getElementById('editTanggalLahir').value, status_pegawai: document.getElementById('editStatusPegawai').value, jk: document.getElementById('editJK').value, pangkat: document.getElementById('editPangkat').value, jabatan: document.getElementById('editJabatan').value, instansi: document.getElementById('editInstansi').value, nama_instansi: document.getElementById('editNamaInstansi').value, fakultas: fakVal, prodi: prodiVal, gelar_depan: document.getElementById('editGelarDepan').value, gelar_belakang: document.getElementById('editGelarBelakang').value, pendidikan: document.getElementById('editPendidikan').value, hp: document.getElementById('editHP').value, alamat: document.getElementById('editAlamat').value }; const btn = document.getElementById('btnSubmitEdit'); if(!data.nama || !data.password || !data.status_pegawai || !data.jk || !data.fakultas || !data.prodi) { return alert("Kolom bertanda bintang (*) tidak boleh dikosongkan."); } btn.innerText = "⏳ Memperbarui Biodata..."; btn.disabled = true; try { const response = await fetch(API_URL, { method: "POST", body: JSON.stringify(data) }); const res = await response.json(); if (res.status === "success") { alert("✅ Biodata berhasil diperbarui!"); session.nama = data.nama; tampilLayar('presensiScreen'); cekJadwalKeamananTinggi(); } else alert("❌ Gagal: " + res.message); } catch(e) { alert("Kesalahan koneksi."); } btn.innerText = "Simpan Perubahan Biodata"; btn.disabled = false; }
+
+        async function bukaModalTambahKelas() { tampilLayar('userEnrollScreen'); const select = document.getElementById('enrollPelatihan'); select.innerHTML = '<option value="">-- Memuat daftar kelas... --</option>'; try { const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_public_pelatihan" }) }); const res = await response.json(); if (res.status === "success" && res.data.length > 0) { select.innerHTML = '<option value="">-- Pilih Kelas Pelatihan --</option>' + res.data.map(p => `<option value="${p}">${p}</option>`).join(''); } else select.innerHTML = '<option value="">Tidak ada pelatihan aktif saat ini</option>'; } catch(e) { select.innerHTML = '<option value="">Gagal menyinkronkan data server</option>'; } }
+
+        async function prosesEnroll() { 
+            const pel = document.getElementById('enrollPelatihan').value; const btn = document.getElementById('btnSubmitEnroll'); 
+            if(!pel) return alert("Silakan pilih kelas pelatihan!"); btn.innerText = "⏳ Memproses Pendaftaran Kelas..."; btn.disabled = true; 
+            try { 
+                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "enroll_training", username: session.username, pelatihan: pel }) }); const res = await response.json(); 
+                if (res.status === "success") { 
+                    tampilLayar('suksesDaftarScreen');
+                    document.getElementById('msgSuksesDaftar').innerText = "Anda berhasil terdaftar di kelas:\n" + pel;
+                    
+                    if(res.wa_link && res.wa_link.trim() !== "") {
+                        document.getElementById('wadahLinkWA').classList.remove('hidden'); document.getElementById('btnLinkWA').href = res.wa_link;
+                    } else { document.getElementById('wadahLinkWA').classList.add('hidden'); }
+                    
+                    document.getElementById('btnLanjutSetelahDaftar').onclick = function() { tampilLayar('presensiScreen'); cekJadwalKeamananTinggi(); };
+                } else { alert("⚠️ " + res.message); tampilLayar('presensiScreen'); cekJadwalKeamananTinggi(); } 
+            } catch(e) { alert("Kesalahan koneksi internet."); } 
+            btn.innerText = "Konfirmasi Daftar Kelas"; btn.disabled = false; 
         }
 
-        function updateProdi(prefix) {
-            const fakultas = document.getElementById(prefix + 'Fakultas').value; const prodiSelect = document.getElementById(prefix + 'ProdiSelect'); const prodiInput = document.getElementById(prefix + 'ProdiInput'); prodiSelect.innerHTML = '<option value="">Pilih Program Studi</option>';
-            if (fakultas === "Lainnya") { prodiSelect.classList.add('hidden'); prodiInput.classList.remove('hidden'); prodiInput.value = ""; } 
-            else { prodiSelect.classList.remove('hidden'); prodiInput.classList.add('hidden'); if (prodiMap[fakultas]) { prodiMap[fakultas].forEach(prodi => { prodiSelect.innerHTML += `<option value="${prodi}">${prodi}</option>`; }); } }
+        async function bukaHalamanRegister() { tampilLayar('registerScreen'); const select = document.getElementById('regPelatihan'); select.innerHTML = '<option value="">-- Memuat daftar kelas... --</option>'; try { const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_public_pelatihan" }) }); const res = await response.json(); if (res.status === "success" && res.data.length > 0) { select.innerHTML = '<option value="">-- Pilih Kelas Pelatihan --</option>' + res.data.map(p => `<option value="${p}">${p}</option>`).join(''); } else select.innerHTML = '<option value="">Tidak ada pelatihan aktif saat ini</option>'; } catch(e) { select.innerHTML = '<option value="">Gagal menyinkronkan data server</option>'; } }
+
+        async function prosesRegister() { 
+            const fakVal = document.getElementById('regFakultas').value; const prodiVal = (fakVal === "Lainnya") ? document.getElementById('regProdiInput').value : document.getElementById('regProdiSelect').value; const data = { action: "register_user", nama: document.getElementById('regNama').value, username: document.getElementById('regUser').value, password: document.getElementById('regPass').value, nip: document.getElementById('regNIP').value, nidn: document.getElementById('regNIDN').value, tempat_lahir: document.getElementById('regTempatLahir').value, tanggal_lahir: document.getElementById('regTanggalLahir').value, status_pegawai: document.getElementById('regStatusPegawai').value, jk: document.getElementById('regJK').value, pangkat: document.getElementById('regPangkat').value, jabatan: document.getElementById('regJabatan').value, instansi: document.getElementById('regInstansi').value, nama_instansi: document.getElementById('regNamaInstansi').value, fakultas: fakVal, prodi: prodiVal, gelar_depan: document.getElementById('regGelarDepan').value, gelar_belakang: document.getElementById('regGelarBelakang').value, pendidikan: document.getElementById('regPendidikan').value, hp: document.getElementById('regHP').value, alamat: document.getElementById('regAlamat').value, pelatihan: document.getElementById('regPelatihan').value }; const btn = document.getElementById('btnSubmitRegister'); if(!data.nama || !data.username || !data.password || !data.status_pegawai || !data.jk || !data.fakultas || !data.prodi || !data.pelatihan) { return alert("Mohon lengkapi seluruh kolom yang bertanda bintang (*)"); } 
+            btn.innerText = "⏳ Memproses Data..."; btn.disabled = true; 
+            try { 
+                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify(data) }); const res = await response.json(); 
+                if (res.status === "success") { 
+                    document.querySelectorAll('#registerScreen input, #registerScreen select, #registerScreen textarea').forEach(el => el.value = ''); 
+                    tampilLayar('suksesDaftarScreen');
+                    document.getElementById('msgSuksesDaftar').innerText = "Akun & Biodata Anda berhasil disimpan.";
+                    
+                    if(res.wa_link && res.wa_link.trim() !== "") {
+                        document.getElementById('wadahLinkWA').classList.remove('hidden'); document.getElementById('btnLinkWA').href = res.wa_link;
+                    } else { document.getElementById('wadahLinkWA').classList.add('hidden'); }
+                    
+                    document.getElementById('btnLanjutSetelahDaftar').onclick = function() { tampilLayar('loginScreen'); };
+                } else alert("❌ Gagal: " + res.message); 
+            } catch(e) { alert("Kesalahan koneksi."); } 
+            btn.innerText = "Simpan Biodata & Daftar"; btn.disabled = false; 
         }
 
-        function cekPilihPelatihanJadwal() {
-            const sel = document.getElementById('jadwalPelatihanSelect').value; const inp = document.getElementById('jadwalPelatihanInput');
-            if (sel === "BARU") { inp.classList.remove('hidden'); inp.value = ""; } else { inp.classList.add('hidden'); }
-        }
+        async function muatDaftarPelatihanAdmin() { try { const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_public_pelatihan" }) }); const res = await response.json(); if (res.status === "success") { const optionsHTML = res.data.map(p => `<option value="${p}">${p}</option>`).join(''); const jSelect = document.getElementById('jadwalPelatihanSelect'); if(jSelect) jSelect.innerHTML = '<option value="">-- Pilih Pelatihan --</option><option value="BARU">+ Buat Pelatihan Baru...</option>' + optionsHTML; const pSelect = document.getElementById('inputPelatihanPeserta'); if(pSelect) pSelect.innerHTML = '<option value="">-- Pilih Pelatihan --</option>' + optionsHTML; const rSelect = document.getElementById('rewardPel'); if(rSelect) rSelect.innerHTML = '<option value="">-- Pilih Pelatihan --</option>' + optionsHTML; } } catch(e) { console.error("Gagal memuat list."); } }
 
-        async function bukaHalamanRewardKu() {
-            tampilLayar('myRewardScreen'); document.getElementById('wadahRewardKu').innerHTML = ""; document.getElementById('loadingRewardKu').classList.remove('hidden');
-            try {
-                const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_my_rewards", username: session.username }) })).json();
-                document.getElementById('loadingRewardKu').classList.add('hidden'); const wadah = document.getElementById('wadahRewardKu');
-                if (res.status === "success" && res.data.length > 0) {
-                    res.data.forEach(item => {
-                        wadah.innerHTML += `<div class="bg-amber-50 border border-amber-200 p-4 rounded-xl shadow-sm flex flex-col items-center text-center"><h3 class="text-sm font-extrabold text-modernDark mb-1 uppercase">${item.pelatihan}</h3><a href="${item.link}" target="_blank" class="mt-2 w-full bg-amber-500 hover:bg-amber-600 text-white text-[11px] font-bold py-3 rounded-lg transition-colors">Unduh Materi</a></div>`;
-                    });
-                } else { wadah.innerHTML = `<p class="text-center text-slate-500 text-sm">Belum ada materi/reward yang terbuka. Silakan penuhi target presensi terlebih dahulu.</p>`; }
-            } catch (e) { document.getElementById('loadingRewardKu').innerText = "Gagal memuat data materi."; }
-        }
+        async function login() { const user = document.getElementById('username').value; const pass = document.getElementById('password').value; const msg = document.getElementById('loginMsg'); const btn = document.getElementById('btnLogin'); if(!user || !pass) return; btn.innerText = "Sinkronisasi..."; msg.classList.add('hidden'); try { const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "login", username: user, password: pass }) }); const res = await response.json(); if (res.status === "success") { session.username = user; session.nama = res.nama || user; if(res.role === "admin") { document.getElementById('adminNameDisplay').innerText = session.nama; tampilLayar('adminScreen'); } else { tampilLayar('presensiScreen'); cekJadwalKeamananTinggi(); } } else { msg.innerText = res.message; msg.classList.remove('hidden'); btn.innerText = "Masuk Ke Aplikasi"; } } catch (e) { msg.innerText = "Gagal menghubungi server."; msg.classList.remove('hidden'); btn.innerText = "Masuk"; } }
 
-        async function bukaHalamanProfil() {
-            tampilLayar('userProfileScreen'); document.getElementById('btnSubmitEdit').innerText = "⏳ Memuat Data..."; document.getElementById('btnSubmitEdit').disabled = true;
-            try {
-                const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_user_profile", username: session.username }) })).json();
-                if(res.status === "success") {
-                    const d = res.data; document.getElementById('editNama').value = d.nama; document.getElementById('editUser').value = d.username; document.getElementById('editPass').value = d.password; document.getElementById('editHP').value = d.hp; document.getElementById('editNIP').value = d.nip; document.getElementById('editNIDN').value = d.nidn; document.getElementById('editTempatLahir').value = d.tempat_lahir;
-                    let tgl = d.tanggal_lahir; if(tgl && tgl.includes('T')) tgl = tgl.split('T')[0]; document.getElementById('editTanggalLahir').value = tgl;
-                    document.getElementById('editStatusPegawai').value = d.status_pegawai; document.getElementById('editJK').value = d.jk; document.getElementById('editPangkat').value = d.pangkat; document.getElementById('editJabatan').value = d.jabatan; document.getElementById('editInstansi').value = d.instansi; document.getElementById('editNamaInstansi').value = d.nama_instansi; document.getElementById('editFakultas').value = d.fakultas;
-                    updateProdi('edit');
-                    if(d.fakultas === "Lainnya") { document.getElementById('editProdiInput').value = d.prodi; } else { document.getElementById('editProdiSelect').value = d.prodi; }
-                    document.getElementById('editGelarDepan').value = d.gelar_depan; document.getElementById('editGelarBelakang').value = d.gelar_belakang; document.getElementById('editPendidikan').value = d.pendidikan; document.getElementById('editAlamat').value = d.alamat;
-                } else { alert("Gagal memuat profil: " + res.message); tampilLayar('presensiScreen'); }
-            } catch(e) { alert("Koneksi gagal."); tampilLayar('presensiScreen'); }
-            document.getElementById('btnSubmitEdit').innerText = "Simpan Perubahan Biodata"; document.getElementById('btnSubmitEdit').disabled = false;
-        }
+        async function cekJadwalKeamananTinggi() { document.getElementById('userNameDisplay').innerText = session.nama; try { const timeResponse = await fetch("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Makassar"); const timeData = await timeResponse.json(); const currentTimeMinutes = (timeData.hour * 60) + timeData.minute; const realTodayStr = `${timeData.year}-${String(timeData.month).padStart(2, '0')}-${String(timeData.day).padStart(2, '0')}`; const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_jadwal", username: session.username }) }); const res = await response.json(); if (res.status === "success" && res.data && res.data.length > 0) { let jadwalAktif = null; for (let i = 0; i < res.data.length; i++) { const jadwal = res.data[i]; const tglSheet = jadwal.tanggal ? jadwal.tanggal.trim() : ""; if (tglSheet && tglSheet !== "-" && tglSheet !== realTodayStr) continue; if (jadwal.jam_mulai && jadwal.jam_selesai) { const [startHour, startMinute] = jadwal.jam_mulai.split(':').map(Number); const [endHour, endMinute] = jadwal.jam_selesai.split(':').map(Number); let endTimeMinutes = (endHour * 60) + endMinute; if (endTimeMinutes === 0) endTimeMinutes = 24 * 60; if (currentTimeMinutes >= (startHour * 60 + startMinute) && currentTimeMinutes <= endTimeMinutes) { jadwalAktif = jadwal; break; } } } if (jadwalAktif) { session.pelatihan = jadwalAktif.pelatihan; session.hari = jadwalAktif.hari; session.sesi = jadwalAktif.sesi; document.getElementById('pelatihanDisplay').innerText = jadwalAktif.pelatihan; document.getElementById('sesiDisplay').innerText = `${jadwalAktif.hari} — ${jadwalAktif.sesi}`; document.getElementById('waktuDisplay').innerText = `Batas: ${jadwalAktif.jam_mulai} - ${jadwalAktif.jam_selesai}`; ubahStatusMsg("Waktu Terverifikasi. Silakan Verifikasi Lokasi.", "text-modernBlue"); document.getElementById('btnLokasi').classList.remove('hidden'); } else { document.getElementById('pelatihanDisplay').innerText = "Tidak Ada Sesi"; document.getElementById('sesiDisplay').innerText = "-"; document.getElementById('waktuDisplay').innerText = "DITUTUP"; ubahStatusMsg("❌ Sesi belum dimulai atau lewat hari.", "text-red-500"); } } else { document.getElementById('pelatihanDisplay').innerText = "Kosong"; ubahStatusMsg("❌ Tidak ada jadwal aktif.", "text-red-500"); } } catch (e) { ubahStatusMsg("Gagal sinkronisasi waktu.", "text-red-500"); } }
 
-        async function prosesUpdateProfil() {
-            const fakVal = document.getElementById('editFakultas').value; const prodiVal = (fakVal === "Lainnya") ? document.getElementById('editProdiInput').value : document.getElementById('editProdiSelect').value;
-            const data = { action: "update_user_profile", nama: document.getElementById('editNama').value, username: document.getElementById('editUser').value, password: document.getElementById('editPass').value, nip: document.getElementById('editNIP').value, nidn: document.getElementById('editNIDN').value, tempat_lahir: document.getElementById('editTempatLahir').value, tanggal_lahir: document.getElementById('editTanggalLahir').value, status_pegawai: document.getElementById('editStatusPegawai').value, jk: document.getElementById('editJK').value, pangkat: document.getElementById('editPangkat').value, jabatan: document.getElementById('editJabatan').value, instansi: document.getElementById('editInstansi').value, nama_instansi: document.getElementById('editNamaInstansi').value, fakultas: fakVal, prodi: prodiVal, gelar_depan: document.getElementById('editGelarDepan').value, gelar_belakang: document.getElementById('editGelarBelakang').value, pendidikan: document.getElementById('editPendidikan').value, hp: document.getElementById('editHP').value, alamat: document.getElementById('editAlamat').value };
-            const btn = document.getElementById('btnSubmitEdit'); if(!data.nama || !data.password || !data.status_pegawai || !data.jk || !data.fakultas || !data.prodi) { return alert("Kolom bertanda bintang (*) tidak boleh dikosongkan."); }
-            btn.innerText = "⏳ Memperbarui Biodata..."; btn.disabled = true;
-            try {
-                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify(data) }); const res = await response.json();
-                if (res.status === "success") { alert("✅ Biodata berhasil diperbarui!"); session.nama = data.nama; tampilLayar('presensiScreen');  cekJadwalKeamananTinggi(); } else alert("❌ Gagal: " + res.message);
-            } catch(e) { alert("Kesalahan koneksi."); }
-            btn.innerText = "Simpan Perubahan Biodata"; btn.disabled = false;
-        }
-
-        async function bukaModalTambahKelas() {
-            tampilLayar('userEnrollScreen'); const select = document.getElementById('enrollPelatihan'); select.innerHTML = '<option value="">-- Memuat daftar kelas... --</option>';
-            try {
-                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_public_pelatihan" }) }); const res = await response.json();
-                if (res.status === "success" && res.data.length > 0) { select.innerHTML = '<option value="">-- Pilih Kelas Pelatihan --</option>' + res.data.map(p => `<option value="${p}">${p}</option>`).join(''); } 
-                else select.innerHTML = '<option value="">Tidak ada pelatihan aktif saat ini</option>';
-            } catch(e) { select.innerHTML = '<option value="">Gagal menyinkronkan data server</option>'; }
-        }
-
-        async function prosesEnroll() {
-            const pel = document.getElementById('enrollPelatihan').value; const btn = document.getElementById('btnSubmitEnroll'); if(!pel) return alert("Silakan pilih kelas pelatihan!"); btn.innerText = "⏳ Memproses Pendaftaran Kelas..."; btn.disabled = true;
-            try {
-                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "enroll_training", username: session.username, pelatihan: pel }) }); const res = await response.json();
-                if (res.status === "success") { alert("Sukses!\nAnda terdaftar di pelatihan: " + pel); tampilLayar('presensiScreen'); cekJadwalKeamananTinggi(); } else { alert("⚠️ " + res.message); tampilLayar('presensiScreen'); cekJadwalKeamananTinggi(); }
-            } catch(e) { alert("Kesalahan koneksi internet."); }
-            btn.innerText = "Konfirmasi Daftar Kelas"; btn.disabled = false;
-        }
-
-        async function bukaHalamanRegister() {
-            tampilLayar('registerScreen'); const select = document.getElementById('regPelatihan'); select.innerHTML = '<option value="">-- Memuat daftar kelas... --</option>';
-            try {
-                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_public_pelatihan" }) }); const res = await response.json();
-                if (res.status === "success" && res.data.length > 0) { select.innerHTML = '<option value="">-- Pilih Kelas Pelatihan --</option>' + res.data.map(p => `<option value="${p}">${p}</option>`).join(''); } 
-                else select.innerHTML = '<option value="">Tidak ada pelatihan aktif saat ini</option>';
-            } catch(e) { select.innerHTML = '<option value="">Gagal menyinkronkan data server</option>'; }
-        }
-
-        async function prosesRegister() {
-            const fakVal = document.getElementById('regFakultas').value; const prodiVal = (fakVal === "Lainnya") ? document.getElementById('regProdiInput').value : document.getElementById('regProdiSelect').value;
-            const data = { action: "register_user", nama: document.getElementById('regNama').value, username: document.getElementById('regUser').value, password: document.getElementById('regPass').value, nip: document.getElementById('regNIP').value, nidn: document.getElementById('regNIDN').value, tempat_lahir: document.getElementById('regTempatLahir').value, tanggal_lahir: document.getElementById('regTanggalLahir').value, status_pegawai: document.getElementById('regStatusPegawai').value, jk: document.getElementById('regJK').value, pangkat: document.getElementById('regPangkat').value, jabatan: document.getElementById('regJabatan').value, instansi: document.getElementById('regInstansi').value, nama_instansi: document.getElementById('regNamaInstansi').value, fakultas: fakVal, prodi: prodiVal, gelar_depan: document.getElementById('regGelarDepan').value, gelar_belakang: document.getElementById('regGelarBelakang').value, pendidikan: document.getElementById('regPendidikan').value, hp: document.getElementById('regHP').value, alamat: document.getElementById('regAlamat').value, pelatihan: document.getElementById('regPelatihan').value };
-            const btn = document.getElementById('btnSubmitRegister'); if(!data.nama || !data.username || !data.password || !data.status_pegawai || !data.jk || !data.fakultas || !data.prodi || !data.pelatihan) { return alert("Mohon lengkapi seluruh kolom yang bertanda bintang (*)"); }
-            btn.innerText = "⏳ Memproses Data..."; btn.disabled = true;
-            try {
-                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify(data) }); const res = await response.json();
-                if (res.status === "success") { alert("Akun Berhasil Disimpan!"); document.querySelectorAll('#registerScreen input, #registerScreen select, #registerScreen textarea').forEach(el => el.value = ''); tampilLayar('loginScreen'); } else alert("❌ Gagal: " + res.message);
-            } catch(e) { alert("Kesalahan koneksi."); }
-            btn.innerText = "Simpan Biodata & Daftar"; btn.disabled = false;
-        }
-
-        async function muatDaftarPelatihanAdmin() {
-            try {
-                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_public_pelatihan" }) }); const res = await response.json();
-                if (res.status === "success") {
-                    const optionsHTML = res.data.map(p => `<option value="${p}">${p}</option>`).join('');
-                    const jSelect = document.getElementById('jadwalPelatihanSelect'); if(jSelect) jSelect.innerHTML = '<option value="">-- Pilih Pelatihan --</option><option value="BARU">+ Buat Pelatihan Baru...</option>' + optionsHTML;
-                    const pSelect = document.getElementById('inputPelatihanPeserta'); if(pSelect) pSelect.innerHTML = '<option value="">-- Pilih Pelatihan --</option>' + optionsHTML;
-                    const rSelect = document.getElementById('rewardPel'); if(rSelect) rSelect.innerHTML = '<option value="">-- Pilih Pelatihan --</option>' + optionsHTML;
-                }
-            } catch(e) { console.error("Gagal memuat list."); }
-        }
-
-        async function login() {
-            const user = document.getElementById('username').value; const pass = document.getElementById('password').value;
-            const msg = document.getElementById('loginMsg'); const btn = document.getElementById('btnLogin'); if(!user || !pass) return;
-            btn.innerText = "Sinkronisasi..."; msg.classList.add('hidden');
-            try {
-                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "login", username: user, password: pass }) }); const res = await response.json();
-                if (res.status === "success") {
-                    session.username = user; session.nama = res.nama || user;
-                    if(res.role === "admin") { document.getElementById('adminNameDisplay').innerText = session.nama; tampilLayar('adminScreen'); } 
-                    else { tampilLayar('presensiScreen');  cekJadwalKeamananTinggi(); }
-                } else { msg.innerText = res.message; msg.classList.remove('hidden'); btn.innerText = "Masuk Ke Aplikasi"; }
-            } catch (e) { msg.innerText = "Gagal menghubungi server."; msg.classList.remove('hidden'); btn.innerText = "Masuk"; }
-        }
-
-        async function cekJadwalKeamananTinggi() {
-            document.getElementById('userNameDisplay').innerText = session.nama;
-            try {
-                const timeResponse = await fetch("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Makassar"); const timeData = await timeResponse.json();
-                const currentTimeMinutes = (timeData.hour * 60) + timeData.minute; const realTodayStr = `${timeData.year}-${String(timeData.month).padStart(2, '0')}-${String(timeData.day).padStart(2, '0')}`;
-                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_jadwal", username: session.username }) }); const res = await response.json();
-                if (res.status === "success" && res.data && res.data.length > 0) {
-                    let jadwalAktif = null;
-                    for (let i = 0; i < res.data.length; i++) {
-                        const jadwal = res.data[i]; const tglSheet = jadwal.tanggal ? jadwal.tanggal.trim() : ""; if (tglSheet && tglSheet !== "-" && tglSheet !== realTodayStr) continue;
-                        if (jadwal.jam_mulai && jadwal.jam_selesai) {
-                            const [startHour, startMinute] = jadwal.jam_mulai.split(':').map(Number); const [endHour, endMinute] = jadwal.jam_selesai.split(':').map(Number); let endTimeMinutes = (endHour * 60) + endMinute; if (endTimeMinutes === 0) endTimeMinutes = 24 * 60;
-                            if (currentTimeMinutes >= (startHour * 60 + startMinute) && currentTimeMinutes <= endTimeMinutes) { jadwalAktif = jadwal; break; }
-                        }
-                    }
-                    if (jadwalAktif) {
-                        session.pelatihan = jadwalAktif.pelatihan; session.hari = jadwalAktif.hari; session.sesi = jadwalAktif.sesi;
-                        document.getElementById('pelatihanDisplay').innerText = jadwalAktif.pelatihan; document.getElementById('sesiDisplay').innerText = `${jadwalAktif.hari} — ${jadwalAktif.sesi}`; document.getElementById('waktuDisplay').innerText = `Batas: ${jadwalAktif.jam_mulai} - ${jadwalAktif.jam_selesai}`; ubahStatusMsg("Waktu Terverifikasi. Silakan Verifikasi Lokasi.", "text-modernBlue"); document.getElementById('btnLokasi').classList.remove('hidden');
-                    } else {
-                        document.getElementById('pelatihanDisplay').innerText = "Tidak Ada Sesi"; document.getElementById('sesiDisplay').innerText = "-"; document.getElementById('waktuDisplay').innerText = "DITUTUP"; ubahStatusMsg("❌ Sesi belum dimulai atau lewat hari.", "text-red-500");
-                    }
-                } else { document.getElementById('pelatihanDisplay').innerText = "Kosong"; ubahStatusMsg("❌ Tidak ada jadwal aktif.", "text-red-500"); }
-            } catch (e) { ubahStatusMsg("Gagal sinkronisasi waktu.", "text-red-500"); }
-        }
-
-        function verifikasiLokasi() {
-            ubahStatusMsg("Mencari GPS...", "text-modernBlue");
-            navigator.geolocation.getCurrentPosition(
-                (pos) => {
-                    session.lat = pos.coords.latitude; session.lng = pos.coords.longitude;
-                    const c = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin((session.lat - TARGET_LAT)*Math.PI/360), 2) + Math.cos(TARGET_LAT*Math.PI/180)*Math.cos(session.lat*Math.PI/180)*Math.pow(Math.sin((session.lng - TARGET_LNG)*Math.PI/360), 2))); const jarak = Math.floor(6371e3 * c);
-                    if (jarak <= RADIUS_MAX) { ubahStatusMsg("✅ Radius Valid.", "text-green-600"); document.getElementById('btnKamera').classList.remove('hidden'); document.getElementById('btnKamera').classList.replace('opacity-50', 'bg-modernBlue'); document.getElementById('btnKamera').disabled = false; } 
-                    else ubahStatusMsg(`❌ Terlalu Jauh (${jarak}m).`, "text-red-500");
-                }, (e) => { ubahStatusMsg("Izinkan GPS browser.", "text-red-500"); }, { enableHighAccuracy: true }
-            );
-        }
+        function verifikasiLokasi() { ubahStatusMsg("Mencari GPS...", "text-modernBlue"); navigator.geolocation.getCurrentPosition( (pos) => { session.lat = pos.coords.latitude; session.lng = pos.coords.longitude; const c = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin((session.lat - TARGET_LAT)*Math.PI/360), 2) + Math.cos(TARGET_LAT*Math.PI/180)*Math.cos(session.lat*Math.PI/180)*Math.pow(Math.sin((session.lng - TARGET_LNG)*Math.PI/360), 2))); const jarak = Math.floor(6371e3 * c); if (jarak <= RADIUS_MAX) { ubahStatusMsg("✅ Radius Valid.", "text-green-600"); document.getElementById('btnKamera').classList.remove('hidden'); document.getElementById('btnKamera').classList.replace('opacity-50', 'bg-modernBlue'); document.getElementById('btnKamera').disabled = false; } else ubahStatusMsg(`❌ Terlalu Jauh (${jarak}m).`, "text-red-500"); }, (e) => { ubahStatusMsg("Izinkan GPS browser.", "text-red-500"); }, { enableHighAccuracy: true } ); }
 
         async function bukaKamera() { tampilLayar('kameraScreen'); const video = document.getElementById('video'); try { streamKamera = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } }); video.srcObject = streamKamera; } catch (err) { alert("Gagal kamera: " + err.message); } }
 
-        async function jepretDanKirim() {
-            document.getElementById('btnJepret').innerText = "Mengunggah..."; document.getElementById('btnJepret').disabled = true;
-            const video = document.getElementById('video'); const canvas = document.getElementById('canvas'); canvas.width = video.videoWidth; canvas.height = video.videoHeight; canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height); const b64 = canvas.toDataURL('image/jpeg', 0.6).split(',')[1]; if(streamKamera) streamKamera.getTracks().forEach(t => t.stop());
-            try {
-                const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "presensi", ...session, imageBase64: b64 }) })).json();
-                if (res.status === "success") { if (res.reward_link) { document.getElementById('rewardBox').classList.remove('hidden'); document.getElementById('btnReward').href = res.reward_link; } tampilLayar('suksesScreen'); } 
-                else { alert(res.message); location.reload(); }
-            } catch (e) { alert("Kesalahan jaringan."); location.reload(); }
-        }
+        async function jepretDanKirim() { document.getElementById('btnJepret').innerText = "Mengunggah..."; document.getElementById('btnJepret').disabled = true; const video = document.getElementById('video'); const canvas = document.getElementById('canvas'); canvas.width = video.videoWidth; canvas.height = video.videoHeight; canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height); const b64 = canvas.toDataURL('image/jpeg', 0.6).split(',')[1]; if(streamKamera) streamKamera.getTracks().forEach(t => t.stop()); try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "presensi", ...session, imageBase64: b64 }) })).json(); if (res.status === "success") { if (res.reward_link) { document.getElementById('rewardBox').classList.remove('hidden'); document.getElementById('btnReward').href = res.reward_link; } tampilLayar('suksesScreen'); } else { alert(res.message); location.reload(); } } catch (e) { alert("Kesalahan jaringan."); location.reload(); } }
 
-        function bukaSpreadsheet() { window.open("https://docs.google.com/spreadsheets/d/1d3jMjww3PinwN1U1v-yVKz79YcLp_-56jSOATBPQi9U/edit", '_blank'); }
+        function bukaSpreadsheet() { window.open("https://docs.google.com/spreadsheets/d/MASUKKAN_ID_SPREADSHEET_KAMU_DISINI/edit", '_blank'); }
 
         function tambahSesiUI() { const wadah = document.getElementById('wadahSesi'); const clone = wadah.firstElementChild.cloneNode(true); clone.querySelectorAll('input').forEach(inp => inp.value = ''); wadah.appendChild(clone); document.querySelectorAll('.btn-hapus-sesi').forEach(b => b.classList.remove('hidden')); }
         function hapusSesi(btn) { btn.closest('.sesi-item').remove(); if(document.querySelectorAll('.sesi-item').length === 1) document.querySelector('.btn-hapus-sesi').classList.add('hidden'); }
@@ -449,7 +316,9 @@
             let payload = { action: "" }; const btnSimpan = event.target; const teksAsli = btnSimpan.innerText; btnSimpan.innerText = "⏳ Proses..."; btnSimpan.disabled = true;
             if (jenis === "jadwal_multi") {
                 let pName = document.getElementById("jadwalPelatihanSelect").value; if(pName === "BARU") pName = document.getElementById("jadwalPelatihanInput").value;
-                payload.action = "save_jadwal"; payload.pelatihan = pName; if(!payload.pelatihan) { alert("Nama Pelatihan wajib diisi!"); btnSimpan.innerText = teksAsli; btnSimpan.disabled = false; return; }
+                payload.action = "save_jadwal"; payload.pelatihan = pName; 
+                payload.wa_link = document.getElementById("jadwalWALink").value; 
+                if(!payload.pelatihan) { alert("Nama Pelatihan wajib diisi!"); btnSimpan.innerText = teksAsli; btnSimpan.disabled = false; return; }
                 payload.list_sesi = Array.from(document.querySelectorAll('.sesi-item')).map(item => ({ hari: item.querySelector('.input-hari').value, tanggal: item.querySelector('.input-tanggal').value, sesi: item.querySelector('.input-sesi').value, jam_mulai: item.querySelector('.input-mulai').value, jam_selesai: item.querySelector('.input-selesai').value }));
             } else if (jenis === "pengaturan") { payload.action = "save_setting"; payload.lat = document.getElementById("setLat").value; payload.lng = document.getElementById("setLng").value; payload.radius = document.getElementById("setRadius").value; } 
             else if (jenis === "reward") { payload.action = "save_reward"; payload.pelatihan = document.getElementById("rewardPel").value; payload.minimal = document.getElementById("rewardMin").value; payload.link = document.getElementById("rewardLink").value; if(!payload.pelatihan || !payload.minimal || !payload.link) { alert("Mohon lengkapi semua data!"); btnSimpan.innerText = teksAsli; btnSimpan.disabled = false; return; } }
@@ -457,7 +326,7 @@
                 const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify(payload) })).json();
                 if (res.status === "success") { 
                     alert("✅ " + res.message); 
-                    if(jenis === 'jadwal_multi') { document.getElementById("jadwalPelatihanSelect").value = ""; document.getElementById("jadwalPelatihanInput").value = ""; document.getElementById("jadwalPelatihanInput").classList.add('hidden'); } 
+                    if(jenis === 'jadwal_multi') { document.getElementById("jadwalPelatihanSelect").value = ""; document.getElementById("jadwalPelatihanInput").value = ""; document.getElementById("jadwalWALink").value = ""; document.getElementById("jadwalPelatihanInput").classList.add('hidden'); } 
                     if(jenis === 'reward') { document.getElementById("rewardPel").value = ""; document.getElementById("rewardMin").value = ""; document.getElementById("rewardLink").value = ""; } 
                     muatDaftarPelatihanAdmin(); 
                 } else alert("❌ Gagal: " + res.message);
@@ -465,69 +334,21 @@
             btnSimpan.innerText = teksAsli; btnSimpan.disabled = false;
         }
 
-        async function hapusJadwalLama() { 
-            let pName = document.getElementById("jadwalPelatihanSelect").value; if(pName === "BARU") pName = document.getElementById("jadwalPelatihanInput").value;
-            if(!pName) return alert("Pilih / Ketik nama pelatihan."); if(!confirm(`Yakin hapus seluruh sesi untuk "${pName}"?`)) return; 
-            try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "delete_pelatihan", pelatihan: pName }) })).json(); if(res.status === "success"){ alert("✅ Berhasil!"); document.getElementById("jadwalPelatihanSelect").value = ""; document.getElementById("jadwalPelatihanInput").value = ""; document.getElementById("jadwalPelatihanInput").classList.add('hidden'); muatDaftarPelatihanAdmin(); } else alert("❌ Gagal: " + res.message); } catch(e) { alert("Gagal."); } 
-        }
+        async function hapusJadwalLama() { let pName = document.getElementById("jadwalPelatihanSelect").value; if(pName === "BARU") pName = document.getElementById("jadwalPelatihanInput").value; if(!pName) return alert("Pilih / Ketik nama pelatihan."); if(!confirm(`Yakin hapus seluruh sesi untuk "${pName}"?`)) return; try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "delete_pelatihan", pelatihan: pName }) })).json(); if(res.status === "success"){ alert("✅ Berhasil!"); document.getElementById("jadwalPelatihanSelect").value = ""; document.getElementById("jadwalPelatihanInput").value = ""; document.getElementById("jadwalPelatihanInput").classList.add('hidden'); muatDaftarPelatihanAdmin(); } else alert("❌ Gagal: " + res.message); } catch(e) { alert("Gagal."); } }
 
-        async function tarikDataPeserta() { 
-            const pel = document.getElementById('inputPelatihanPeserta').value; if(!pel) return alert("Pilih pelatihan!"); 
-            document.getElementById('areaPeserta').value = "Mengambil data..."; 
-            const detailWadah = document.getElementById('wadahDetailPeserta'); const searchInput = document.getElementById('cariPesertaInput');
-            detailWadah.innerHTML = ""; detailWadah.classList.add('hidden'); searchInput.classList.add('hidden');
-            document.getElementById('teksBantuPeserta').classList.add('hidden');
+        async function tarikDataPeserta() { const pel = document.getElementById('inputPelatihanPeserta').value; if(!pel) return alert("Pilih pelatihan!"); document.getElementById('areaPeserta').value = "Mengambil data..."; const detailWadah = document.getElementById('wadahDetailPeserta'); const searchInput = document.getElementById('cariPesertaInput'); detailWadah.innerHTML = ""; detailWadah.classList.add('hidden'); searchInput.classList.add('hidden'); document.getElementById('teksBantuPeserta').classList.add('hidden'); try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_peserta", pelatihan: pel }) })).json(); document.getElementById('areaPeserta').value = res.emails.join('\n'); if(res.details && res.details.length > 0) { searchInput.classList.remove('hidden'); searchInput.value = ''; let html = '<h3 class="text-sm font-bold text-modernDark mb-2 sticky top-0 bg-slate-50 z-10 py-1">Detail Biodata Peserta:</h3>'; res.details.forEach(d => { html += `<div class="kartu-peserta bg-white border border-slate-200 p-4 rounded-xl shadow-sm hover:border-modernBlue transition-colors"><p class="font-extrabold text-sm text-slate-800">${d.nama}</p><p class="text-[11px] text-modernBlue font-bold mb-2">${d.email}</p><div class="grid grid-cols-2 gap-y-1 text-[10px] text-slate-600"><p><b>NIP:</b> ${d.nip || '-'}</p><p><b>NIDN:</b> ${d.nidn || '-'}</p><p><b>Instansi:</b> ${d.instansi}</p><p><b>Unit:</b> ${d.nama_instansi || '-'}</p><p><b>Fakultas:</b> ${d.fakultas}</p><p><b>Prodi:</b> ${d.prodi}</p></div></div>`; }); detailWadah.innerHTML = html; detailWadah.classList.remove('hidden'); } else { document.getElementById('teksBantuPeserta').innerText = "Belum ada data biodata peserta untuk kelas ini."; document.getElementById('teksBantuPeserta').classList.remove('hidden'); } } catch(e) { document.getElementById('areaPeserta').value = ""; document.getElementById('teksBantuPeserta').classList.remove('hidden'); alert("Gagal mengambil data."); } }
 
-            try { 
-                const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_peserta", pelatihan: pel }) })).json(); 
-                document.getElementById('areaPeserta').value = res.emails.join('\n'); 
+        function filterKartuPeserta() { const keyword = document.getElementById('cariPesertaInput').value.toLowerCase(); const cards = document.querySelectorAll('.kartu-peserta'); cards.forEach(card => { const textContent = card.innerText.toLowerCase(); if(textContent.includes(keyword)) { card.style.display = 'block'; } else { card.style.display = 'none'; } }); }
 
-                if(res.details && res.details.length > 0) {
-                    searchInput.classList.remove('hidden'); searchInput.value = '';
-                    let html = '<h3 class="text-sm font-bold text-modernDark mb-2 sticky top-0 bg-slate-50 z-10 py-1">Detail Biodata Peserta:</h3>';
-                    res.details.forEach(d => {
-                        html += `
-                        <div class="kartu-peserta bg-white border border-slate-200 p-4 rounded-xl shadow-sm hover:border-modernBlue transition-colors">
-                            <p class="font-extrabold text-sm text-slate-800">${d.nama}</p>
-                            <p class="text-[11px] text-modernBlue font-bold mb-2">${d.email}</p>
-                            <div class="grid grid-cols-2 gap-y-1 text-[10px] text-slate-600">
-                                <p><b>NIP:</b> ${d.nip || '-'}</p>
-                                <p><b>NIDN:</b> ${d.nidn || '-'}</p>
-                                <p><b>Instansi:</b> ${d.instansi}</p>
-                                <p><b>Unit:</b> ${d.nama_instansi || '-'}</p>
-                                <p><b>Fakultas:</b> ${d.fakultas}</p>
-                                <p><b>Prodi:</b> ${d.prodi}</p>
-                            </div>
-                        </div>`;
-                    });
-                    detailWadah.innerHTML = html; detailWadah.classList.remove('hidden');
-                } else {
-                    document.getElementById('teksBantuPeserta').innerText = "Belum ada data biodata peserta untuk kelas ini.";
-                    document.getElementById('teksBantuPeserta').classList.remove('hidden');
-                }
-            } catch(e) { document.getElementById('areaPeserta').value = ""; document.getElementById('teksBantuPeserta').classList.remove('hidden'); alert("Gagal mengambil data."); } 
-        }
-
-        function filterKartuPeserta() {
-            const keyword = document.getElementById('cariPesertaInput').value.toLowerCase(); const cards = document.querySelectorAll('.kartu-peserta');
-            cards.forEach(card => { const textContent = card.innerText.toLowerCase(); if(textContent.includes(keyword)) { card.style.display = 'block'; } else { card.style.display = 'none'; } });
-        }
-
-        async function simpanDaftarPeserta() { const pel = document.getElementById('inputPelatihanPeserta').value; const users = document.getElementById('areaPeserta').value.split('\n').filter(u => u.trim() !== ""); if(!pel || users.length === 0) return alert("Lengkapi isian!"); event.target.innerText = "⏳ Menyimpan..."; try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "save_peserta", pelatihan: pel, usernames: users }) })).json(); alert(res.status === "success" ? "✅ Tersimpan!" : "❌ Gagal."); tarikDataPeserta(); } catch(e) { alert("Gagal."); } event.target.innerText = "Update Daftar Email"; }
+        async function simpanDaftarPeserta() { const pel = document.getElementById('inputPelatihanPeserta').value; const users = document.getElementById('areaPeserta').value.split('\n').filter(u => u.trim() !== ""); if(!pel || users.length === 0) return alert("Lengkapi isian!"); event.target.innerText = "⏳ Menyimpan..."; try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "save_peserta", pelatihan: pel, usernames: users }) })).json(); alert(res.status === "success" ? "✅ Tersimpan!" : "❌ Gagal."); tarikDataPeserta(); } catch(e) { alert("Gagal."); } event.target.innerText = "💾 Update Daftar Email"; }
         
         async function muatGaleri() { tampilLayar('adminValidasiScreen'); document.getElementById('wadahGaleri').innerHTML = ""; document.getElementById('loadingGaleri').classList.remove('hidden'); try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_galeri" }) })).json(); if (res.status === "success") { dataGaleriGlobal = res.data; const listPelatihan = [...new Set(res.data.map(i => i.pelatihan))]; document.getElementById('filterPelatihan').innerHTML = '<option value="">Semua Pelatihan</option>' + listPelatihan.map(p => `<option value="${p}">${p}</option>`).join(''); renderGaleri(); } } catch (e) { document.getElementById('loadingGaleri').innerText = "Gagal memuat."; } document.getElementById('loadingGaleri').classList.add('hidden'); }
 
-        function renderGaleri() {
-            const filterPel = document.getElementById('filterPelatihan').value.toLowerCase(); const filterNama = document.getElementById('filterPeserta').value.toLowerCase(); const wadah = document.getElementById('wadahGaleri'); wadah.innerHTML = ""; const terfilter = dataGaleriGlobal.filter(i => i.pelatihan.toLowerCase().includes(filterPel) && i.username.toLowerCase().includes(filterNama)); if (terfilter.length === 0) { wadah.innerHTML = `<p class="text-center text-slate-500 text-sm col-span-full">Tidak ada data cocok.</p>`; return; }
-            terfilter.forEach(item => { const wkt = new Date(item.waktu); const jamFormat = String(wkt.getHours()).padStart(2, '0') + ":" + String(wkt.getMinutes()).padStart(2, '0'); wadah.innerHTML += `<div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm flex flex-col hover:border-modernBlue transition-colors"><p class="text-[10px] font-bold text-modernBlue uppercase mb-1">${item.pelatihan} • ${item.sesi}</p><h3 class="text-md font-extrabold text-slate-800">${item.username}</h3><p class="text-[11px] text-slate-500 mb-3 font-medium">Jam Absen: ${jamFormat} WITA</p><a href="${item.foto}" target="_blank" class="w-full bg-slate-100 text-modernDark text-center font-bold py-2 rounded-lg text-sm hover:bg-slate-200">Lihat Foto</a></div>`; });
-        }
+        function renderGaleri() { const filterPel = document.getElementById('filterPelatihan').value.toLowerCase(); const filterNama = document.getElementById('filterPeserta').value.toLowerCase(); const wadah = document.getElementById('wadahGaleri'); wadah.innerHTML = ""; const terfilter = dataGaleriGlobal.filter(i => i.pelatihan.toLowerCase().includes(filterPel) && i.username.toLowerCase().includes(filterNama)); if (terfilter.length === 0) { wadah.innerHTML = `<p class="text-center text-slate-500 text-sm col-span-full">Tidak ada data cocok.</p>`; return; } terfilter.forEach(item => { const wkt = new Date(item.waktu); const jamFormat = String(wkt.getHours()).padStart(2, '0') + ":" + String(wkt.getMinutes()).padStart(2, '0'); wadah.innerHTML += `<div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm flex flex-col hover:border-modernBlue transition-colors"><p class="text-[10px] font-bold text-modernBlue uppercase mb-1">${item.pelatihan} • ${item.sesi}</p><h3 class="text-md font-extrabold text-slate-800">${item.username}</h3><p class="text-[11px] text-slate-500 mb-3 font-medium">Jam Absen: ${jamFormat} WITA</p><a href="${item.foto}" target="_blank" class="w-full bg-slate-100 text-modernDark text-center font-bold py-2 rounded-lg text-sm hover:bg-slate-200">Lihat Foto</a></div>`; }); }
 
         function tampilLayar(idLayar) {
-            ['loginScreen', 'presensiScreen', 'kameraScreen', 'suksesScreen', 'adminScreen', 'adminJadwalScreen', 'adminPengaturanScreen', 'adminValidasiScreen', 'adminPesertaScreen', 'adminRewardScreen', 'registerScreen', 'userEnrollScreen', 'userProfileScreen', 'myRewardScreen'].forEach(id => { document.getElementById(id).classList.add('hidden'); });
-            
-            const wadah = document.getElementById('mainWadah');
-            wadah.classList.remove('max-w-md', 'max-w-2xl', 'max-w-4xl');
-            
+            ['loginScreen', 'presensiScreen', 'kameraScreen', 'suksesScreen', 'adminScreen', 'adminJadwalScreen', 'adminPengaturanScreen', 'adminValidasiScreen', 'adminPesertaScreen', 'adminRewardScreen', 'registerScreen', 'userEnrollScreen', 'userProfileScreen', 'myRewardScreen', 'suksesDaftarScreen'].forEach(id => { document.getElementById(id).classList.add('hidden'); });
+            const wadah = document.getElementById('mainWadah'); wadah.classList.remove('max-w-md', 'max-w-2xl', 'max-w-4xl');
             const adminScreens = ['adminScreen', 'adminJadwalScreen', 'adminPengaturanScreen', 'adminValidasiScreen', 'adminPesertaScreen', 'adminRewardScreen'];
             
             if (idLayar === 'registerScreen' || idLayar === 'userProfileScreen') { wadah.classList.add('max-w-2xl'); } 
