@@ -38,7 +38,6 @@
         <div id="registerScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-extrabold text-modernDark mb-1">Pendaftaran & Biodata</h2>
             <p class="text-xs text-slate-500 mb-4">Lengkapi data diri Anda di bawah ini.</p>
-
             <div class="overflow-y-auto max-h-[60vh] pr-2 mb-4 space-y-3">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div><label class="text-[10px] text-slate-500 font-bold">NAMA LENGKAP (Beserta Gelar)*</label><input type="text" id="regNama" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
@@ -349,9 +348,11 @@
                     res.data.forEach(item => {
                         let statusBadge = ""; let actionBtn = ""; let isBelumMulai = false;
 
-                        if (item.tanggal && item.tanggal !== "-" && item.jam_mulai) {
-                            const [sH, sM] = item.jam_mulai.split(':').map(Number);
-                            const startMins = sH * 60 + sM;
+                        if (item.tanggal && item.tanggal !== "-" && item.jam_mulai && item.jam_mulai !== "-") {
+                            let rawMulai = item.jam_mulai.replace(/\./g, ':').replace(/[^0-9:]/g, ''); 
+                            const [sH, sM] = rawMulai.split(':').map(Number);
+                            const startMins = (sH * 60) + (sM || 0);
+                            
                             if (item.tanggal > todayStr) { isBelumMulai = true; } 
                             else if (item.tanggal === todayStr && startMins > currentMins) { isBelumMulai = true; }
                         }
@@ -409,7 +410,73 @@
 
         async function login() { const user = document.getElementById('username').value; const pass = document.getElementById('password').value; const msg = document.getElementById('loginMsg'); const btn = document.getElementById('btnLogin'); if(!user || !pass) return; btn.innerText = "Sinkronisasi..."; msg.classList.add('hidden'); try { const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "login", username: user, password: pass }) }); const res = await response.json(); if (res.status === "success") { session.username = user; session.nama = res.nama || user; if(res.role === "admin") { document.getElementById('adminNameDisplay').innerText = session.nama; tampilLayar('adminScreen'); } else { tampilLayar('presensiScreen'); cekJadwalKeamananTinggi(); } } else { msg.innerText = res.message; msg.classList.remove('hidden'); btn.innerText = "Masuk Ke Aplikasi"; } } catch (e) { msg.innerText = "Gagal menghubungi server."; msg.classList.remove('hidden'); btn.innerText = "Masuk"; } }
 
-        async function cekJadwalKeamananTinggi() { document.getElementById('userNameDisplay').innerText = session.nama; try { const timeResponse = await fetch("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Makassar"); const timeData = await timeResponse.json(); const currentTimeMinutes = (timeData.hour * 60) + timeData.minute; const realTodayStr = `${timeData.year}-${String(timeData.month).padStart(2, '0')}-${String(timeData.day).padStart(2, '0')}`; const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_jadwal", username: session.username }) }); const res = await response.json(); if (res.status === "success" && res.data && res.data.length > 0) { let jadwalAktif = null; for (let i = 0; i < res.data.length; i++) { const jadwal = res.data[i]; const tglSheet = jadwal.tanggal ? jadwal.tanggal.trim() : ""; if (tglSheet && tglSheet !== "-" && tglSheet !== realTodayStr) continue; if (jadwal.jam_mulai && jadwal.jam_selesai) { const [startHour, startMinute] = jadwal.jam_mulai.split(':').map(Number); const [endHour, endMinute] = jadwal.jam_selesai.split(':').map(Number); let endTimeMinutes = (endHour * 60) + endMinute; if (endTimeMinutes === 0) endTimeMinutes = 24 * 60; if (currentTimeMinutes >= (startHour * 60 + startMinute) && currentTimeMinutes <= endTimeMinutes) { jadwalAktif = jadwal; break; } } } if (jadwalAktif) { session.pelatihan = jadwalAktif.pelatihan; session.hari = jadwalAktif.hari; session.sesi = jadwalAktif.sesi; document.getElementById('pelatihanDisplay').innerText = jadwalAktif.pelatihan; document.getElementById('sesiDisplay').innerText = `${jadwalAktif.hari} — ${jadwalAktif.sesi}`; document.getElementById('waktuDisplay').innerText = `Batas: ${jadwalAktif.jam_mulai} - ${jadwalAktif.jam_selesai}`; ubahStatusMsg("Waktu Terverifikasi. Silakan Verifikasi Lokasi.", "text-modernBlue"); document.getElementById('btnLokasi').classList.remove('hidden'); } else { document.getElementById('pelatihanDisplay').innerText = "Tidak Ada Sesi"; document.getElementById('sesiDisplay').innerText = "-"; document.getElementById('waktuDisplay').innerText = "DITUTUP"; ubahStatusMsg("❌ Sesi belum dimulai atau lewat hari.", "text-red-500"); } } else { document.getElementById('pelatihanDisplay').innerText = "Kosong"; ubahStatusMsg("❌ Tidak ada jadwal aktif.", "text-red-500"); } } catch (e) { ubahStatusMsg("Gagal sinkronisasi waktu.", "text-red-500"); } }
+        async function cekJadwalKeamananTinggi() { 
+            document.getElementById('userNameDisplay').innerText = session.nama; 
+            try { 
+                const timeResponse = await fetch("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Makassar"); 
+                const timeData = await timeResponse.json(); 
+                const currentTimeMinutes = (timeData.hour * 60) + timeData.minute; 
+                const realTodayStr = `${timeData.year}-${String(timeData.month).padStart(2, '0')}-${String(timeData.day).padStart(2, '0')}`; 
+                
+                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_jadwal", username: session.username }) }); 
+                const res = await response.json(); 
+                
+                if (res.status === "success" && res.data && res.data.length > 0) { 
+                    let jadwalAktif = null; 
+                    for (let i = 0; i < res.data.length; i++) { 
+                        const jadwal = res.data[i]; 
+                        const tglSheet = jadwal.tanggal ? jadwal.tanggal.trim() : ""; 
+                        if (tglSheet && tglSheet !== "-" && tglSheet !== realTodayStr) continue; 
+                        
+                        if (jadwal.jam_mulai && jadwal.jam_selesai && jadwal.jam_mulai !== "-" && jadwal.jam_selesai !== "-") { 
+                            let rawMulai = jadwal.jam_mulai.replace(/\./g, ':').replace(/[^0-9:]/g, ''); 
+                            let rawSelesai = jadwal.jam_selesai.replace(/\./g, ':').replace(/[^0-9:]/g, ''); 
+                            
+                            const [startHour, startMinute] = rawMulai.split(':').map(Number); 
+                            const [endHour, endMinute] = rawSelesai.split(':').map(Number); 
+                            
+                            let endTimeMinutes = (endHour * 60) + (endMinute || 0); 
+                            if (endTimeMinutes === 0) endTimeMinutes = 24 * 60; 
+                            let startTimeMinutes = (startHour * 60) + (startMinute || 0);
+
+                            if (currentTimeMinutes >= startTimeMinutes && currentTimeMinutes <= endTimeMinutes) { 
+                                jadwalAktif = jadwal; 
+                                break; 
+                            } 
+                        } 
+                    } 
+                    
+                    if (jadwalAktif) { 
+                        session.pelatihan = jadwalAktif.pelatihan; session.hari = jadwalAktif.hari; session.sesi = jadwalAktif.sesi; 
+                        document.getElementById('pelatihanDisplay').innerText = jadwalAktif.pelatihan; 
+                        document.getElementById('sesiDisplay').innerText = `${jadwalAktif.hari} — ${jadwalAktif.sesi}`; 
+                        document.getElementById('waktuDisplay').innerText = `Batas: ${jadwalAktif.jam_mulai} - ${jadwalAktif.jam_selesai}`; 
+                        
+                        if(jadwalAktif.sudah_hadir) {
+                            ubahStatusMsg("✅ Anda sudah melakukan presensi di sesi ini.", "text-green-600"); 
+                            document.getElementById('btnLokasi').classList.add('hidden');
+                            document.getElementById('btnKamera').classList.add('hidden');
+                        } else {
+                            ubahStatusMsg("Waktu Terverifikasi. Silakan Verifikasi Lokasi.", "text-modernBlue"); 
+                            document.getElementById('btnLokasi').classList.remove('hidden'); 
+                            document.getElementById('btnKamera').classList.add('hidden');
+                        }
+                    } else { 
+                        document.getElementById('pelatihanDisplay').innerText = "Tidak Ada Sesi"; 
+                        document.getElementById('sesiDisplay').innerText = "-"; 
+                        document.getElementById('waktuDisplay').innerText = "DITUTUP"; 
+                        ubahStatusMsg("❌ Sesi belum dimulai atau lewat hari.", "text-red-500"); 
+                        document.getElementById('btnLokasi').classList.add('hidden');
+                        document.getElementById('btnKamera').classList.add('hidden');
+                    } 
+                } else { 
+                    document.getElementById('pelatihanDisplay').innerText = "Kosong"; 
+                    ubahStatusMsg("❌ Tidak ada jadwal aktif.", "text-red-500"); 
+                    document.getElementById('btnLokasi').classList.add('hidden');
+                    document.getElementById('btnKamera').classList.add('hidden');
+                } 
+            } catch (e) { ubahStatusMsg("Gagal sinkronisasi waktu server.", "text-red-500"); } 
+        }
 
         function verifikasiLokasi() { ubahStatusMsg("Mencari GPS...", "text-modernBlue"); navigator.geolocation.getCurrentPosition( (pos) => { session.lat = pos.coords.latitude; session.lng = pos.coords.longitude; const c = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin((session.lat - TARGET_LAT)*Math.PI/360), 2) + Math.cos(TARGET_LAT*Math.PI/180)*Math.cos(session.lat*Math.PI/180)*Math.pow(Math.sin((session.lng - TARGET_LNG)*Math.PI/360), 2))); const jarak = Math.floor(6371e3 * c); if (jarak <= RADIUS_MAX) { ubahStatusMsg("✅ Radius Valid.", "text-green-600"); document.getElementById('btnKamera').classList.remove('hidden'); document.getElementById('btnKamera').classList.replace('opacity-50', 'bg-modernBlue'); document.getElementById('btnKamera').disabled = false; } else ubahStatusMsg(`❌ Terlalu Jauh (${jarak}m).`, "text-red-500"); }, (e) => { ubahStatusMsg("Izinkan GPS browser.", "text-red-500"); }, { enableHighAccuracy: true } ); }
 
