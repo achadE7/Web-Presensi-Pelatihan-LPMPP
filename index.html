@@ -15,7 +15,7 @@
 
     <div id="mainWadah" class="w-full max-w-md bg-white rounded-[28px] shadow-sm overflow-hidden p-8 relative transition-all duration-500 ease-in-out">
 
-        <!-- HALAMAN LOGIN -->
+        <!-- LAYER 1: HALAMAN LOGIN -->
         <div id="loginScreen" class="block">
             <div class="flex flex-col items-center mb-8">
                 <img src="https://i.ibb.co.com/KphQrZDB/Logo-LPMPP-ULM.png" alt="Logo LPMPP" class="w-24 h-28 object-contain mb-4"> 
@@ -34,10 +34,11 @@
             </div>
         </div>
 
-        <!-- HALAMAN REGISTER MANDIRI & BIODATA -->
+        <!-- LAYER 11: HALAMAN REGISTER MANDIRI & BIODATA -->
         <div id="registerScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-extrabold text-modernDark mb-1">Pendaftaran & Biodata</h2>
             <p class="text-xs text-slate-500 mb-4">Lengkapi data diri Anda di bawah ini.</p>
+
             <div class="overflow-y-auto max-h-[60vh] pr-2 mb-4 space-y-3">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div><label class="text-[10px] text-slate-500 font-bold">NAMA LENGKAP (Beserta Gelar)*</label><input type="text" id="regNama" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
@@ -66,7 +67,7 @@
             <button onclick="tampilLayar('loginScreen')" class="w-full text-slate-400 text-center text-sm font-bold py-2">Batal & Kembali</button>
         </div>
 
-        <!-- HALAMAN SUKSES PENDAFTARAN & GRUP WA -->
+        <!-- LAYER 15: HALAMAN SUKSES PENDAFTARAN & GRUP WA -->
         <div id="suksesDaftarScreen" class="hidden flex flex-col items-center py-8">
             <h1 class="text-2xl font-extrabold text-modernDark mb-2 text-center">Pendaftaran Berhasil!</h1>
             <p class="text-center text-sm text-slate-500 mb-6" id="msgSuksesDaftar">Anda telah terdaftar di pelatihan.</p>
@@ -78,7 +79,7 @@
             <button id="btnLanjutSetelahDaftar" class="w-full border-2 border-modernBlue text-modernBlue font-bold py-3 rounded-full">Lanjut</button>
         </div>
 
-        <!-- HALAMAN EDIT BIODATA PESERTA LAMA -->
+        <!-- LAYER 13: HALAMAN EDIT BIODATA PESERTA LAMA -->
         <div id="userProfileScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-extrabold text-modernDark mb-1">Pengaturan Profil</h2>
             <p class="text-xs text-slate-500 mb-4">Perbarui biodata Anda jika ada perubahan.</p>
@@ -109,7 +110,7 @@
             <button onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full text-slate-400 text-center text-sm font-bold py-2">Batal & Kembali</button>
         </div>
 
-        <!-- HALAMAN PRESENSI PESERTA -->
+        <!-- LAYER 2: HALAMAN PRESENSI PESERTA -->
         <div id="presensiScreen" class="hidden flex flex-col items-center">
             <p class="text-sm text-slate-500 font-medium">Selamat Datang,</p>
             <h2 id="userNameDisplay" class="text-lg font-bold text-modernDark text-center mb-4">Nama Peserta</h2>
@@ -133,7 +134,7 @@
             <button onclick="bukaKamera()" id="btnKamera" disabled class="w-full bg-modernDark opacity-50 text-white font-bold py-4 rounded-full hidden">2. Buka Kamera Presensi</button>
         </div>
 
-        <!-- HALAMAN RIWAYAT PRESENSI -->
+        <!-- LAYER 17: HALAMAN RIWAYAT PRESENSI SAYA -->
         <div id="myAttendanceScreen" class="hidden flex flex-col w-full">
             <div class="text-4xl mb-2 text-center">📅</div>
             <h2 class="text-xl font-extrabold text-modernDark mb-1 text-center">Riwayat Presensi</h2>
@@ -143,7 +144,7 @@
             <button onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full text-slate-400 text-center text-sm font-bold py-2">Kembali Ke Dasbor</button>
         </div>
 
-        <!-- LAYER 18: FORM UPLOAD PERMOHONAN LUPA PRESENSI (BARU) -->
+        <!-- LAYER 18: FORM UPLOAD PERMOHONAN LUPA PRESENSI -->
         <div id="lupaPresensiFormScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-extrabold text-modernDark mb-1 text-center">Ajukan Lupa Presensi</h2>
             <p class="text-[11px] text-slate-500 mb-4 text-center">Unggah bukti foto bahwa Anda berada di lokasi saat sesi ini berlangsung.</p>
@@ -166,7 +167,7 @@
             <button onclick="tampilLayar('myAttendanceScreen')" class="w-full text-slate-400 text-center text-sm font-bold py-2">Batal</button>
         </div>
 
-        <!-- HALAMAN GRUP WA -->
+        <!-- LAYER 16: HALAMAN GRUP WA SAYA -->
         <div id="myGroupScreen" class="hidden flex flex-col w-full">
             <div class="text-4xl mb-2 text-center">💬</div>
             <h2 class="text-xl font-extrabold text-modernDark mb-1 text-center">Grup WhatsApp</h2>
@@ -176,7 +177,7 @@
             <button onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full text-slate-400 text-center text-sm font-bold py-2">Kembali Ke Dasbor</button>
         </div>
 
-        <!-- KELAS BARU USER LAMA -->
+        <!-- LAYER 12: KELAS BARU USER LAMA -->
         <div id="userEnrollScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-extrabold text-modernDark mb-1">Ikuti Pelatihan Baru</h2>
             <p class="text-xs text-slate-500 mb-6">Pilih program pelatihan LPMPP tambahan yang ingin Anda ikuti.</p>
@@ -188,14 +189,14 @@
             <button onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full text-slate-400 text-center text-sm font-bold py-2">Kembali</button>
         </div>
 
-        <!-- HALAMAN MATERI -->
+        <!-- LAYER 14: HALAMAN MATERI / REWARD SAYA -->
         <div id="myRewardScreen" class="hidden flex flex-col w-full">
             <div class="text-4xl mb-2 text-center">📚</div><h2 class="text-xl font-extrabold text-modernDark mb-1 text-center">Materi Pelatihan</h2><p class="text-xs text-slate-500 mb-6 text-center">Daftar materi eksklusif yang berhasil Anda buka berdasarkan riwayat presensi.</p>
             <div id="loadingRewardKu" class="text-center text-sm font-bold text-modernBlue my-4">⏳ Memeriksa data...</div><div id="wadahRewardKu" class="w-full space-y-3 mb-6 overflow-y-auto max-h-[50vh] pr-2"></div>
             <button onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full text-slate-400 text-center text-sm font-bold py-2">Kembali Ke Dasbor</button>
         </div>
 
-        <!-- KAMERA & SUKSES -->
+        <!-- LAYER 3, 4: KAMERA & SUKSES -->
         <div id="kameraScreen" class="hidden flex flex-col items-center">
             <h2 class="text-lg font-bold text-modernDark mb-4">Posisikan Wajah Anda</h2>
             <div class="w-full h-64 bg-black rounded-2xl overflow-hidden mb-4 relative"><video id="video" class="w-full h-full object-cover" autoplay playsinline></video><canvas id="canvas" class="hidden"></canvas></div>
@@ -278,6 +279,7 @@
 
     </div>
 
+    <!-- LOGIKA JAVASCRIPT MASTER UTUH -->
     <script>
         const API_URL = "https://script.google.com/macros/s/AKfycbzkeGOglouiCbiAq5VNRXt7Wfie2NDQ8DqcJnMMZ-cOwkeokbRGCpL-W4gizcGn0IdZ/exec";
         let TARGET_LAT = -3.29687; let TARGET_LNG = 114.58823; let RADIUS_MAX = 50; 
@@ -292,9 +294,6 @@
 
         function cekPilihPelatihanJadwal() { const sel = document.getElementById('jadwalPelatihanSelect').value; const inp = document.getElementById('jadwalPelatihanInput'); if (sel === "BARU") { inp.classList.remove('hidden'); inp.value = ""; } else { inp.classList.add('hidden'); } }
 
-        // ===================================
-        // VALIDASI LUPA PRESENSI (ADMIN)
-        // ===================================
         async function muatLupaPresensiAdmin() {
             tampilLayar('adminLupaPresensiScreen'); const wadah = document.getElementById('wadahLupaPresensiAdmin'); wadah.innerHTML = `<div class="text-center text-sm font-bold text-modernBlue my-4">⏳ Memuat data...</div>`;
             try {
@@ -303,18 +302,7 @@
                     let html = "";
                     res.data.forEach(item => {
                         const wkt = new Date(item.waktu); const wktFormat = wkt.getDate() + "/" + (wkt.getMonth()+1) + "/" + wkt.getFullYear() + " " + String(wkt.getHours()).padStart(2, '0') + ":" + String(wkt.getMinutes()).padStart(2, '0');
-                        html += `
-                        <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm mb-3">
-                            <p class="text-[10px] font-bold text-modernBlue uppercase mb-1">${item.pelatihan}</p>
-                            <h3 class="text-md font-extrabold text-slate-800 mb-1">${item.username}</h3>
-                            <p class="text-xs text-slate-500 mb-2">${item.hari} • ${item.sesi}</p>
-                            <p class="text-[10px] text-slate-400 mb-3">📅 Tgl Pengajuan: ${wktFormat}</p>
-                            <a href="${item.foto}" target="_blank" class="w-full block bg-slate-100 text-modernDark text-center font-bold py-2 rounded-lg text-xs mb-3 hover:bg-slate-200">📸 Lihat Bukti Foto</a>
-                            <div class="flex space-x-2">
-                                <button onclick="prosesLupaPresensiAdmin(${item.row}, 'Approved')" class="w-1/2 bg-green-500 hover:bg-green-600 text-white rounded-lg py-2 font-bold text-xs shadow-sm">✅ Setujui</button>
-                                <button onclick="prosesLupaPresensiAdmin(${item.row}, 'Rejected')" class="w-1/2 bg-red-500 hover:bg-red-600 text-white rounded-lg py-2 font-bold text-xs shadow-sm">❌ Tolak</button>
-                            </div>
-                        </div>`;
+                        html += `<div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm mb-3"><p class="text-[10px] font-bold text-modernBlue uppercase mb-1">${item.pelatihan}</p><h3 class="text-md font-extrabold text-slate-800 mb-1">${item.username}</h3><p class="text-xs text-slate-500 mb-2">${item.hari} • ${item.sesi}</p><p class="text-[10px] text-slate-400 mb-3">📅 Tgl Pengajuan: ${wktFormat}</p><a href="${item.foto}" target="_blank" class="w-full block bg-slate-100 text-modernDark text-center font-bold py-2 rounded-lg text-xs mb-3 hover:bg-slate-200">📸 Lihat Bukti Foto</a><div class="flex space-x-2"><button onclick="prosesLupaPresensiAdmin(${item.row}, 'Approved')" class="w-1/2 bg-green-500 hover:bg-green-600 text-white rounded-lg py-2 font-bold text-xs shadow-sm">✅ Setujui</button><button onclick="prosesLupaPresensiAdmin(${item.row}, 'Rejected')" class="w-1/2 bg-red-500 hover:bg-red-600 text-white rounded-lg py-2 font-bold text-xs shadow-sm">❌ Tolak</button></div></div>`;
                     });
                     wadah.innerHTML = html;
                 } else { wadah.innerHTML = `<p class="text-center text-slate-500 text-sm mt-4">Belum ada permohonan lupa presensi.</p>`; }
@@ -325,28 +313,20 @@
             if(!confirm("Yakin ingin " + (status==="Approved"?"MENYETUJUI":"MENOLAK") + " permohonan ini?")) return;
             try {
                 const res = await (await fetch(API_URL, {method:"POST", body:JSON.stringify({action:"process_lupa_presensi", rowIndex: row, keputusan: status})})).json();
-                alert(res.message); muatLupaPresensiAdmin(); // Reload list
+                alert(res.message); muatLupaPresensiAdmin(); 
             } catch(e) { alert("Gagal memproses permohonan."); }
         }
 
-        // ===================================
-        // AJUKAN LUPA PRESENSI (USER)
-        // ===================================
         function bukaFormLupaPresensi(pel, hari, sesi) {
-            document.getElementById('lpPelatihan').innerText = pel;
-            document.getElementById('lpHariSesi').innerText = hari + " - " + sesi;
-            window.lpData = {pelatihan: pel, hari: hari, sesi: sesi};
-            tampilLayar('lupaPresensiFormScreen');
+            document.getElementById('lpPelatihan').innerText = pel; document.getElementById('lpHariSesi').innerText = hari + " - " + sesi;
+            window.lpData = {pelatihan: pel, hari: hari, sesi: sesi}; tampilLayar('lupaPresensiFormScreen');
         }
 
         async function submitLupaPresensi() {
-            const fileInput = document.getElementById('lpFileInput');
-            if(!fileInput.files[0]) return alert("Silakan unggah foto bukti kehadiran terlebih dahulu!");
-            
+            const fileInput = document.getElementById('lpFileInput'); if(!fileInput.files[0]) return alert("Silakan unggah foto bukti kehadiran terlebih dahulu!");
             const file = fileInput.files[0]; const reader = new FileReader();
             reader.onloadend = async function() {
-                const base64data = reader.result.split(',')[1];
-                const btn = document.getElementById('btnSubmitLP'); btn.innerText = "⏳ Mengirim..."; btn.disabled = true;
+                const base64data = reader.result.split(',')[1]; const btn = document.getElementById('btnSubmitLP'); btn.innerText = "⏳ Mengirim..."; btn.disabled = true;
                 try {
                     const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "submit_lupa_presensi", username: session.username, pelatihan: window.lpData.pelatihan, hari: window.lpData.hari, sesi: window.lpData.sesi, imageBase64: base64data }) })).json();
                     alert(res.message); bukaHalamanRiwayatKu();
@@ -362,8 +342,20 @@
                 const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_my_attendance_full", username: session.username }) })).json();
                 document.getElementById('loadingRiwayatKu').classList.add('hidden'); const wadah = document.getElementById('wadahRiwayatKu');
                 if (res.status === "success" && res.data.length > 0) {
+                    const now = new Date();
+                    const todayStr = now.getFullYear() + "-" + String(now.getMonth()+1).padStart(2, '0') + "-" + String(now.getDate()).padStart(2, '0');
+                    const currentMins = now.getHours() * 60 + now.getMinutes();
+
                     res.data.forEach(item => {
-                        let statusBadge = ""; let actionBtn = "";
+                        let statusBadge = ""; let actionBtn = ""; let isBelumMulai = false;
+
+                        if (item.tanggal && item.tanggal !== "-" && item.jam_mulai) {
+                            const [sH, sM] = item.jam_mulai.split(':').map(Number);
+                            const startMins = sH * 60 + sM;
+                            if (item.tanggal > todayStr) { isBelumMulai = true; } 
+                            else if (item.tanggal === todayStr && startMins > currentMins) { isBelumMulai = true; }
+                        }
+
                         if (item.status === "Hadir") {
                             statusBadge = `<span class="bg-green-100 text-green-700 text-[10px] font-extrabold px-2 py-1 rounded-md border border-green-200 shadow-sm">✅ Hadir</span>`;
                         } else if (item.status === "Pending") {
@@ -371,15 +363,21 @@
                         } else if (item.status === "Ditolak") {
                             statusBadge = `<span class="bg-gray-100 text-gray-500 text-[10px] font-extrabold px-2 py-1 rounded-md border border-gray-200 shadow-sm">❌ Pengajuan Ditolak</span>`;
                         } else {
-                            // Belum Hadir (Merah) -> Bisa Ajukan Lupa Presensi
-                            statusBadge = `<span class="bg-red-100 text-red-600 text-[10px] font-extrabold px-2 py-1 rounded-md border border-red-200 shadow-sm">❌ Belum Hadir</span>`;
-                            actionBtn = `<button onclick="bukaFormLupaPresensi('${item.pelatihan}', '${item.hari}', '${item.sesi}')" class="w-full mt-3 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-[10px] font-bold py-2 rounded-lg transition-colors">Ajukan Lupa Presensi</button>`;
+                            if (isBelumMulai) {
+                                statusBadge = `<span class="bg-slate-100 text-slate-500 text-[10px] font-extrabold px-2 py-1 rounded-md border border-slate-200 shadow-sm">⏳ Belum Mulai</span>`;
+                            } else {
+                                statusBadge = `<span class="bg-red-100 text-red-600 text-[10px] font-extrabold px-2 py-1 rounded-md border border-red-200 shadow-sm">❌ Belum Hadir</span>`;
+                                actionBtn = `<button onclick="bukaFormLupaPresensi('${item.pelatihan}', '${item.hari}', '${item.sesi}')" class="w-full mt-3 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-[10px] font-bold py-2 rounded-lg transition-colors">Ajukan Lupa Presensi</button>`;
+                            }
                         }
 
+                        let jamText = (item.jam_mulai && item.jam_selesai && item.jam_mulai !== "-") ? `⏰ ${item.jam_mulai} - ${item.jam_selesai}` : ``;
+
                         wadah.innerHTML += `
-                        <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm flex flex-col">
+                        <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm flex flex-col hover:border-modernBlue transition-colors">
                             <p class="text-[10px] font-bold text-modernBlue uppercase mb-1">${item.pelatihan}</p>
-                            <h3 class="text-md font-extrabold text-slate-800 mb-2">${item.hari} • ${item.sesi}</h3>
+                            <h3 class="text-md font-extrabold text-slate-800 mb-0">${item.hari} • ${item.sesi}</h3>
+                            <p class="text-[10px] text-slate-500 font-bold mb-2">${jamText}</p>
                             <div class="flex justify-between items-center pt-2 border-t border-slate-100">
                                 <p class="text-[9px] text-slate-400 font-medium tracking-wider uppercase">${item.tanggal}</p>
                                 ${statusBadge}
@@ -401,7 +399,7 @@
 
         async function bukaModalTambahKelas() { tampilLayar('userEnrollScreen'); const select = document.getElementById('enrollPelatihan'); select.innerHTML = '<option value="">-- Memuat daftar kelas... --</option>'; try { const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_public_pelatihan" }) }); const res = await response.json(); if (res.status === "success" && res.data.length > 0) { select.innerHTML = '<option value="">-- Pilih Kelas Pelatihan --</option>' + res.data.map(p => `<option value="${p}">${p}</option>`).join(''); } else select.innerHTML = '<option value="">Tidak ada pelatihan aktif saat ini</option>'; } catch(e) { select.innerHTML = '<option value="">Gagal menyinkronkan data server</option>'; } }
 
-        async function prosesEnroll() { const pel = document.getElementById('enrollPelatihan').value; const btn = document.getElementById('btnSubmitEnroll'); if(!pel) return alert("Silakan pilih kelas pelatihan!"); btn.innerText = "⏳ Memproses Pendaftaran Kelas..."; btn.disabled = true; try { const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "enroll_training", username: session.username, pelatihan: pel }) }); const res = await response.json(); if (res.status === "success") { tampilLayar('suksesDaftarScreen'); document.getElementById('msgSuksesDaftar').innerText = "Anda berhasil terdaftar di kelas:\n" + pel; if(res.wa_link && res.wa_link.trim() !== "") { document.getElementById('wadahLinkWA').classList.remove('hidden'); document.getElementById('btnLinkWA').href = res.wa_link; } else { document.getElementById('wadahLinkWA').classList.add('hidden'); } document.getElementById('btnLanjutSetelahDaftar').onclick = function() { tampilLayar('presensiScreen'); cekJadwalKeamananTinggi(); }; } else { alert("⚠️ " + res.message); tampilLayar('presensiScreen'); cekJadwalKeamananTinggi(); } } catch(e) { alert("Kesalahan koneksi internet."); } btn.innerText = "➕ Konfirmasi Daftar Kelas"; btn.disabled = false; }
+        async function prosesEnroll() { const pel = document.getElementById('enrollPelatihan').value; const btn = document.getElementById('btnSubmitEnroll'); if(!pel) return alert("Silakan pilih kelas pelatihan!"); btn.innerText = "⏳ Memproses Pendaftaran Kelas..."; btn.disabled = true; try { const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "enroll_training", username: session.username, pelatihan: pel }) }); const res = await response.json(); if (res.status === "success") { tampilLayar('suksesDaftarScreen'); document.getElementById('msgSuksesDaftar').innerText = "Anda berhasil terdaftar di kelas:\n" + pel; if(res.wa_link && res.wa_link.trim() !== "") { document.getElementById('wadahLinkWA').classList.remove('hidden'); document.getElementById('btnLinkWA').href = res.wa_link; } else { document.getElementById('wadahLinkWA').classList.add('hidden'); } document.getElementById('btnLanjutSetelahDaftar').onclick = function() { tampilLayar('presensiScreen'); cekJadwalKeamananTinggi(); }; } else { alert("⚠️ " + res.message); tampilLayar('presensiScreen'); cekJadwalKeamananTinggi(); } } catch(e) { alert("Kesalahan koneksi internet."); } btn.innerText = "Konfirmasi Daftar Kelas"; btn.disabled = false; }
 
         async function bukaHalamanRegister() { tampilLayar('registerScreen'); const select = document.getElementById('regPelatihan'); select.innerHTML = '<option value="">-- Memuat daftar kelas... --</option>'; try { const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_public_pelatihan" }) }); const res = await response.json(); if (res.status === "success" && res.data.length > 0) { select.innerHTML = '<option value="">-- Pilih Kelas Pelatihan --</option>' + res.data.map(p => `<option value="${p}">${p}</option>`).join(''); } else select.innerHTML = '<option value="">Tidak ada pelatihan aktif saat ini</option>'; } catch(e) { select.innerHTML = '<option value="">Gagal menyinkronkan data server</option>'; } }
 
