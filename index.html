@@ -244,7 +244,7 @@
                 <div class="sesi-item bg-slate-50 p-4 rounded-xl border border-slate-200 relative"><button onclick="hapusSesi(this)" class="btn-hapus-sesi absolute top-2 right-3 text-red-500 font-extrabold text-lg hidden">×</button><div class="grid grid-cols-2 gap-2 mb-2 mt-1"><input type="text" placeholder="Hari" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm input-hari"><input type="date" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm input-tanggal"></div><input type="text" placeholder="Nama Sesi (cth: Pagi)" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm mb-2 input-sesi"><div class="flex space-x-2 items-center"><input type="time" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm input-mulai"><span class="text-xs font-bold text-slate-400">-</span><input type="time" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm input-selesai"></div></div>
             </div>
             <button onclick="tambahSesiUI()" class="w-full border-2 border-dashed border-modernBlue text-modernBlue font-bold py-3 rounded-xl mb-4 hover:bg-modernContainer">+ Tambah Sesi Lain</button>
-            <div class="flex space-x-2 mb-3"><button onclick="simpanDataAdmin('jadwal_multi')" class="w-2/3 bg-modernBlue text-white font-bold py-4 rounded-xl">Simpan Baru</button><button onclick="hapusJadwalLama()" class="w-1/3 bg-red-100 text-red-600 font-bold py-4 rounded-xl">Hapus</button></div>
+            <div class="flex space-x-2 mb-3"><button onclick="simpanDataAdmin('jadwal_multi')" class="w-2/3 bg-modernBlue text-white font-bold py-4 rounded-xl">Simpan Baru</button><button onclick="hapusJadwalLama()" class="w-1/3 bg-red-100 text-red-600 font-bold py-4 rounded-xl">🗑️ Hapus</button></div>
             <button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2">Kembali Ke Dasbor</button>
         </div>
 
@@ -252,7 +252,7 @@
         <div id="adminPesertaScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-bold text-modernDark mb-4">Daftar Peserta Pelatihan</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div><div class="flex space-x-2 mb-4"><select id="inputPelatihanPeserta" class="w-2/3 px-4 py-3 rounded-xl border border-slate-300 font-bold bg-white"><option value="">-- Pilih Pelatihan --</option></select><button onclick="tarikDataPeserta()" class="w-1/3 bg-modernDark text-white font-bold rounded-xl text-sm hover:bg-slate-800">Tarik Data</button></div><p class="text-xs text-slate-500 mb-1">Tambah/Hapus Email (Satu per baris):</p><textarea id="areaPeserta" rows="8" class="w-full px-4 py-3 mb-2 rounded-xl border border-slate-300 text-sm" placeholder="user1@email.com&#10;user2@email.com"></textarea><button onclick="simpanDaftarPeserta()" class="w-full bg-modernBlue hover:bg-modernDark text-white font-bold py-3 rounded-xl mb-3">Update Daftar Email</button></div>
+                <div><div class="flex space-x-2 mb-4"><select id="inputPelatihanPeserta" class="w-2/3 px-4 py-3 rounded-xl border border-slate-300 font-bold bg-white"><option value="">-- Pilih Pelatihan --</option></select><button onclick="tarikDataPeserta()" class="w-1/3 bg-modernDark text-white font-bold rounded-xl text-sm hover:bg-slate-800">Tarik Data</button></div><p class="text-xs text-slate-500 mb-1">Tambah/Hapus Email (Satu per baris):</p><textarea id="areaPeserta" rows="8" class="w-full px-4 py-3 mb-2 rounded-xl border border-slate-300 text-sm" placeholder="user1@email.com&#10;user2@email.com"></textarea><button onclick="simpanDaftarPeserta()" class="w-full bg-modernBlue hover:bg-modernDark text-white font-bold py-3 rounded-xl mb-3">💾 Update Daftar Email</button></div>
                 <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex flex-col h-full"><input type="text" id="cariPesertaInput" onkeyup="filterKartuPeserta()" placeholder="Cari Nama, Email, NIP, atau Instansi..." class="hidden w-full px-4 py-2 mb-3 rounded-lg border border-slate-300 text-sm focus:ring-1 focus:ring-modernBlue shadow-sm"><div id="wadahDetailPeserta" class="hidden space-y-3 overflow-y-auto max-h-[45vh] pr-1 flex-grow"></div><p id="teksBantuPeserta" class="text-slate-400 text-sm text-center my-auto">Klik "Tarik Data" untuk melihat detail peserta.</p></div>
             </div><button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2 mt-4">Kembali Ke Dasbor</button>
         </div>
@@ -373,6 +373,24 @@
             } catch (e) { ubahStatusMsg("Gagal sinkronisasi waktu server.", "text-red-500"); } 
         }
 
+        // --- FUNGSI BARU: TOMBOL ANTI-GAGAL BUKA MATERI ---
+        async function bukaAksesMateri(btn, link) {
+            const teksAsli = btn.innerText;
+            btn.innerText = "⏳ Membuka Gembok Drive...";
+            btn.disabled = true;
+            try {
+                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "grant_drive_access", username: session.username, link: link }) });
+                const res = await response.json();
+                if(res.status === "success") {
+                    window.open(link, '_blank');
+                } else { alert("Gagal menghubungi sistem Drive."); }
+            } catch(e) {
+                alert("Koneksi gagal saat meminta izin akses.");
+            }
+            btn.innerText = teksAsli;
+            btn.disabled = false;
+        }
+
         async function bukaHalamanRewardKu() { 
             tampilLayar('myRewardScreen'); 
             document.getElementById('wadahRewardKu').innerHTML = ""; 
@@ -385,13 +403,13 @@
                 const wadah = document.getElementById('wadahRewardKu'); 
                 if (res.status === "success" && res.data.length > 0) { 
                     res.data.forEach(item => { 
-                        wadah.innerHTML += `<div class="bg-amber-50 border border-amber-200 p-4 rounded-xl shadow-sm flex flex-col items-center text-center"><span class="text-3xl mb-2">📚</span><h3 class="text-sm font-extrabold text-modernDark mb-1 uppercase">${item.pelatihan}</h3><a href="${item.link}" target="_blank" class="mt-2 w-full bg-amber-500 hover:bg-amber-600 text-white text-[11px] font-bold py-3 rounded-lg transition-colors">Unduh Materi</a></div>`; 
+                        // TOMBOL INI SEKARANG MEMANGGIL FUNGSI bukaAksesMateri()
+                        wadah.innerHTML += `<div class="bg-amber-50 border border-amber-200 p-4 rounded-xl shadow-sm flex flex-col items-center text-center"><span class="text-3xl mb-2">📚</span><h3 class="text-sm font-extrabold text-modernDark mb-1 uppercase">${item.pelatihan}</h3><button onclick="bukaAksesMateri(this, '${item.link}')" class="mt-2 w-full bg-amber-500 hover:bg-amber-600 text-white text-[11px] font-bold py-3 rounded-lg transition-colors">Buka & Unduh Materi</button></div>`; 
                     }); 
                 } else { 
                     wadah.innerHTML = `<p class="text-center text-slate-500 text-sm">Belum ada materi/reward yang terbuka. Silakan penuhi target presensi terlebih dahulu.</p>`; 
                 } 
             } catch (e) { 
-                console.error("Error mengambil materi:", e);
                 document.getElementById('loadingRewardKu').innerText = "Gagal memuat data materi."; 
                 document.getElementById('loadingRewardKu').classList.remove('hidden');
             } 
