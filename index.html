@@ -187,19 +187,19 @@
         <div id="kameraScreen" class="hidden flex flex-col items-center">
             <h2 class="text-lg font-bold text-modernDark mb-4">Posisikan Wajah Anda</h2>
             <div class="w-full h-64 bg-black rounded-2xl overflow-hidden mb-4 relative"><video id="video" class="w-full h-full object-cover" autoplay playsinline></video><canvas id="canvas" class="hidden"></canvas></div>
-            <button onclick="jepretDanKirim()" id="btnJepret" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full">📸 Selfie & Unggah Kehadiran</button>
+            <button onclick="jepretDanKirim()" id="btnJepret" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full">Selfie & Unggah Kehadiran</button>
         </div>
 
         <!-- LAYER 11: SUKSES PRESENSI -->
         <div id="suksesScreen" class="hidden flex flex-col items-center py-8">
-            <h1 class="text-2xl font-extrabold text-modernDark mb-2">Presensi Berhasil!</h1><p class="text-center text-sm text-slate-500 mb-6">Data kehadiran telah tercatat di server.</p>
+            <h1 class="text-2xl font-extrabold text-modernDark mb-2 mt-4">Presensi Berhasil!</h1><p class="text-center text-sm text-slate-500 mb-6">Data kehadiran telah tercatat di server.</p>
             <div id="rewardBox" class="hidden w-full bg-amber-50 border border-amber-200 rounded-2xl p-5 mb-6 flex flex-col items-center"><span class="text-4xl mb-2">📚</span><h3 class="text-sm font-extrabold text-amber-600 mb-1">REWARD TERBUKA!</h3><p class="text-[11px] text-center text-amber-700 mb-4 font-medium">Anda telah mencapai target presensi minimum. Akses materi eksklusif sekarang.</p><a id="btnReward" href="#" target="_blank" class="w-full bg-amber-500 text-white text-center font-bold py-3 rounded-xl">Unduh Materi</a></div>
             <button onclick="location.reload()" class="w-full border-2 border-modernBlue text-modernBlue font-bold py-3 rounded-full">Kembali Ke Awal</button>
         </div>
 
         <!-- LAYER 12: SUKSES PENDAFTARAN -->
         <div id="suksesDaftarScreen" class="hidden flex flex-col items-center py-8">
-            <h1 class="text-2xl font-extrabold text-modernDark mb-2 text-center">Pendaftaran Berhasil!</h1><p class="text-center text-sm text-slate-500 mb-6" id="msgSuksesDaftar">Anda telah terdaftar di pelatihan.</p>
+            <h1 class="text-2xl font-extrabold text-modernDark mb-2 mt-4 text-center">Pendaftaran Berhasil!</h1><p class="text-center text-sm text-slate-500 mb-6" id="msgSuksesDaftar">Anda telah terdaftar di pelatihan.</p>
             <div id="wadahLinkWA" class="hidden w-full mb-6"><p class="text-[11px] text-center text-slate-500 mb-2 font-bold uppercase tracking-wider">Langkah Selanjutnya:</p><div class="bg-red-50 border border-red-200 p-3 rounded-xl mb-3 shadow-sm"><p class="text-[9px] text-red-600 font-bold text-center leading-tight">⚠️ DILARANG MENYEBARKAN LINK GRUP WHATSAPP INI, TERMASUK KE SESAMA PESERTA. PESERTA HANYA DIIZINKAN MASUK KE DALAM GRUP MELALUI SISTEM INI.</p></div><a id="btnLinkWA" href="#" target="_blank" class="w-full flex items-center justify-center space-x-2 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-4 rounded-2xl shadow-md transition-colors"><span class="text-2xl">💬</span><span>Gabung Grup WhatsApp</span></a></div>
             <button id="btnLanjutSetelahDaftar" class="w-full border-2 border-modernBlue text-modernBlue font-bold py-3 rounded-full">Lanjut</button>
         </div>
@@ -252,7 +252,7 @@
         <div id="adminPesertaScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-bold text-modernDark mb-4">Daftar Peserta Pelatihan</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div><div class="flex space-x-2 mb-4"><select id="inputPelatihanPeserta" class="w-2/3 px-4 py-3 rounded-xl border border-slate-300 font-bold bg-white"><option value="">-- Pilih Pelatihan --</option></select><button onclick="tarikDataPeserta()" class="w-1/3 bg-modernDark text-white font-bold rounded-xl text-sm hover:bg-slate-800">Tarik Data</button></div><p class="text-xs text-slate-500 mb-1">Tambah/Hapus Email (Satu per baris):</p><textarea id="areaPeserta" rows="8" class="w-full px-4 py-3 mb-2 rounded-xl border border-slate-300 text-sm" placeholder="user1@email.com&#10;user2@email.com"></textarea><button onclick="simpanDaftarPeserta()" class="w-full bg-modernBlue hover:bg-modernDark text-white font-bold py-3 rounded-xl mb-3">💾 Update Daftar Email</button></div>
+                <div><div class="flex space-x-2 mb-4"><select id="inputPelatihanPeserta" class="w-2/3 px-4 py-3 rounded-xl border border-slate-300 font-bold bg-white"><option value="">-- Pilih Pelatihan --</option></select><button onclick="tarikDataPeserta()" class="w-1/3 bg-modernDark text-white font-bold rounded-xl text-sm hover:bg-slate-800">Tarik Data</button></div><p class="text-xs text-slate-500 mb-1">Tambah/Hapus Email (Satu per baris):</p><textarea id="areaPeserta" rows="8" class="w-full px-4 py-3 mb-2 rounded-xl border border-slate-300 text-sm" placeholder="user1@email.com&#10;user2@email.com"></textarea><button onclick="simpanDaftarPeserta()" class="w-full bg-modernBlue hover:bg-modernDark text-white font-bold py-3 rounded-xl mb-3">Update Daftar Email</button></div>
                 <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex flex-col h-full"><input type="text" id="cariPesertaInput" onkeyup="filterKartuPeserta()" placeholder="Cari Nama, Email, NIP, atau Instansi..." class="hidden w-full px-4 py-2 mb-3 rounded-lg border border-slate-300 text-sm focus:ring-1 focus:ring-modernBlue shadow-sm"><div id="wadahDetailPeserta" class="hidden space-y-3 overflow-y-auto max-h-[45vh] pr-1 flex-grow"></div><p id="teksBantuPeserta" class="text-slate-400 text-sm text-center my-auto">Klik "Tarik Data" untuk melihat detail peserta.</p></div>
             </div><button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2 mt-4">Kembali Ke Dasbor</button>
         </div>
@@ -315,12 +315,23 @@
 
         async function cekJadwalKeamananTinggi() { 
             document.getElementById('userNameDisplay').innerText = session.nama; 
+            
+            let currentTimeMinutes;
+            let realTodayStr;
+
             try { 
                 const timeResponse = await fetch("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Makassar"); 
                 const timeData = await timeResponse.json(); 
-                const currentTimeMinutes = (timeData.hour * 60) + timeData.minute; 
-                const realTodayStr = `${timeData.year}-${String(timeData.month).padStart(2, '0')}-${String(timeData.day).padStart(2, '0')}`; 
-                
+                currentTimeMinutes = (timeData.hour * 60) + timeData.minute; 
+                realTodayStr = `${timeData.year}-${String(timeData.month).padStart(2, '0')}-${String(timeData.day).padStart(2, '0')}`; 
+            } catch (errTime) { 
+                console.warn("TimeAPI offline. Menggunakan jam lokal perangkat.");
+                const now = new Date();
+                currentTimeMinutes = (now.getHours() * 60) + now.getMinutes();
+                realTodayStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+            }
+
+            try {
                 const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_jadwal", username: session.username }) }); 
                 const res = await response.json(); 
                 
@@ -370,10 +381,9 @@
                     document.getElementById('pelatihanDisplay').innerText = "Kosong"; ubahStatusMsg("❌ Tidak ada jadwal aktif.", "text-red-500"); 
                     document.getElementById('btnLokasi').classList.add('hidden'); document.getElementById('btnKamera').classList.add('hidden');
                 } 
-            } catch (e) { ubahStatusMsg("Gagal sinkronisasi waktu server.", "text-red-500"); } 
+            } catch (e) { ubahStatusMsg("Gagal memuat jadwal dari database.", "text-red-500"); } 
         }
 
-        // --- FUNGSI BARU: TOMBOL ANTI-GAGAL BUKA MATERI ---
         async function bukaAksesMateri(btn, link) {
             const teksAsli = btn.innerText;
             btn.innerText = "⏳ Membuka Gembok Drive...";
@@ -403,13 +413,13 @@
                 const wadah = document.getElementById('wadahRewardKu'); 
                 if (res.status === "success" && res.data.length > 0) { 
                     res.data.forEach(item => { 
-                        // TOMBOL INI SEKARANG MEMANGGIL FUNGSI bukaAksesMateri()
                         wadah.innerHTML += `<div class="bg-amber-50 border border-amber-200 p-4 rounded-xl shadow-sm flex flex-col items-center text-center"><span class="text-3xl mb-2">📚</span><h3 class="text-sm font-extrabold text-modernDark mb-1 uppercase">${item.pelatihan}</h3><button onclick="bukaAksesMateri(this, '${item.link}')" class="mt-2 w-full bg-amber-500 hover:bg-amber-600 text-white text-[11px] font-bold py-3 rounded-lg transition-colors">Buka & Unduh Materi</button></div>`; 
                     }); 
                 } else { 
                     wadah.innerHTML = `<p class="text-center text-slate-500 text-sm">Belum ada materi/reward yang terbuka. Silakan penuhi target presensi terlebih dahulu.</p>`; 
                 } 
             } catch (e) { 
+                console.error("Error mengambil materi:", e);
                 document.getElementById('loadingRewardKu').innerText = "Gagal memuat data materi."; 
                 document.getElementById('loadingRewardKu').classList.remove('hidden');
             } 
