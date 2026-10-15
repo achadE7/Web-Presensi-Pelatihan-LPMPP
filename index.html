@@ -148,6 +148,7 @@
                         <p class="text-[10px] font-medium text-slate-500 leading-relaxed mt-0.5">Pastikan Anda telah <b>mengizinkan pemakaian Lokasi (GPS) dan Kamera</b> pada pengaturan browser di HP atau Laptop/PC Anda.</p>
                     </div>
                 </div>
+			</div>
 
             <div class="px-5 -mt-7 relative z-10 space-y-4">
                 <!-- KARTU 1: TANGGAL (KLIK ARROW KE KALENDER) & KELAS AKTIF -->
@@ -658,7 +659,7 @@
             const elMonth = document.getElementById('currentMonthYear');
             if (elNum) elNum.innerText = String(now.getDate()).padStart(2, '0');
             if (elDay) elDay.innerText = namaHariIndo[now.getDay()];
-            if (elMonth) elMonth.innerText = `${namaBulanLengkap[now.getMonth()]}${now.getFullYear()}`;
+            if (elMonth) elMonth.innerText = `${namaBulanLengkap[now.getMonth()]} ${now.getFullYear()}`;
         }
         setTanggalHariIni();
 
@@ -669,7 +670,7 @@
             if (!tglStr) return "";
             const parts = tglStr.split('-');
             if (parts.length !== 3) return tglStr;
-            return `${parseInt(parts[2], 10)} ${namaBulan[parseInt(parts[1], 10) - 1]}${parts[0]}`;
+            return `${parseInt(parts[2], 10)} ${namaBulan[parseInt(parts[1], 10) - 1]} ${parts[0]}`;
         }
 
         function parseTglIndo(indoStr) {
@@ -987,7 +988,7 @@
         }
 
         function renderKalenderPeserta() {
-            document.getElementById('judulBulanKalender').innerText = `${namaBulanLengkap[calMonth]}${calYear}`;
+            document.getElementById('judulBulanKalender').innerText = `${namaBulanLengkap[calMonth]} ${calYear}`;
             const grid = document.getElementById('gridTanggalKalender');
             const firstDay = new Date(calYear, calMonth, 1).getDay();
             const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
