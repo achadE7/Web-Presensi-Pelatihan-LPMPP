@@ -58,7 +58,7 @@
                     <div><label class="text-[10px] text-slate-500 font-bold">PENDIDIKAN TERAKHIR</label><select id="regPendidikan" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Pendidikan Terakhir</option><option value="D3">D3</option><option value="D4">D4</option><option value="S1">S1</option><option value="S2">S2</option><option value="S3">S3</option></select></div>
                 </div>
                 <div class="mt-2"><label class="text-[10px] text-slate-500 font-bold">ALAMAT LENGKAP</label><textarea id="regAlamat" rows="2" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></textarea></div>
-
+                
                 <div class="mt-3 bg-modernContainer p-4 rounded-xl border border-modernBlue border-opacity-30">
                     <label class="text-[10px] font-extrabold text-modernDark uppercase tracking-wider block mb-1">PILIH PELATIHAN (OPSIONAL / BISA DIPILIH NANTI):</label>
                     <p class="text-[10px] text-slate-500 mb-3">Klik tombol "Daftar" pada kotak pelatihan jika ingin langsung mendaftar kelas, atau kosongkan untuk memilih nanti setelah login.</p>
@@ -116,16 +116,16 @@
 
             <div class="w-full bg-white border border-slate-100 shadow-sm rounded-2xl p-6 flex flex-col items-center mb-4 mt-2">
                 <p class="text-[11px] font-bold text-modernBlue tracking-wider mb-2">KELAS AKTIF SAAT INI</p>
-                <h3 id="pelatihanDisplay" class="text-xl font-extrabold text-modernDark text-center leading-tight mb-1">Mencari Jadwal...</h3>
-                <p id="sesiDisplay" class="text-sm text-slate-500 font-medium mb-3">-</p>
-                <div class="bg-red-50 px-3 py-1 rounded-lg"><p id="waktuDisplay" class="text-xs font-bold text-red-500">Batas Absen: -</p></div>
+                <h3 id="pelatihanDisplay" class="text-sm font-bold text-slate-500 text-center leading-relaxed">Memeriksa jadwal...</h3>
+                <p id="sesiDisplay" class="text-sm text-slate-500 font-medium mb-3 hidden">-</p>
+                <div id="wadahWaktuDisplay" class="bg-red-50 px-3 py-1 rounded-lg hidden"><p id="waktuDisplay" class="text-xs font-bold text-red-500">Batas Absen: -</p></div>
             </div>
 
             <div class="w-full bg-blue-50 border border-blue-100 rounded-xl px-4 py-2.5 mb-3 text-center">
                 <p class="text-[11px] font-bold text-modernDark">Lakukan Verifikasi Lokasi dan Selfie untuk melakukan presensi</p>
             </div>
 
-            <p id="statusMsg" class="text-sm font-semibold text-center mb-5 px-2">Memeriksa keamanan jam server...</p>
+            <p id="statusMsg" class="text-sm font-semibold text-center mb-5 px-2 hidden"></p>
             <button onclick="verifikasiLokasi()" id="btnLokasi" class="w-full bg-slate-200 text-slate-700 font-bold py-4 rounded-full mb-3 hidden">1. Verifikasi Lokasi GPS</button>
             <button onclick="bukaKamera()" id="btnKamera" disabled class="w-full bg-modernDark opacity-50 text-white font-bold py-4 rounded-full hidden">2. Buka Kamera Presensi</button>
         </div>
@@ -385,7 +385,7 @@
             const d = parseInt(parts[2], 10);
             const m = parseInt(parts[1], 10) - 1;
             const y = parts[0];
-            return `${d} ${namaBulan[m]} ${y}`;
+            return `${d} ${namaBulan[m]}${y}`;
         }
 
         function parseTglIndo(indoStr) {
@@ -507,7 +507,6 @@
                             toggleTempatInput();
                         }
 
-                        // Muat sesi yang sudah ada
                         if (found.sesi_list && found.sesi_list.length > 0) {
                             const wadah = document.getElementById('wadahSesi');
                             found.sesi_list.forEach((s, idx) => {
@@ -556,12 +555,32 @@
             if (['adminJadwalScreen', 'adminPesertaScreen', 'adminRewardScreen', 'adminRekapScreen'].includes(idLayar)) muatDaftarPelatihanAdmin();
         }
 
-        function ubahStatusMsg(text, colorClass) { document.getElementById('statusMsg').innerText = text; document.getElementById('statusMsg').className = `text-sm font-semibold text-center mb-5 px-2 ${colorClass}`; }
+        function ubahStatusMsg(text, colorClass) { 
+            const el = document.getElementById('statusMsg');
+            el.innerText = text; 
+            if (!text) {
+                el.className = "hidden";
+            } else {
+                el.className = `text-sm font-semibold text-center mb-5 px-2 ${colorClass}`; 
+            }
+        }
 
         async function login() { const user = document.getElementById('username').value; const pass = document.getElementById('password').value; const msg = document.getElementById('loginMsg'); const btn = document.getElementById('btnLogin'); if(!user || !pass) return; btn.innerText = "Sinkronisasi..."; msg.classList.add('hidden'); try { const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "login", username: user, password: pass }) }); const res = await response.json(); if (res.status === "success") { session.username = user; session.nama = res.nama || user; if(res.role === "admin") { document.getElementById('adminNameDisplay').innerText = session.nama; tampilLayar('adminScreen'); } else { tampilLayar('presensiScreen'); cekJadwalKeamananTinggi(); } } else { msg.innerText = res.message; msg.classList.remove('hidden'); btn.innerText = "Masuk Ke Aplikasi"; } } catch (e) { msg.innerText = "Gagal menghubungi server."; msg.classList.remove('hidden'); btn.innerText = "Masuk Ke Aplikasi"; } }
 
         async function cekJadwalKeamananTinggi() { 
             document.getElementById('userNameDisplay').innerText = session.nama; 
+            const pelEl = document.getElementById('pelatihanDisplay');
+            const sesiEl = document.getElementById('sesiDisplay');
+            const wadahWaktuEl = document.getElementById('wadahWaktuDisplay');
+            const waktuEl = document.getElementById('waktuDisplay');
+
+            pelEl.className = "text-sm font-bold text-slate-500 text-center leading-relaxed";
+            pelEl.innerText = "Memeriksa jadwal...";
+            sesiEl.classList.add('hidden');
+            wadahWaktuEl.classList.add('hidden');
+            ubahStatusMsg("", "");
+            document.getElementById('btnLokasi').classList.add('hidden'); 
+            document.getElementById('btnKamera').classList.add('hidden');
             
             let currentTimeMinutes;
             let realTodayStr;
@@ -581,14 +600,13 @@
             try {
                 const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_jadwal", username: session.username }) }); 
                 const res = await response.json(); 
-                
+
                 if (res.status === "success" && res.enrolled_count === 0) {
-                    document.getElementById('pelatihanDisplay').innerText = "Belum Ada Kelas"; 
-                    document.getElementById('sesiDisplay').innerText = "-"; 
-                    document.getElementById('waktuDisplay').innerText = "-"; 
-                    ubahStatusMsg('Anda belum terdaftar di pelatihan mana pun. Silakan memilih pelatihan di menu "Daftar Kelas"', "text-amber-600"); 
-                    document.getElementById('btnLokasi').classList.add('hidden'); 
-                    document.getElementById('btnKamera').classList.add('hidden');
+                    pelEl.className = "text-sm font-bold text-amber-600 text-center leading-relaxed";
+                    pelEl.innerText = 'Anda belum terdaftar di pelatihan mana pun. Silakan memilih pelatihan di menu "Daftar Kelas"'; 
+                    sesiEl.classList.add('hidden'); 
+                    wadahWaktuEl.classList.add('hidden'); 
+                    ubahStatusMsg("", ""); 
                     return;
                 }
 
@@ -623,9 +641,12 @@
                         session.targetRadius = parseFloat(jadwalAktif.radius) || RADIUS_MAX;
                         session.mode = jadwalAktif.mode || "Offline";
 
-                        document.getElementById('pelatihanDisplay').innerText = jadwalAktif.pelatihan; 
-                        document.getElementById('sesiDisplay').innerText = `${jadwalAktif.hari} — ${jadwalAktif.sesi} (${session.mode})`; 
-                        document.getElementById('waktuDisplay').innerText = `Batas: ${jadwalAktif.jam_mulai} -${jadwalAktif.jam_selesai}`; 
+                        pelEl.className = "text-xl font-extrabold text-modernDark text-center leading-tight mb-1";
+                        pelEl.innerText = jadwalAktif.pelatihan; 
+                        sesiEl.innerText = `${jadwalAktif.hari} — ${jadwalAktif.sesi} (${session.mode})`; 
+                        sesiEl.classList.remove('hidden');
+                        waktuEl.innerText = `Batas: ${jadwalAktif.jam_mulai} -${jadwalAktif.jam_selesai}`; 
+                        wadahWaktuEl.classList.remove('hidden');
                         
                         if(jadwalAktif.sudah_hadir) {
                             ubahStatusMsg("✅ Anda sudah melakukan presensi di sesi ini.", "text-green-600"); 
@@ -637,16 +658,26 @@
                             document.getElementById('btnKamera').classList.add('hidden');
                         }
                     } else { 
-                        document.getElementById('pelatihanDisplay').innerText = "Tidak Ada Sesi"; document.getElementById('sesiDisplay').innerText = "-"; document.getElementById('waktuDisplay').innerText = "DITUTUP"; 
-                        ubahStatusMsg("❌ Sesi belum dimulai atau lewat hari.", "text-red-500"); 
-                        document.getElementById('btnLokasi').classList.add('hidden'); document.getElementById('btnKamera').classList.add('hidden');
+                        pelEl.className = "text-sm font-bold text-slate-500 text-center leading-relaxed";
+                        pelEl.innerText = "Belum ada sesi presensi aktif untuk pelatihan Anda."; 
+                        sesiEl.classList.add('hidden'); 
+                        wadahWaktuEl.classList.add('hidden'); 
+                        ubahStatusMsg("", ""); 
                     } 
                 } else { 
-                    document.getElementById('pelatihanDisplay').innerText = "Menunggu Jadwal"; document.getElementById('sesiDisplay').innerText = "-"; document.getElementById('waktuDisplay').innerText = "-"; 
-                    ubahStatusMsg("❌ Anda belum terdaftar di pelatihan mana pun. Silakan memilih pelatihan di menu "Daftar Kelas"", "text-red-500"); 
-                    document.getElementById('btnLokasi').classList.add('hidden'); document.getElementById('btnKamera').classList.add('hidden');
+                    pelEl.className = "text-sm font-bold text-slate-500 text-center leading-relaxed";
+                    pelEl.innerText = "Belum ada sesi presensi aktif untuk pelatihan Anda."; 
+                    sesiEl.classList.add('hidden'); 
+                    wadahWaktuEl.classList.add('hidden'); 
+                    ubahStatusMsg("", ""); 
                 } 
-            } catch (e) { ubahStatusMsg("Gagal memuat jadwal dari database.", "text-red-500"); } 
+            } catch (e) { 
+                pelEl.className = "text-sm font-bold text-red-500 text-center leading-relaxed";
+                pelEl.innerText = "Gagal memuat jadwal dari database."; 
+                sesiEl.classList.add('hidden'); 
+                wadahWaktuEl.classList.add('hidden'); 
+                ubahStatusMsg("", ""); 
+            } 
         }
 
         function verifikasiLokasi() { 
@@ -738,7 +769,6 @@
             } 
         }
 
-        // RIWAYAT PRESENSI DENGAN PROTEKSI LUPA PRESENSI HANYA SETELAH JAM SELESAI LEWAT
         async function bukaHalamanRiwayatKu() {
             tampilLayar('myAttendanceScreen'); document.getElementById('wadahRiwayatKu').innerHTML = ""; document.getElementById('loadingRiwayatKu').classList.remove('hidden');
             
@@ -808,7 +838,6 @@
                                 statusBadge = `<span class="bg-blue-100 text-modernBlue text-[10px] font-extrabold px-2 py-1 rounded-md border border-blue-200 shadow-sm">🟢 Sedang Berlangsung</span>`;
                                 actionBtn = `<p class="text-[10px] text-modernBlue font-semibold mt-2 text-center">Sesi sedang berlangsung. Silakan presensi di halaman utama.</p>`;
                             } else {
-                                // HANYA MUNCUL JIKA JAM PELATIHAN SUDAH TERLEWAT
                                 statusBadge = `<span class="bg-red-100 text-red-600 text-[10px] font-extrabold px-2 py-1 rounded-md border border-red-200 shadow-sm">❌ Belum Hadir</span>`;
                                 actionBtn = `<button onclick="bukaFormLupaPresensi('${item.pelatihan.replace(/'/g, "\\'")}', '${item.hari.replace(/'/g, "\\'")}', '${item.sesi.replace(/'/g, "\\'")}')" class="w-full mt-3 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-[10px] font-bold py-2 rounded-lg transition-colors">Ajukan Lupa Presensi</button>`;
                             }
