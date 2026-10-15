@@ -849,14 +849,41 @@
             bangunDaftarNotifikasi(realTodayStr, currentTimeMinutes);
         }
 
+                function hitungSelisihHari(tglSelesaiStr, todayStr) {
+            if (!tglSelesaiStr || !todayStr) return 0;
+            const dSelesai = new Date(tglSelesaiStr + "T00:00:00");
+            const dToday = new Date(todayStr + "T00:00:00");
+            if (isNaN(dSelesai.getTime()) || isNaN(dToday.getTime())) return 0;
+            return Math.floor((dToday - dSelesai) / (1000 * 60 * 60 * 24));
+        }
+
+        function ambilTanggalAkhirPelatihan(infoObj) {
+            let akhir = infoObj.max_date || "";
+            if (infoObj.info_tanggal && infoObj.info_tanggal !== "-") {
+                const bagianTgl = infoObj.info_tanggal.split("|")[0].trim();
+                if (bagianTgl.includes("-")) {
+                    const dp = bagianTgl.split(/\s*-\s*/);
+                    const parsedEnd = parseTglIndo(dp[dp.length - 1]);
+                    if (parsedEnd && parsedEnd > akhir) akhir = parsedEnd;
+                } else {
+                    const parsedSingle = parseTglIndo(bagianTgl);
+                    if (parsedSingle && parsedSingle > akhir) akhir = parsedSingle;
+                }
+            }
+            return akhir;
+        }
+
         function bangunDaftarNotifikasi(realTodayStr, currentTimeMinutes) {
             const wadah = document.getElementById('wadahNotifikasi');
             const badge = document.getElementById('notifBadgeDot');
             let itemsHtml = [];
 
-            // A. Notifikasi Terlewat Presensi
+            // A. Notifikasi Terlewat Presensi (Maksimal 7 hari setelah tanggal sesi berlalu)
             cachedJadwalPeserta.forEach(j => {
                 if (!j.sudah_hadir && j.tanggal && j.tanggal !== "-") {
+                    const selisihSesi = hitungSelisihHari(j.tanggal, realTodayStr);
+                    if (selisihSesi > 7) return; // Abaikan jika sudah lewat lebih dari 7 hari
+
                     let isLewat = false;
                     if (j.tanggal < realTodayStr) isLewat = true;
                     else if (j.tanggal === realTodayStr && j.jam_selesai && j.jam_selesai !== "-") {
@@ -881,8 +908,13 @@
                 }
             });
 
-            // B. Notifikasi Materi Pelatihan dari Admin & Peringatan Grup WA
+            // B. Notifikasi Materi & Grup WA (Maksimal 7 hari setelah tanggal selesai pelatihan berlalu)
             cachedEnrolledInfo.forEach(info => {
+                const tglAkhirPel = ambilTanggalAkhirPelatihan(info);
+                if (tglAkhirPel !== "" && hitungSelisihHari(tglAkhirPel, realTodayStr) > 7) {
+                    return; // Abaikan pelatihan yang sudah berlalu lebih dari 7 hari
+                }
+
                 if (info.ada_materi) {
                     itemsHtml.push(`
                     <div class="bg-sky-50/70 border border-sky-200 p-3.5 rounded-2xl flex flex-col justify-between">
@@ -919,6 +951,8 @@
                     : `<div class="bg-slate-50 rounded-2xl p-6 text-center"><p class="text-xs text-slate-400">Belum ada notifikasi baru untuk Anda.</p></div>`;
             }
         }
+
+
 
         function bukaHalamanNotifikasi() {
             tampilLayar('notifikasiScreen');
