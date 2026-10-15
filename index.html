@@ -36,7 +36,7 @@
         <div id="registerScreen" class="hidden flex flex-col w-full">
             <h2 class="text-xl font-extrabold text-modernDark mb-1">Pendaftaran & Biodata</h2>
             <p class="text-xs text-slate-500 mb-4">Lengkapi data diri Anda di bawah ini.</p>
-            <div class="overflow-y-auto max-h-[60vh] pr-2 mb-4 space-y-3">
+            <div class="overflow-y-auto max-h-[62vh] pr-2 mb-4 space-y-3">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div><label class="text-[10px] text-slate-500 font-bold">NAMA LENGKAP (Beserta Gelar)*</label><input type="text" id="regNama" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
                     <div><label class="text-[10px] text-slate-500 font-bold">EMAIL AKTIF*</label><input type="email" id="regUser" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></div>
@@ -58,9 +58,17 @@
                     <div><label class="text-[10px] text-slate-500 font-bold">PENDIDIKAN TERAKHIR</label><select id="regPendidikan" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"><option value="">Pilih Pendidikan Terakhir</option><option value="D3">D3</option><option value="D4">D4</option><option value="S1">S1</option><option value="S2">S2</option><option value="S3">S3</option></select></div>
                 </div>
                 <div class="mt-2"><label class="text-[10px] text-slate-500 font-bold">ALAMAT LENGKAP</label><textarea id="regAlamat" rows="2" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"></textarea></div>
-                <div class="mt-2 bg-modernContainer p-3 rounded-lg border border-modernBlue border-opacity-30"><label class="text-[10px] font-bold text-modernBlue">PILIH PELATIHAN (BISA DIPILIH NANTI):</label><select id="regPelatihan" class="w-full mt-1 px-3 py-2 rounded-lg border border-slate-300 text-sm bg-white font-bold text-slate-700"><option value="">-- Memuat daftar kelas... --</option></select></div>
+
+                <div class="mt-3 bg-modernContainer p-4 rounded-xl border border-modernBlue border-opacity-30">
+                    <label class="text-[10px] font-extrabold text-modernDark uppercase tracking-wider block mb-1">PILIH PELATIHAN (OPSIONAL / BISA DIPILIH NANTI):</label>
+                    <p class="text-[10px] text-slate-500 mb-3">Klik tombol "Daftar" pada kotak pelatihan jika ingin langsung mendaftar kelas, atau kosongkan untuk memilih nanti setelah login.</p>
+                    <input type="hidden" id="regPelatihan" value="">
+                    <div id="wadahBoxRegPelatihan" class="grid grid-cols-1 gap-3">
+                        <p class="text-xs text-slate-500 text-center py-2">⏳ Memuat daftar pelatihan...</p>
+                    </div>
+                </div>
             </div>
-            <button onclick="prosesRegister()" id="btnSubmitRegister" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full mb-3 shadow-sm">Simpan Biodata & Daftar</button>
+            <button onclick="prosesRegister()" id="btnSubmitRegister" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full mb-3 shadow-sm">Simpan Biodata & Buat Akun</button>
             <button onclick="tampilLayar('loginScreen')" class="w-full text-slate-400 text-center text-sm font-bold py-2">Batal & Kembali</button>
         </div>
 
@@ -106,13 +114,18 @@
                 <button onclick="bukaHalamanRiwayatKu()" class="col-span-2 text-[10px] bg-purple-50 text-purple-600 border border-purple-200 py-3 rounded-xl font-bold hover:bg-purple-100 shadow-sm flex flex-col items-center justify-center text-center"><span class="text-base mb-1">📅</span>Riwayat Presensi</button>
             </div>
 
-            <div class="w-full bg-white border border-slate-100 shadow-sm rounded-2xl p-6 flex flex-col items-center mb-6 mt-2">
+            <div class="w-full bg-white border border-slate-100 shadow-sm rounded-2xl p-6 flex flex-col items-center mb-4 mt-2">
                 <p class="text-[11px] font-bold text-modernBlue tracking-wider mb-2">KELAS AKTIF SAAT INI</p>
                 <h3 id="pelatihanDisplay" class="text-xl font-extrabold text-modernDark text-center leading-tight mb-1">Mencari Jadwal...</h3>
                 <p id="sesiDisplay" class="text-sm text-slate-500 font-medium mb-3">-</p>
                 <div class="bg-red-50 px-3 py-1 rounded-lg"><p id="waktuDisplay" class="text-xs font-bold text-red-500">Batas Absen: -</p></div>
             </div>
-            <p id="statusMsg" class="text-sm font-semibold text-center mb-6 px-2">Memeriksa keamanan jam server...</p>
+
+            <div class="w-full bg-blue-50 border border-blue-100 rounded-xl px-4 py-2.5 mb-3 text-center">
+                <p class="text-[11px] font-bold text-modernDark">Lakukan Verifikasi Lokasi dan Selfie untuk melakukan presensi</p>
+            </div>
+
+            <p id="statusMsg" class="text-sm font-semibold text-center mb-5 px-2">Memeriksa keamanan jam server...</p>
             <button onclick="verifikasiLokasi()" id="btnLokasi" class="w-full bg-slate-200 text-slate-700 font-bold py-4 rounded-full mb-3 hidden">1. Verifikasi Lokasi GPS</button>
             <button onclick="bukaKamera()" id="btnKamera" disabled class="w-full bg-modernDark opacity-50 text-white font-bold py-4 rounded-full hidden">2. Buka Kamera Presensi</button>
         </div>
@@ -155,14 +168,12 @@
         </div>
 
         <div id="userEnrollScreen" class="hidden flex flex-col w-full">
-            <h2 class="text-xl font-extrabold text-modernDark mb-1">Ikuti Pelatihan Baru</h2>
-            <p class="text-xs text-slate-500 mb-6">Pilih program pelatihan LPMPP tambahan yang ingin Anda ikuti.</p>
-            <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl mb-6">
-                <label class="text-[11px] font-bold text-amber-700 block mb-1">PILIH PELATIHAN AKTIF:*</label>
-                <select id="enrollPelatihan" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm bg-white font-bold text-slate-700"><option value="">-- Memuat daftar kelas... --</option></select>
+            <h2 class="text-xl font-extrabold text-modernDark mb-1 text-center">Daftar Kelas Pelatihan</h2>
+            <p class="text-xs text-slate-500 mb-4 text-center">Pilih program pelatihan LPMPP yang ingin Anda ikuti di bawah ini.</p>
+            <div id="wadahBoxEnrollPelatihan" class="w-full space-y-3 mb-4 overflow-y-auto max-h-[55vh] pr-1">
+                <p class="text-center text-sm font-bold text-modernBlue my-4">⏳ Memuat daftar pelatihan...</p>
             </div>
-            <button onclick="prosesEnroll()" id="btnSubmitEnroll" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full mb-3 shadow-sm">Konfirmasi Daftar Kelas</button>
-            <button onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full text-slate-400 text-center text-sm font-bold py-2">Kembali</button>
+            <button onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full text-slate-400 text-center text-sm font-bold py-2">Kembali Ke Dasbor</button>
         </div>
 
         <div id="myRewardScreen" class="hidden flex flex-col w-full">
@@ -207,7 +218,7 @@
                 <button onclick="muatLupaPresensiAdmin()" class="w-full bg-red-50 border-2 border-red-200 p-5 rounded-2xl flex flex-col items-center justify-center hover:border-red-400 transition-all"><span class="text-3xl mb-1">📝</span><span class="text-xs font-bold text-red-700">Permohonan</span></button>
                 <button onclick="tampilLayar('adminRekapScreen')" class="w-full bg-blue-50 border-2 border-blue-200 p-5 rounded-2xl flex flex-col items-center justify-center hover:border-blue-400 transition-all"><span class="text-3xl mb-1">📋</span><span class="text-xs font-bold text-blue-700">Rekap Absen</span></button>
                 <button onclick="tampilLayar('adminRewardScreen')" class="w-full bg-amber-50 border-2 border-amber-200 p-5 rounded-2xl flex flex-col items-center justify-center hover:border-amber-400 transition-all"><span class="text-3xl mb-1">📚</span><span class="text-xs font-bold text-amber-700">Gamifikasi</span></button>
-                <button onclick="tampilLayar('adminPengaturanScreen')" class="w-full bg-white border-2 border-slate-100 p-5 rounded-2xl flex flex-col items-center justify-center hover:border-modernBlue transition-all"><span class="text-3xl mb-1">⚙️</span><span class="text-xs font-bold text-slate-700">GPS Setup</span></button>
+                <button onclick="tampilLayar('adminPengaturanScreen')" class="w-full bg-white border-2 border-slate-100 p-5 rounded-2xl flex flex-col items-center justify-center hover:border-modernBlue transition-all"><span class="text-3xl mb-1">⚙️</span><span class="text-xs font-bold text-slate-700">GPS Default</span></button>
             </div>
         </div>
 
@@ -234,12 +245,12 @@
         </div>
 
         <div id="adminJadwalScreen" class="hidden flex flex-col w-full">
-            <h2 class="text-xl font-bold text-modernDark mb-4">Buat / Hapus Jadwal</h2>
+            <h2 class="text-xl font-bold text-modernDark mb-4">Buat / Edit Jadwal & Lokasi Pelatihan</h2>
             <select id="jadwalPelatihanSelect" onchange="cekPilihPelatihanJadwal()" class="w-full px-4 py-3 mb-2 rounded-xl border border-slate-300 font-bold text-modernDark bg-slate-50 focus:bg-white"><option value="">-- Pilih Pelatihan --</option><option value="BARU">+ Buat Pelatihan Baru...</option></select>
             <input type="text" id="jadwalPelatihanInput" placeholder="Ketik nama pelatihan baru..." class="hidden w-full px-4 py-3 mb-2 rounded-xl border border-slate-300 font-bold text-modernDark bg-white">
-
+            
             <div class="bg-blue-50 bg-opacity-50 p-4 rounded-xl border border-blue-200 mb-3 space-y-3">
-                <p class="text-[11px] font-extrabold text-modernDark uppercase tracking-wider">Keterangan Pelaksanaan Pelatihan</p>
+                <p class="text-[11px] font-extrabold text-modernDark uppercase tracking-wider">Keterangan Pelaksanaan & Lokasi Pelatihan</p>
                 
                 <div class="grid grid-cols-2 gap-2">
                     <div>
@@ -271,13 +282,53 @@
                         </div>
                     </div>
                 </div>
+
+                <div id="wadahKoordinatPelatihan" class="bg-white p-3 rounded-lg border border-slate-200 space-y-2">
+                    <div class="flex justify-between items-center">
+                        <label class="text-[10px] text-modernDark font-extrabold uppercase">Titik Koordinat Area Presensi (Untuk Sesi Offline)</label>
+                        <button type="button" onclick="ambilLokasiAdminSaatIni()" class="text-[10px] bg-modernContainer text-modernDark font-bold px-2.5 py-1 rounded-md hover:bg-blue-200 transition-colors">📍 Gunakan Lokasi Saya</button>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2">
+                        <div>
+                            <label class="text-[9px] text-slate-400 font-bold block">LATITUDE</label>
+                            <input type="text" id="jadwalLat" value="-3.29687" class="w-full px-2.5 py-1.5 rounded border border-slate-300 text-xs">
+                        </div>
+                        <div>
+                            <label class="text-[9px] text-slate-400 font-bold block">LONGITUDE</label>
+                            <input type="text" id="jadwalLng" value="114.58823" class="w-full px-2.5 py-1.5 rounded border border-slate-300 text-xs">
+                        </div>
+                        <div>
+                            <label class="text-[9px] text-slate-400 font-bold block">RADIUS (METER)</label>
+                            <input type="number" id="jadwalRadius" value="50" class="w-full px-2.5 py-1.5 rounded border border-slate-300 text-xs">
+                        </div>
+                    </div>
+                    <p class="text-[9px] text-slate-400 italic">*Jika sesi diatur sebagai Online, peserta bebas melakukan presensi dari lokasi mana saja.</p>
+                </div>
             </div>
             
             <input type="url" id="jadwalWALink" placeholder="Tautan / Link Grup WhatsApp (Opsional)" class="w-full px-4 py-3 mb-4 rounded-xl border border-green-300 text-sm bg-green-50 placeholder-green-600 focus:bg-white">
             
             <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Daftar Sesi Presensi (Opsional / Bisa Diisi Nanti)</p>
             <div id="wadahSesi" class="space-y-4 mb-4 overflow-y-auto max-h-[35vh] pr-1">
-                <div class="sesi-item bg-slate-50 p-4 rounded-xl border border-slate-200 relative"><button onclick="hapusSesi(this)" class="btn-hapus-sesi absolute top-2 right-3 text-red-500 font-extrabold text-lg hidden">×</button><div class="grid grid-cols-2 gap-2 mb-2 mt-1"><input type="text" placeholder="Hari" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm input-hari"><input type="date" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm input-tanggal"></div><input type="text" placeholder="Nama Sesi (cth: Pagi)" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm mb-2 input-sesi"><div class="flex space-x-2 items-center"><input type="time" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm input-mulai"><span class="text-xs font-bold text-slate-400">-</span><input type="time" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm input-selesai"></div></div>
+                <div class="sesi-item bg-slate-50 p-4 rounded-xl border border-slate-200 relative">
+                    <button onclick="hapusSesi(this)" class="btn-hapus-sesi absolute top-2 right-3 text-red-500 font-extrabold text-lg hidden">×</button>
+                    <div class="grid grid-cols-2 gap-2 mb-2 mt-1">
+                        <input type="text" placeholder="Hari (cth: Hari 1)" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm input-hari">
+                        <input type="date" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm input-tanggal">
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 mb-2">
+                        <input type="text" placeholder="Nama Sesi (cth: Pagi)" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm input-sesi">
+                        <select class="w-full px-3 py-2 rounded-lg border border-slate-300 text-xs font-bold text-slate-700 bg-white input-mode">
+                            <option value="Offline">📍 Offline (Wajib Radius GPS)</option>
+                            <option value="Online">🌐 Online (Bebas Lokasi)</option>
+                        </select>
+                    </div>
+                    <div class="flex space-x-2 items-center">
+                        <input type="time" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm input-mulai">
+                        <span class="text-xs font-bold text-slate-400">-</span>
+                        <input type="time" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm input-selesai">
+                    </div>
+                </div>
             </div>
             <button onclick="tambahSesiUI()" class="w-full border-2 border-dashed border-modernBlue text-modernBlue font-bold py-3 rounded-xl mb-4 hover:bg-modernContainer">Tambah Sesi Lain</button>
             <div class="flex space-x-2 mb-3"><button onclick="simpanDataAdmin('jadwal_multi')" class="w-2/3 bg-modernBlue text-white font-bold py-4 rounded-xl">Simpan Baru</button><button onclick="hapusJadwalLama()" class="w-1/3 bg-red-100 text-red-600 font-bold py-4 rounded-xl">🗑️ Hapus</button></div>
@@ -299,7 +350,13 @@
         </div>
 
         <div id="adminPengaturanScreen" class="hidden flex flex-col w-full">
-            <h2 class="text-xl font-bold text-modernDark mb-4">Pengaturan GPS</h2><input type="text" id="setLat" value="-3.29687" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300"><input type="text" id="setLng" value="114.58823" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300"><input type="number" id="setRadius" value="50" class="w-full px-4 py-3 mb-6 rounded-xl border border-slate-300"><button onclick="simpanDataAdmin('pengaturan')" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full mb-3">Update Parameter</button><button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2">Kembali</button>
+            <h2 class="text-xl font-bold text-modernDark mb-1">Pengaturan GPS Default</h2>
+            <p class="text-xs text-slate-500 mb-4">Titik koordinat standar (LPMPP) yang otomatis menjadi nilai awal saat membuat pelatihan baru.</p>
+            <input type="text" id="setLat" value="-3.29687" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300">
+            <input type="text" id="setLng" value="114.58823" class="w-full px-4 py-3 mb-3 rounded-xl border border-slate-300">
+            <input type="number" id="setRadius" value="50" class="w-full px-4 py-3 mb-6 rounded-xl border border-slate-300">
+            <button onclick="simpanDataAdmin('pengaturan')" class="w-full bg-modernBlue text-white font-bold py-4 rounded-full mb-3">Update Parameter</button>
+            <button onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 font-bold py-2">Kembali</button>
         </div>
 
         <div id="adminRewardScreen" class="hidden flex flex-col w-full">
@@ -311,7 +368,7 @@
     <script>
         const API_URL = "https://script.google.com/macros/s/AKfycbzkeGOglouiCbiAq5VNRXt7Wfie2NDQ8DqcJnMMZ-cOwkeokbRGCpL-W4gizcGn0IdZ/exec";
         let TARGET_LAT = -3.29687; let TARGET_LNG = 114.58823; let RADIUS_MAX = 50; 
-        let session = { username: "", nama: "", pelatihan: "", hari: "", sesi: "", lat: 0, lng: 0 };
+        let session = { username: "", nama: "", pelatihan: "", hari: "", sesi: "", lat: 0, lng: 0, targetLat: -3.29687, targetLng: 114.58823, targetRadius: 50, mode: "Offline" };
         let streamKamera = null; let dataGaleriGlobal = [];
 
         const namaBulan = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
@@ -321,7 +378,6 @@
         function togglePassword(idField, btn) { const el = document.getElementById(idField); if (el.type === "password") { el.type = "text"; btn.innerText = "👁️"; } else { el.type = "password"; btn.innerText = "👁️"; } }
         function updateProdi(prefix) { const fakultas = document.getElementById(prefix + 'Fakultas').value; const prodiSelect = document.getElementById(prefix + 'ProdiSelect'); const prodiInput = document.getElementById(prefix + 'ProdiInput'); prodiSelect.innerHTML = '<option value="">Pilih Program Studi</option>'; if (fakultas === "Lainnya") { prodiSelect.classList.add('hidden'); prodiInput.classList.remove('hidden'); prodiInput.value = ""; } else { prodiSelect.classList.remove('hidden'); prodiInput.classList.add('hidden'); if (prodiMap[fakultas]) { prodiMap[fakultas].forEach(prodi => { prodiSelect.innerHTML += `<option value="${prodi}">${prodi}</option>`; }); } } }
 
-        // FUNGSI FORMAT & PARSE KETERANGAN PELATIHAN (TANGGAL KALENDER & TEMPAT)
         function formatTglIndo(tglStr) {
             if (!tglStr) return "";
             const parts = tglStr.split('-');
@@ -329,7 +385,7 @@
             const d = parseInt(parts[2], 10);
             const m = parseInt(parts[1], 10) - 1;
             const y = parts[0];
-            return `${d} ${namaBulan[m]}${y}`;
+            return `${d} ${namaBulan[m]} ${y}`;
         }
 
         function parseTglIndo(indoStr) {
@@ -355,6 +411,23 @@
 
             if (isOffline) inpOffline.classList.remove('hidden');
             else inpOffline.classList.add('hidden');
+
+            if (isOnline && !isOffline) {
+                document.querySelectorAll('.input-mode').forEach(sel => sel.value = 'Online');
+            } else if (!isOnline && isOffline) {
+                document.querySelectorAll('.input-mode').forEach(sel => sel.value = 'Offline');
+            }
+        }
+
+        function ambilLokasiAdminSaatIni() {
+            if (!navigator.geolocation) return alert("Browser tidak mendukung GPS.");
+            navigator.geolocation.getCurrentPosition(pos => {
+                document.getElementById('jadwalLat').value = pos.coords.latitude.toFixed(6);
+                document.getElementById('jadwalLng').value = pos.coords.longitude.toFixed(6);
+                alert("📍 Titik koordinat lokasi Anda saat ini berhasil dimasukkan!");
+            }, err => {
+                alert("Gagal mengambil lokasi GPS. Pastikan izin lokasi browser aktif.");
+            }, { enableHighAccuracy: true });
         }
 
         function resetKeteranganJadwal() {
@@ -364,7 +437,23 @@
             document.getElementById('tempatOnline').value = "";
             document.getElementById('cekOffline').checked = false;
             document.getElementById('tempatOffline').value = "";
+            document.getElementById('jadwalLat').value = document.getElementById('setLat').value || "-3.29687";
+            document.getElementById('jadwalLng').value = document.getElementById('setLng').value || "114.58823";
+            document.getElementById('jadwalRadius').value = document.getElementById('setRadius').value || "50";
             toggleTempatInput();
+
+            const wadah = document.getElementById('wadahSesi');
+            while (wadah.children.length > 1) {
+                wadah.lastElementChild.remove();
+            }
+            const firstItem = wadah.firstElementChild;
+            if (firstItem) {
+                firstItem.querySelectorAll('input').forEach(inp => inp.value = '');
+                const modeSel = firstItem.querySelector('.input-mode');
+                if (modeSel) modeSel.value = 'Offline';
+                const btnHapus = firstItem.querySelector('.btn-hapus-sesi');
+                if (btnHapus) btnHapus.classList.add('hidden');
+            }
         }
 
         function cekPilihPelatihanJadwal() { 
@@ -383,6 +472,10 @@
                     const found = window.pelatihanData.find(p => p.nama === sel);
                     if (found) {
                         if(waInp) waInp.value = found.wa_link || "";
+                        if(found.lat) document.getElementById('jadwalLat').value = found.lat;
+                        if(found.lng) document.getElementById('jadwalLng').value = found.lng;
+                        if(found.radius) document.getElementById('jadwalRadius').value = found.radius;
+
                         if(found.info && found.info !== "-") {
                             const parts = found.info.split(" | ");
                             parts.forEach(part => {
@@ -413,6 +506,31 @@
                             });
                             toggleTempatInput();
                         }
+
+                        // Muat sesi yang sudah ada
+                        if (found.sesi_list && found.sesi_list.length > 0) {
+                            const wadah = document.getElementById('wadahSesi');
+                            found.sesi_list.forEach((s, idx) => {
+                                let itemEl;
+                                if (idx === 0) {
+                                    itemEl = wadah.firstElementChild;
+                                } else {
+                                    itemEl = wadah.firstElementChild.cloneNode(true);
+                                    wadah.appendChild(itemEl);
+                                }
+                                itemEl.querySelector('.input-hari').value = s.hari || "";
+                                itemEl.querySelector('.input-tanggal').value = s.tanggal && s.tanggal !== "-" ? s.tanggal : "";
+                                itemEl.querySelector('.input-sesi').value = s.sesi || "";
+                                itemEl.querySelector('.input-mulai').value = s.jam_mulai && s.jam_mulai !== "-" ? s.jam_mulai : "";
+                                itemEl.querySelector('.input-selesai').value = s.jam_selesai && s.jam_selesai !== "-" ? s.jam_selesai : "";
+                                if (itemEl.querySelector('.input-mode')) {
+                                    itemEl.querySelector('.input-mode').value = s.mode || "Offline";
+                                }
+                            });
+                            if (found.sesi_list.length > 1) {
+                                document.querySelectorAll('.btn-hapus-sesi').forEach(b => b.classList.remove('hidden'));
+                            }
+                        }
                     }
                 }
             } 
@@ -438,7 +556,7 @@
             if (['adminJadwalScreen', 'adminPesertaScreen', 'adminRewardScreen', 'adminRekapScreen'].includes(idLayar)) muatDaftarPelatihanAdmin();
         }
 
-        function ubahStatusMsg(text, colorClass) { document.getElementById('statusMsg').innerText = text; document.getElementById('statusMsg').className = `text-sm font-semibold text-center mb-6 px-2 ${colorClass}`; }
+        function ubahStatusMsg(text, colorClass) { document.getElementById('statusMsg').innerText = text; document.getElementById('statusMsg').className = `text-sm font-semibold text-center mb-5 px-2 ${colorClass}`; }
 
         async function login() { const user = document.getElementById('username').value; const pass = document.getElementById('password').value; const msg = document.getElementById('loginMsg'); const btn = document.getElementById('btnLogin'); if(!user || !pass) return; btn.innerText = "Sinkronisasi..."; msg.classList.add('hidden'); try { const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "login", username: user, password: pass }) }); const res = await response.json(); if (res.status === "success") { session.username = user; session.nama = res.nama || user; if(res.role === "admin") { document.getElementById('adminNameDisplay').innerText = session.nama; tampilLayar('adminScreen'); } else { tampilLayar('presensiScreen'); cekJadwalKeamananTinggi(); } } else { msg.innerText = res.message; msg.classList.remove('hidden'); btn.innerText = "Masuk Ke Aplikasi"; } } catch (e) { msg.innerText = "Gagal menghubungi server."; msg.classList.remove('hidden'); btn.innerText = "Masuk Ke Aplikasi"; } }
 
@@ -464,6 +582,16 @@
                 const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_jadwal", username: session.username }) }); 
                 const res = await response.json(); 
                 
+                if (res.status === "success" && res.enrolled_count === 0) {
+                    document.getElementById('pelatihanDisplay').innerText = "Belum Ada Kelas"; 
+                    document.getElementById('sesiDisplay').innerText = "-"; 
+                    document.getElementById('waktuDisplay').innerText = "-"; 
+                    ubahStatusMsg('Anda belum terdaftar di pelatihan mana pun. Silakan memilih pelatihan di menu "Daftar Kelas"', "text-amber-600"); 
+                    document.getElementById('btnLokasi').classList.add('hidden'); 
+                    document.getElementById('btnKamera').classList.add('hidden');
+                    return;
+                }
+
                 if (res.status === "success" && res.data && res.data.length > 0) { 
                     let jadwalAktif = null; 
                     for (let i = 0; i < res.data.length; i++) { 
@@ -487,9 +615,16 @@
                     } 
                     
                     if (jadwalAktif) { 
-                        session.pelatihan = jadwalAktif.pelatihan; session.hari = jadwalAktif.hari; session.sesi = jadwalAktif.sesi; 
+                        session.pelatihan = jadwalAktif.pelatihan; 
+                        session.hari = jadwalAktif.hari; 
+                        session.sesi = jadwalAktif.sesi; 
+                        session.targetLat = parseFloat(jadwalAktif.lat) || TARGET_LAT;
+                        session.targetLng = parseFloat(jadwalAktif.lng) || TARGET_LNG;
+                        session.targetRadius = parseFloat(jadwalAktif.radius) || RADIUS_MAX;
+                        session.mode = jadwalAktif.mode || "Offline";
+
                         document.getElementById('pelatihanDisplay').innerText = jadwalAktif.pelatihan; 
-                        document.getElementById('sesiDisplay').innerText = `${jadwalAktif.hari} —${jadwalAktif.sesi}`; 
+                        document.getElementById('sesiDisplay').innerText = `${jadwalAktif.hari} — ${jadwalAktif.sesi} (${session.mode})`; 
                         document.getElementById('waktuDisplay').innerText = `Batas: ${jadwalAktif.jam_mulai} -${jadwalAktif.jam_selesai}`; 
                         
                         if(jadwalAktif.sudah_hadir) {
@@ -507,10 +642,59 @@
                         document.getElementById('btnLokasi').classList.add('hidden'); document.getElementById('btnKamera').classList.add('hidden');
                     } 
                 } else { 
-                    document.getElementById('pelatihanDisplay').innerText = "Kosong"; ubahStatusMsg("❌ Tidak ada jadwal aktif.", "text-red-500"); 
+                    document.getElementById('pelatihanDisplay').innerText = "Menunggu Jadwal"; document.getElementById('sesiDisplay').innerText = "-"; document.getElementById('waktuDisplay').innerText = "-"; 
+                    ubahStatusMsg("❌ Belum ada sesi presensi aktif untuk pelatihan Anda.", "text-red-500"); 
                     document.getElementById('btnLokasi').classList.add('hidden'); document.getElementById('btnKamera').classList.add('hidden');
                 } 
             } catch (e) { ubahStatusMsg("Gagal memuat jadwal dari database.", "text-red-500"); } 
+        }
+
+        function verifikasiLokasi() { 
+            ubahStatusMsg("Mencari GPS...", "text-modernBlue"); 
+            
+            if (session.mode === "Online") {
+                navigator.geolocation.getCurrentPosition(
+                    (pos) => {
+                        session.lat = pos.coords.latitude;
+                        session.lng = pos.coords.longitude;
+                        ubahStatusMsg("✅ Sesi Online (Bebas Lokasi). Silakan Buka Kamera.", "text-green-600");
+                        document.getElementById('btnKamera').classList.remove('hidden');
+                        document.getElementById('btnKamera').classList.replace('opacity-50', 'bg-modernBlue');
+                        document.getElementById('btnKamera').disabled = false;
+                    },
+                    (e) => {
+                        session.lat = "Online";
+                        session.lng = "Online";
+                        ubahStatusMsg("✅ Sesi Online (Bebas Lokasi). Silakan Buka Kamera.", "text-green-600");
+                        document.getElementById('btnKamera').classList.remove('hidden');
+                        document.getElementById('btnKamera').classList.replace('opacity-50', 'bg-modernBlue');
+                        document.getElementById('btnKamera').disabled = false;
+                    },
+                    { enableHighAccuracy: true, timeout: 5000 }
+                );
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition( (pos) => { 
+                session.lat = pos.coords.latitude; 
+                session.lng = pos.coords.longitude; 
+                const tLat = session.targetLat || TARGET_LAT;
+                const tLng = session.targetLng || TARGET_LNG;
+                const tRad = session.targetRadius || RADIUS_MAX;
+
+                const c = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin((session.lat - tLat)*Math.PI/360), 2) + Math.cos(tLat*Math.PI/180)*Math.cos(session.lat*Math.PI/180)*Math.pow(Math.sin((session.lng - tLng)*Math.PI/360), 2))); 
+                const jarak = Math.floor(6371e3 * c); 
+                if (jarak <= tRad) { 
+                    ubahStatusMsg(`✅ Radius Valid (${jarak}m). Silakan Selfie.`, "text-green-600"); 
+                    document.getElementById('btnKamera').classList.remove('hidden'); 
+                    document.getElementById('btnKamera').classList.replace('opacity-50', 'bg-modernBlue'); 
+                    document.getElementById('btnKamera').disabled = false; 
+                } else {
+                    ubahStatusMsg(`❌ Terlalu Jauh (${jarak}m dari titik lokasi pelatihan, maks${tRad}m).`, "text-red-500"); 
+                }
+            }, (e) => { 
+                ubahStatusMsg("Izinkan akses lokasi GPS pada browser Anda.", "text-red-500"); 
+            }, { enableHighAccuracy: true } ); 
         }
 
         async function bukaAksesMateri(btn, link) {
@@ -554,25 +738,60 @@
             } 
         }
 
+        // RIWAYAT PRESENSI DENGAN PROTEKSI LUPA PRESENSI HANYA SETELAH JAM SELESAI LEWAT
         async function bukaHalamanRiwayatKu() {
             tampilLayar('myAttendanceScreen'); document.getElementById('wadahRiwayatKu').innerHTML = ""; document.getElementById('loadingRiwayatKu').classList.remove('hidden');
+            
+            let todayStr;
+            let currentMins;
+            try {
+                const timeResponse = await fetch("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Makassar"); 
+                const timeData = await timeResponse.json(); 
+                currentMins = (timeData.hour * 60) + timeData.minute; 
+                todayStr = `${timeData.year}-${String(timeData.month).padStart(2, '0')}-${String(timeData.day).padStart(2, '0')}`;
+            } catch (err) {
+                const now = new Date();
+                todayStr = now.getFullYear() + "-" + String(now.getMonth()+1).padStart(2, '0') + "-" + String(now.getDate()).padStart(2, '0');
+                currentMins = now.getHours() * 60 + now.getMinutes();
+            }
+
             try {
                 const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_my_attendance_full", username: session.username }) })).json();
                 document.getElementById('loadingRiwayatKu').classList.add('hidden'); const wadah = document.getElementById('wadahRiwayatKu');
                 if (res.status === "success" && res.data.length > 0) {
-                    const now = new Date();
-                    const todayStr = now.getFullYear() + "-" + String(now.getMonth()+1).padStart(2, '0') + "-" + String(now.getDate()).padStart(2, '0');
-                    const currentMins = now.getHours() * 60 + now.getMinutes();
-
                     res.data.forEach(item => {
-                        let statusBadge = ""; let actionBtn = ""; let isBelumMulai = false;
+                        let statusBadge = ""; let actionBtn = ""; 
+                        let isBelumMulai = false;
+                        let isSedangBerlangsung = false;
 
-                        if (item.tanggal && item.tanggal !== "-" && item.jam_mulai && item.jam_mulai !== "-") {
+                        let startMins = 0;
+                        let endMins = 24 * 60;
+
+                        if (item.jam_mulai && item.jam_mulai !== "-") {
                             let rawMulai = item.jam_mulai.replace(/\./g, ':').replace(/[^0-9:]/g, ''); 
                             const [sH, sM] = rawMulai.split(':').map(Number);
-                            const startMins = (sH * 60) + (sM || 0);
-                            if (item.tanggal > todayStr) { isBelumMulai = true; } 
-                            else if (item.tanggal === todayStr && startMins > currentMins) { isBelumMulai = true; }
+                            startMins = (sH * 60) + (sM || 0);
+                        }
+                        if (item.jam_selesai && item.jam_selesai !== "-") {
+                            let rawSelesai = item.jam_selesai.replace(/\./g, ':').replace(/[^0-9:]/g, ''); 
+                            const [eH, eM] = rawSelesai.split(':').map(Number);
+                            endMins = (eH * 60) + (eM || 0);
+                            if (endMins === 0) endMins = 24 * 60;
+                        }
+
+                        if (item.tanggal && item.tanggal !== "-") {
+                            if (item.tanggal > todayStr) { 
+                                isBelumMulai = true; 
+                            } else if (item.tanggal === todayStr) {
+                                if (currentMins < startMins) {
+                                    isBelumMulai = true;
+                                } else if (currentMins >= startMins && currentMins <= endMins) {
+                                    isSedangBerlangsung = true;
+                                }
+                            }
+                        } else {
+                            if (currentMins < startMins) isBelumMulai = true;
+                            else if (currentMins <= endMins) isSedangBerlangsung = true;
                         }
 
                         if (item.status === "Hadir") {
@@ -581,13 +800,17 @@
                             statusBadge = `<span class="bg-yellow-100 text-yellow-700 text-[10px] font-extrabold px-2 py-1 rounded-md border border-yellow-200 shadow-sm">⏳ Sedang Diverifikasi</span>`;
                         } else if (item.status === "Ditolak") {
                             statusBadge = `<span class="bg-red-100 text-red-700 text-[10px] font-extrabold px-2 py-1 rounded-md border border-red-200 shadow-sm">❌ Ditolak</span>`;
-                            actionBtn = `<div class="w-full mt-3 bg-red-50 border border-red-200 p-2 rounded-lg text-center"><p class="text-[9px] font-bold text-red-700 uppercase">Alasan Penolakan:</p><p class="text-[11px] font-medium text-red-600 mt-1">"${item.alasan}"</p></div><button onclick="bukaFormLupaPresensi('${item.pelatihan}', '${item.hari}', '${item.sesi}')" class="w-full mt-2 bg-white hover:bg-slate-50 text-modernDark border border-slate-200 text-[10px] font-bold py-2 rounded-lg transition-colors shadow-sm">Ajukan Ulang Permohonan</button>`;
+                            actionBtn = `<div class="w-full mt-3 bg-red-50 border border-red-200 p-2 rounded-lg text-center"><p class="text-[9px] font-bold text-red-700 uppercase">Alasan Penolakan:</p><p class="text-[11px] font-medium text-red-600 mt-1">"${item.alasan}"</p></div><button onclick="bukaFormLupaPresensi('${item.pelatihan.replace(/'/g, "\\'")}', '${item.hari.replace(/'/g, "\\'")}', '${item.sesi.replace(/'/g, "\\'")}')" class="w-full mt-2 bg-white hover:bg-slate-50 text-modernDark border border-slate-200 text-[10px] font-bold py-2 rounded-lg transition-colors shadow-sm">Ajukan Ulang Permohonan</button>`;
                         } else {
                             if (isBelumMulai) {
                                 statusBadge = `<span class="bg-slate-100 text-slate-500 text-[10px] font-extrabold px-2 py-1 rounded-md border border-slate-200 shadow-sm">⏳ Belum Mulai</span>`;
+                            } else if (isSedangBerlangsung) {
+                                statusBadge = `<span class="bg-blue-100 text-modernBlue text-[10px] font-extrabold px-2 py-1 rounded-md border border-blue-200 shadow-sm">🟢 Sedang Berlangsung</span>`;
+                                actionBtn = `<p class="text-[10px] text-modernBlue font-semibold mt-2 text-center">Sesi sedang berlangsung. Silakan presensi di halaman utama.</p>`;
                             } else {
+                                // HANYA MUNCUL JIKA JAM PELATIHAN SUDAH TERLEWAT
                                 statusBadge = `<span class="bg-red-100 text-red-600 text-[10px] font-extrabold px-2 py-1 rounded-md border border-red-200 shadow-sm">❌ Belum Hadir</span>`;
-                                actionBtn = `<button onclick="bukaFormLupaPresensi('${item.pelatihan}', '${item.hari}', '${item.sesi}')" class="w-full mt-3 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-[10px] font-bold py-2 rounded-lg transition-colors">Ajukan Lupa Presensi</button>`;
+                                actionBtn = `<button onclick="bukaFormLupaPresensi('${item.pelatihan.replace(/'/g, "\\'")}', '${item.hari.replace(/'/g, "\\'")}', '${item.sesi.replace(/'/g, "\\'")}')" class="w-full mt-3 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-[10px] font-bold py-2 rounded-lg transition-colors">Ajukan Lupa Presensi</button>`;
                             }
                         }
 
@@ -675,49 +898,141 @@
         async function bukaHalamanProfil() { tampilLayar('userProfileScreen'); document.getElementById('btnSubmitEdit').innerText = "⏳ Memuat Data..."; document.getElementById('btnSubmitEdit').disabled = true; try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_user_profile", username: session.username }) })).json(); if(res.status === "success") { const d = res.data; document.getElementById('editNama').value = d.nama; document.getElementById('editUser').value = d.username; document.getElementById('editPass').value = d.password; document.getElementById('editHP').value = d.hp; document.getElementById('editNIP').value = d.nip; document.getElementById('editNIDN').value = d.nidn; document.getElementById('editNUPTK').value = d.nuptk || ""; document.getElementById('editTempatLahir').value = d.tempat_lahir; let tgl = d.tanggal_lahir; if(tgl && tgl.includes('T')) tgl = tgl.split('T')[0]; document.getElementById('editTanggalLahir').value = tgl; document.getElementById('editStatusPegawai').value = d.status_pegawai; document.getElementById('editJK').value = d.jk; document.getElementById('editPangkat').value = d.pangkat; document.getElementById('editJabatan').value = d.jabatan; document.getElementById('editInstansi').value = d.instansi; document.getElementById('editNamaInstansi').value = d.nama_instansi; document.getElementById('editFakultas').value = d.fakultas; updateProdi('edit'); if(d.fakultas === "Lainnya") { document.getElementById('editProdiInput').value = d.prodi; } else { document.getElementById('editProdiSelect').value = d.prodi; } document.getElementById('editPendidikan').value = d.pendidikan; document.getElementById('editAlamat').value = d.alamat; } else { alert("Gagal memuat profil: " + res.message); tampilLayar('presensiScreen'); } } catch(e) { alert("Koneksi gagal."); tampilLayar('presensiScreen'); } document.getElementById('btnSubmitEdit').innerText = "Simpan Perubahan Biodata"; document.getElementById('btnSubmitEdit').disabled = false; }
         async function prosesUpdateProfil() { const fakVal = document.getElementById('editFakultas').value; const prodiVal = (fakVal === "Lainnya") ? document.getElementById('editProdiInput').value : document.getElementById('editProdiSelect').value; const data = { action: "update_user_profile", nama: document.getElementById('editNama').value, username: document.getElementById('editUser').value, password: document.getElementById('editPass').value, nip: document.getElementById('editNIP').value, nidn: document.getElementById('editNIDN').value, nuptk: document.getElementById('editNUPTK').value, tempat_lahir: document.getElementById('editTempatLahir').value, tanggal_lahir: document.getElementById('editTanggalLahir').value, status_pegawai: document.getElementById('editStatusPegawai').value, jk: document.getElementById('editJK').value, pangkat: document.getElementById('editPangkat').value, jabatan: document.getElementById('editJabatan').value, instansi: document.getElementById('editInstansi').value, nama_instansi: document.getElementById('editNamaInstansi').value, fakultas: fakVal, prodi: prodiVal, pendidikan: document.getElementById('editPendidikan').value, hp: document.getElementById('editHP').value, alamat: document.getElementById('editAlamat').value }; const btn = document.getElementById('btnSubmitEdit'); if(!data.nama || !data.password || !data.status_pegawai || !data.jk || !data.fakultas || !data.prodi) { return alert("Kolom bertanda bintang (*) tidak boleh dikosongkan."); } btn.innerText = "⏳ Memperbarui Biodata..."; btn.disabled = true; try { const response = await fetch(API_URL, { method: "POST", body: JSON.stringify(data) }); const res = await response.json(); if (res.status === "success") { alert("✅ Biodata berhasil diperbarui!"); session.nama = data.nama; tampilLayar('presensiScreen'); cekJadwalKeamananTinggi(); } else alert("❌ Gagal: " + res.message); } catch(e) { alert("Kesalahan koneksi."); } btn.innerText = "Simpan Perubahan Biodata"; btn.disabled = false; }
 
+        function formatInfoBoxHtml(infoStr) {
+            if (!infoStr || infoStr === "-") {
+                return `<p class="text-[11px] text-slate-400 italic mb-3">Jadwal & keterangan menyusul</p>`;
+            }
+            const parts = infoStr.split(" | ");
+            return `<div class="space-y-1 mb-3 mt-1">` + parts.map(part => {
+                const p = part.trim();
+                if (p.toLowerCase().startsWith("online")) {
+                    return `<p class="text-[11px] text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md font-semibold">🌐 ${p}</p>`;
+                } else if (p.toLowerCase().startsWith("offline")) {
+                    return `<p class="text-[11px] text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md font-semibold">📍 ${p}</p>`;
+                } else {
+                    return `<p class="text-[11px] text-slate-600 bg-slate-100 px-2.5 py-1 rounded-md font-semibold">🗓️ ${p}</p>`;
+                }
+            }).join('') + `</div>`;
+        }
+
+        function pilihKelasRegistrasi(namaPel, btnEl) {
+            const inputHidden = document.getElementById('regPelatihan');
+            const semuaBox = document.querySelectorAll('.box-reg-pelatihan');
+            const semuaBtn = document.querySelectorAll('.btn-reg-pelatihan');
+
+            if (inputHidden.value === namaPel) {
+                inputHidden.value = "";
+                semuaBox.forEach(b => { b.classList.remove('border-modernBlue', 'ring-2', 'ring-modernBlue'); b.classList.add('border-slate-200'); });
+                semuaBtn.forEach(btn => { btn.innerText = "Daftar"; btn.className = "btn-reg-pelatihan w-full bg-modernBlue hover:bg-modernDark text-white text-xs font-bold py-2.5 rounded-xl transition-colors"; });
+            } else {
+                inputHidden.value = namaPel;
+                semuaBox.forEach(b => { b.classList.remove('border-modernBlue', 'ring-2', 'ring-modernBlue'); b.classList.add('border-slate-200'); });
+                semuaBtn.forEach(btn => { btn.innerText = "Daftar"; btn.className = "btn-reg-pelatihan w-full bg-modernBlue hover:bg-modernDark text-white text-xs font-bold py-2.5 rounded-xl transition-colors"; });
+
+                const parentBox = btnEl.closest('.box-reg-pelatihan');
+                if (parentBox) {
+                    parentBox.classList.remove('border-slate-200');
+                    parentBox.classList.add('border-modernBlue', 'ring-2', 'ring-modernBlue');
+                }
+                btnEl.innerText = "✅ Terpilih untuk Pendaftaran (Klik Batal)";
+                btnEl.className = "btn-reg-pelatihan w-full bg-green-600 hover:bg-green-700 text-white text-xs font-bold py-2.5 rounded-xl transition-colors";
+            }
+        }
+
         async function bukaHalamanRegister() { 
             tampilLayar('registerScreen'); 
-            const select = document.getElementById('regPelatihan'); select.innerHTML = '<option value="">-- Memuat daftar kelas... --</option>'; 
+            document.getElementById('regPelatihan').value = "";
+            const wadah = document.getElementById('wadahBoxRegPelatihan'); 
+            wadah.innerHTML = '<p class="text-xs text-slate-500 text-center py-2">⏳ Memuat daftar pelatihan...</p>'; 
             try { 
                 const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_public_pelatihan" }) }); 
                 const res = await response.json(); 
                 if (res.status === "success" && res.data.length > 0) { 
-                    select.innerHTML = '<option value="">-- Pilih Kelas Pelatihan --</option>' + res.data.map(p => {
-                        let label = p.nama;
-                        if(p.info && p.info !== "" && p.info !== "-") label += ` (${p.info})`;
-                        return `<option value="${p.nama}">${label}</option>`;
+                    wadah.innerHTML = res.data.map(p => {
+                        const safeName = p.nama.replace(/'/g, "\\'");
+                        return `
+                        <div class="box-reg-pelatihan bg-white border-2 border-slate-200 rounded-xl p-4 shadow-sm transition-all flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-sm font-extrabold text-modernDark uppercase">${p.nama}</h3>
+                                ${formatInfoBoxHtml(p.info)}
+                            </div>
+                            <button type="button" onclick="pilihKelasRegistrasi('${safeName}', this)" class="btn-reg-pelatihan w-full bg-modernBlue hover:bg-modernDark text-white text-xs font-bold py-2.5 rounded-xl transition-colors">
+                                Daftar
+                            </button>
+                        </div>`;
                     }).join(''); 
-                } else select.innerHTML = '<option value="">Tidak ada pelatihan aktif saat ini</option>'; 
-            } catch(e) { select.innerHTML = '<option value="">Gagal menyinkronkan data server</option>'; } 
+                } else {
+                    wadah.innerHTML = '<p class="text-xs text-slate-500 text-center py-2">Tidak ada pelatihan aktif saat ini.</p>'; 
+                }
+            } catch(e) { 
+                wadah.innerHTML = '<p class="text-xs text-red-500 text-center py-2">Gagal menyinkronkan data server.</p>'; 
+            } 
         }
 
         async function bukaModalTambahKelas() { 
             tampilLayar('userEnrollScreen'); 
-            const select = document.getElementById('enrollPelatihan'); select.innerHTML = '<option value="">-- Memuat daftar kelas... --</option>'; 
+            const wadah = document.getElementById('wadahBoxEnrollPelatihan'); 
+            wadah.innerHTML = '<p class="text-center text-sm font-bold text-modernBlue my-4">⏳ Memuat daftar pelatihan...</p>'; 
             try { 
                 const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_public_pelatihan" }) }); 
                 const res = await response.json(); 
                 if (res.status === "success" && res.data.length > 0) { 
-                    select.innerHTML = '<option value="">-- Pilih Kelas Pelatihan --</option>' + res.data.map(p => {
-                        let label = p.nama;
-                        if(p.info && p.info !== "" && p.info !== "-") label += ` (${p.info})`;
-                        return `<option value="${p.nama}">${label}</option>`;
+                    wadah.innerHTML = res.data.map(p => {
+                        const safeName = p.nama.replace(/'/g, "\\'");
+                        return `
+                        <div class="bg-white border-2 border-slate-200 hover:border-modernBlue rounded-2xl p-4 shadow-sm transition-all flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-sm font-extrabold text-modernDark uppercase">${p.nama}</h3>
+                                ${formatInfoBoxHtml(p.info)}
+                            </div>
+                            <button type="button" onclick="prosesEnroll('${safeName}', this)" class="w-full bg-modernBlue hover:bg-modernDark text-white text-xs font-bold py-3 rounded-xl transition-colors shadow-sm">
+                                Daftar
+                            </button>
+                        </div>`;
                     }).join(''); 
-                } else select.innerHTML = '<option value="">Tidak ada pelatihan aktif saat ini</option>'; 
-            } catch(e) { select.innerHTML = '<option value="">Gagal menyinkronkan data server</option>'; } 
+                } else {
+                    wadah.innerHTML = '<p class="text-center text-slate-500 text-sm my-4">Tidak ada pelatihan aktif saat ini.</p>'; 
+                }
+            } catch(e) { 
+                wadah.innerHTML = '<p class="text-center text-red-500 text-sm my-4">Gagal menyinkronkan data server.</p>'; 
+            } 
         }
 
-        async function prosesEnroll() { const pel = document.getElementById('enrollPelatihan').value; const btn = document.getElementById('btnSubmitEnroll'); if(!pel) return alert("Silakan pilih kelas pelatihan!"); btn.innerText = "⏳ Memproses Pendaftaran Kelas..."; btn.disabled = true; try { const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "enroll_training", username: session.username, pelatihan: pel }) }); const res = await response.json(); if (res.status === "success") { tampilLayar('suksesDaftarScreen'); document.getElementById('msgSuksesDaftar').innerText = "Anda berhasil terdaftar di kelas:\n" + pel; if(res.wa_link && res.wa_link.trim() !== "") { document.getElementById('wadahLinkWA').classList.remove('hidden'); document.getElementById('btnLinkWA').href = res.wa_link; } else { document.getElementById('wadahLinkWA').classList.add('hidden'); } document.getElementById('btnLanjutSetelahDaftar').onclick = function() { tampilLayar('presensiScreen'); cekJadwalKeamananTinggi(); }; } else { alert("⚠️ " + res.message); tampilLayar('presensiScreen'); cekJadwalKeamananTinggi(); } } catch(e) { alert("Kesalahan koneksi internet."); } btn.innerText = "Konfirmasi Daftar Kelas"; btn.disabled = false; }
+        async function prosesEnroll(pel, btnEl) { 
+            if(!pel) return alert("Silakan pilih kelas pelatihan!"); 
+            const teksAsli = btnEl ? btnEl.innerText : "Daftar";
+            if(btnEl) { btnEl.innerText = "⏳ Memproses..."; btnEl.disabled = true; }
+            try { 
+                const response = await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "enroll_training", username: session.username, pelatihan: pel }) }); 
+                const res = await response.json(); 
+                if (res.status === "success") { 
+                    tampilLayar('suksesDaftarScreen'); 
+                    document.getElementById('msgSuksesDaftar').innerText = "Anda berhasil terdaftar di kelas:\n" + pel; 
+                    if(res.wa_link && res.wa_link.trim() !== "") { 
+                        document.getElementById('wadahLinkWA').classList.remove('hidden'); 
+                        document.getElementById('btnLinkWA').href = res.wa_link; 
+                    } else { 
+                        document.getElementById('wadahLinkWA').classList.add('hidden'); 
+                    } 
+                    document.getElementById('btnLanjutSetelahDaftar').onclick = function() { tampilLayar('presensiScreen'); cekJadwalKeamananTinggi(); }; 
+                } else { 
+                    alert("⚠️ " + res.message); 
+                } 
+            } catch(e) { 
+                alert("Kesalahan koneksi internet."); 
+            } 
+            if(btnEl) { btnEl.innerText = teksAsli; btnEl.disabled = false; }
+        }
 
         async function prosesRegister() { const fakVal = document.getElementById('regFakultas').value; const prodiVal = (fakVal === "Lainnya") ? document.getElementById('regProdiInput').value : document.getElementById('regProdiSelect').value; const data = { action: "register_user", nama: document.getElementById('regNama').value, username: document.getElementById('regUser').value, password: document.getElementById('regPass').value, nip: document.getElementById('regNIP').value, nidn: document.getElementById('regNIDN').value, nuptk: document.getElementById('regNUPTK').value, tempat_lahir: document.getElementById('regTempatLahir').value, tanggal_lahir: document.getElementById('regTanggalLahir').value, status_pegawai: document.getElementById('regStatusPegawai').value, jk: document.getElementById('regJK').value, pangkat: document.getElementById('regPangkat').value, jabatan: document.getElementById('regJabatan').value, instansi: document.getElementById('regInstansi').value, nama_instansi: document.getElementById('regNamaInstansi').value, fakultas: fakVal, prodi: prodiVal, pendidikan: document.getElementById('regPendidikan').value, hp: document.getElementById('regHP').value, alamat: document.getElementById('regAlamat').value, pelatihan: document.getElementById('regPelatihan').value }; const btn = document.getElementById('btnSubmitRegister'); if(!data.nama || !data.username || !data.password || !data.status_pegawai || !data.jk || !data.fakultas || !data.prodi) { return alert("Mohon lengkapi seluruh kolom yang bertanda bintang (*)"); } btn.innerText = "⏳ Memproses Data..."; btn.disabled = true; try { const response = await fetch(API_URL, { method: "POST", body: JSON.stringify(data) }); const res = await response.json(); if (res.status === "success") { document.querySelectorAll('#registerScreen input, #registerScreen select, #registerScreen textarea').forEach(el => el.value = ''); tampilLayar('suksesDaftarScreen'); 
         
         if(data.pelatihan) {
             document.getElementById('msgSuksesDaftar').innerText = "Akun & Biodata Anda berhasil disimpan, dan Anda terdaftar di kelas: " + data.pelatihan;
         } else {
-            document.getElementById('msgSuksesDaftar').innerText = "Akun & Biodata Anda berhasil disimpan. Anda dapat memilih kelas pelatihan melalui Dashboard.";
+            document.getElementById('msgSuksesDaftar').innerText = "Akun & Biodata Anda berhasil disimpan. Anda dapat memilih kelas pelatihan melalui menu Daftar Kelas setelah login.";
         }
         
-        if(res.wa_link && res.wa_link.trim() !== "") { document.getElementById('wadahLinkWA').classList.remove('hidden'); document.getElementById('btnLinkWA').href = res.wa_link; } else { document.getElementById('wadahLinkWA').classList.add('hidden'); } document.getElementById('btnLanjutSetelahDaftar').onclick = function() { tampilLayar('loginScreen'); }; } else alert("❌ Gagal: " + res.message); } catch(e) { alert("Kesalahan koneksi."); } btn.innerText = "Simpan Biodata & Daftar"; btn.disabled = false; }
+        if(res.wa_link && res.wa_link.trim() !== "") { document.getElementById('wadahLinkWA').classList.remove('hidden'); document.getElementById('btnLinkWA').href = res.wa_link; } else { document.getElementById('wadahLinkWA').classList.add('hidden'); } document.getElementById('btnLanjutSetelahDaftar').onclick = function() { tampilLayar('loginScreen'); }; } else alert("❌ Gagal: " + res.message); } catch(e) { alert("Kesalahan koneksi."); } btn.innerText = "Simpan Biodata & Buat Akun"; btn.disabled = false; }
 
         async function muatDaftarPelatihanAdmin() { 
             try { 
@@ -748,8 +1063,10 @@
                 payload.action = "save_jadwal"; 
                 payload.pelatihan = pName; 
                 payload.wa_link = document.getElementById("jadwalWALink").value; 
+                payload.lat = document.getElementById("jadwalLat").value.trim() || "-3.29687";
+                payload.lng = document.getElementById("jadwalLng").value.trim() || "114.58823";
+                payload.radius = document.getElementById("jadwalRadius").value.trim() || "50";
                 
-                // Merangkai Keterangan Tanggal, Metode, dan Tempat secara otomatis
                 const tglM = document.getElementById("jadwalTglMulai").value;
                 const tglS = document.getElementById("jadwalTglSelesai").value;
                 const isOnline = document.getElementById("cekOnline").checked;
@@ -774,6 +1091,7 @@
                 }
 
                 payload.info_tanggal = infoParts.join(" | ");
+                payload.default_mode = (isOnline && !isOffline) ? "Online" : "Offline";
                 
                 if(!payload.pelatihan) { alert("Nama Pelatihan wajib diisi!"); btnSimpan.innerText = teksAsli; btnSimpan.disabled = false; return; } 
                 
@@ -782,16 +1100,27 @@
                 rawSesi.forEach(item => {
                     let h = item.querySelector('.input-hari').value;
                     if(h && h.trim() !== "") {
+                        let sMode = item.querySelector('.input-mode') ? item.querySelector('.input-mode').value : payload.default_mode;
+                        if (isOnline && !isOffline) sMode = "Online";
                         payload.list_sesi.push({
                             hari: h, 
                             tanggal: item.querySelector('.input-tanggal').value, 
                             sesi: item.querySelector('.input-sesi').value, 
                             jam_mulai: item.querySelector('.input-mulai').value, 
-                            jam_selesai: item.querySelector('.input-selesai').value
+                            jam_selesai: item.querySelector('.input-selesai').value,
+                            mode: sMode
                         });
                     }
                 });
-            } else if (jenis === "pengaturan") { payload.action = "save_setting"; payload.lat = document.getElementById("setLat").value; payload.lng = document.getElementById("setLng").value; payload.radius = document.getElementById("setRadius").value; } else if (jenis === "reward") { payload.action = "save_reward"; payload.pelatihan = document.getElementById("rewardPel").value; payload.minimal = document.getElementById("rewardMin").value; payload.link = document.getElementById("rewardLink").value; if(!payload.pelatihan || !payload.minimal || !payload.link) { alert("Mohon lengkapi semua data!"); btnSimpan.innerText = teksAsli; btnSimpan.disabled = false; return; } } 
+            } else if (jenis === "pengaturan") { 
+                payload.action = "save_setting"; 
+                payload.lat = document.getElementById("setLat").value; 
+                payload.lng = document.getElementById("setLng").value; 
+                payload.radius = document.getElementById("setRadius").value; 
+                TARGET_LAT = parseFloat(payload.lat) || -3.29687;
+                TARGET_LNG = parseFloat(payload.lng) || 114.58823;
+                RADIUS_MAX = parseFloat(payload.radius) || 50;
+            } else if (jenis === "reward") { payload.action = "save_reward"; payload.pelatihan = document.getElementById("rewardPel").value; payload.minimal = document.getElementById("rewardMin").value; payload.link = document.getElementById("rewardLink").value; if(!payload.pelatihan || !payload.minimal || !payload.link) { alert("Mohon lengkapi semua data!"); btnSimpan.innerText = teksAsli; btnSimpan.disabled = false; return; } } 
             
             try { 
                 const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify(payload) })).json(); 
@@ -811,13 +1140,23 @@
             btnSimpan.innerText = teksAsli; btnSimpan.disabled = false; 
         }
 
-        function verifikasiLokasi() { ubahStatusMsg("Mencari GPS...", "text-modernBlue"); navigator.geolocation.getCurrentPosition( (pos) => { session.lat = pos.coords.latitude; session.lng = pos.coords.longitude; const c = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin((session.lat - TARGET_LAT)*Math.PI/360), 2) + Math.cos(TARGET_LAT*Math.PI/180)*Math.cos(session.lat*Math.PI/180)*Math.pow(Math.sin((session.lng - TARGET_LNG)*Math.PI/360), 2))); const jarak = Math.floor(6371e3 * c); if (jarak <= RADIUS_MAX) { ubahStatusMsg("✅ Radius Valid.", "text-green-600"); document.getElementById('btnKamera').classList.remove('hidden'); document.getElementById('btnKamera').classList.replace('opacity-50', 'bg-modernBlue'); document.getElementById('btnKamera').disabled = false; } else ubahStatusMsg(`❌ Terlalu Jauh (${jarak}m).`, "text-red-500"); }, (e) => { ubahStatusMsg("Izinkan GPS browser.", "text-red-500"); }, { enableHighAccuracy: true } ); }
         async function bukaKamera() { tampilLayar('kameraScreen'); const video = document.getElementById('video'); try { streamKamera = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } }); video.srcObject = streamKamera; } catch (err) { alert("Gagal kamera: " + err.message); } }
         async function jepretDanKirim() { document.getElementById('btnJepret').innerText = "Mengunggah..."; document.getElementById('btnJepret').disabled = true; const video = document.getElementById('video'); const canvas = document.getElementById('canvas'); canvas.width = video.videoWidth; canvas.height = video.videoHeight; canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height); const b64 = canvas.toDataURL('image/jpeg', 0.6).split(',')[1]; if(streamKamera) streamKamera.getTracks().forEach(t => t.stop()); try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "presensi", ...session, imageBase64: b64 }) })).json(); if (res.status === "success") { if (res.reward_link) { document.getElementById('rewardBox').classList.remove('hidden'); document.getElementById('btnReward').href = res.reward_link; } tampilLayar('suksesScreen'); } else { alert(res.message); location.reload(); } } catch (e) { alert("Kesalahan jaringan."); location.reload(); } }
 
         function bukaSpreadsheet() { window.open("https://docs.google.com/spreadsheets/d/1d3jMjww3PinwN1U1v-yVKz79YcLp_-56jSOATBPQi9U/edit", '_blank'); }
         
-        function tambahSesiUI() { const wadah = document.getElementById('wadahSesi'); const clone = wadah.firstElementChild.cloneNode(true); clone.querySelectorAll('input').forEach(inp => inp.value = ''); wadah.appendChild(clone); document.querySelectorAll('.btn-hapus-sesi').forEach(b => b.classList.remove('hidden')); }
+        function tambahSesiUI() { 
+            const wadah = document.getElementById('wadahSesi'); 
+            const clone = wadah.firstElementChild.cloneNode(true); 
+            clone.querySelectorAll('input').forEach(inp => inp.value = ''); 
+            const isOnline = document.getElementById('cekOnline').checked;
+            const isOffline = document.getElementById('cekOffline').checked;
+            if (clone.querySelector('.input-mode')) {
+                clone.querySelector('.input-mode').value = (isOnline && !isOffline) ? 'Online' : 'Offline';
+            }
+            wadah.appendChild(clone); 
+            document.querySelectorAll('.btn-hapus-sesi').forEach(b => b.classList.remove('hidden')); 
+        }
         function hapusSesi(btn) { btn.closest('.sesi-item').remove(); if(document.querySelectorAll('.sesi-item').length === 1) document.querySelector('.btn-hapus-sesi').classList.add('hidden'); }
         
         async function hapusJadwalLama() { let pName = document.getElementById("jadwalPelatihanSelect").value; if(pName === "BARU") pName = document.getElementById("jadwalPelatihanInput").value; if(!pName) return alert("Pilih / Ketik nama pelatihan."); if(!confirm(`Yakin hapus seluruh sesi untuk "${pName}"?`)) return; try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "delete_pelatihan", pelatihan: pName }) })).json(); if(res.status === "success"){ alert("✅ Berhasil!"); document.getElementById("jadwalPelatihanSelect").value = ""; document.getElementById("jadwalPelatihanInput").value = ""; document.getElementById("jadwalPelatihanInput").classList.add('hidden'); resetKeteranganJadwal(); muatDaftarPelatihanAdmin(); } else alert("❌ Gagal: " + res.message); } catch(e) { alert("Gagal."); } }
