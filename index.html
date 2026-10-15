@@ -643,7 +643,7 @@
                     } 
                 } else { 
                     document.getElementById('pelatihanDisplay').innerText = "Menunggu Jadwal"; document.getElementById('sesiDisplay').innerText = "-"; document.getElementById('waktuDisplay').innerText = "-"; 
-                    ubahStatusMsg("❌ Belum ada sesi presensi aktif untuk pelatihan Anda.", "text-red-500"); 
+                    ubahStatusMsg("❌ Anda belum terdaftar di pelatihan mana pun. Silakan memilih pelatihan di menu "Daftar Kelas"", "text-red-500"); 
                     document.getElementById('btnLokasi').classList.add('hidden'); document.getElementById('btnKamera').classList.add('hidden');
                 } 
             } catch (e) { ubahStatusMsg("Gagal memuat jadwal dari database.", "text-red-500"); } 
