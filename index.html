@@ -445,6 +445,10 @@
                 <button type="button" onclick="tampilLayar('adminRewardScreen')" class="w-full bg-white border border-slate-200 p-4 rounded-2xl flex flex-col items-center justify-center hover:border-amber-400 shadow-sm"><span class="text-2xl mb-1.5">📚</span><span class="text-xs font-semibold text-slate-700">Gamifikasi</span></button>
                 <button type="button" onclick="tampilLayar('adminPengaturanScreen')" class="w-full bg-white border border-slate-200 p-4 rounded-2xl flex flex-col items-center justify-center hover:border-oceanBlue shadow-sm"><span class="text-2xl mb-1.5">⚙️</span><span class="text-xs font-semibold text-slate-700">GPS Setup</span></button>
             </div>
+			<button type="button" onclick="bukaHalamanAdminProdi()" class="w-full mt-3 bg-sky-50/70 border border-sky-200 p-3.5 rounded-2xl flex items-center justify-center space-x-2 hover:bg-sky-100/70 transition-all shadow-sm">
+                <span class="text-xl">🏛️</span>
+                <span class="text-xs font-extrabold text-oceanDark">Kelola Daftar Fakultas & Program Studi</span>
+            </button>
         </div>
 
         <!-- LAYER 20: ADMIN REKAP -->
@@ -605,7 +609,29 @@
             <button type="button" onclick="simpanDataAdmin('reward')" class="w-full bg-gradient-to-r from-oceanDark to-oceanBlue text-white text-sm font-bold py-3 rounded-xl mb-2.5">Aktifkan Reward</button>
             <button type="button" onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 text-xs font-semibold py-2.5 rounded-xl">Kembali</button>
         </div>
+		
+		<!-- LAYER 21: ADMIN FAKULTAS & PRODI -->
+        <div id="adminProdiScreen" class="hidden flex flex-col w-full p-6 sm:p-8 bg-white">
+            <h2 class="text-lg font-extrabold text-oceanDark mb-1">Kelola Fakultas & Program Studi</h2>
+            <p class="text-xs text-slate-500 mb-4">Tambah fakultas baru atau perbarui daftar program studi yang tersedia saat registrasi.</p>
+            
+            <label class="text-[11px] font-semibold text-slate-600 block mb-1">Pilih Fakultas</label>
+            <select id="adminFakSelect" onchange="cekPilihFakultasAdmin()" class="w-full px-3.5 py-2.5 mb-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
+                <option value="">-- Pilih Fakultas --</option>
+                <option value="BARU">+ Tambah Fakultas Baru...</option>
+            </select>
+            
+            <input type="text" id="adminFakInput" placeholder="Ketik Nama Fakultas Baru..." class="hidden w-full px-3.5 py-2.5 mb-3 rounded-xl border border-sky-300 text-xs font-semibold bg-white">
 
+            <label class="text-[11px] font-semibold text-slate-600 block mb-1 mt-2">Daftar Program Studi (Ketik satu Prodi per baris)</label>
+            <textarea id="adminProdiArea" rows="8" placeholder="Contoh:&#10;S1 Teknik Informatika&#10;S1 Sistem Informasi" class="w-full px-3.5 py-2.5 mb-4 rounded-xl border border-slate-200 text-xs"></textarea>
+
+            <div class="flex space-x-2 mb-2.5">
+                <button type="button" onclick="simpanFakultasProdiAdmin(this)" class="w-2/3 bg-gradient-to-r from-oceanDark to-oceanBlue text-white text-xs font-bold py-3 rounded-xl">Simpan Fakultas & Prodi</button>
+                <button type="button" onclick="hapusFakultasAdmin()" class="w-1/3 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold py-3 rounded-xl">Hapus Fakultas</button>
+            </div>
+            <button type="button" onclick="tampilLayar('adminScreen')" class="w-full text-slate-500 text-xs font-semibold py-2.5 rounded-xl">Kembali Ke Dasbor</button>
+        </div>
     </div>
 
     <script>
@@ -794,13 +820,13 @@
         var calMonth = new Date().getMonth();
         var calYear = new Date().getFullYear();
 
-        function tampilLayar(idLayar) {
-            ['loginScreen', 'registerScreen', 'userProfileScreen', 'presensiScreen', 'notifikasiScreen', 'kalenderScreen', 'myAttendanceScreen', 'lupaPresensiFormScreen', 'myGroupScreen', 'userEnrollScreen', 'myRewardScreen', 'kameraScreen', 'suksesScreen', 'suksesDaftarScreen', 'adminScreen', 'adminLupaPresensiScreen', 'adminJadwalScreen', 'adminPesertaScreen', 'adminValidasiScreen', 'adminPengaturanScreen', 'adminRewardScreen', 'adminRekapScreen'].forEach(id => { 
+		function tampilLayar(idLayar) {
+            ['loginScreen', 'registerScreen', 'userProfileScreen', 'presensiScreen', 'notifikasiScreen', 'kalenderScreen', 'myAttendanceScreen', 'lupaPresensiFormScreen', 'myGroupScreen', 'userEnrollScreen', 'myRewardScreen', 'kameraScreen', 'suksesScreen', 'suksesDaftarScreen', 'adminScreen', 'adminLupaPresensiScreen', 'adminJadwalScreen', 'adminPesertaScreen', 'adminValidasiScreen', 'adminPengaturanScreen', 'adminRewardScreen', 'adminRekapScreen', 'adminProdiScreen'].forEach(id => { 
                 const el = document.getElementById(id); if(el) el.classList.add('hidden'); 
             });
             const wadah = document.getElementById('mainWadah'); 
             wadah.classList.remove('max-w-md', 'max-w-2xl', 'max-w-4xl');
-            const adminScreens = ['adminScreen', 'adminJadwalScreen', 'adminPengaturanScreen', 'adminValidasiScreen', 'adminPesertaScreen', 'adminRewardScreen', 'adminLupaPresensiScreen', 'adminRekapScreen'];
+            const adminScreens = ['adminScreen', 'adminJadwalScreen', 'adminPengaturanScreen', 'adminValidasiScreen', 'adminPesertaScreen', 'adminRewardScreen', 'adminLupaPresensiScreen', 'adminRekapScreen', 'adminProdiScreen'];
             if (idLayar === 'registerScreen' || idLayar === 'userProfileScreen') wadah.classList.add('max-w-2xl');
             else if (adminScreens.includes(idLayar)) wadah.classList.add('max-w-4xl');
             else wadah.classList.add('max-w-md');
@@ -1466,6 +1492,97 @@
         async function simpanDaftarPeserta() { const pel = document.getElementById('inputPelatihanPeserta').value, users = document.getElementById('areaPeserta').value.split('\n').filter(u => u.trim() !== ""); if(!pel || users.length === 0) return alert("Lengkapi isian!"); event.target.innerText = "Menyimpan..."; try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "save_peserta", pelatihan: pel, usernames: users }) })).json(); alert(res.status === "success" ? "✅ Tersimpan!" : "❌ Gagal."); tarikDataPeserta(); } catch(e) { alert("Gagal."); } event.target.innerText = "Update Daftar Email"; }
         async function muatGaleri() { tampilLayar('adminValidasiScreen'); document.getElementById('wadahGaleri').innerHTML = ""; document.getElementById('loadingGaleri').classList.remove('hidden'); try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_galeri" }) })).json(); if (res.status === "success") { dataGaleriGlobal = res.data; const listPelatihan = [...new Set(res.data.map(i => i.pelatihan))]; document.getElementById('filterPelatihan').innerHTML = '<option value="">Semua Pelatihan</option>' + listPelatihan.map(p => `<option value="${p}">${p}</option>`).join(''); renderGaleri(); } } catch (e) { document.getElementById('loadingGaleri').innerText = "Gagal memuat."; } document.getElementById('loadingGaleri').classList.add('hidden'); }
         function renderGaleri() { const fPel = document.getElementById('filterPelatihan').value.toLowerCase(), fNama = document.getElementById('filterPeserta').value.toLowerCase(), wadah = document.getElementById('wadahGaleri'); const terfilter = dataGaleriGlobal.filter(i => i.pelatihan.toLowerCase().includes(fPel) && i.username.toLowerCase().includes(fNama)); if (terfilter.length === 0) { wadah.innerHTML = `<p class="text-center text-slate-400 text-xs col-span-full">Tidak ada data cocok.</p>`; return; } wadah.innerHTML = terfilter.map(item => { const wkt = new Date(item.waktu); const jam = `${String(wkt.getHours()).padStart(2, '0')}:${String(wkt.getMinutes()).padStart(2, '0')}`; return `<div class="bg-white border border-slate-200 p-3.5 rounded-2xl shadow-sm flex flex-col justify-between"><p class="text-[10px] font-bold text-oceanBlue uppercase mb-0.5">${item.pelatihan} • ${item.sesi}</p><h3 class="text-xs font-bold text-slate-800 truncate">${item.username}</h3><p class="text-[11px] text-slate-400 mb-2.5">Jam Absen: ${jam} WITA</p><a href="${item.foto}" target="_blank" class="w-full bg-slate-100 text-slate-700 text-center font-semibold py-2 rounded-xl text-xs hover:bg-slate-200">Lihat Foto</a></div>`; }).join(''); }
-    </script>
+		
+		async function muatDataFakultasProdi() {
+            try {
+                const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_fakultas_prodi" }) })).json();
+                if (res.status === "success" && res.data) {
+                    Object.keys(res.data).forEach(fak => {
+                        if (res.data[fak] === "__DELETED__") {
+                            delete prodiMap[fak];
+                        } else {
+                            prodiMap[fak] = res.data[fak];
+                        }
+                    });
+                    document.getElementById('formFieldsReg').innerHTML = buildBiodataFields('reg');
+                    document.getElementById('formFieldsEdit').innerHTML = buildBiodataFields('edit');
+                }
+            } catch (e) {}
+        }
+        muatDataFakultasProdi();
+
+        function renderDropdownFakultasAdmin() {
+            const sel = document.getElementById('adminFakSelect');
+            if (!sel) return;
+            const opts = Object.keys(prodiMap).map(f => `<option value="${f}">${f}</option>`).join('');
+            sel.innerHTML = `<option value="">-- Pilih Fakultas --</option><option value="BARU">+ Tambah Fakultas Baru...</option>` + opts;
+        }
+
+        function bukaHalamanAdminProdi() {
+            tampilLayar('adminProdiScreen');
+            renderDropdownFakultasAdmin();
+            document.getElementById('adminFakSelect').value = "";
+            document.getElementById('adminFakInput').value = "";
+            document.getElementById('adminFakInput').classList.add('hidden');
+            document.getElementById('adminProdiArea').value = "";
+        }
+
+        function cekPilihFakultasAdmin() {
+            const val = document.getElementById('adminFakSelect').value;
+            const inp = document.getElementById('adminFakInput');
+            const area = document.getElementById('adminProdiArea');
+            if (val === "BARU") {
+                inp.classList.remove('hidden');
+                inp.value = "";
+                area.value = "";
+            } else {
+                inp.classList.add('hidden');
+                area.value = (val && prodiMap[val]) ? prodiMap[val].join('\n') : "";
+            }
+        }
+
+        async function simpanFakultasProdiAdmin(btn) {
+            let fak = document.getElementById('adminFakSelect').value;
+            if (fak === "BARU") fak = document.getElementById('adminFakInput').value.trim();
+            const prodiList = document.getElementById('adminProdiArea').value.split('\n').map(s => s.trim()).filter(s => s !== "");
+
+            if (!fak) return alert("Pilih atau ketik nama Fakultas terlebih dahulu!");
+            if (prodiList.length === 0) return alert("Masukkan minimal 1 Program Studi!");
+
+            const teksAsli = btn.innerText;
+            btn.innerText = "Menyimpan...";
+            btn.disabled = true;
+            try {
+                const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "save_fakultas_prodi", fakultas: fak, prodi_list: prodiList }) })).json();
+                if (res.status === "success") {
+                    alert("✅ " + res.message);
+                    await muatDataFakultasProdi();
+                    bukaHalamanAdminProdi();
+                } else {
+                    alert("❌ Gagal menyimpan data.");
+                }
+            } catch (e) {
+                alert("Koneksi gagal.");
+            }
+            btn.innerText = teksAsli;
+            btn.disabled = false;
+        }
+
+        async function hapusFakultasAdmin() {
+            const fak = document.getElementById('adminFakSelect').value;
+            if (!fak || fak === "BARU") return alert("Pilih nama Fakultas yang ingin dihapus dari dropdown!");
+            if (!confirm(`Yakin ingin menghapus Fakultas "${fak}" beserta daftar Program Studinya?`)) return;
+            try {
+                const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "delete_fakultas_prodi", fakultas: fak }) })).json();
+                if (res.status === "success") {
+                    alert("✅ " + res.message);
+                    await muatDataFakultasProdi();
+                    bukaHalamanAdminProdi();
+                }
+            } catch (e) {
+                alert("Koneksi gagal.");
+            }
+        }
+	</script>
 </body>
 </html>
