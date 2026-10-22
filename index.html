@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Informasi Pelatihan LPMPP</title>
+    <title>Sistem Informasi Pelatihan</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1060,7 +1060,7 @@
                 <div class="bg-slate-50 border ${j.sudah_hadir ? 'border-emerald-200' : 'border-rose-200'} p-3 rounded-xl flex justify-between items-center">
                     <div>
                         <p class="text-[10px] font-bold text-oceanBlue uppercase">${j.pelatihan}</p>
-                        <h4 class="text-xs font-bold text-slate-800">${j.hari} •${j.sesi}</h4>
+                        <h4 class="text-xs font-bold text-slate-800">${j.hari} • ${j.sesi}</h4>
                         <p class="text-[10px] text-slate-500">⏰ ${j.jam_mulai} - ${j.jam_selesai} (${j.mode})</p>
                     </div>
                     <span class="${j.sudah_hadir ? 'bg-emerald-500 text-white' : 'bg-rose-500 text-white'} text-[10px] font-bold px-2.5 py-1 rounded-full">
@@ -1090,23 +1090,30 @@
             setTanggalHariIni();
             document.getElementById('userNameDisplay').innerText = session.nama; 
             const pelEl = document.getElementById('pelatihanDisplay'), sesiEl = document.getElementById('sesiDisplay'), wadahWaktuEl = document.getElementById('wadahWaktuDisplay'), waktuEl = document.getElementById('waktuDisplay');
-            pelEl.className = "text-xs font-medium text-slate-500 text-center leading-relaxed"; pelEl.innerText = "Memeriksa jadwal...";
-            sesiEl.classList.add('hidden'); wadahWaktuEl.classList.add('hidden'); ubahStatusMsg("", "");
-            document.getElementById('btnLokasi').classList.add('hidden'); document.getElementById('btnKamera').classList.add('hidden');
             
-            let currentTimeMinutes, realTodayStr;
-            try { 
-                const td = await (await fetch("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Makassar")).json(); 
-                currentTimeMinutes = (td.hour * 60) + td.minute; 
-                realTodayStr = `${td.year}-${String(td.month).padStart(2, '0')}-${String(td.day).padStart(2, '0')}`; 
-            } catch (errTime) { 
-                const now = new Date(); currentTimeMinutes = (now.getHours() * 60) + now.getMinutes();
-                realTodayStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+            if (cachedJadwalPeserta.length === 0 && cachedEnrolledInfo.length === 0) {
+                pelEl.className = "text-xs font-medium text-slate-500 text-center leading-relaxed"; 
+                pelEl.innerText = "Memeriksa jadwal...";
+                sesiEl.classList.add('hidden'); 
+                wadahWaktuEl.classList.add('hidden'); 
+                ubahStatusMsg("", "");
+                document.getElementById('btnLokasi').classList.add('hidden'); 
+                document.getElementById('btnKamera').classList.add('hidden');
             }
+            
+            const witaNow = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Makassar"}));
+            const currentTimeMinutes = (witaNow.getHours() * 60) + witaNow.getMinutes();
+            const realTodayStr = `${witaNow.getFullYear()}-${String(witaNow.getMonth()+1).padStart(2, '0')}-${String(witaNow.getDate()).padStart(2, '0')}`;
 
             try {
                 const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_jadwal", username: session.username }) })).json(); 
                 updateStatistikDashboard(res.data || [], res.enrolled_info || [], realTodayStr, currentTimeMinutes);
+
+                sesiEl.classList.add('hidden'); 
+                wadahWaktuEl.classList.add('hidden'); 
+                ubahStatusMsg("", "");
+                document.getElementById('btnLokasi').classList.add('hidden'); 
+                document.getElementById('btnKamera').classList.add('hidden');
 
                 if (res.status === "success" && res.enrolled_count === 0) {
                     pelEl.className = "text-xs font-semibold text-amber-700 text-center leading-relaxed";
@@ -1132,7 +1139,7 @@
                         session.targetRadius = parseFloat(jadwalAktif.radius) || RADIUS_MAX; session.mode = jadwalAktif.mode || "Offline";
                         pelEl.className = "text-sm font-extrabold text-oceanDark text-center leading-snug"; pelEl.innerText = jadwalAktif.pelatihan; 
                         sesiEl.innerText = `${jadwalAktif.hari} — ${jadwalAktif.sesi} (${session.mode})`; sesiEl.classList.remove('hidden');
-                        waktuEl.innerText = `Batas: ${jadwalAktif.jam_mulai} -${jadwalAktif.jam_selesai}`; wadahWaktuEl.classList.remove('hidden');
+                        waktuEl.innerText = `Batas: ${jadwalAktif.jam_mulai} - ${jadwalAktif.jam_selesai}`; wadahWaktuEl.classList.remove('hidden');
                         if(jadwalAktif.sudah_hadir) {
                             ubahStatusMsg("✅ Anda sudah melakukan presensi di sesi ini.", "text-emerald-600"); 
                         } else {
@@ -1167,7 +1174,7 @@
                 const c = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin((session.lat - tLat)*Math.PI/360), 2) + Math.cos(tLat*Math.PI/180)*Math.cos(session.lat*Math.PI/180)*Math.pow(Math.sin((session.lng - tLng)*Math.PI/360), 2))); 
                 const jarak = Math.floor(6371e3 * c); 
                 if (jarak <= tRad) aktifkanTombolKamera(`✅ Radius Valid (${jarak}m). Silakan Selfie.`);
-                else ubahStatusMsg(`❌ Terlalu Jauh (${jarak}m dari titik lokasi pelatihan, maks${tRad}m).`, "text-red-500"); 
+                else ubahStatusMsg(`❌ Terlalu Jauh (${jarak}m dari titik lokasi pelatihan, maks ${tRad}m).`, "text-red-500"); 
             }, () => ubahStatusMsg("❌ Gagal akses GPS. Mohon izinkan pemakaian Lokasi pada browser HP/Laptop Anda.", "text-red-500"), { enableHighAccuracy: true }); 
         }
 
@@ -1203,17 +1210,18 @@
         function bukaFormLupaPresensiIndex(idx) { const item = listRiwayatGlobal[idx]; if (item) bukaFormLupaPresensi(item.pelatihan, item.hari, item.sesi); }
 
         async function bukaHalamanRiwayatKu() {
-            tampilLayar('myAttendanceScreen'); document.getElementById('wadahRiwayatKu').innerHTML = ""; document.getElementById('loadingRiwayatKu').classList.remove('hidden');
-            let todayStr, currentMins;
-            try {
-                const td = await (await fetch("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Makassar")).json(); 
-                currentMins = (td.hour * 60) + td.minute; todayStr = `${td.year}-${String(td.month).padStart(2, '0')}-${String(td.day).padStart(2, '0')}`;
-            } catch (err) {
-                const now = new Date(); todayStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`; currentMins = now.getHours() * 60 + now.getMinutes();
-            }
+            tampilLayar('myAttendanceScreen'); 
+            document.getElementById('wadahRiwayatKu').innerHTML = ""; 
+            document.getElementById('loadingRiwayatKu').classList.remove('hidden');
+            
+            const witaNow = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Makassar"}));
+            const currentMins = (witaNow.getHours() * 60) + witaNow.getMinutes();
+            const todayStr = `${witaNow.getFullYear()}-${String(witaNow.getMonth()+1).padStart(2, '0')}-${String(witaNow.getDate()).padStart(2, '0')}`;
+
             try {
                 const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_my_attendance_full", username: session.username }) })).json();
-                document.getElementById('loadingRiwayatKu').classList.add('hidden'); const wadah = document.getElementById('wadahRiwayatKu');
+                document.getElementById('loadingRiwayatKu').classList.add('hidden'); 
+                const wadah = document.getElementById('wadahRiwayatKu');
                 if (res.status === "success" && res.data.length > 0) {
                     listRiwayatGlobal = res.data;
                     res.data.forEach((item, idx) => {
@@ -1240,7 +1248,7 @@
                                 actionBtn = `<button type="button" onclick="bukaFormLupaPresensiIndex(${idx})" class="w-full mt-2.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-[11px] font-bold py-2 rounded-xl">Ajukan Lupa Presensi</button>`;
                             }
                         }
-                        let jamText = (item.jam_mulai && item.jam_selesai && item.jam_mulai !== "-") ? `${item.jam_mulai} -${item.jam_selesai}` : ``;
+                        let jamText = (item.jam_mulai && item.jam_selesai && item.jam_mulai !== "-") ? `${item.jam_mulai} - ${item.jam_selesai}` : ``;
                         wadah.innerHTML += `<div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm flex flex-col"><div class="flex justify-between items-start gap-2 mb-1"><div><p class="text-[10px] font-bold text-oceanBlue uppercase">${item.pelatihan}</p><h3 class="text-sm font-bold text-slate-800 mt-0.5">${item.hari} • ${item.sesi}</h3></div>${statusBadge}</div><div class="flex items-center space-x-3 text-[11px] text-slate-400 font-medium mt-1"><span>🗓️ ${item.tanggal}</span>${jamText ? `<span>⏰ ${jamText}</span>` : ''}</div>${actionBtn}</div>`;
                     });
                 } else wadah.innerHTML = `<div class="bg-slate-50 border border-slate-200/60 rounded-2xl p-6 text-center"><p class="text-slate-500 text-xs">Anda belum memiliki jadwal pelatihan aktif.</p></div>`;
@@ -1482,13 +1490,30 @@
         }
 
         async function bukaKamera() { tampilLayar('kameraScreen'); const video = document.getElementById('video'); try { streamKamera = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } }); video.srcObject = streamKamera; } catch (err) { alert("⚠️ Gagal mengakses kamera (" + err.message + ").\n\nMohon izinkan penggunaan KAMERA pada pengaturan browser di HP atau Laptop/PC Anda."); tampilLayar('presensiScreen'); } }
-        async function jepretDanKirim() { document.getElementById('btnJepret').innerText = "Mengunggah..."; document.getElementById('btnJepret').disabled = true; const video = document.getElementById('video'), canvas = document.getElementById('canvas'); canvas.width = video.videoWidth; canvas.height = video.videoHeight; canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height); const b64 = canvas.toDataURL('image/jpeg', 0.6).split(',')[1]; if(streamKamera) streamKamera.getTracks().forEach(t => t.stop()); try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "presensi", ...session, imageBase64: b64 }) })).json(); if (res.status === "success") { if (res.reward_link) { document.getElementById('rewardBox').classList.remove('hidden'); document.getElementById('btnReward').href = res.reward_link; } tampilLayar('suksesScreen'); } else { alert(res.message); location.reload(); } } catch (e) { alert("Kesalahan jaringan."); location.reload(); } }
+        async function jepretDanKirim() { 
+            document.getElementById('btnJepret').innerText = "Mengunggah..."; 
+            document.getElementById('btnJepret').disabled = true; 
+            const video = document.getElementById('video'), canvas = document.getElementById('canvas'); 
+            const scale = Math.min(1, 480 / (video.videoWidth || 480));
+            canvas.width = (video.videoWidth || 480) * scale; 
+            canvas.height = (video.videoHeight || 640) * scale; 
+            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height); 
+            const b64 = canvas.toDataURL('image/jpeg', 0.5).split(',')[1]; 
+            if(streamKamera) streamKamera.getTracks().forEach(t => t.stop()); 
+            try { 
+                const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "presensi", ...session, imageBase64: b64 }) })).json(); 
+                if (res.status === "success") { 
+                    if (res.reward_link) { document.getElementById('rewardBox').classList.remove('hidden'); document.getElementById('btnReward').href = res.reward_link; } 
+                    tampilLayar('suksesScreen'); 
+                } else { alert(res.message); location.reload(); } 
+            } catch (e) { alert("Kesalahan jaringan."); location.reload(); } 
+        }
 
         function bukaSpreadsheet() { window.open("https://docs.google.com/spreadsheets/d/1d3jMjww3PinwN1U1v-yVKz79YcLp_-56jSOATBPQi9U/edit", '_blank'); }
         function tambahSesiUI() { const wadah = document.getElementById('wadahSesi'), clone = wadah.firstElementChild.cloneNode(true); clone.querySelectorAll('input').forEach(inp => inp.value = ''); const isOnline = document.getElementById('cekOnline').checked, isOffline = document.getElementById('cekOffline').checked; if (clone.querySelector('.input-mode')) clone.querySelector('.input-mode').value = (isOnline && !isOffline) ? 'Online' : 'Offline'; wadah.appendChild(clone); document.querySelectorAll('.btn-hapus-sesi').forEach(b => b.classList.remove('hidden')); }
         function hapusSesi(btn) { btn.closest('.sesi-item').remove(); if(document.querySelectorAll('.sesi-item').length === 1) document.querySelector('.btn-hapus-sesi').classList.add('hidden'); }
         async function hapusJadwalLama() { let pName = document.getElementById("jadwalPelatihanSelect").value; if(pName === "BARU") pName = document.getElementById("jadwalPelatihanInput").value; if(!pName) return alert("Pilih / Ketik nama pelatihan."); if(!confirm(`Yakin hapus seluruh sesi untuk "${pName}"?`)) return; try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "delete_pelatihan", pelatihan: pName }) })).json(); if(res.status === "success"){ alert("✅ Berhasil!"); document.getElementById("jadwalPelatihanSelect").value = ""; document.getElementById("jadwalPelatihanInput").value = ""; document.getElementById("jadwalPelatihanInput").classList.add('hidden'); resetKeteranganJadwal(); muatDaftarPelatihanAdmin(); } else alert("❌ Gagal: " + res.message); } catch(e) { alert("Gagal."); } }
-        async function tarikDataPeserta() { const pel = document.getElementById('inputPelatihanPeserta').value; if(!pel) return alert("Pilih pelatihan!"); document.getElementById('areaPeserta').value = "Mengambil data..."; const detailWadah = document.getElementById('wadahDetailPeserta'), searchInput = document.getElementById('cariPesertaInput'); detailWadah.innerHTML = ""; detailWadah.classList.add('hidden'); searchInput.classList.add('hidden'); document.getElementById('teksBantuPeserta').classList.add('hidden'); try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_peserta", pelatihan: pel }) })).json(); document.getElementById('areaPeserta').value = res.emails.join('\n'); if(res.details && res.details.length > 0) { searchInput.classList.remove('hidden'); searchInput.value = ''; detailWadah.innerHTML = '<h3 class="text-xs font-bold text-slate-700 mb-2 sticky top-0 bg-slate-50 z-10 py-1">Detail Biodata Peserta:</h3>' + res.details.map(d => `<div class="kartu-peserta bg-white border border-slate-200 p-3.5 rounded-2xl shadow-sm"><p class="font-bold text-xs text-slate-800">${d.nama}</p><p class="text-[11px] text-oceanBlue font-medium mb-2">${d.email}</p><div class="grid grid-cols-2 gap-y-1 text-[10px] text-slate-500"><p><b>NIP:</b> ${d.nip || '-'}</p><p><b>NIDN:</b> ${d.nidn || '-'}</p><p><b>NUPTK:</b> ${d.nuptk || '-'}</p><p><b>Instansi:</b> ${d.instansi}</p><p><b>Unit:</b> ${d.nama_instansi || '-'}</p><p><b>Fakultas:</b> ${d.fakultas}</p><p><b>Prodi:</b> ${d.prodi}</p></div></div>`).join(''); detailWadah.classList.remove('hidden'); } else { document.getElementById('teksBantuPeserta').innerText = "Belum ada data biodata peserta untuk kelas ini."; document.getElementById('teksBantuPeserta').classList.remove('hidden'); } } catch(e) { document.getElementById('areaPeserta').value = ""; document.getElementById('teksBantuPeserta').classList.remove('hidden'); alert("Gagal mengambil data."); } }
+        async function tarikDataPeserta() { const pel = document.getElementById('inputPelatihanPeserta').value; if(!pel) return alert("Pilih pelatihan!"); document.getElementById('areaPeserta').value = "Mengambil data..."; const detailWadah = document.getElementById('wadahDetailPeserta'), searchInput = document.getElementById('cariPesertaInput'); detailWadah.innerHTML = ""; detailWadah.classList.add('hidden'); searchInput.classList.add('hidden'); document.getElementById('teksBantuPeserta').classList.add('hidden'); try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_peserta", pelatihan: pel }) })).json(); document.getElementById('areaPeserta').value = res.emails.join('\n'); if(res.details && res.details.length > 0) { searchInput.classList.remove('hidden'); searchInput.value = ''; detailWadah.innerHTML = '<h3 class="text-xs font-bold text-slate-700 mb-2 sticky top-0 bg-slate-50 z-10 py-1">Detail Biodata Peserta:</h3>' + res.details.map(d => `<div class="kartu-peserta bg-white border border-slate-200 p-3.5 rounded-2xl shadow-sm"><p class="font-bold text-xs text-slate-800">${d.gelar_depan ? d.gelar_depan + ' ' : ''}${d.nama}${d.gelar_belakang ? ', ' + d.gelar_belakang : ''}</p><p class="text-[11px] text-oceanBlue font-medium mb-2">${d.email}</p><div class="grid grid-cols-2 gap-y-1 text-[10px] text-slate-500"><p><b>NIP:</b> ${d.nip || '-'}</p><p><b>NIDN:</b> ${d.nidn || '-'}</p><p><b>NUPTK:</b> ${d.nuptk || '-'}</p><p><b>Instansi:</b> ${d.instansi}</p><p><b>Unit:</b> ${d.nama_instansi || '-'}</p><p><b>Fakultas:</b> ${d.fakultas}</p><p><b>Prodi:</b> ${d.prodi}</p></div></div>`).join(''); detailWadah.classList.remove('hidden'); } else { document.getElementById('teksBantuPeserta').innerText = "Belum ada data biodata peserta untuk kelas ini."; document.getElementById('teksBantuPeserta').classList.remove('hidden'); } } catch(e) { document.getElementById('areaPeserta').value = ""; document.getElementById('teksBantuPeserta').classList.remove('hidden'); alert("Gagal mengambil data."); } }
         function filterKartuPeserta() { const kw = document.getElementById('cariPesertaInput').value.toLowerCase(); document.querySelectorAll('.kartu-peserta').forEach(c => { c.style.display = c.innerText.toLowerCase().includes(kw) ? 'block' : 'none'; }); }
         async function simpanDaftarPeserta() { const pel = document.getElementById('inputPelatihanPeserta').value, users = document.getElementById('areaPeserta').value.split('\n').filter(u => u.trim() !== ""); if(!pel || users.length === 0) return alert("Lengkapi isian!"); event.target.innerText = "Menyimpan..."; try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "save_peserta", pelatihan: pel, usernames: users }) })).json(); alert(res.status === "success" ? "✅ Tersimpan!" : "❌ Gagal."); tarikDataPeserta(); } catch(e) { alert("Gagal."); } event.target.innerText = "Update Daftar Email"; }
         async function muatGaleri() { tampilLayar('adminValidasiScreen'); document.getElementById('wadahGaleri').innerHTML = ""; document.getElementById('loadingGaleri').classList.remove('hidden'); try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_galeri" }) })).json(); if (res.status === "success") { dataGaleriGlobal = res.data; const listPelatihan = [...new Set(res.data.map(i => i.pelatihan))]; document.getElementById('filterPelatihan').innerHTML = '<option value="">Semua Pelatihan</option>' + listPelatihan.map(p => `<option value="${p}">${p}</option>`).join(''); renderGaleri(); } } catch (e) { document.getElementById('loadingGaleri').innerText = "Gagal memuat."; } document.getElementById('loadingGaleri').classList.add('hidden'); }
@@ -1505,8 +1530,9 @@
                             prodiMap[fak] = res.data[fak];
                         }
                     });
-                    document.getElementById('formFieldsReg').innerHTML = buildBiodataFields('reg');
-                    document.getElementById('formFieldsEdit').innerHTML = buildBiodataFields('edit');
+                    const fakOpts = '<option value="">Pilih Fakultas</option>' + Object.keys(prodiMap).concat(["Lainnya"]).map(o => `<option value="${o}">${o}</option>`).join('');
+					if (document.getElementById('regFakultas')) document.getElementById('regFakultas').innerHTML = fakOpts;
+					if (document.getElementById('editFakultas')) document.getElementById('editFakultas').innerHTML = fakOpts;
                 }
             } catch (e) {}
         }
