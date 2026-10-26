@@ -549,7 +549,12 @@
 
         <!-- LAYER 16: ADMIN PESERTA -->
         <div id="adminPesertaScreen" class="hidden flex flex-col w-full p-6 sm:p-8 bg-white">
-            <h2 class="text-lg font-extrabold text-oceanDark mb-3">Daftar Peserta Pelatihan</h2>
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
+                <h2 class="text-lg font-extrabold text-oceanDark">Daftar Peserta Pelatihan</h2>
+                <button type="button" onclick="exportPesertaXLS()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-sm flex items-center justify-center space-x-1.5 transition-colors cursor-pointer">
+                    <span>📥</span><span>Export XLS Peserta</span>
+                </button>
+            </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                     <div class="flex space-x-2 mb-3">
@@ -1635,7 +1640,122 @@
         function tambahSesiUI() { const wadah = document.getElementById('wadahSesi'), clone = wadah.firstElementChild.cloneNode(true); clone.querySelectorAll('input').forEach(inp => inp.value = ''); const isOnline = document.getElementById('cekOnline').checked, isOffline = document.getElementById('cekOffline').checked; if (clone.querySelector('.input-mode')) clone.querySelector('.input-mode').value = (isOnline && !isOffline) ? 'Online' : 'Offline'; wadah.appendChild(clone); document.querySelectorAll('.btn-hapus-sesi').forEach(b => b.classList.remove('hidden')); }
         function hapusSesi(btn) { btn.closest('.sesi-item').remove(); if(document.querySelectorAll('.sesi-item').length === 1) document.querySelector('.btn-hapus-sesi').classList.add('hidden'); }
         async function hapusJadwalLama() { let pName = document.getElementById("jadwalPelatihanSelect").value; if(pName === "BARU") pName = document.getElementById("jadwalPelatihanInput").value; if(!pName) return alert("Pilih / Ketik nama pelatihan."); if(!confirm(`Yakin hapus seluruh sesi untuk "${pName}"?`)) return; try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "delete_pelatihan", pelatihan: pName }) })).json(); if(res.status === "success"){ alert("✅ Berhasil!"); document.getElementById("jadwalPelatihanSelect").value = ""; document.getElementById("jadwalPelatihanInput").value = ""; document.getElementById("jadwalPelatihanInput").classList.add('hidden'); resetKeteranganJadwal(); muatDaftarPelatihanAdmin(); } else alert("❌ Gagal: " + res.message); } catch(e) { alert("Gagal."); } }
-        async function tarikDataPeserta() { const pel = document.getElementById('inputPelatihanPeserta').value; if(!pel) return alert("Pilih pelatihan!"); document.getElementById('areaPeserta').value = "Mengambil data..."; const detailWadah = document.getElementById('wadahDetailPeserta'), searchInput = document.getElementById('cariPesertaInput'); detailWadah.innerHTML = ""; detailWadah.classList.add('hidden'); searchInput.classList.add('hidden'); document.getElementById('teksBantuPeserta').classList.add('hidden'); try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_peserta", pelatihan: pel }) })).json(); document.getElementById('areaPeserta').value = res.emails.join('\n'); if(res.details && res.details.length > 0) { searchInput.classList.remove('hidden'); searchInput.value = ''; detailWadah.innerHTML = '<h3 class="text-xs font-bold text-slate-700 mb-2 sticky top-0 bg-slate-50 z-10 py-1">Detail Biodata Peserta:</h3>' + res.details.map(d => `<div class="kartu-peserta bg-white border border-slate-200 p-3.5 rounded-2xl shadow-sm"><p class="font-bold text-xs text-slate-800">${d.gelar_depan ? d.gelar_depan + ' ' : ''}${d.nama}${d.gelar_belakang ? ', ' + d.gelar_belakang : ''}</p><p class="text-[11px] text-oceanBlue font-medium mb-2">${d.email}</p><div class="grid grid-cols-2 gap-y-1 text-[10px] text-slate-500"><p><b>NIP:</b> ${d.nip || '-'}</p><p><b>NIDN:</b> ${d.nidn || '-'}</p><p><b>NUPTK:</b> ${d.nuptk || '-'}</p><p><b>Instansi:</b> ${d.instansi}</p><p><b>Unit:</b> ${d.nama_instansi || '-'}</p><p><b>Fakultas:</b> ${d.fakultas}</p><p><b>Prodi:</b> ${d.prodi}</p></div></div>`).join(''); detailWadah.classList.remove('hidden'); } else { document.getElementById('teksBantuPeserta').innerText = "Belum ada data biodata peserta untuk kelas ini."; document.getElementById('teksBantuPeserta').classList.remove('hidden'); } } catch(e) { document.getElementById('areaPeserta').value = ""; document.getElementById('teksBantuPeserta').classList.remove('hidden'); alert("Gagal mengambil data."); } }
+        var cachedDetailPesertaAdmin = [];
+        var cachedNamaPelatihanPeserta = "";
+
+        async function tarikDataPeserta() { 
+            const pel = document.getElementById('inputPelatihanPeserta').value; 
+            if(!pel) return alert("Pilih pelatihan!"); 
+            document.getElementById('areaPeserta').value = "Mengambil data..."; 
+            const detailWadah = document.getElementById('wadahDetailPeserta'), searchInput = document.getElementById('cariPesertaInput'); 
+            detailWadah.innerHTML = ""; detailWadah.classList.add('hidden'); searchInput.classList.add('hidden'); document.getElementById('teksBantuPeserta').classList.add('hidden'); 
+            try { 
+                const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_peserta", pelatihan: pel }) })).json(); 
+                document.getElementById('areaPeserta').value = res.emails.join('\n'); 
+                cachedDetailPesertaAdmin = res.details || [];
+                cachedNamaPelatihanPeserta = pel;
+                if(res.details && res.details.length > 0) { 
+                    searchInput.classList.remove('hidden'); searchInput.value = ''; 
+                    detailWadah.innerHTML = '<h3 class="text-xs font-bold text-slate-700 mb-2 sticky top-0 bg-slate-50 z-10 py-1">Detail Biodata Peserta:</h3>' + res.details.map(d => `<div class="kartu-peserta bg-white border border-slate-200 p-3.5 rounded-2xl shadow-sm"><p class="font-bold text-xs text-slate-800">${d.gelar_depan ? d.gelar_depan + ' ' : ''}${d.nama}${d.gelar_belakang ? ', ' + d.gelar_belakang : ''}</p><p class="text-[11px] text-oceanBlue font-medium mb-2">${d.email}</p><div class="grid grid-cols-2 gap-y-1 text-[10px] text-slate-500"><p><b>NIP:</b> ${d.nip || '-'}</p><p><b>NIDN:</b> ${d.nidn || '-'}</p><p><b>NUPTK:</b> ${d.nuptk || '-'}</p><p><b>Instansi:</b> ${d.instansi}</p><p><b>Unit:</b> ${d.nama_instansi || '-'}</p><p><b>Fakultas:</b> ${d.fakultas}</p><p><b>Prodi:</b> ${d.prodi}</p></div></div>`).join(''); 
+                    detailWadah.classList.remove('hidden'); 
+                } else { 
+                    document.getElementById('teksBantuPeserta').innerText = "Belum ada data biodata peserta untuk kelas ini."; 
+                    document.getElementById('teksBantuPeserta').classList.remove('hidden'); 
+                } 
+            } catch(e) { 
+                document.getElementById('areaPeserta').value = ""; 
+                document.getElementById('teksBantuPeserta').classList.remove('hidden'); 
+                alert("Gagal mengambil data."); 
+            } 
+        }
+
+        async function exportPesertaXLS() {
+            const pel = document.getElementById('inputPelatihanPeserta').value;
+            if (!pel) return alert("Pilih nama pelatihan terlebih dahulu!");
+
+            if (cachedNamaPelatihanPeserta !== pel || cachedDetailPesertaAdmin.length === 0) {
+                await tarikDataPeserta();
+            }
+            if (!cachedDetailPesertaAdmin || cachedDetailPesertaAdmin.length === 0) {
+                return alert("Belum ada data peserta yang terdaftar pada pelatihan ini untuk diekspor.");
+            }
+
+            let tableHtml = `
+            <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+            <head><meta charset="UTF-8"><style>td, th { border: 1px solid #000000; padding: 5px; font-family: Arial, sans-serif; font-size: 11pt; } th { background-color: #0284C7; color: #ffffff; font-weight: bold; } .str { mso-number-format:"\\@"; }</style></head>
+            <body>
+                <h3>Rekap Data Peserta - ${pel}</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Email</th>
+                            <th>Nama Lengkap (Tanpa Gelar)</th>
+                            <th>Gelar Depan</th>
+                            <th>Gelar Belakang</th>
+                            <th>Nama Lengkap & Gelar</th>
+                            <th>NIP</th>
+                            <th>NIDN/NIDK</th>
+                            <th>NUPTK</th>
+                            <th>Tempat Lahir</th>
+                            <th>Tanggal Lahir</th>
+                            <th>Status Kepegawaian</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Pangkat/Golongan</th>
+                            <th>Jabatan Fungsional</th>
+                            <th>Instansi</th>
+                            <th>Nama Instansi</th>
+                            <th>Fakultas</th>
+                            <th>Program Studi</th>
+                            <th>Pendidikan Terakhir</th>
+                            <th>Nomor HP</th>
+                            <th>Alamat</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+            cachedDetailPesertaAdmin.forEach((d, idx) => {
+                const namaGelar = `${d.gelar_depan ? d.gelar_depan + ' ' : ''}${d.nama || ''}${d.gelar_belakang ? ', ' + d.gelar_belakang : ''}`;
+                tableHtml += `
+                        <tr>
+                            <td>${idx + 1}</td>
+                            <td>${d.email || ''}</td>
+                            <td>${d.nama || ''}</td>
+                            <td>${d.gelar_depan || ''}</td>
+                            <td>${d.gelar_belakang || ''}</td>
+                            <td>${namaGelar}</td>
+                            <td class="str">${d.nip || ''}</td>
+                            <td class="str">${d.nidn || ''}</td>
+                            <td class="str">${d.nuptk || ''}</td>
+                            <td>${d.tempat_lahir || ''}</td>
+                            <td class="str">${d.tanggal_lahir || ''}</td>
+                            <td>${d.status_pegawai || ''}</td>
+                            <td>${d.jk || ''}</td>
+                            <td>${d.pangkat || ''}</td>
+                            <td>${d.jabatan || ''}</td>
+                            <td>${d.instansi || ''}</td>
+                            <td>${d.nama_instansi || ''}</td>
+                            <td>${d.fakultas || ''}</td>
+                            <td>${d.prodi || ''}</td>
+                            <td>${d.pendidikan || ''}</td>
+                            <td class="str">${d.hp || ''}</td>
+                            <td>${d.alamat || ''}</td>
+                        </tr>`;
+            });
+
+            tableHtml += `</tbody></table></body></html>`;
+
+            const blob = new Blob([tableHtml], { type: "application/vnd.ms-excel" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `Rekap_Peserta_${pel.replace(/[^a-zA-Z0-9]/g, '_')}.xls`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+		
         function filterKartuPeserta() { const kw = document.getElementById('cariPesertaInput').value.toLowerCase(); document.querySelectorAll('.kartu-peserta').forEach(c => { c.style.display = c.innerText.toLowerCase().includes(kw) ? 'block' : 'none'; }); }
         async function simpanDaftarPeserta() { const pel = document.getElementById('inputPelatihanPeserta').value, users = document.getElementById('areaPeserta').value.split('\n').filter(u => u.trim() !== ""); if(!pel || users.length === 0) return alert("Lengkapi isian!"); event.target.innerText = "Menyimpan..."; try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "save_peserta", pelatihan: pel, usernames: users }) })).json(); alert(res.status === "success" ? "✅ Tersimpan!" : "❌ Gagal."); tarikDataPeserta(); } catch(e) { alert("Gagal."); } event.target.innerText = "Update Daftar Email"; }
         async function muatGaleri() { tampilLayar('adminValidasiScreen'); document.getElementById('wadahGaleri').innerHTML = ""; document.getElementById('loadingGaleri').classList.remove('hidden'); try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_galeri" }) })).json(); if (res.status === "success") { dataGaleriGlobal = res.data; const listPelatihan = [...new Set(res.data.map(i => i.pelatihan))]; document.getElementById('filterPelatihan').innerHTML = '<option value="">Semua Pelatihan</option>' + listPelatihan.map(p => `<option value="${p}">${p}</option>`).join(''); renderGaleri(); } } catch (e) { document.getElementById('loadingGaleri').innerText = "Gagal memuat."; } document.getElementById('loadingGaleri').classList.add('hidden'); }
