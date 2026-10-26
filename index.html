@@ -333,17 +333,22 @@
         <div id="lupaPresensiFormScreen" class="hidden flex flex-col w-full p-6 sm:p-8 bg-white">
             <div class="mb-4 text-center">
                 <h2 class="text-lg font-extrabold text-oceanDark">Ajukan Lupa Presensi</h2>
-                <p class="text-xs text-slate-500">Unggah foto bukti kehadiran Anda saat sesi berlangsung.</p>
+                <p class="text-xs text-slate-500">Isi alasan dan unggah foto bukti kehadiran Anda saat sesi berlangsung.</p>
             </div>
             <div class="bg-sky-50/70 border border-sky-100 p-3.5 rounded-2xl mb-4 text-center">
                 <p class="text-[10px] font-bold text-oceanBlue uppercase mb-0.5" id="lpPelatihan">NAMA PELATIHAN</p>
                 <h3 class="text-sm font-bold text-slate-800" id="lpHariSesi">Hari - Sesi</h3>
+                <p id="lpKuotaInfo" class="text-[10px] font-semibold text-amber-600 mt-1">Kuota Lupa Presensi: 0/5</p>
             </div>
-            <label class="border-2 border-dashed border-sky-200 hover:border-oceanBlue rounded-2xl p-6 text-center mb-5 hover:bg-sky-50/30 cursor-pointer block">
-                <span class="text-3xl block mb-2">📸</span>
-                <span class="text-xs font-bold text-oceanBlue block">Pilih File Foto Bukti</span>
-                <input type="file" id="lpFileInput" accept="image/*" class="hidden" onchange="document.getElementById('lpFileName').innerText = this.files[0].name;">
-                <p id="lpFileName" class="text-[11px] text-slate-400 mt-1.5 truncate max-w-xs mx-auto">Belum ada file terpilih</p>
+            <div class="mb-3.5">
+                <label class="text-[11px] font-bold text-slate-600 block mb-1">Alasan Lupa Melakukan Presensi*</label>
+                <textarea id="lpAlasanInput" rows="3" placeholder="Tuliskan alasan mengapa Anda lupa melakukan presensi pada sesi ini..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs bg-slate-50/50 focus:bg-white"></textarea>
+            </div>
+            <label class="border-2 border-dashed border-sky-200 hover:border-oceanBlue rounded-2xl p-5 text-center mb-5 hover:bg-sky-50/30 cursor-pointer block">
+                <span class="text-2xl block mb-1.5">📸</span>
+                <span class="text-xs font-bold text-oceanBlue block">Pilih File Foto Bukti*</span>
+                <input type="file" id="lpFileInput" accept="image/*" class="hidden" onchange="document.getElementById('lpFileName').innerText = this.files[0] ? this.files[0].name : 'Belum ada file terpilih';">
+                <p id="lpFileName" class="text-[11px] text-slate-400 mt-1 truncate max-w-xs mx-auto">Belum ada file terpilih</p>
             </label>
             <div class="space-y-2">
                 <button type="button" onclick="submitLupaPresensi()" id="btnSubmitLP" class="w-full bg-gradient-to-r from-oceanDark to-oceanBlue text-white font-bold text-sm py-3 rounded-xl">Kirim Permohonan</button>
@@ -1207,7 +1212,14 @@
             } catch (e) { document.getElementById('loadingRewardKu').innerText = "Gagal memuat data materi."; } 
         }
 
-        function bukaFormLupaPresensiIndex(idx) { const item = listRiwayatGlobal[idx]; if (item) bukaFormLupaPresensi(item.pelatihan, item.hari, item.sesi); }
+        function bukaFormLupaPresensiIndex(idx) { 
+            const item = listRiwayatGlobal[idx]; 
+            if (!item) return;
+            if ((item.lupa_count || 0) >= 5) {
+                return alert("Batas maksimal permohonan lupa presensi (5 kali) untuk pelatihan ini telah habis!");
+            }
+            bukaFormLupaPresensi(item.pelatihan, item.hari, item.sesi, item.lupa_count || 0); 
+        }
 
         async function bukaHalamanRiwayatKu() {
             tampilLayar('myAttendanceScreen'); 
@@ -1224,8 +1236,36 @@
                 const wadah = document.getElementById('wadahRiwayatKu');
                 if (res.status === "success" && res.data.length > 0) {
                     listRiwayatGlobal = res.data;
+
+                    const kuotaPerPelatihan = {};
+                    res.data.forEach(item => {
+                        kuotaPerPelatihan[item.pelatihan] = item.lupa_count || 0;
+                    });
+
+                    let html = `
+                    <div class="bg-sky-50/70 border border-sky-200 p-3.5 rounded-2xl mb-3">
+                        <p class="text-[10px] font-extrabold text-oceanDark uppercase tracking-wider mb-2">📌 Status Kuota Lupa Presensi (Maks. 5x)</p>
+                        <div class="space-y-1.5">
+                            ${Object.keys(kuotaPerPelatihan).map(pel => {
+                                const terpakai = kuotaPerPelatihan[pel];
+                                const sisa = Math.max(0, 5 - terpakai);
+                                const warnaBadge = terpakai >= 5 
+                                    ? 'bg-rose-500 text-white' 
+                                    : (terpakai >= 3 ? 'bg-amber-500 text-white' : 'bg-oceanBlue text-white');
+                                return `
+                                <div class="flex justify-between items-center bg-white px-3 py-2 rounded-xl border border-sky-100 shadow-sm">
+                                    <span class="text-[11px] font-bold text-slate-700 truncate pr-2">${pel}</span>
+                                    <span class="${warnaBadge} text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shrink-0">${terpakai}/5 Terpakai (Sisa ${sisa})</span>
+                                </div>`;
+                            }).join('')}
+                        </div>
+                    </div>`;
+
                     res.data.forEach((item, idx) => {
                         let statusBadge = "", actionBtn = "", isBelumMulai = false, isSedangBerlangsung = false, startMins = 0, endMins = 1440;
+                        const usedQuota = item.lupa_count || 0;
+                        const isQuotaFull = usedQuota >= 5;
+
                         if (item.jam_mulai && item.jam_mulai !== "-") { const [sH, sM] = item.jam_mulai.replace(/\./g, ':').replace(/[^0-9:]/g, '').split(':').map(Number); startMins = (sH * 60) + (sM || 0); }
                         if (item.jam_selesai && item.jam_selesai !== "-") { const [eH, eM] = item.jam_selesai.replace(/\./g, ':').replace(/[^0-9:]/g, '').split(':').map(Number); endMins = (eH * 60) + (eM || 0); if (endMins === 0) endMins = 1440; }
                         if (item.tanggal && item.tanggal !== "-") {
@@ -1234,10 +1274,13 @@
                         } else { if (currentMins < startMins) isBelumMulai = true; else if (currentMins <= endMins) isSedangBerlangsung = true; }
 
                         if (item.status === "Hadir") statusBadge = `<span class="bg-sky-50 text-oceanBlue text-[10px] font-bold px-2.5 py-1 rounded-full border border-sky-200">✓ Hadir</span>`;
-                        else if (item.status === "Pending") statusBadge = `<span class="bg-amber-50 text-amber-700 text-[10px] font-bold px-2.5 py-1 rounded-full border border-amber-200">Diverifikasi</span>`;
+                        else if (item.status === "Pending") statusBadge = `<span class="bg-amber-50 text-amber-700 text-[10px] font-bold px-2.5 py-1 rounded-full border border-amber-200">Diverifikasi (${usedQuota}/5)</span>`;
                         else if (item.status === "Ditolak") {
                             statusBadge = `<span class="bg-red-50 text-red-700 text-[10px] font-bold px-2.5 py-1 rounded-full border border-red-200">Ditolak</span>`;
-                            actionBtn = `<div class="w-full mt-2.5 bg-red-50/70 border border-red-100 p-2.5 rounded-xl text-center"><p class="text-[9px] font-bold text-red-700 uppercase">Alasan Penolakan</p><p class="text-[11px] text-red-600 mt-0.5">"${item.alasan}"</p></div><button type="button" onclick="bukaFormLupaPresensiIndex(${idx})" class="w-full mt-2 bg-white text-slate-700 border border-slate-200 text-[11px] font-semibold py-2 rounded-xl">Ajukan Ulang Permohonan</button>`;
+                            const btnUlang = isQuotaFull 
+                                ? `<p class="text-[10px] text-rose-600 font-semibold mt-2 text-center">Kuota lupa presensi (5/5) untuk pelatihan ini telah habis.</p>`
+                                : `<button type="button" onclick="bukaFormLupaPresensiIndex(${idx})" class="w-full mt-2 bg-white text-slate-700 border border-slate-200 text-[11px] font-semibold py-2 rounded-xl">Ajukan Ulang Permohonan (${usedQuota}/5)</button>`;
+                            actionBtn = `<div class="w-full mt-2.5 bg-red-50/70 border border-red-100 p-2.5 rounded-xl text-center"><p class="text-[9px] font-bold text-red-700 uppercase">Alasan Penolakan</p><p class="text-[11px] text-red-600 mt-0.5">"${item.alasan}"</p></div>${btnUlang}`;
                         } else {
                             if (isBelumMulai) statusBadge = `<span class="bg-slate-100 text-slate-500 text-[10px] font-semibold px-2.5 py-1 rounded-full">Belum Mulai</span>`;
                             else if (isSedangBerlangsung) {
@@ -1245,12 +1288,15 @@
                                 actionBtn = `<p class="text-[10px] text-oceanBlue font-medium mt-2 text-center">Sesi sedang berlangsung. Silakan presensi di halaman utama.</p>`;
                             } else {
                                 statusBadge = `<span class="bg-red-50 text-red-600 text-[10px] font-bold px-2.5 py-1 rounded-full border border-red-200">Belum Hadir</span>`;
-                                actionBtn = `<button type="button" onclick="bukaFormLupaPresensiIndex(${idx})" class="w-full mt-2.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-[11px] font-bold py-2 rounded-xl">Ajukan Lupa Presensi</button>`;
+                                actionBtn = isQuotaFull 
+                                    ? `<p class="text-[10px] text-rose-600 font-semibold mt-2.5 bg-rose-50/60 py-1.5 px-2 rounded-lg text-center">Batas maksimal lupa presensi (5/5) untuk pelatihan ini telah habis.</p>`
+                                    : `<button type="button" onclick="bukaFormLupaPresensiIndex(${idx})" class="w-full mt-2.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-[11px] font-bold py-2 rounded-xl">Ajukan Lupa Presensi (${usedQuota}/5)</button>`;
                             }
                         }
                         let jamText = (item.jam_mulai && item.jam_selesai && item.jam_mulai !== "-") ? `${item.jam_mulai} - ${item.jam_selesai}` : ``;
-                        wadah.innerHTML += `<div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm flex flex-col"><div class="flex justify-between items-start gap-2 mb-1"><div><p class="text-[10px] font-bold text-oceanBlue uppercase">${item.pelatihan}</p><h3 class="text-sm font-bold text-slate-800 mt-0.5">${item.hari} • ${item.sesi}</h3></div>${statusBadge}</div><div class="flex items-center space-x-3 text-[11px] text-slate-400 font-medium mt-1"><span>🗓️ ${item.tanggal}</span>${jamText ? `<span>⏰ ${jamText}</span>` : ''}</div>${actionBtn}</div>`;
+                        html += `<div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm flex flex-col"><div class="flex justify-between items-start gap-2 mb-1"><div><p class="text-[10px] font-bold text-oceanBlue uppercase">${item.pelatihan}</p><h3 class="text-sm font-bold text-slate-800 mt-0.5">${item.hari} • ${item.sesi}</h3></div>${statusBadge}</div><div class="flex items-center space-x-3 text-[11px] text-slate-400 font-medium mt-1"><span>🗓️ ${item.tanggal}</span>${jamText ? `<span>⏰ ${jamText}</span>` : ''}</div>${actionBtn}</div>`;
                     });
+                    wadah.innerHTML = html;
                 } else wadah.innerHTML = `<div class="bg-slate-50 border border-slate-200/60 rounded-2xl p-6 text-center"><p class="text-slate-500 text-xs">Anda belum memiliki jadwal pelatihan aktif.</p></div>`;
             } catch (e) { document.getElementById('loadingRiwayatKu').innerText = "Gagal memuat riwayat presensi."; }
         }
@@ -1269,11 +1315,87 @@
             } catch (e) { document.getElementById('loadingGroupKu').innerText = "Gagal memuat data grup."; } 
         }
 
-        function bukaFormLupaPresensi(pel, hari, sesi) { document.getElementById('lpPelatihan').innerText = pel; document.getElementById('lpHariSesi').innerText = hari + " - " + sesi; window.lpData = {pelatihan: pel, hari: hari, sesi: sesi}; tampilLayar('lupaPresensiFormScreen'); }
+        function bukaFormLupaPresensi(pel, hari, sesi, usedQuota) { 
+            document.getElementById('lpPelatihan').innerText = pel; 
+            document.getElementById('lpHariSesi').innerText = hari + " - " + sesi; 
+            if (document.getElementById('lpKuotaInfo')) {
+                document.getElementById('lpKuotaInfo').innerText = `Kuota Lupa Presensi Terpakai: ${usedQuota || 0}/5 (Maksimal 5x per pelatihan)`;
+            }
+            if (document.getElementById('lpAlasanInput')) document.getElementById('lpAlasanInput').value = "";
+            if (document.getElementById('lpFileInput')) document.getElementById('lpFileInput').value = "";
+            if (document.getElementById('lpFileName')) document.getElementById('lpFileName').innerText = "Belum ada file terpilih";
+            window.lpData = {pelatihan: pel, hari: hari, sesi: sesi}; 
+            tampilLayar('lupaPresensiFormScreen'); 
+        }
 
-        async function submitLupaPresensi() { const fileInput = document.getElementById('lpFileInput'); if(!fileInput.files[0]) return alert("Silakan unggah foto bukti kehadiran terlebih dahulu!"); const reader = new FileReader(); reader.onloadend = async function() { const base64data = reader.result.split(',')[1]; const btn = document.getElementById('btnSubmitLP'); btn.innerText = "Mengirim..."; btn.disabled = true; try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "submit_lupa_presensi", username: session.username, pelatihan: window.lpData.pelatihan, hari: window.lpData.hari, sesi: window.lpData.sesi, imageBase64: base64data }) })).json(); alert(res.message); bukaHalamanRiwayatKu(); } catch(e) { alert("Gagal mengirim permohonan."); } btn.innerText = "Kirim Permohonan"; btn.disabled = false; }; reader.readAsDataURL(fileInput.files[0]); }
+        async function submitLupaPresensi() { 
+            const alasanInput = document.getElementById('lpAlasanInput');
+            const alasanVal = alasanInput ? alasanInput.value.trim() : "";
+            if (!alasanVal) return alert("Mohon tuliskan alasan mengapa Anda lupa melakukan presensi terlebih dahulu!");
 
-        async function muatLupaPresensiAdmin() { tampilLayar('adminLupaPresensiScreen'); const wadah = document.getElementById('wadahLupaPresensiAdmin'); wadah.innerHTML = `<div class="text-center text-xs font-semibold text-oceanBlue my-4">Memuat data...</div>`; try { const res = await (await fetch(API_URL, {method:"POST", body:JSON.stringify({action:"get_lupa_presensi"})})).json(); if(res.status==="success" && res.data.length > 0) { wadah.innerHTML = res.data.map(item => { const wkt = new Date(item.waktu); const wktFormat = `${wkt.getDate()}/${wkt.getMonth()+1}/${wkt.getFullYear()} ${String(wkt.getHours()).padStart(2, '0')}:${String(wkt.getMinutes()).padStart(2, '0')}`; return `<div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm mb-2.5"><p class="text-[10px] font-bold text-oceanBlue uppercase mb-0.5">${item.pelatihan}</p><h3 class="text-sm font-bold text-slate-800">${item.username}</h3><p class="text-xs text-slate-500 mb-1">${item.hari} • ${item.sesi}</p><p class="text-[10px] text-slate-400 mb-3">Diajukan: ${wktFormat}</p><a href="${item.foto}" target="_blank" class="w-full block bg-slate-100 text-slate-700 text-center font-semibold py-2 rounded-xl text-xs mb-2.5">Lihat Bukti Foto</a><div class="flex space-x-2"><button type="button" onclick="prosesLupaPresensiAdmin(${item.row}, 'Approved')" class="w-1/2 bg-oceanBlue text-white rounded-xl py-2 font-semibold text-xs">Setujui</button><button type="button" onclick="prosesLupaPresensiAdmin(${item.row}, 'Rejected')" class="w-1/2 bg-red-50 text-red-600 rounded-xl py-2 font-semibold text-xs">Tolak</button></div></div>`; }).join(''); } else wadah.innerHTML = `<p class="text-center text-slate-400 text-xs mt-4">Belum ada permohonan lupa presensi.</p>`; } catch(e) { wadah.innerHTML = `<p class="text-center text-red-500 text-xs mt-4">Gagal memuat data.</p>`; } }
+            const fileInput = document.getElementById('lpFileInput'); 
+            if(!fileInput.files[0]) return alert("Silakan unggah foto bukti kehadiran terlebih dahulu!"); 
+            
+            const reader = new FileReader(); 
+            reader.onloadend = async function() { 
+                const base64data = reader.result.split(',')[1]; 
+                const btn = document.getElementById('btnSubmitLP'); 
+                btn.innerText = "Mengirim..."; 
+                btn.disabled = true; 
+                try { 
+                    const res = await (await fetch(API_URL, { 
+                        method: "POST", 
+                        body: JSON.stringify({ 
+                            action: "submit_lupa_presensi", 
+                            username: session.username, 
+                            pelatihan: window.lpData.pelatihan, 
+                            hari: window.lpData.hari, 
+                            sesi: window.lpData.sesi, 
+                            alasan_lupa: alasanVal,
+                            imageBase64: base64data 
+                        }) 
+                    })).json(); 
+                    alert(res.message); 
+                    if (res.status === "success") bukaHalamanRiwayatKu(); 
+                } catch(e) { 
+                    alert("Gagal mengirim permohonan."); 
+                } 
+                btn.innerText = "Kirim Permohonan"; 
+                btn.disabled = false; 
+            }; 
+            reader.readAsDataURL(fileInput.files[0]); 
+        }
+
+        async function muatLupaPresensiAdmin() { 
+            tampilLayar('adminLupaPresensiScreen'); 
+            const wadah = document.getElementById('wadahLupaPresensiAdmin'); 
+            wadah.innerHTML = `<div class="text-center text-xs font-semibold text-oceanBlue my-4">Memuat data...</div>`; 
+            try { 
+                const res = await (await fetch(API_URL, {method:"POST", body:JSON.stringify({action:"get_lupa_presensi"})})).json(); 
+                if(res.status==="success" && res.data.length > 0) { 
+                    wadah.innerHTML = res.data.map(item => { 
+                        const wkt = new Date(item.waktu); 
+                        const wktFormat = `${wkt.getDate()}/${wkt.getMonth()+1}/${wkt.getFullYear()} ${String(wkt.getHours()).padStart(2, '0')}:${String(wkt.getMinutes()).padStart(2, '0')}`; 
+                        return `
+                        <div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm mb-2.5">
+                            <p class="text-[10px] font-bold text-oceanBlue uppercase mb-0.5">${item.pelatihan}</p>
+                            <h3 class="text-sm font-bold text-slate-800">${item.username}</h3>
+                            <p class="text-xs text-slate-500 mb-1">${item.hari} • ${item.sesi}</p>
+                            <p class="text-[10px] text-slate-400 mb-2">Diajukan: ${wktFormat}</p>
+                            <div class="bg-amber-50/70 border border-amber-100 p-2.5 rounded-xl mb-3">
+                                <p class="text-[9px] font-bold text-amber-700 uppercase">Alasan Peserta:</p>
+                                <p class="text-xs text-slate-700 font-medium mt-0.5">"${item.alasan_lupa || '-'}"</p>
+                            </div>
+                            <a href="${item.foto}" target="_blank" class="w-full block bg-slate-100 text-slate-700 text-center font-semibold py-2 rounded-xl text-xs mb-2.5">Lihat Bukti Foto</a>
+                            <div class="flex space-x-2">
+                                <button type="button" onclick="prosesLupaPresensiAdmin(${item.row}, 'Approved')" class="w-1/2 bg-oceanBlue text-white rounded-xl py-2 font-semibold text-xs">Setujui</button>
+                                <button type="button" onclick="prosesLupaPresensiAdmin(${item.row}, 'Rejected')" class="w-1/2 bg-red-50 text-red-600 rounded-xl py-2 font-semibold text-xs">Tolak</button>
+                            </div>
+                        </div>`; 
+                    }).join(''); 
+                } else wadah.innerHTML = `<p class="text-center text-slate-400 text-xs mt-4">Belum ada permohonan lupa presensi.</p>`; 
+            } catch(e) { wadah.innerHTML = `<p class="text-center text-red-500 text-xs mt-4">Gagal memuat data.</p>`; } 
+        }
 
         async function prosesLupaPresensiAdmin(row, status) { let alasanText = ""; if(status === "Rejected") { alasanText = prompt("Tuliskan alasan mengapa bukti ditolak:"); if(alasanText === null) return; if(alasanText.trim() === "") alasanText = "Bukti foto tidak sah atau tidak memenuhi kriteria."; } else if(!confirm("Yakin ingin MENYETUJUI permohonan ini?")) return; try { const res = await (await fetch(API_URL, {method:"POST", body:JSON.stringify({action:"process_lupa_presensi", rowIndex: row, keputusan: status, alasan: alasanText})})).json(); alert(res.message); muatLupaPresensiAdmin(); } catch(e) { alert("Gagal memproses permohonan."); } }
 
