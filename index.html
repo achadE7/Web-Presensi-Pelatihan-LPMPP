@@ -46,7 +46,7 @@
 </head>
 <body class="bg-slate-100 min-h-screen flex items-center justify-center p-0 sm:p-4 font-sans text-slate-800 antialiased">
 
-    <div id="mainWadah" class="w-full max-w-md bg-[#F4F8FB] sm:rounded-[36px] shadow-[0_12px_40px_rgb(3,105,161,0.12)] border border-slate-200/80 overflow-hidden relative transition-all duration-300 ease-in-out min-h-screen sm:min-h-0">
+    <div id="mainWadah" class="w-full sm:max-w-lg md:max-w-xl bg-[#F4F8FB] sm:rounded-[36px] shadow-[0_12px_40px_rgb(3,105,161,0.12)] border border-slate-200/80 overflow-hidden relative transition-all duration-300 ease-in-out min-h-screen sm:min-h-0">
 
         <!-- LAYER 1: LOGIN -->
         <div id="loginScreen" class="block pb-8">
@@ -223,36 +223,47 @@
                     </div>
                 </div>
 
-                <!-- KARTU 3: GRID MENU IKON 3x2 -->
+                <!-- KARTU 3: GRID MENU IKON 3x2 MODERN SVG -->
                 <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
                     <div class="grid grid-cols-3 divide-x divide-y divide-slate-100">
-                        <button type="button" onclick="bukaModalTambahKelas()" class="p-4 flex flex-col items-center justify-center hover:bg-sky-50/40 group">
-                            <div class="w-11 h-11 rounded-full bg-sky-50 text-oceanBlue flex items-center justify-center text-lg mb-2 group-hover:scale-105 transition-transform border border-sky-100">👨🏻‍🏫</div>
-                            <span class="text-[11px] font-semibold text-slate-700 text-center">Daftar Kelas</span>
+                        <button type="button" onclick="bukaModalTambahKelas()" class="p-4 sm:p-5 flex flex-col items-center justify-center hover:bg-sky-50/50 transition-all group">
+                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-50 to-sky-100/80 text-oceanBlue flex items-center justify-center mb-2.5 group-hover:scale-105 group-hover:shadow-sm transition-all border border-sky-200/60">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5"></path></svg>
+                            </div>
+                            <span class="text-[11px] sm:text-xs font-bold text-slate-700 text-center">Daftar Kelas</span>
                         </button>
-                        <button type="button" onclick="bukaHalamanRiwayatKu()" class="p-4 flex flex-col items-center justify-center hover:bg-sky-50/40 group">
-                            <div class="w-11 h-11 rounded-full bg-sky-50 text-oceanBlue flex items-center justify-center text-lg mb-2 group-hover:scale-105 transition-transform border border-sky-100">📅</div>
-                            <span class="text-[11px] font-semibold text-slate-700 text-center">Riwayat Absen</span>
+                        <button type="button" onclick="bukaHalamanRiwayatKu()" class="p-4 sm:p-5 flex flex-col items-center justify-center hover:bg-sky-50/50 transition-all group">
+                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-50 to-sky-100/80 text-oceanBlue flex items-center justify-center mb-2.5 group-hover:scale-105 group-hover:shadow-sm transition-all border border-sky-200/60">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path></svg>
+                            </div>
+                            <span class="text-[11px] sm:text-xs font-bold text-slate-700 text-center">Riwayat Presensi</span>
                         </button>
-                        <button type="button" onclick="bukaHalamanRewardKu()" class="p-4 flex flex-col items-center justify-center hover:bg-sky-50/40 group">
-                            <div class="w-11 h-11 rounded-full bg-sky-50 text-oceanBlue flex items-center justify-center text-lg mb-2 group-hover:scale-105 transition-transform border border-sky-100">📚</div>
-                            <span class="text-[11px] font-semibold text-slate-700 text-center">Materi Saya</span>
+                        <button type="button" onclick="bukaHalamanRewardKu()" class="p-4 sm:p-5 flex flex-col items-center justify-center hover:bg-sky-50/50 transition-all group">
+                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-50 to-sky-100/80 text-oceanBlue flex items-center justify-center mb-2.5 group-hover:scale-105 group-hover:shadow-sm transition-all border border-sky-200/60">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"></path></svg>
+                            </div>
+                            <span class="text-[11px] sm:text-xs font-bold text-slate-700 text-center">Materi Saya</span>
                         </button>
-                        <button type="button" onclick="bukaHalamanGrupWA()" class="p-4 flex flex-col items-center justify-center hover:bg-sky-50/40 group">
-                            <div class="w-11 h-11 rounded-full bg-sky-50 text-oceanBlue flex items-center justify-center text-lg mb-2 group-hover:scale-105 transition-transform border border-sky-100">💬</div>
-                            <span class="text-[11px] font-semibold text-slate-700 text-center">Grup WA</span>
+                        <button type="button" onclick="bukaHalamanGrupWA()" class="p-4 sm:p-5 flex flex-col items-center justify-center hover:bg-sky-50/50 transition-all group">
+                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-100/70 text-emerald-600 flex items-center justify-center mb-2.5 group-hover:scale-105 group-hover:shadow-sm transition-all border border-emerald-200/60">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"></path></svg>
+                            </div>
+                            <span class="text-[11px] sm:text-xs font-bold text-slate-700 text-center">Grup WA</span>
                         </button>
-                        <button type="button" onclick="bukaHalamanProfil()" class="p-4 flex flex-col items-center justify-center hover:bg-sky-50/40 group">
-                            <div class="w-11 h-11 rounded-full bg-sky-50 text-oceanBlue flex items-center justify-center text-lg mb-2 group-hover:scale-105 transition-transform border border-sky-100">⚙️</div>
-                            <span class="text-[11px] font-semibold text-slate-700 text-center">Edit Biodata</span>
+                        <button type="button" onclick="bukaHalamanProfil()" class="p-4 sm:p-5 flex flex-col items-center justify-center hover:bg-sky-50/50 transition-all group">
+                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-50 to-sky-100/80 text-oceanBlue flex items-center justify-center mb-2.5 group-hover:scale-105 group-hover:shadow-sm transition-all border border-sky-200/60">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"></path></svg>
+                            </div>
+                            <span class="text-[11px] sm:text-xs font-bold text-slate-700 text-center">Edit Biodata</span>
                         </button>
-                        <button type="button" onclick="cekJadwalKeamananTinggi()" class="p-4 flex flex-col items-center justify-center hover:bg-sky-50/40 group">
-                            <div class="w-11 h-11 rounded-full bg-sky-50 text-oceanBlue flex items-center justify-center text-lg mb-2 group-hover:scale-105 transition-transform border border-sky-100">🔄</div>
-                            <span class="text-[11px] font-semibold text-slate-700 text-center">Segarkan</span>
+                        <button type="button" onclick="cekJadwalKeamananTinggi()" class="p-4 sm:p-5 flex flex-col items-center justify-center hover:bg-sky-50/50 transition-all group">
+                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-50 to-sky-100/80 text-oceanBlue flex items-center justify-center mb-2.5 group-hover:scale-105 group-hover:shadow-sm transition-all border border-sky-200/60">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"></path></svg>
+                            </div>
+                            <span class="text-[11px] sm:text-xs font-bold text-slate-700 text-center">Segarkan</span>
                         </button>
                     </div>
                 </div>
-            </div>
 
             <!-- BOTTOM NAVIGATION BAR -->
             <div class="fixed sm:absolute bottom-0 left-0 right-0 bg-white border-t border-slate-100 px-6 py-2.5 flex justify-between items-center z-20">
@@ -471,10 +482,28 @@
             <button type="button" onclick="tampilLayar('adminScreen')" class="w-full bg-slate-100 text-slate-700 text-xs font-bold py-2.5 rounded-xl">Kembali Ke Dasbor</button>
         </div>
 
-        <!-- LAYER 14: ADMIN LUPA PRESENSI -->
+        <!-- LAYER 14: ADMIN LUPA PRESENSI (DENGAN FITUR BULK / SEKALIGUS) -->
         <div id="adminLupaPresensiScreen" class="hidden flex flex-col w-full p-6 sm:p-8 bg-white">
-            <h2 class="text-lg font-extrabold text-oceanDark mb-3">Validasi Permohonan Lupa Presensi</h2>
-            <div id="wadahLupaPresensiAdmin" class="w-full space-y-2.5 overflow-y-auto max-h-[52vh] pr-1 mb-4"></div>
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
+                <h2 class="text-lg font-extrabold text-oceanDark">Validasi Permohonan Lupa Presensi</h2>
+                <div id="toolbarBulkLP" class="hidden flex flex-wrap items-center gap-1.5">
+                    <button type="button" onclick="prosesBulkLupaPresensi('Approved', true)" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg shadow-sm transition-colors">✓ Setujui Semua</button>
+                    <button type="button" onclick="prosesBulkLupaPresensi('Rejected', true)" class="bg-rose-600 hover:bg-rose-700 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg shadow-sm transition-colors">✕ Tolak Semua</button>
+                </div>
+            </div>
+
+            <div id="subToolbarPilihLP" class="hidden bg-slate-50 border border-slate-200/80 px-3.5 py-2.5 rounded-xl mb-3 flex flex-wrap items-center justify-between gap-2">
+                <label class="flex items-center space-x-2 text-xs font-bold text-slate-700 cursor-pointer">
+                    <input type="checkbox" id="cekSemuaLP" onchange="togglePilihSemuaLP(this)" class="w-4 h-4 rounded text-oceanBlue focus:ring-oceanBlue">
+                    <span>Pilih Semua</span>
+                </label>
+                <div class="flex items-center space-x-2">
+                    <button type="button" onclick="prosesBulkLupaPresensi('Approved', false)" class="bg-oceanBlue hover:bg-oceanDark text-white text-[11px] font-bold px-3 py-1.5 rounded-lg transition-colors">Setujui Terpilih</button>
+                    <button type="button" onclick="prosesBulkLupaPresensi('Rejected', false)" class="bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-[11px] font-bold px-3 py-1.5 rounded-lg transition-colors">Tolak Terpilih</button>
+                </div>
+            </div>
+
+            <div id="wadahLupaPresensiAdmin" class="w-full space-y-2.5 overflow-y-auto max-h-[55vh] pr-1 mb-4"></div>
             <button type="button" onclick="tampilLayar('adminScreen')" class="w-full bg-slate-100 text-slate-700 text-xs font-bold py-2.5 rounded-xl">Kembali Ke Dasbor</button>
         </div>
 
@@ -836,11 +865,15 @@
                 const el = document.getElementById(id); if(el) el.classList.add('hidden'); 
             });
             const wadah = document.getElementById('mainWadah'); 
-            wadah.classList.remove('max-w-md', 'max-w-2xl', 'max-w-4xl');
+            wadah.classList.remove('max-w-md', 'sm:max-w-lg', 'md:max-w-xl', 'max-w-2xl', 'max-w-4xl', 'lg:max-w-5xl');
             const adminScreens = ['adminScreen', 'adminJadwalScreen', 'adminPengaturanScreen', 'adminValidasiScreen', 'adminPesertaScreen', 'adminRewardScreen', 'adminLupaPresensiScreen', 'adminRekapScreen', 'adminProdiScreen'];
-            if (idLayar === 'registerScreen' || idLayar === 'userProfileScreen') wadah.classList.add('max-w-2xl');
-            else if (adminScreens.includes(idLayar)) wadah.classList.add('max-w-4xl');
-            else wadah.classList.add('max-w-md');
+            if (idLayar === 'loginScreen') {
+                wadah.classList.add('sm:max-w-md');
+            } else if (adminScreens.includes(idLayar)) {
+                wadah.classList.add('max-w-4xl', 'lg:max-w-5xl');
+            } else {
+                wadah.classList.add('sm:max-w-xl', 'md:max-w-2xl');
+            }
             const target = document.getElementById(idLayar); if(target) target.classList.remove('hidden');
             if (['adminJadwalScreen', 'adminPesertaScreen', 'adminRewardScreen', 'adminRekapScreen', 'adminPengaturanScreen'].includes(idLayar)) muatDaftarPelatihanAdmin();
         }
@@ -1313,7 +1346,7 @@
                 document.getElementById('loadingGroupKu').classList.add('hidden'); const wadah = document.getElementById('wadahGroupKu'); 
                 if (res.status === "success" && res.data.length > 0) { 
                     res.data.forEach(item => { 
-                        if(item.link && item.link.trim() !== "") wadah.innerHTML += `<div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm flex flex-col"><h3 class="text-xs font-bold text-slate-800 uppercase mb-2">${item.pelatihan}</h3><div class="bg-red-50 border border-red-100 px-2.5 py-1.5 rounded-lg mb-3"><p class="text-[9px] text-red-600 font-semibold text-center">⚠️ DILARANG MENYEBARKAN LINK GRUP INI</p></div><a href="${item.link}" target="_blank" class="w-full bg-[#25D366] text-white text-xs font-bold py-2.5 rounded-xl flex items-center justify-center space-x-2"><span>💬</span><span>Gabung Grup WhatsApp</span></a></div>`; 
+                        if(item.link && item.link.trim() !== "") wadah.innerHTML += `<div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm flex flex-col"><h3 class="text-xs font-bold text-slate-800 uppercase mb-2">${item.pelatihan}</h3><div class="bg-red-50 border border-red-100 p-2.5 rounded-xl mb-3"><p class="text-[10px] text-red-600 font-semibold text-center leading-relaxed">⚠️ DILARANG MENYEBARKAN LINK GRUP WHATSAPP INI, TERMASUK KE SESAMA PESERTA. PESERTA HANYA DIIZINKAN MASUK KE DALAM GRUP MELALUI SISTEM INI.</p></div><a href="${item.link}" target="_blank" class="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-bold py-2.5 rounded-xl flex items-center justify-center space-x-2 transition-colors"><span>💬</span><span>Gabung Grup WhatsApp</span></a></div>`; 
                     }); 
                     if(wadah.innerHTML === "") wadah.innerHTML = `<div class="bg-slate-50 rounded-2xl p-6 text-center"><p class="text-slate-500 text-xs">Belum ada link grup WhatsApp untuk pelatihan Anda.</p></div>`; 
                 } else wadah.innerHTML = `<div class="bg-slate-50 rounded-2xl p-6 text-center"><p class="text-slate-500 text-xs">Anda belum terdaftar di pelatihan mana pun atau belum ada link grup yang tersedia.</p></div>`; 
@@ -1374,27 +1407,45 @@
         async function muatLupaPresensiAdmin() { 
             tampilLayar('adminLupaPresensiScreen'); 
             const wadah = document.getElementById('wadahLupaPresensiAdmin'); 
+            const toolbarAll = document.getElementById('toolbarBulkLP');
+            const toolbarSelect = document.getElementById('subToolbarPilihLP');
+            if (toolbarAll) toolbarAll.classList.add('hidden');
+            if (toolbarSelect) toolbarSelect.classList.add('hidden');
+            if (document.getElementById('cekSemuaLP')) document.getElementById('cekSemuaLP').checked = false;
+
             wadah.innerHTML = `<div class="text-center text-xs font-semibold text-oceanBlue my-4">Memuat data...</div>`; 
             try { 
                 const res = await (await fetch(API_URL, {method:"POST", body:JSON.stringify({action:"get_lupa_presensi"})})).json(); 
                 if(res.status==="success" && res.data.length > 0) { 
+                    if (toolbarAll) toolbarAll.classList.remove('hidden');
+                    if (toolbarSelect) toolbarSelect.classList.remove('hidden');
+
                     wadah.innerHTML = res.data.map(item => { 
                         const wkt = new Date(item.waktu); 
                         const wktFormat = `${wkt.getDate()}/${wkt.getMonth()+1}/${wkt.getFullYear()} ${String(wkt.getHours()).padStart(2, '0')}:${String(wkt.getMinutes()).padStart(2, '0')}`; 
                         return `
                         <div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm mb-2.5">
-                            <p class="text-[10px] font-bold text-oceanBlue uppercase mb-0.5">${item.pelatihan}</p>
-                            <h3 class="text-sm font-bold text-slate-800">${item.username}</h3>
-                            <p class="text-xs text-slate-500 mb-1">${item.hari} • ${item.sesi}</p>
-                            <p class="text-[10px] text-slate-400 mb-2">Diajukan: ${wktFormat}</p>
-                            <div class="bg-amber-50/70 border border-amber-100 p-2.5 rounded-xl mb-3">
+                            <div class="flex items-start justify-between gap-2 mb-1">
+                                <label class="flex items-start space-x-2.5 cursor-pointer">
+                                    <input type="checkbox" value="${item.row}" class="cek-item-lp w-4 h-4 mt-0.5 rounded text-oceanBlue focus:ring-oceanBlue">
+                                    <div>
+                                        <p class="text-[10px] font-bold text-oceanBlue uppercase mb-0.5">${item.pelatihan}</p>
+                                        <h3 class="text-sm font-bold text-slate-800">${item.username}</h3>
+                                    </div>
+                                </label>
+                                <span class="text-[10px] text-slate-400">${wktFormat}</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mb-2 pl-6">${item.hari} • ${item.sesi}</p>
+                            <div class="bg-amber-50/70 border border-amber-100 p-2.5 rounded-xl mb-3 ml-6">
                                 <p class="text-[9px] font-bold text-amber-700 uppercase">Alasan Peserta:</p>
                                 <p class="text-xs text-slate-700 font-medium mt-0.5">"${item.alasan_lupa || '-'}"</p>
                             </div>
-                            <a href="${item.foto}" target="_blank" class="w-full block bg-slate-100 text-slate-700 text-center font-semibold py-2 rounded-xl text-xs mb-2.5">Lihat Bukti Foto</a>
-                            <div class="flex space-x-2">
-                                <button type="button" onclick="prosesLupaPresensiAdmin(${item.row}, 'Approved')" class="w-1/2 bg-oceanBlue text-white rounded-xl py-2 font-semibold text-xs">Setujui</button>
-                                <button type="button" onclick="prosesLupaPresensiAdmin(${item.row}, 'Rejected')" class="w-1/2 bg-red-50 text-red-600 rounded-xl py-2 font-semibold text-xs">Tolak</button>
+                            <div class="pl-6">
+                                <a href="${item.foto}" target="_blank" class="w-full block bg-slate-100 text-slate-700 text-center font-semibold py-2 rounded-xl text-xs mb-2.5 hover:bg-slate-200 transition-colors">Lihat Bukti Foto</a>
+                                <div class="flex space-x-2">
+                                    <button type="button" onclick="prosesLupaPresensiAdmin(${item.row}, 'Approved')" class="w-1/2 bg-oceanBlue hover:bg-oceanDark text-white rounded-xl py-2 font-semibold text-xs transition-colors">Setujui</button>
+                                    <button type="button" onclick="prosesLupaPresensiAdmin(${item.row}, 'Rejected')" class="w-1/2 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl py-2 font-semibold text-xs transition-colors">Tolak</button>
+                                </div>
                             </div>
                         </div>`; 
                     }).join(''); 
@@ -1402,7 +1453,52 @@
             } catch(e) { wadah.innerHTML = `<p class="text-center text-red-500 text-xs mt-4">Gagal memuat data.</p>`; } 
         }
 
-        async function prosesLupaPresensiAdmin(row, status) { let alasanText = ""; if(status === "Rejected") { alasanText = prompt("Tuliskan alasan mengapa bukti ditolak:"); if(alasanText === null) return; if(alasanText.trim() === "") alasanText = "Bukti foto tidak sah atau tidak memenuhi kriteria."; } else if(!confirm("Yakin ingin MENYETUJUI permohonan ini?")) return; try { const res = await (await fetch(API_URL, {method:"POST", body:JSON.stringify({action:"process_lupa_presensi", rowIndex: row, keputusan: status, alasan: alasanText})})).json(); alert(res.message); muatLupaPresensiAdmin(); } catch(e) { alert("Gagal memproses permohonan."); } }
+        function togglePilihSemuaLP(masterCb) {
+            document.querySelectorAll('.cek-item-lp').forEach(cb => { cb.checked = masterCb.checked; });
+        }
+
+        async function prosesBulkLupaPresensi(status, isAll) {
+            const checkboxes = isAll 
+                ? Array.from(document.querySelectorAll('.cek-item-lp'))
+                : Array.from(document.querySelectorAll('.cek-item-lp:checked'));
+
+            if (checkboxes.length === 0) return alert("Pilih minimal 1 permohonan terlebih dahulu!");
+
+            const rowIndices = checkboxes.map(cb => parseInt(cb.value));
+            let alasanText = "";
+            if (status === "Rejected") {
+                alasanText = prompt(`Tuliskan alasan penolakan untuk ${rowIndices.length} permohonan ini:`);
+                if (alasanText === null) return;
+                if (alasanText.trim() === "") alasanText = "Bukti foto tidak sah atau tidak memenuhi kriteria.";
+            } else {
+                if (!confirm(`Yakin ingin MENYETUJUI ${rowIndices.length} permohonan sekaligus?`)) return;
+            }
+
+            try {
+                const res = await (await fetch(API_URL, {
+                    method: "POST",
+                    body: JSON.stringify({ action: "process_lupa_presensi", rowIndices: rowIndices, keputusan: status, alasan: alasanText })
+                })).json();
+                alert(res.message);
+                muatLupaPresensiAdmin();
+            } catch (e) {
+                alert("Gagal memproses permohonan.");
+            }
+        }
+
+        async function prosesLupaPresensiAdmin(row, status) { 
+            let alasanText = ""; 
+            if(status === "Rejected") { 
+                alasanText = prompt("Tuliskan alasan mengapa bukti ditolak:"); 
+                if(alasanText === null) return; 
+                if(alasanText.trim() === "") alasanText = "Bukti foto tidak sah atau tidak memenuhi kriteria."; 
+            } else if(!confirm("Yakin ingin MENYETUJUI permohonan ini?")) return; 
+            try { 
+                const res = await (await fetch(API_URL, {method:"POST", body:JSON.stringify({action:"process_lupa_presensi", rowIndex: row, keputusan: status, alasan: alasanText})})).json(); 
+                alert(res.message); 
+                muatLupaPresensiAdmin(); 
+            } catch(e) { alert("Gagal memproses permohonan."); } 
+        }
 
         async function tarikDataRekap() {
             const pel = document.getElementById('rekapPelatihanSelect').value; if (!pel) return alert("Pilih pelatihan terlebih dahulu!");
