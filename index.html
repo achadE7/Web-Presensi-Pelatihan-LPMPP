@@ -44,9 +44,9 @@
         }
     </style>
 </head>
-<body class="bg-slate-100 min-h-screen flex items-center justify-center p-0 sm:p-4 font-sans text-slate-800 antialiased">
+<body class="bg-slate-100 min-h-screen flex items-start sm:items-center justify-center p-0 sm:p-4 md:p-6 font-sans text-slate-800 antialiased">
 
-    <div id="mainWadah" class="w-full sm:max-w-lg md:max-w-xl bg-[#F4F8FB] sm:rounded-[36px] shadow-[0_12px_40px_rgb(3,105,161,0.12)] border border-slate-200/80 overflow-hidden relative transition-all duration-300 ease-in-out min-h-screen sm:min-h-0">
+    <div id="mainWadah" class="w-full sm:max-w-xl md:max-w-2xl bg-[#F4F8FB] sm:rounded-[36px] shadow-[0_12px_40px_rgb(3,105,161,0.12)] border border-slate-200/80 overflow-hidden relative transition-all duration-300 ease-in-out min-h-screen sm:min-h-0 my-auto">
 
         <!-- LAYER 1: LOGIN -->
         <div id="loginScreen" class="block pb-8">
@@ -116,7 +116,7 @@
         </div>
 
         <!-- LAYER 4: DASHBOARD PESERTA -->
-        <div id="presensiScreen" class="hidden flex flex-col w-full pb-20">
+        <div id="presensiScreen" class="hidden flex flex-col w-full">
             <div class="ocean-header px-6 pt-7 pb-14 text-white relative shadow-md">
                 <div class="flex justify-between items-center mb-5">
                     <div>
@@ -264,9 +264,10 @@
                         </button>
                     </div>
                 </div>
+            </div>
 
-            <!-- BOTTOM NAVIGATION BAR -->
-            <div class="fixed sm:absolute bottom-0 left-0 right-0 bg-white border-t border-slate-100 px-6 py-2.5 flex justify-between items-center z-20">
+            <!-- BOTTOM NAVIGATION BAR (TIDAK AKAN MENIMPA KARTU LAGI) -->
+            <div class="sticky bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t border-slate-100 px-6 py-3 mt-5 flex justify-between items-center z-20">
                 <button type="button" onclick="tampilLayar('presensiScreen')" class="flex flex-col items-center text-oceanBlue">
                     <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                     <span class="text-[10px] font-bold">Home</span>
