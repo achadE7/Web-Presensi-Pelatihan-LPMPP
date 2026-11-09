@@ -67,7 +67,9 @@
                         <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Kata Sandi</label>
                         <div class="relative">
                             <input type="password" id="password" placeholder="Masukkan kata sandi" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/60 focus:bg-white text-sm pr-11">
-                            <button type="button" onclick="togglePassword('password', this)" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-sm opacity-60 hover:opacity-100">👁️</button>
+                            <button type="button" onclick="togglePassword('password', this)" title="Tampilkan / Sembunyikan Kata Sandi" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-oceanBlue transition-colors p-1 cursor-pointer">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </button>
                         </div>
                     </div>
                     <button type="button" onclick="login()" id="btnLogin" class="w-full bg-gradient-to-r from-oceanDark to-oceanBlue hover:from-oceanBlue hover:to-skyBlue text-white font-bold text-sm py-3.5 rounded-xl mt-2 transition-all shadow-md shadow-sky-600/20 cursor-pointer">Masuk Ke Aplikasi</button>
@@ -1182,7 +1184,7 @@
                 <div><label class="text-[11px] text-slate-600 font-semibold block mb-1">Gelar Depan</label><input type="text" id="${prefix}GelarDepan" placeholder="Contoh: Dr., Ir., Prof." class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm"></div>
                 <div><label class="text-[11px] text-slate-600 font-semibold block mb-1">Gelar Belakang</label><input type="text" id="${prefix}GelarBelakang" placeholder="Contoh: S.Pd., M.Pd." class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm"></div>
                 <div><label class="text-[11px] text-slate-600 font-semibold block mb-1">Email Aktif*</label><input type="email" id="${prefix}User" ${isEdit ? 'readonly class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm bg-slate-100 text-slate-500 cursor-not-allowed"' : 'class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm"'}></div>
-                <div><label class="text-[11px] text-slate-600 font-semibold block mb-1">Password*</label><div class="relative"><input type="password" id="${prefix}Pass" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm pr-10"><button type="button" onclick="togglePassword('${prefix}Pass', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-sm opacity-60">👁️</button></div></div>
+                <div><label class="text-[11px] text-slate-600 font-semibold block mb-1">Password*</label><div class="relative"><input type="password" id="${prefix}Pass" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm pr-10"><button type="button" onclick="togglePassword('${prefix}Pass', this)" title="Tampilkan / Sembunyikan Password" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-oceanBlue transition-colors cursor-pointer"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></div></div>
                 <div><label class="text-[11px] text-slate-600 font-semibold block mb-1">Nomor HP</label><input type="number" id="${prefix}HP" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm"></div>
                 <div><label class="text-[11px] text-slate-600 font-semibold block mb-1">NIP</label><input type="text" id="${prefix}NIP" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm"></div>
                 <div><label class="text-[11px] text-slate-600 font-semibold block mb-1">NIDN / NIDK</label><input type="text" id="${prefix}NIDN" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm"></div>
@@ -1214,7 +1216,17 @@
         }
         setTanggalHariIni();
 
-        function togglePassword(idField, btn) { const el = document.getElementById(idField); el.type = (el.type === "password") ? "text" : "password"; btn.innerText = "👁️"; }
+        function togglePassword(idField, btn) { 
+            const el = document.getElementById(idField); 
+            const isHidden = el.type === "password";
+            el.type = isHidden ? "text" : "password"; 
+            const sizeClass = idField === "password" ? "w-5 h-5" : "w-4 h-4";
+            btn.classList.toggle("text-oceanBlue", isHidden);
+            btn.classList.toggle("text-slate-400", !isHidden);
+            btn.innerHTML = isHidden 
+                ? `<svg class="${sizeClass}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>`
+                : `<svg class="${sizeClass}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`;
+        }
         function updateProdi(prefix) { const fakultas = document.getElementById(prefix + 'Fakultas').value; const prodiSelect = document.getElementById(prefix + 'ProdiSelect'); const prodiInput = document.getElementById(prefix + 'ProdiInput'); prodiSelect.innerHTML = '<option value="">Pilih Program Studi</option>'; if (fakultas === "Lainnya") { prodiSelect.classList.add('hidden'); prodiInput.classList.remove('hidden'); prodiInput.value = ""; } else { prodiSelect.classList.remove('hidden'); prodiInput.classList.add('hidden'); if (prodiMap[fakultas]) { prodiMap[fakultas].forEach(prodi => { prodiSelect.innerHTML += `<option value="${prodi}">${prodi}</option>`; }); } } }
 
         function formatTglIndo(tglStr) {
