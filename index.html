@@ -77,41 +77,80 @@
             </div>
         </div>
 
-        <!-- LAYER 2: REGISTER -->
-        <div id="registerScreen" class="hidden flex flex-col w-full p-6 sm:p-8 bg-white">
-            <div class="mb-4">
-                <h2 class="text-lg font-extrabold text-oceanDark">Pendaftaran & Biodata</h2>
-                <p class="text-xs text-slate-500">Lengkapi data diri Anda di bawah ini.</p>
+        <!-- LAYER 2: REGISTER MODERN -->
+        <div id="registerScreen" class="hidden flex flex-col w-full p-5 sm:p-8 bg-[#F4F8FB]">
+            <div class="flex items-center justify-between gap-3 mb-5">
+                <div class="flex items-center space-x-3.5">
+                    <div class="w-11 h-11 rounded-2xl bg-sky-50 text-oceanBlue border border-sky-200/80 flex items-center justify-center shadow-sm shrink-0">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-extrabold text-slate-800 tracking-tight">Pendaftaran & Biodata</h2>
+                        <p class="text-xs text-slate-500">Lengkapi data diri Anda untuk membuat akun peserta.</p>
+                    </div>
+                </div>
+                <button type="button" onclick="tampilLayar('loginScreen')" class="bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center space-x-1.5 shadow-sm transition-all cursor-pointer shrink-0">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <span>Login</span>
+                </button>
             </div>
-            <div class="overflow-y-auto max-h-[62vh] pr-2 mb-4 space-y-3.5">
-                <div id="formFieldsReg" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
-                <div><label class="text-[11px] text-slate-600 font-semibold block mb-1">Alamat Lengkap</label><textarea id="regAlamat" rows="2" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm"></textarea></div>
-                <div class="bg-sky-50/60 p-4 rounded-2xl border border-sky-100">
-                    <label class="text-xs font-bold text-oceanDark block mb-0.5">Pilih Pelatihan (Opsional / Bisa Dipilih Nanti)</label>
-                    <p class="text-[11px] text-slate-500 mb-3">Klik tombol "Daftar" pada kelas jika ingin langsung bergabung, atau lewati untuk memilih nanti.</p>
-                    <input type="hidden" id="regPelatihan" value="">
-                    <div id="wadahBoxRegPelatihan" class="grid grid-cols-1 gap-2.5"></div>
+
+            <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-slate-200/80 mb-4">
+                <div class="overflow-y-auto max-h-[60vh] pr-1.5 space-y-4">
+                    <div id="formFieldsReg" class="grid grid-cols-1 md:grid-cols-2 gap-3.5"></div>
+                    <div>
+                        <label class="text-[11px] text-slate-600 font-semibold block mb-1">Alamat Lengkap</label>
+                        <textarea id="regAlamat" rows="2" placeholder="Masukkan alamat lengkap domisili..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white text-sm"></textarea>
+                    </div>
+                    <div class="bg-sky-50/60 p-4 rounded-2xl border border-sky-100">
+                        <div class="flex items-center space-x-2 mb-1">
+                            <svg class="w-4 h-4 text-oceanBlue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                            <label class="text-xs font-extrabold text-oceanDark">Pilih Pelatihan (Opsional / Bisa Dipilih Nanti)</label>
+                        </div>
+                        <p class="text-[11px] text-slate-500 mb-3">Klik tombol "Daftar" pada kelas jika ingin langsung bergabung, atau lewati untuk memilih nanti.</p>
+                        <input type="hidden" id="regPelatihan" value="">
+                        <div id="wadahBoxRegPelatihan" class="grid grid-cols-1 gap-2.5"></div>
+                    </div>
                 </div>
             </div>
-            <div class="space-y-2">
-                <button type="button" onclick="prosesRegister()" id="btnSubmitRegister" class="w-full bg-gradient-to-r from-oceanDark to-oceanBlue text-white font-bold text-sm py-3.5 rounded-xl shadow-md">Simpan Biodata & Buat Akun</button>
-                <button type="button" onclick="tampilLayar('loginScreen')" class="w-full text-slate-500 hover:bg-slate-50 rounded-xl text-xs font-semibold py-2.5">Batal & Kembali</button>
+
+            <div class="space-y-2.5">
+                <button type="button" onclick="prosesRegister()" id="btnSubmitRegister" class="w-full bg-gradient-to-r from-oceanDark to-oceanBlue hover:from-oceanBlue hover:to-skyBlue text-white font-bold text-xs sm:text-sm py-3.5 rounded-2xl shadow-md transition-all cursor-pointer">Simpan Biodata & Buat Akun</button>
+                <button type="button" onclick="tampilLayar('loginScreen')" class="w-full bg-white hover:bg-slate-100 text-slate-600 border border-slate-200/80 rounded-2xl text-xs font-bold py-3 shadow-sm transition-colors cursor-pointer">Batal & Kembali</button>
             </div>
         </div>
 
-        <!-- LAYER 3: EDIT PROFIL -->
-        <div id="userProfileScreen" class="hidden flex flex-col w-full p-6 sm:p-8 bg-white">
-            <div class="mb-4">
-                <h2 class="text-lg font-extrabold text-oceanDark">Pengaturan Profil</h2>
-                <p class="text-xs text-slate-500">Perbarui biodata Anda jika terdapat perubahan.</p>
+        <!-- LAYER 3: EDIT PROFIL MODERN -->
+        <div id="userProfileScreen" class="hidden flex flex-col w-full p-5 sm:p-8 bg-[#F4F8FB]">
+            <div class="flex items-center justify-between gap-3 mb-5">
+                <div class="flex items-center space-x-3.5">
+                    <div class="w-11 h-11 rounded-2xl bg-sky-50 text-oceanBlue border border-sky-200/80 flex items-center justify-center shadow-sm shrink-0">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-extrabold text-slate-800 tracking-tight">Pengaturan Profil</h2>
+                        <p class="text-xs text-slate-500">Perbarui biodata dan gelar akademik Anda.</p>
+                    </div>
+                </div>
+                <button type="button" onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center space-x-1.5 shadow-sm transition-all cursor-pointer shrink-0">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <span>Dasbor</span>
+                </button>
             </div>
-            <div class="overflow-y-auto max-h-[60vh] pr-2 mb-4 space-y-3.5">
-                <div id="formFieldsEdit" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
-                <div><label class="text-[11px] text-slate-600 font-semibold block mb-1">Alamat Lengkap</label><textarea id="editAlamat" rows="2" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm"></textarea></div>
+
+            <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-slate-200/80 mb-4">
+                <div class="overflow-y-auto max-h-[58vh] pr-1.5 space-y-4">
+                    <div id="formFieldsEdit" class="grid grid-cols-1 md:grid-cols-2 gap-3.5"></div>
+                    <div>
+                        <label class="text-[11px] text-slate-600 font-semibold block mb-1">Alamat Lengkap</label>
+                        <textarea id="editAlamat" rows="2" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white text-sm"></textarea>
+                    </div>
+                </div>
             </div>
-            <div class="space-y-2">
-                <button type="button" onclick="prosesUpdateProfil()" id="btnSubmitEdit" class="w-full bg-gradient-to-r from-oceanDark to-oceanBlue text-white font-bold text-sm py-3.5 rounded-xl shadow-md">Simpan Perubahan Biodata</button>
-                <button type="button" onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full text-slate-500 hover:bg-slate-50 rounded-xl text-xs font-semibold py-2.5">Batal & Kembali</button>
+
+            <div class="space-y-2.5">
+                <button type="button" onclick="prosesUpdateProfil()" id="btnSubmitEdit" class="w-full bg-gradient-to-r from-oceanDark to-oceanBlue hover:from-oceanBlue hover:to-skyBlue text-white font-bold text-xs sm:text-sm py-3.5 rounded-2xl shadow-md transition-all cursor-pointer">Simpan Perubahan Biodata</button>
+                <button type="button" onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full bg-white hover:bg-slate-100 text-slate-600 border border-slate-200/80 rounded-2xl text-xs font-bold py-3 shadow-sm transition-colors cursor-pointer">Batal & Kembali</button>
             </div>
         </div>
 
@@ -291,154 +330,262 @@
             </div>
         </div>
 
-        <!-- LAYER BARU: NOTIFIKASI LONCENG -->
-        <div id="notifikasiScreen" class="hidden flex flex-col w-full p-6 sm:p-8 bg-white">
-            <div class="mb-5 text-center">
-                <div class="w-12 h-12 rounded-2xl bg-sky-50 text-oceanBlue flex items-center justify-center text-2xl mx-auto mb-2 border border-sky-100">🔔</div>
-                <h2 class="text-lg font-extrabold text-oceanDark">Pusat Notifikasi</h2>
-                <p class="text-xs text-slate-500">Pemberitahuan materi, grup WhatsApp, dan status presensi Anda.</p>
+        <!-- LAYER BARU: NOTIFIKASI LONCENG MODERN -->
+        <div id="notifikasiScreen" class="hidden flex flex-col w-full p-5 sm:p-8 bg-[#F4F8FB]">
+            <div class="flex items-center justify-between gap-3 mb-5">
+                <div class="flex items-center space-x-3.5">
+                    <div class="w-11 h-11 rounded-2xl bg-sky-50 text-oceanBlue border border-sky-200/80 flex items-center justify-center shadow-sm shrink-0">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-extrabold text-slate-800 tracking-tight">Pusat Notifikasi</h2>
+                        <p class="text-xs text-slate-500">Pemberitahuan materi, grup WhatsApp, dan status presensi Anda.</p>
+                    </div>
+                </div>
+                <button type="button" onclick="tampilLayar('presensiScreen')" class="bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center space-x-1.5 shadow-sm transition-all cursor-pointer shrink-0">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <span>Dasbor</span>
+                </button>
             </div>
-            <div id="wadahNotifikasi" class="w-full space-y-2.5 mb-5 overflow-y-auto max-h-[55vh] pr-1"></div>
-            <button type="button" onclick="tampilLayar('presensiScreen')" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold py-3 rounded-xl">Kembali Ke Dasbor</button>
+            <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200/80 mb-4">
+                <div id="wadahNotifikasi" class="w-full space-y-3 overflow-y-auto max-h-[55vh] pr-1"></div>
+            </div>
+            <button type="button" onclick="tampilLayar('presensiScreen')" class="w-full bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/80 text-xs font-bold py-3 rounded-2xl shadow-sm transition-colors cursor-pointer">Kembali Ke Dasbor</button>
         </div>
 
-        <!-- LAYER BARU: KALENDER JADWAL PELATIHAN PESERTA -->
-        <div id="kalenderScreen" class="hidden flex flex-col w-full p-6 sm:p-8 bg-white">
-            <div class="mb-4 text-center">
-                <h2 class="text-lg font-extrabold text-oceanDark">Kalender Pelatihan</h2>
-                <p class="text-xs text-slate-500">Jadwal sesi pelatihan yang Anda ikuti.</p>
+        <!-- LAYER BARU: KALENDER JADWAL PELATIHAN PESERTA MODERN -->
+        <div id="kalenderScreen" class="hidden flex flex-col w-full p-5 sm:p-8 bg-[#F4F8FB]">
+            <div class="flex items-center justify-between gap-3 mb-5">
+                <div class="flex items-center space-x-3.5">
+                    <div class="w-11 h-11 rounded-2xl bg-sky-50 text-oceanBlue border border-sky-200/80 flex items-center justify-center shadow-sm shrink-0">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-extrabold text-slate-800 tracking-tight">Kalender Pelatihan</h2>
+                        <p class="text-xs text-slate-500">Jadwal sesi pelatihan yang Anda ikuti.</p>
+                    </div>
+                </div>
+                <button type="button" onclick="tampilLayar('presensiScreen')" class="bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center space-x-1.5 shadow-sm transition-all cursor-pointer shrink-0">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <span>Dasbor</span>
+                </button>
             </div>
-            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 mb-4">
-                <div class="flex justify-between items-center mb-3">
-                    <button type="button" onclick="gantiBulanKalender(-1)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-sky-50 font-bold">‹</button>
-                    <span id="judulBulanKalender" class="text-xs font-extrabold text-oceanDark uppercase tracking-wider">Oktober 2026</span>
-                    <button type="button" onclick="gantiBulanKalender(1)" class="w-8 h-8 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-sky-50 font-bold">›</button>
+            <div class="bg-white border border-slate-200/80 rounded-3xl p-5 shadow-sm mb-4">
+                <div class="flex justify-between items-center mb-4">
+                    <button type="button" onclick="gantiBulanKalender(-1)" class="w-9 h-9 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-sky-50 hover:text-oceanBlue font-bold transition-colors cursor-pointer">‹</button>
+                    <span id="judulBulanKalender" class="text-xs sm:text-sm font-extrabold text-oceanDark uppercase tracking-wider">Oktober 2026</span>
+                    <button type="button" onclick="gantiBulanKalender(1)" class="w-9 h-9 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-sky-50 hover:text-oceanBlue font-bold transition-colors cursor-pointer">›</button>
                 </div>
                 <div class="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-slate-400 mb-2">
                     <span>Min</span><span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span>
                 </div>
                 <div id="gridTanggalKalender" class="grid grid-cols-7 gap-1.5 text-center"></div>
-                <div class="flex items-center justify-center space-x-4 mt-3 pt-2.5 border-t border-slate-200/60 text-[10px] font-semibold text-slate-500">
+                <div class="flex items-center justify-center space-x-4 mt-4 pt-3 border-t border-slate-100 text-[10px] font-semibold text-slate-500">
                     <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 mr-1.5"></span>Sudah Presensi</span>
                     <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 mr-1.5"></span>Belum Presensi (!)</span>
                 </div>
             </div>
-            <div id="detailTanggalKalender" class="w-full space-y-2 mb-5 overflow-y-auto max-h-[28vh] pr-1">
-                <p class="text-center text-xs text-slate-400">Ketuk tanggal bertanda pada kalender untuk melihat detail sesi.</p>
+            <div id="detailTanggalKalender" class="bg-white border border-slate-200/80 rounded-3xl p-4 shadow-sm w-full space-y-2 mb-4 overflow-y-auto max-h-[28vh]">
+                <p class="text-center text-xs text-slate-400 py-2">Ketuk tanggal bertanda pada kalender untuk melihat detail sesi.</p>
             </div>
-            <button type="button" onclick="tampilLayar('presensiScreen')" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold py-3 rounded-xl">Kembali Ke Dasbor</button>
+            <button type="button" onclick="tampilLayar('presensiScreen')" class="w-full bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/80 text-xs font-bold py-3 rounded-2xl shadow-sm transition-colors cursor-pointer">Kembali Ke Dasbor</button>
         </div>
 
-        <!-- LAYER 5: RIWAYAT PRESENSI -->
-        <div id="myAttendanceScreen" class="hidden flex flex-col w-full p-6 sm:p-8 bg-white">
-            <div class="mb-5 text-center">
-                <div class="w-12 h-12 rounded-2xl bg-sky-50 text-oceanBlue flex items-center justify-center text-2xl mx-auto mb-2 border border-sky-100">📅</div>
-                <h2 class="text-lg font-extrabold text-oceanDark">Riwayat Presensi</h2>
-                <p class="text-xs text-slate-500">Status kehadiran pada seluruh jadwal pelatihan Anda.</p>
-            </div>
-            <div id="loadingRiwayatKu" class="text-center text-xs font-semibold text-oceanBlue my-6">Memuat riwayat kehadiran...</div>
-            <div id="wadahRiwayatKu" class="w-full space-y-2.5 mb-5 overflow-y-auto max-h-[55vh] pr-1"></div>
-            <button type="button" onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold py-3 rounded-xl">Kembali Ke Dasbor</button>
-        </div>
-
-        <!-- LAYER 6: FORM LUPA PRESENSI -->
-        <div id="lupaPresensiFormScreen" class="hidden flex flex-col w-full p-6 sm:p-8 bg-white">
-            <div class="mb-4 text-center">
-                <h2 class="text-lg font-extrabold text-oceanDark">Ajukan Lupa Presensi</h2>
-                <p class="text-xs text-slate-500">Isi alasan dan unggah foto bukti kehadiran Anda saat sesi berlangsung.</p>
-            </div>
-            <div class="bg-sky-50/70 border border-sky-100 p-3.5 rounded-2xl mb-4 text-center">
-                <p class="text-[10px] font-bold text-oceanBlue uppercase mb-0.5" id="lpPelatihan">NAMA PELATIHAN</p>
-                <h3 class="text-sm font-bold text-slate-800" id="lpHariSesi">Hari - Sesi</h3>
-                <p id="lpKuotaInfo" class="text-[10px] font-semibold text-amber-600 mt-1">Kuota Lupa Presensi: 0/5</p>
-            </div>
-            <div class="mb-3.5">
-                <label class="text-[11px] font-bold text-slate-600 block mb-1">Alasan Lupa Melakukan Presensi*</label>
-                <textarea id="lpAlasanInput" rows="3" placeholder="Tuliskan alasan mengapa Anda lupa melakukan presensi pada sesi ini..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs bg-slate-50/50 focus:bg-white"></textarea>
-            </div>
-            <label class="border-2 border-dashed border-sky-200 hover:border-oceanBlue rounded-2xl p-5 text-center mb-5 hover:bg-sky-50/30 cursor-pointer block">
-                <span class="text-2xl block mb-1.5">📸</span>
-                <span class="text-xs font-bold text-oceanBlue block">Pilih File Foto Bukti*</span>
-                <input type="file" id="lpFileInput" accept="image/*" class="hidden" onchange="document.getElementById('lpFileName').innerText = this.files[0] ? this.files[0].name : 'Belum ada file terpilih';">
-                <p id="lpFileName" class="text-[11px] text-slate-400 mt-1 truncate max-w-xs mx-auto">Belum ada file terpilih</p>
-            </label>
-            <div class="space-y-2">
-                <button type="button" onclick="submitLupaPresensi()" id="btnSubmitLP" class="w-full bg-gradient-to-r from-oceanDark to-oceanBlue text-white font-bold text-sm py-3 rounded-xl">Kirim Permohonan</button>
-                <button type="button" onclick="tampilLayar('myAttendanceScreen')" class="w-full text-slate-500 hover:bg-slate-50 text-xs font-semibold py-2.5 rounded-xl">Batal</button>
-            </div>
-        </div>
-
-        <!-- LAYER 7: GRUP WA -->
-        <div id="myGroupScreen" class="hidden flex flex-col w-full p-6 sm:p-8 bg-white">
-            <div class="mb-5 text-center">
-                <div class="w-12 h-12 rounded-2xl bg-sky-50 text-oceanBlue flex items-center justify-center text-2xl mx-auto mb-2 border border-sky-100">💬</div>
-                <h2 class="text-lg font-extrabold text-oceanDark">Grup WhatsApp</h2>
-                <p class="text-xs text-slate-500">Tautan grup resmi untuk pelatihan yang Anda ikuti.</p>
-            </div>
-            <div id="loadingGroupKu" class="text-center text-xs font-semibold text-oceanBlue my-6">Memuat daftar grup...</div>
-            <div id="wadahGroupKu" class="w-full space-y-3 mb-5 overflow-y-auto max-h-[52vh] pr-1"></div>
-            <button type="button" onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold py-3 rounded-xl">Kembali Ke Dasbor</button>
-        </div>
-
-        <!-- LAYER 8: DAFTAR KELAS -->
-        <div id="userEnrollScreen" class="hidden flex flex-col w-full p-6 sm:p-8 bg-white">
-            <div class="mb-5 text-center">
-                <div class="w-12 h-12 rounded-2xl bg-sky-50 text-oceanBlue flex items-center justify-center text-2xl mx-auto mb-2 border border-sky-100">👨🏻‍🏫</div>
-                <h2 class="text-lg font-extrabold text-oceanDark">Daftar Kelas Pelatihan</h2>
-                <p class="text-xs text-slate-500">Pilih program pelatihan LPMPP yang tersedia di bawah ini.</p>
-            </div>
-            <div id="wadahBoxEnrollPelatihan" class="w-full space-y-3 mb-5 overflow-y-auto max-h-[55vh] pr-1"></div>
-            <button type="button" onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold py-3 rounded-xl">Kembali Ke Dasbor</button>
-        </div>
-
-        <!-- LAYER 9: MATERI SAYA -->
-        <div id="myRewardScreen" class="hidden flex flex-col w-full p-6 sm:p-8 bg-white">
-            <div class="mb-5 text-center">
-                <div class="w-12 h-12 rounded-2xl bg-sky-50 text-oceanBlue flex items-center justify-center text-2xl mx-auto mb-2 border border-sky-100">📚</div>
-                <h2 class="text-lg font-extrabold text-oceanDark">Materi Pelatihan</h2>
-                <p class="text-xs text-slate-500">Daftar materi eksklusif berdasarkan capaian presensi Anda.</p>
-            </div>
-            <div id="loadingRewardKu" class="text-center text-xs font-semibold text-oceanBlue my-6">Memeriksa data...</div>
-            <div id="wadahRewardKu" class="w-full space-y-3 mb-5 overflow-y-auto max-h-[52vh] pr-1"></div>
-            <button type="button" onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold py-3 rounded-xl">Kembali Ke Dasbor</button>
-        </div>
-
-        <!-- LAYER 10: KAMERA -->
-        <div id="kameraScreen" class="hidden flex flex-col items-center p-6 sm:p-8 bg-white">
-            <h2 class="text-base font-extrabold text-oceanDark mb-3">Posisikan Wajah Anda</h2>
-            <div class="w-full h-64 bg-slate-900 rounded-2xl overflow-hidden mb-4 relative"><video id="video" class="w-full h-full object-cover" autoplay playsinline></video><canvas id="canvas" class="hidden"></canvas></div>
-            <button type="button" onclick="jepretDanKirim()" id="btnJepret" class="w-full bg-gradient-to-r from-oceanDark to-oceanBlue text-white text-sm font-bold py-3.5 rounded-xl shadow-md">Selfie & Unggah Kehadiran</button>
-        </div>
-
-        <!-- LAYER 11: SUKSES PRESENSI -->
-        <div id="suksesScreen" class="hidden flex flex-col items-center p-6 sm:p-8 bg-white">
-            <div class="w-14 h-14 rounded-full bg-sky-50 text-oceanBlue flex items-center justify-center text-2xl font-bold mb-3 border border-sky-100">✓</div>
-            <h1 class="text-xl font-extrabold text-oceanDark mb-1">Presensi Berhasil!</h1>
-            <p class="text-center text-xs text-slate-500 mb-6">Data kehadiran Anda telah tercatat di server.</p>
-            <div id="rewardBox" class="hidden w-full bg-sky-50/70 border border-sky-200 rounded-2xl p-5 mb-5 flex flex-col items-center">
-                <span class="text-3xl mb-2">📚</span>
-                <h3 class="text-xs font-bold text-oceanDark uppercase mb-1">Materi Terbuka!</h3>
-                <p class="text-[11px] text-center text-slate-600 mb-3.5">Anda telah memenuhi batas minimal kehadiran. Silakan akses materi pelatihan.</p>
-                <a id="btnReward" href="#" target="_blank" class="w-full bg-oceanBlue text-white text-center text-xs font-bold py-2.5 rounded-xl">Unduh Materi</a>
-            </div>
-            <button type="button" onclick="location.reload()" class="w-full bg-slate-100 text-slate-700 text-xs font-bold py-3 rounded-xl">Kembali Ke Awal</button>
-        </div>
-
-        <!-- LAYER 12: SUKSES DAFTAR -->
-        <div id="suksesDaftarScreen" class="hidden flex flex-col items-center p-6 sm:p-8 bg-white">
-            <div class="w-14 h-14 rounded-full bg-sky-50 text-oceanBlue flex items-center justify-center text-2xl font-bold mb-3 border border-sky-100">✓</div>
-            <h1 class="text-xl font-extrabold text-oceanDark mb-1 text-center">Pendaftaran Berhasil!</h1>
-            <p class="text-center text-xs text-slate-500 mb-5 leading-relaxed" id="msgSuksesDaftar">Anda telah terdaftar di pelatihan.</p>
-            <div id="wadahLinkWA" class="hidden w-full mb-5 bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
-                <p class="text-[10px] text-center text-slate-500 mb-2 font-bold uppercase">Langkah Selanjutnya</p>
-                <div class="bg-red-50 border border-red-100 p-2.5 rounded-xl mb-3">
-                    <p class="text-[10px] text-red-600 font-semibold text-center leading-relaxed">⚠️ DILARANG MENYEBARKAN LINK GRUP WHATSAPP INI, TERMASUK KE SESAMA PESERTA. PESERTA HANYA DIIZINKAN MASUK KE DALAM GRUP MELALUI SISTEM INI.</p>
+        <!-- LAYER 5: RIWAYAT PRESENSI MODERN -->
+        <div id="myAttendanceScreen" class="hidden flex flex-col w-full p-5 sm:p-8 bg-[#F4F8FB]">
+            <div class="flex items-center justify-between gap-3 mb-5">
+                <div class="flex items-center space-x-3.5">
+                    <div class="w-11 h-11 rounded-2xl bg-sky-50 text-oceanBlue border border-sky-200/80 flex items-center justify-center shadow-sm shrink-0">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-extrabold text-slate-800 tracking-tight">Riwayat Presensi</h2>
+                        <p class="text-xs text-slate-500">Status kehadiran pada seluruh jadwal pelatihan Anda.</p>
+                    </div>
                 </div>
-                <a id="btnLinkWA" href="#" target="_blank" class="w-full flex items-center justify-center space-x-2 bg-[#25D366] text-white text-xs font-bold py-3 rounded-xl">
-                    <span>💬</span><span>Gabung Grup WhatsApp</span>
-                </a>
+                <button type="button" onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center space-x-1.5 shadow-sm transition-all cursor-pointer shrink-0">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <span>Dasbor</span>
+                </button>
             </div>
-            <button type="button" id="btnLanjutSetelahDaftar" class="w-full bg-gradient-to-r from-oceanDark to-oceanBlue text-white text-xs font-bold py-3 rounded-xl">Lanjut</button>
+            <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200/80 mb-4">
+                <div id="loadingRiwayatKu" class="text-center text-xs font-semibold text-oceanBlue my-6">Memuat riwayat kehadiran...</div>
+                <div id="wadahRiwayatKu" class="w-full space-y-3 overflow-y-auto max-h-[58vh] pr-1"></div>
+            </div>
+            <button type="button" onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/80 text-xs font-bold py-3 rounded-2xl shadow-sm transition-colors cursor-pointer">Kembali Ke Dasbor</button>
+        </div>
+
+        <!-- LAYER 6: FORM LUPA PRESENSI MODERN -->
+        <div id="lupaPresensiFormScreen" class="hidden flex flex-col w-full p-5 sm:p-8 bg-[#F4F8FB]">
+            <div class="flex items-center justify-between gap-3 mb-5">
+                <div class="flex items-center space-x-3.5">
+                    <div class="w-11 h-11 rounded-2xl bg-rose-50 text-rose-600 border border-rose-200/80 flex items-center justify-center shadow-sm shrink-0">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-extrabold text-slate-800 tracking-tight">Ajukan Lupa Presensi</h2>
+                        <p class="text-xs text-slate-500">Isi alasan dan unggah foto bukti kehadiran sesi.</p>
+                    </div>
+                </div>
+                <button type="button" onclick="tampilLayar('myAttendanceScreen')" class="bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center space-x-1.5 shadow-sm transition-all cursor-pointer shrink-0">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <span>Kembali</span>
+                </button>
+            </div>
+
+            <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-slate-200/80 space-y-4 mb-4">
+                <div class="bg-sky-50/70 border border-sky-100 p-4 rounded-2xl text-center">
+                    <p class="text-[10px] font-extrabold text-oceanBlue uppercase tracking-wider mb-0.5" id="lpPelatihan">NAMA PELATIHAN</p>
+                    <h3 class="text-sm font-extrabold text-slate-800" id="lpHariSesi">Hari - Sesi</h3>
+                    <p id="lpKuotaInfo" class="text-[10px] font-bold text-amber-600 mt-1">Kuota Lupa Presensi: 0/5</p>
+                </div>
+                <div>
+                    <label class="text-[11px] font-bold text-slate-600 uppercase tracking-wider block mb-1.5">Alasan Lupa Melakukan Presensi*</label>
+                    <textarea id="lpAlasanInput" rows="3" placeholder="Tuliskan alasan mengapa Anda lupa melakukan presensi pada sesi ini..." class="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs bg-slate-50/50 focus:bg-white"></textarea>
+                </div>
+                <label class="border-2 border-dashed border-sky-200 hover:border-oceanBlue rounded-2xl p-6 text-center hover:bg-sky-50/30 cursor-pointer block transition-all">
+                    <div class="w-11 h-11 rounded-2xl bg-sky-50 text-oceanBlue border border-sky-100 flex items-center justify-center mx-auto mb-2">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                    </div>
+                    <span class="text-xs font-extrabold text-oceanBlue block">Pilih File Foto Bukti Kehadiran*</span>
+                    <input type="file" id="lpFileInput" accept="image/*" class="hidden" onchange="document.getElementById('lpFileName').innerText = this.files[0] ? this.files[0].name : 'Belum ada file terpilih';">
+                    <p id="lpFileName" class="text-[11px] text-slate-400 mt-1 truncate max-w-xs mx-auto">Belum ada file terpilih</p>
+                </label>
+            </div>
+
+            <div class="space-y-2.5">
+                <button type="button" onclick="submitLupaPresensi()" id="btnSubmitLP" class="w-full bg-gradient-to-r from-oceanDark to-oceanBlue hover:from-oceanBlue hover:to-skyBlue text-white font-bold text-xs sm:text-sm py-3.5 rounded-2xl shadow-md transition-all cursor-pointer">Kirim Permohonan</button>
+                <button type="button" onclick="tampilLayar('myAttendanceScreen')" class="w-full bg-white hover:bg-slate-100 text-slate-600 border border-slate-200/80 text-xs font-bold py-3 rounded-2xl shadow-sm transition-colors cursor-pointer">Batal</button>
+            </div>
+        </div>
+
+        <!-- LAYER 7: GRUP WA MODERN -->
+        <div id="myGroupScreen" class="hidden flex flex-col w-full p-5 sm:p-8 bg-[#F4F8FB]">
+            <div class="flex items-center justify-between gap-3 mb-5">
+                <div class="flex items-center space-x-3.5">
+                    <div class="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-200/80 flex items-center justify-center shadow-sm shrink-0">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-extrabold text-slate-800 tracking-tight">Grup WhatsApp</h2>
+                        <p class="text-xs text-slate-500">Tautan grup resmi untuk pelatihan yang Anda ikuti.</p>
+                    </div>
+                </div>
+                <button type="button" onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center space-x-1.5 shadow-sm transition-all cursor-pointer shrink-0">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <span>Dasbor</span>
+                </button>
+            </div>
+            <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200/80 mb-4">
+                <div id="loadingGroupKu" class="text-center text-xs font-semibold text-oceanBlue my-6">Memuat daftar grup...</div>
+                <div id="wadahGroupKu" class="w-full space-y-3 overflow-y-auto max-h-[55vh] pr-1"></div>
+            </div>
+            <button type="button" onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/80 text-xs font-bold py-3 rounded-2xl shadow-sm transition-colors cursor-pointer">Kembali Ke Dasbor</button>
+        </div>
+
+        <!-- LAYER 8: DAFTAR KELAS MODERN -->
+        <div id="userEnrollScreen" class="hidden flex flex-col w-full p-5 sm:p-8 bg-[#F4F8FB]">
+            <div class="flex items-center justify-between gap-3 mb-5">
+                <div class="flex items-center space-x-3.5">
+                    <div class="w-11 h-11 rounded-2xl bg-sky-50 text-oceanBlue border border-sky-200/80 flex items-center justify-center shadow-sm shrink-0">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-extrabold text-slate-800 tracking-tight">Daftar Kelas Pelatihan</h2>
+                        <p class="text-xs text-slate-500">Pilih program pelatihan LPMPP yang sedang berjalan atau akan datang.</p>
+                    </div>
+                </div>
+                <button type="button" onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center space-x-1.5 shadow-sm transition-all cursor-pointer shrink-0">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <span>Dasbor</span>
+                </button>
+            </div>
+            <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200/80 mb-4">
+                <div id="wadahBoxEnrollPelatihan" class="w-full space-y-3 overflow-y-auto max-h-[58vh] pr-1"></div>
+            </div>
+            <button type="button" onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/80 text-xs font-bold py-3 rounded-2xl shadow-sm transition-colors cursor-pointer">Kembali Ke Dasbor</button>
+        </div>
+
+        <!-- LAYER 9: MATERI SAYA MODERN -->
+        <div id="myRewardScreen" class="hidden flex flex-col w-full p-5 sm:p-8 bg-[#F4F8FB]">
+            <div class="flex items-center justify-between gap-3 mb-5">
+                <div class="flex items-center space-x-3.5">
+                    <div class="w-11 h-11 rounded-2xl bg-sky-50 text-oceanBlue border border-sky-200/80 flex items-center justify-center shadow-sm shrink-0">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-extrabold text-slate-800 tracking-tight">Materi Pelatihan</h2>
+                        <p class="text-xs text-slate-500">Daftar materi eksklusif berdasarkan capaian presensi Anda.</p>
+                    </div>
+                </div>
+                <button type="button" onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center space-x-1.5 shadow-sm transition-all cursor-pointer shrink-0">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <span>Dasbor</span>
+                </button>
+            </div>
+            <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200/80 mb-4">
+                <div id="loadingRewardKu" class="text-center text-xs font-semibold text-oceanBlue my-6">Memeriksa data materi...</div>
+                <div id="wadahRewardKu" class="w-full space-y-3 overflow-y-auto max-h-[55vh] pr-1"></div>
+            </div>
+            <button type="button" onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/80 text-xs font-bold py-3 rounded-2xl shadow-sm transition-colors cursor-pointer">Kembali Ke Dasbor</button>
+        </div>
+
+        <!-- LAYER 10: KAMERA MODERN -->
+        <div id="kameraScreen" class="hidden flex flex-col items-center p-5 sm:p-8 bg-[#F4F8FB]">
+            <div class="w-full bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-slate-200/80 flex flex-col items-center">
+                <div class="w-11 h-11 rounded-2xl bg-sky-50 text-oceanBlue border border-sky-200/80 flex items-center justify-center mb-2.5">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                </div>
+                <h2 class="text-base font-extrabold text-slate-800 mb-0.5">Verifikasi Wajah (Selfie)</h2>
+                <p class="text-xs text-slate-500 mb-4 text-center">Posisikan wajah Anda terlihat jelas di dalam bingkai kamera.</p>
+                <div class="w-full h-64 sm:h-72 bg-slate-900 rounded-2xl overflow-hidden mb-4 relative shadow-inner">
+                    <video id="video" class="w-full h-full object-cover" autoplay playsinline></video>
+                    <canvas id="canvas" class="hidden"></canvas>
+                </div>
+                <button type="button" onclick="jepretDanKirim()" id="btnJepret" class="w-full bg-gradient-to-r from-oceanDark to-oceanBlue hover:from-oceanBlue hover:to-skyBlue text-white text-xs sm:text-sm font-bold py-3.5 rounded-2xl shadow-md transition-all cursor-pointer">Ambil Selfie & Unggah Kehadiran</button>
+            </div>
+        </div>
+
+        <!-- LAYER 11: SUKSES PRESENSI MODERN -->
+        <div id="suksesScreen" class="hidden flex flex-col items-center p-5 sm:p-8 bg-[#F4F8FB]">
+            <div class="w-full bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 flex flex-col items-center text-center">
+                <div class="w-16 h-16 rounded-3xl bg-emerald-50 text-emerald-600 border border-emerald-200/80 flex items-center justify-center mb-4 shadow-sm">
+                    <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                <h1 class="text-xl font-extrabold text-slate-800 mb-1">Presensi Berhasil!</h1>
+                <p class="text-xs text-slate-500 mb-6">Data kehadiran Anda telah tercatat di server LPMPP.</p>
+                <div id="rewardBox" class="hidden w-full bg-sky-50/70 border border-sky-200 rounded-2xl p-5 mb-5 flex flex-col items-center">
+                    <div class="w-11 h-11 rounded-2xl bg-white text-oceanBlue border border-sky-100 flex items-center justify-center mb-2.5 shadow-sm">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                    </div>
+                    <h3 class="text-xs font-extrabold text-oceanDark uppercase tracking-wider mb-1">Materi Pelatihan Terbuka!</h3>
+                    <p class="text-[11px] text-center text-slate-600 mb-3.5">Anda telah memenuhi batas minimal kehadiran. Silakan akses materi pelatihan.</p>
+                    <a id="btnReward" href="#" target="_blank" class="w-full bg-oceanBlue hover:bg-oceanDark text-white text-center text-xs font-bold py-3 rounded-xl transition-colors">Buka & Unduh Materi</a>
+                </div>
+                <button type="button" onclick="location.reload()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold py-3.5 rounded-2xl transition-colors cursor-pointer">Kembali Ke Halaman Utama</button>
+            </div>
+        </div>
+
+        <!-- LAYER 12: SUKSES DAFTAR MODERN -->
+        <div id="suksesDaftarScreen" class="hidden flex flex-col items-center p-5 sm:p-8 bg-[#F4F8FB]">
+            <div class="w-full bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 flex flex-col items-center text-center">
+                <div class="w-16 h-16 rounded-3xl bg-sky-50 text-oceanBlue border border-sky-200/80 flex items-center justify-center mb-4 shadow-sm">
+                    <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                <h1 class="text-xl font-extrabold text-slate-800 mb-1">Pendaftaran Berhasil!</h1>
+                <p class="text-xs text-slate-500 mb-5 leading-relaxed whitespace-pre-line font-medium" id="msgSuksesDaftar">Anda telah terdaftar di pelatihan.</p>
+                <div id="wadahLinkWA" class="hidden w-full mb-5 bg-slate-50/80 p-4 sm:p-5 rounded-2xl border border-slate-200/80">
+                    <p class="text-[10px] text-center text-slate-500 mb-2.5 font-extrabold uppercase tracking-wider">Langkah Selanjutnya</p>
+                    <div class="bg-rose-50 border border-rose-200/80 p-3 rounded-xl mb-3.5">
+                        <p class="text-[10px] text-rose-600 font-bold text-center leading-relaxed">DILARANG MENYEBARKAN LINK GRUP WHATSAPP INI, TERMASUK KE SESAMA PESERTA. PESERTA HANYA DIIZINKAN MASUK KE DALAM GRUP MELALUI SISTEM INI.</p>
+                    </div>
+                    <a id="btnLinkWA" href="#" target="_blank" class="w-full flex items-center justify-center space-x-2 bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-bold py-3.5 rounded-xl shadow-sm transition-colors">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                        <span>Gabung Grup WhatsApp</span>
+                    </a>
+                </div>
+                <button type="button" id="btnLanjutSetelahDaftar" class="w-full bg-gradient-to-r from-oceanDark to-oceanBlue hover:from-oceanBlue hover:to-skyBlue text-white text-xs sm:text-sm font-bold py-3.5 rounded-2xl shadow-md transition-all cursor-pointer">Lanjut</button>
+            </div>
         </div>
 
         <!-- LAYER 13: DASHBOARD ADMIN MODERN -->
@@ -1298,9 +1445,38 @@
             return "9999-12-31";
         }
 
+        function ambilTanggalSelesaiPublik(p) {
+            let akhir = "";
+            if (p.info && p.info !== "-") {
+                const bagianTgl = p.info.split("|")[0].trim();
+                if (bagianTgl.includes("-")) {
+                    const dp = bagianTgl.split(/\s*-\s*/);
+                    const parsedEnd = parseTglIndo(dp[dp.length - 1]);
+                    if (parsedEnd) akhir = parsedEnd;
+                } else {
+                    const parsedSingle = parseTglIndo(bagianTgl);
+                    if (parsedSingle) akhir = parsedSingle;
+                }
+            }
+            if (p.sesi_list && p.sesi_list.length > 0) {
+                p.sesi_list.forEach(s => {
+                    if (s.tanggal && s.tanggal !== "-" && s.tanggal > akhir) akhir = s.tanggal;
+                });
+            }
+            return akhir;
+        }
+
         function urutkanPelatihanBerdasarkanTanggal(list) {
             if (!list || !Array.isArray(list)) return [];
-            return list.slice().sort((a, b) => {
+            const witaNow = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Makassar"}));
+            const todayStr = `${witaNow.getFullYear()}-${String(witaNow.getMonth()+1).padStart(2, '0')}-${String(witaNow.getDate()).padStart(2, '0')}`;
+
+            // Otomatis sembunyikan pelatihan yang tanggal selesainya sudah lewat dari hari ini
+            return list.filter(p => {
+                const tglSelesai = ambilTanggalSelesaiPublik(p);
+                if (tglSelesai && tglSelesai < todayStr) return false;
+                return true;
+            }).sort((a, b) => {
                 const tglA = ambilTanggalMulaiPelatihan(a);
                 const tglB = ambilTanggalMulaiPelatihan(b);
                 return tglA.localeCompare(tglB);
@@ -1582,9 +1758,24 @@
                 document.getElementById('loadingRewardKu').classList.add('hidden'); const wadah = document.getElementById('wadahRewardKu'); 
                 if (res.status === "success" && res.data.length > 0) { 
                     res.data.forEach(item => { 
-                        wadah.innerHTML += `<div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm flex flex-col justify-between"><div class="flex items-center space-x-3 mb-3"><span class="w-9 h-9 rounded-xl bg-sky-50 text-oceanBlue flex items-center justify-center text-lg border border-sky-100">📚</span><h3 class="text-xs font-bold text-slate-800 uppercase">${item.pelatihan}</h3></div><button type="button" onclick="bukaAksesMateri(this, '${item.link}')" class="w-full bg-gradient-to-r from-oceanDark to-oceanBlue text-white text-xs font-bold py-2.5 rounded-xl">Buka & Unduh Materi</button></div>`; 
+                        wadah.innerHTML += `
+                        <div class="bg-slate-50/70 hover:bg-white border border-slate-200/90 hover:border-sky-300 p-4 rounded-2xl shadow-sm flex flex-col justify-between transition-all">
+                            <div class="flex items-center space-x-3 mb-3.5">
+                                <div class="w-10 h-10 rounded-xl bg-sky-50 text-oceanBlue border border-sky-200/70 flex items-center justify-center shrink-0">
+                                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-extrabold text-oceanBlue uppercase tracking-wider block">Materi Terbuka</span>
+                                    <h3 class="text-xs sm:text-sm font-extrabold text-slate-800 uppercase">${item.pelatihan}</h3>
+                                </div>
+                            </div>
+                            <button type="button" onclick="bukaAksesMateri(this, '${item.link}')" class="w-full bg-gradient-to-r from-oceanDark to-oceanBlue hover:from-oceanBlue hover:to-skyBlue text-white text-xs font-bold py-3 rounded-xl shadow-sm flex items-center justify-center space-x-2 transition-all cursor-pointer">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                <span>Buka & Unduh Materi</span>
+                            </button>
+                        </div>`; 
                     }); 
-                } else wadah.innerHTML = `<div class="bg-slate-50 border border-slate-200/60 rounded-2xl p-6 text-center"><p class="text-slate-500 text-xs">Belum ada materi yang terbuka. Silakan penuhi target presensi terlebih dahulu.</p></div>`; 
+                } else wadah.innerHTML = `<div class="bg-slate-50 border border-dashed border-slate-200 rounded-2xl p-8 text-center"><p class="text-slate-400 text-xs font-medium">Belum ada materi yang terbuka. Silakan penuhi target presensi terlebih dahulu.</p></div>`; 
             } catch (e) { document.getElementById('loadingRewardKu').innerText = "Gagal memuat data materi."; } 
         }
 
@@ -1619,9 +1810,12 @@
                     });
 
                     let html = `
-                    <div class="bg-sky-50/70 border border-sky-200 p-3.5 rounded-2xl mb-3">
-                        <p class="text-[10px] font-extrabold text-oceanDark uppercase tracking-wider mb-2">📌 Status Kuota Lupa Presensi (Maks. 5x)</p>
-                        <div class="space-y-1.5">
+                    <div class="bg-sky-50/70 border border-sky-200/80 p-4 rounded-2xl mb-3">
+                        <div class="flex items-center space-x-2 mb-2.5">
+                            <svg class="w-4 h-4 text-oceanDark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                            <p class="text-[10px] font-extrabold text-oceanDark uppercase tracking-wider">Status Kuota Lupa Presensi (Maks. 5x)</p>
+                        </div>
+                        <div class="space-y-2">
                             ${Object.keys(kuotaPerPelatihan).map(pel => {
                                 const terpakai = kuotaPerPelatihan[pel];
                                 const sisa = Math.max(0, 5 - terpakai);
@@ -1629,8 +1823,8 @@
                                     ? 'bg-rose-500 text-white' 
                                     : (terpakai >= 3 ? 'bg-amber-500 text-white' : 'bg-oceanBlue text-white');
                                 return `
-                                <div class="flex justify-between items-center bg-white px-3 py-2 rounded-xl border border-sky-100 shadow-sm">
-                                    <span class="text-[11px] font-bold text-slate-700 truncate pr-2">${pel}</span>
+                                <div class="flex justify-between items-center bg-white px-3.5 py-2.5 rounded-xl border border-sky-100 shadow-sm">
+                                    <span class="text-xs font-bold text-slate-700 truncate pr-2">${pel}</span>
                                     <span class="${warnaBadge} text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shrink-0">${terpakai}/5 Terpakai (Sisa ${sisa})</span>
                                 </div>`;
                             }).join('')}
@@ -1649,31 +1843,48 @@
                             else if (item.tanggal === todayStr) { if (currentMins < startMins) isBelumMulai = true; else if (currentMins <= endMins) isSedangBerlangsung = true; }
                         } else { if (currentMins < startMins) isBelumMulai = true; else if (currentMins <= endMins) isSedangBerlangsung = true; }
 
-                        if (item.status === "Hadir") statusBadge = `<span class="bg-sky-50 text-oceanBlue text-[10px] font-bold px-2.5 py-1 rounded-full border border-sky-200">✓ Hadir</span>`;
-                        else if (item.status === "Pending") statusBadge = `<span class="bg-amber-50 text-amber-700 text-[10px] font-bold px-2.5 py-1 rounded-full border border-amber-200">Diverifikasi (${usedQuota}/5)</span>`;
+                        if (item.status === "Hadir") statusBadge = `<span class="bg-emerald-50 text-emerald-600 text-[10px] font-extrabold px-2.5 py-1 rounded-full border border-emerald-200">✓ Hadir</span>`;
+                        else if (item.status === "Pending") statusBadge = `<span class="bg-amber-50 text-amber-700 text-[10px] font-extrabold px-2.5 py-1 rounded-full border border-amber-200">Diverifikasi (${usedQuota}/5)</span>`;
                         else if (item.status === "Ditolak") {
-                            statusBadge = `<span class="bg-red-50 text-red-700 text-[10px] font-bold px-2.5 py-1 rounded-full border border-red-200">Ditolak</span>`;
+                            statusBadge = `<span class="bg-rose-50 text-rose-700 text-[10px] font-extrabold px-2.5 py-1 rounded-full border border-rose-200">Ditolak</span>`;
                             const btnUlang = isQuotaFull 
                                 ? `<p class="text-[10px] text-rose-600 font-semibold mt-2 text-center">Kuota lupa presensi (5/5) untuk pelatihan ini telah habis.</p>`
-                                : `<button type="button" onclick="bukaFormLupaPresensiIndex(${idx})" class="w-full mt-2 bg-white text-slate-700 border border-slate-200 text-[11px] font-semibold py-2 rounded-xl">Ajukan Ulang Permohonan (${usedQuota}/5)</button>`;
-                            actionBtn = `<div class="w-full mt-2.5 bg-red-50/70 border border-red-100 p-2.5 rounded-xl text-center"><p class="text-[9px] font-bold text-red-700 uppercase">Alasan Penolakan</p><p class="text-[11px] text-red-600 mt-0.5">"${item.alasan}"</p></div>${btnUlang}`;
+                                : `<button type="button" onclick="bukaFormLupaPresensiIndex(${idx})" class="w-full mt-2 bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 text-[11px] font-bold py-2.5 rounded-xl transition-colors cursor-pointer">Ajukan Ulang Permohonan (${usedQuota}/5)</button>`;
+                            actionBtn = `<div class="w-full mt-2.5 bg-rose-50/70 border border-rose-100 p-2.5 rounded-xl text-center"><p class="text-[9px] font-bold text-rose-700 uppercase">Alasan Penolakan</p><p class="text-[11px] text-rose-600 mt-0.5">"${item.alasan}"</p></div>${btnUlang}`;
                         } else {
-                            if (isBelumMulai) statusBadge = `<span class="bg-slate-100 text-slate-500 text-[10px] font-semibold px-2.5 py-1 rounded-full">Belum Mulai</span>`;
+                            if (isBelumMulai) statusBadge = `<span class="bg-slate-100 text-slate-500 text-[10px] font-bold px-2.5 py-1 rounded-full">Belum Mulai</span>`;
                             else if (isSedangBerlangsung) {
-                                statusBadge = `<span class="bg-sky-50 text-oceanBlue text-[10px] font-bold px-2.5 py-1 rounded-full border border-sky-200">Berlangsung</span>`;
-                                actionBtn = `<p class="text-[10px] text-oceanBlue font-medium mt-2 text-center">Sesi sedang berlangsung. Silakan presensi di halaman utama.</p>`;
+                                statusBadge = `<span class="bg-sky-50 text-oceanBlue text-[10px] font-extrabold px-2.5 py-1 rounded-full border border-sky-200">Berlangsung</span>`;
+                                actionBtn = `<p class="text-[10px] text-oceanBlue font-semibold mt-2 text-center">Sesi sedang berlangsung. Silakan presensi di halaman utama.</p>`;
                             } else {
-                                statusBadge = `<span class="bg-red-50 text-red-600 text-[10px] font-bold px-2.5 py-1 rounded-full border border-red-200">Belum Hadir</span>`;
+                                statusBadge = `<span class="bg-rose-50 text-rose-600 text-[10px] font-extrabold px-2.5 py-1 rounded-full border border-rose-200">Belum Hadir</span>`;
                                 actionBtn = isQuotaFull 
-                                    ? `<p class="text-[10px] text-rose-600 font-semibold mt-2.5 bg-rose-50/60 py-1.5 px-2 rounded-lg text-center">Batas maksimal lupa presensi (5/5) untuk pelatihan ini telah habis.</p>`
-                                    : `<button type="button" onclick="bukaFormLupaPresensiIndex(${idx})" class="w-full mt-2.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-[11px] font-bold py-2 rounded-xl">Ajukan Lupa Presensi (${usedQuota}/5)</button>`;
+                                    ? `<p class="text-[10px] text-rose-600 font-semibold mt-2.5 bg-rose-50/60 py-2 px-2.5 rounded-xl text-center">Batas maksimal lupa presensi (5/5) untuk pelatihan ini telah habis.</p>`
+                                    : `<button type="button" onclick="bukaFormLupaPresensiIndex(${idx})" class="w-full mt-3 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200/80 text-[11px] font-bold py-2.5 rounded-xl transition-colors cursor-pointer">Ajukan Lupa Presensi (${usedQuota}/5)</button>`;
                             }
                         }
                         let jamText = (item.jam_mulai && item.jam_selesai && item.jam_mulai !== "-") ? `${item.jam_mulai} - ${item.jam_selesai}` : ``;
-                        html += `<div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm flex flex-col"><div class="flex justify-between items-start gap-2 mb-1"><div><p class="text-[10px] font-bold text-oceanBlue uppercase">${item.pelatihan}</p><h3 class="text-sm font-bold text-slate-800 mt-0.5">${item.hari} • ${item.sesi}</h3></div>${statusBadge}</div><div class="flex items-center space-x-3 text-[11px] text-slate-400 font-medium mt-1"><span>🗓️ ${item.tanggal}</span>${jamText ? `<span>⏰ ${jamText}</span>` : ''}</div>${actionBtn}</div>`;
+                        html += `
+                        <div class="bg-slate-50/70 hover:bg-white border border-slate-200/90 p-4 rounded-2xl shadow-sm flex flex-col transition-all">
+                            <div class="flex justify-between items-start gap-2 mb-1.5">
+                                <div>
+                                    <p class="text-[10px] font-extrabold text-oceanBlue uppercase tracking-wider">${item.pelatihan}</p>
+                                    <h3 class="text-sm font-extrabold text-slate-800 mt-0.5">${item.hari} • ${item.sesi}</h3>
+                                </div>
+                                ${statusBadge}
+                            </div>
+                            <div class="flex items-center space-x-3.5 text-[11px] text-slate-500 font-semibold mt-1">
+                                <span class="flex items-center space-x-1">
+                                    <svg class="w-3.5 h-3.5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                    <span>${item.tanggal}</span>
+                                </span>
+                                ${jamText ? `<span class="flex items-center space-x-1"><svg class="w-3.5 h-3.5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span>${jamText}</span></span>` : ''}
+                            </div>
+                            ${actionBtn}
+                        </div>`;
                     });
                     wadah.innerHTML = html;
-                } else wadah.innerHTML = `<div class="bg-slate-50 border border-slate-200/60 rounded-2xl p-6 text-center"><p class="text-slate-500 text-xs">Anda belum memiliki jadwal pelatihan aktif.</p></div>`;
+                } else wadah.innerHTML = `<div class="bg-slate-50 border border-dashed border-slate-200 rounded-2xl p-8 text-center"><p class="text-slate-400 text-xs font-medium">Anda belum memiliki jadwal pelatihan aktif.</p></div>`;
             } catch (e) { document.getElementById('loadingRiwayatKu').innerText = "Gagal memuat riwayat presensi."; }
         }
 
@@ -1684,10 +1895,20 @@
                 document.getElementById('loadingGroupKu').classList.add('hidden'); const wadah = document.getElementById('wadahGroupKu'); 
                 if (res.status === "success" && res.data.length > 0) { 
                     res.data.forEach(item => { 
-                        if(item.link && item.link.trim() !== "") wadah.innerHTML += `<div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm flex flex-col"><h3 class="text-xs font-bold text-slate-800 uppercase mb-2">${item.pelatihan}</h3><div class="bg-red-50 border border-red-100 p-2.5 rounded-xl mb-3"><p class="text-[10px] text-red-600 font-semibold text-center leading-relaxed">⚠️ DILARANG MENYEBARKAN LINK GRUP WHATSAPP INI, TERMASUK KE SESAMA PESERTA. PESERTA HANYA DIIZINKAN MASUK KE DALAM GRUP MELALUI SISTEM INI.</p></div><a href="${item.link}" target="_blank" class="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-bold py-2.5 rounded-xl flex items-center justify-center space-x-2 transition-colors"><span>💬</span><span>Gabung Grup WhatsApp</span></a></div>`; 
+                        if(item.link && item.link.trim() !== "") wadah.innerHTML += `
+                        <div class="bg-slate-50/70 hover:bg-white border border-slate-200/90 p-4 sm:p-5 rounded-2xl shadow-sm flex flex-col transition-all">
+                            <h3 class="text-xs sm:text-sm font-extrabold text-slate-800 uppercase mb-2.5">${item.pelatihan}</h3>
+                            <div class="bg-rose-50 border border-rose-200/80 p-3 rounded-xl mb-3.5">
+                                <p class="text-[10px] text-rose-600 font-bold text-center leading-relaxed">DILARANG MENYEBARKAN LINK GRUP WHATSAPP INI, TERMASUK KE SESAMA PESERTA. PESERTA HANYA DIIZINKAN MASUK KE DALAM GRUP MELALUI SISTEM INI.</p>
+                            </div>
+                            <a href="${item.link}" target="_blank" class="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-bold py-3 rounded-xl shadow-sm flex items-center justify-center space-x-2 transition-colors">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                <span>Gabung Grup WhatsApp</span>
+                            </a>
+                        </div>`; 
                     }); 
-                    if(wadah.innerHTML === "") wadah.innerHTML = `<div class="bg-slate-50 rounded-2xl p-6 text-center"><p class="text-slate-500 text-xs">Belum ada link grup WhatsApp untuk pelatihan Anda.</p></div>`; 
-                } else wadah.innerHTML = `<div class="bg-slate-50 rounded-2xl p-6 text-center"><p class="text-slate-500 text-xs">Anda belum terdaftar di pelatihan mana pun atau belum ada link grup yang tersedia.</p></div>`; 
+                    if(wadah.innerHTML === "") wadah.innerHTML = `<div class="bg-slate-50 border border-dashed border-slate-200 rounded-2xl p-8 text-center"><p class="text-slate-400 text-xs font-medium">Belum ada link grup WhatsApp untuk pelatihan Anda.</p></div>`; 
+                } else wadah.innerHTML = `<div class="bg-slate-50 border border-dashed border-slate-200 rounded-2xl p-8 text-center"><p class="text-slate-400 text-xs font-medium">Anda belum terdaftar di pelatihan mana pun atau belum ada link grup yang tersedia.</p></div>`; 
             } catch (e) { document.getElementById('loadingGroupKu').innerText = "Gagal memuat data grup."; } 
         }
 
@@ -1867,9 +2088,9 @@
             if (!infoStr || infoStr === "-") return `<p class="text-[11px] text-slate-400 italic mb-3">Jadwal & keterangan menyusul</p>`;
             return `<div class="flex flex-wrap gap-1.5 mb-3.5 mt-2">` + infoStr.split("|").map(part => {
                 const p = part.trim();
-                if (p.toLowerCase().startsWith("online")) return `<span class="text-[11px] text-oceanBlue bg-sky-50 border border-sky-100 px-2.5 py-1 rounded-lg font-medium">🌐 ${p}</span>`;
-                if (p.toLowerCase().startsWith("offline")) return `<span class="text-[11px] text-oceanDark bg-sky-100/70 border border-sky-200 px-2.5 py-1 rounded-lg font-medium">📍 ${p}</span>`;
-                return `<span class="text-[11px] text-slate-600 bg-slate-100 px-2.5 py-1 rounded-lg font-medium">🗓️ ${p}</span>`;
+                if (p.toLowerCase().startsWith("online")) return `<span class="inline-flex items-center space-x-1 text-[11px] text-oceanBlue bg-sky-50 border border-sky-200/70 px-2.5 py-1 rounded-lg font-semibold"><svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg><span>${p}</span></span>`;
+                if (p.toLowerCase().startsWith("offline")) return `<span class="inline-flex items-center space-x-1 text-[11px] text-oceanDark bg-sky-100/70 border border-sky-200 px-2.5 py-1 rounded-lg font-semibold"><svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg><span>${p}</span></span>`;
+                return `<span class="inline-flex items-center space-x-1 text-[11px] text-slate-600 bg-slate-100 border border-slate-200/80 px-2.5 py-1 rounded-lg font-semibold"><svg class="w-3.5 h-3.5 shrink-0 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg><span>${p}</span></span>`;
             }).join('') + `</div>`;
         }
 
