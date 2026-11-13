@@ -1995,11 +1995,11 @@
                         const wkt = new Date(item.waktu); 
                         const wktFormat = `${wkt.getDate()}/${wkt.getMonth()+1}/${wkt.getFullYear()} ${String(wkt.getHours()).padStart(2, '0')}:${String(wkt.getMinutes()).padStart(2, '0')}`; 
                         
-                        // Ekstrak ID dari URL Google Drive untuk menampilkan foto langsung
+                        // Gunakan endpoint thumbnail Google Drive agar aman dari pemblokiran CORS
                         let imageUrl = item.foto;
                         let idMatch = item.foto.match(/[-\w]{25,}/);
                         if (idMatch && idMatch[0]) {
-                            imageUrl = `https://drive.google.com/uc?export=view&id=${idMatch[0]}`;
+                            imageUrl = `https://drive.google.com/thumbnail?id=${idMatch[0]}&sz=w800`;
                         }
 
                         return `
