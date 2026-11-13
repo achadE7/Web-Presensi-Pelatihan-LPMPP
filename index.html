@@ -1994,6 +1994,14 @@
                     wadah.innerHTML = res.data.map(item => { 
                         const wkt = new Date(item.waktu); 
                         const wktFormat = `${wkt.getDate()}/${wkt.getMonth()+1}/${wkt.getFullYear()} ${String(wkt.getHours()).padStart(2, '0')}:${String(wkt.getMinutes()).padStart(2, '0')}`; 
+                        
+                        // Ekstrak ID dari URL Google Drive untuk menampilkan foto langsung
+                        let imageUrl = item.foto;
+                        let idMatch = item.foto.match(/[-\w]{25,}/);
+                        if (idMatch && idMatch[0]) {
+                            imageUrl = `https://drive.google.com/uc?export=view&id=${idMatch[0]}`;
+                        }
+
                         return `
                         <div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm mb-2.5">
                             <div class="flex items-start justify-between gap-2 mb-1">
@@ -2007,15 +2015,26 @@
                                 <span class="text-[10px] text-slate-400">${wktFormat}</span>
                             </div>
                             <p class="text-xs text-slate-500 mb-2 pl-6">${item.hari} • ${item.sesi}</p>
-                            <div class="bg-amber-50/70 border border-amber-100 p-2.5 rounded-xl mb-3 ml-6">
-                                <p class="text-[9px] font-bold text-amber-700 uppercase">Alasan Peserta:</p>
-                                <p class="text-xs text-slate-700 font-medium mt-0.5">"${item.alasan_lupa || '-'}"</p>
+                            
+                            <div class="pl-6 space-y-3 mb-3">
+                                <!-- Kotak Alasan -->
+                                <div class="bg-amber-50/70 border border-amber-100 p-2.5 rounded-xl">
+                                    <p class="text-[9px] font-bold text-amber-700 uppercase">Alasan Peserta:</p>
+                                    <p class="text-xs text-slate-700 font-medium mt-0.5">"${item.alasan_lupa || '-'}"</p>
+                                </div>
+                                
+                                <!-- Penampil Foto Langsung -->
+                                <div class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-center">
+                                    <p class="text-[9px] font-bold text-slate-500 uppercase mb-1.5">Bukti Foto Kehadiran</p>
+                                    <img src="${imageUrl}" alt="Bukti Presensi" class="w-full h-auto max-h-[300px] object-contain rounded-lg mx-auto bg-slate-100" onerror="this.onerror=null; this.parentNode.innerHTML='<p class=\\'text-xs text-red-500 py-4\\'>Gagal memuat pratinjau gambar. <a href=\\'${item.foto}\\' target=\\'_blank\\' class=\\'text-oceanBlue underline\\'>Buka Tautan Asli</a></p>';">
+                                </div>
                             </div>
+                            
                             <div class="pl-6">
-                                <a href="${item.foto}" target="_blank" class="w-full block bg-slate-100 text-slate-700 text-center font-semibold py-2 rounded-xl text-xs mb-2.5 hover:bg-slate-200 transition-colors">Lihat Bukti Foto</a>
+                                <a href="${item.foto}" target="_blank" class="w-full block bg-slate-50 text-oceanBlue border border-sky-100 text-center font-bold py-2 rounded-xl text-xs mb-2.5 hover:bg-sky-50 transition-colors">Buka Foto Layar Penuh</a>
                                 <div class="flex space-x-2">
-                                    <button type="button" onclick="prosesLupaPresensiAdmin(${item.row}, 'Approved')" class="w-1/2 bg-oceanBlue hover:bg-oceanDark text-white rounded-xl py-2 font-semibold text-xs transition-colors">Setujui</button>
-                                    <button type="button" onclick="prosesLupaPresensiAdmin(${item.row}, 'Rejected')" class="w-1/2 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl py-2 font-semibold text-xs transition-colors">Tolak</button>
+                                    <button type="button" onclick="prosesLupaPresensiAdmin(${item.row}, 'Approved')" class="w-1/2 bg-oceanBlue hover:bg-oceanDark text-white rounded-xl py-2.5 font-bold text-xs transition-colors shadow-sm">Setujui</button>
+                                    <button type="button" onclick="prosesLupaPresensiAdmin(${item.row}, 'Rejected')" class="w-1/2 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-xl py-2.5 font-bold text-xs transition-colors shadow-sm">Tolak</button>
                                 </div>
                             </div>
                         </div>`; 
