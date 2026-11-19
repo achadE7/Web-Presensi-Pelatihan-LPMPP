@@ -3345,7 +3345,7 @@
             const semuaBaris = listApproved.map(p => ({ nama: p.nama, unit: p.fakultas }))
                 .concat(DAFTAR_PANITIA_LPMPP.map(nm => ({ nama: nm, unit: "LPMPP" })));
 
-            const tglTerbitIndo = formatTanggalLengkapIndo(""); // Otomatis tanggal hari ini (kapan digenerate)
+            const tglTerbitIndo = "2 Desember 2024";
             let hariTglKegiatan = document.getElementById('docHariTglPresensi').value.trim();
             if (!hariTglKegiatan && window.pelatihanData) {
                 const found = window.pelatihanData.find(p => p.nama === pel);
