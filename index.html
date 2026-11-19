@@ -590,160 +590,142 @@
             </div>
         </div>
 
-        <!-- LAYER 13: DASHBOARD ADMIN MODERN -->
+        <!-- LAYER 13: DASHBOARD ADMIN & SUPER ADMIN -->
         <div id="adminScreen" class="hidden flex flex-col w-full p-5 sm:p-8 bg-[#F4F8FB]">
             <!-- HEADER BANNER ADMIN -->
             <div class="w-full bg-gradient-to-r from-oceanDark via-oceanBlue to-skyBlue rounded-3xl p-6 text-white shadow-md mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div class="flex items-center space-x-4">
                     <div class="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur flex items-center justify-center border border-white/30 shrink-0">
-                        <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                            <path d="m9 12 2 2 4-4"></path>
-                        </svg>
+                        <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
                     </div>
                     <div>
-                        <span class="inline-block text-[10px] font-extrabold uppercase tracking-widest bg-white/20 px-2.5 py-0.5 rounded-full mb-1">Panel Administrator</span>
+                        <span id="adminRoleBadge" class="inline-block text-[10px] font-extrabold uppercase tracking-widest bg-white/20 px-2.5 py-0.5 rounded-full mb-1">Panel Administrator</span>
                         <h2 id="adminNameDisplay" class="text-xl font-extrabold tracking-tight">Admin</h2>
                     </div>
                 </div>
                 <button type="button" onclick="location.reload()" class="bg-white/15 hover:bg-rose-500 text-white border border-white/25 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center space-x-2 transition-all cursor-pointer shrink-0">
-                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                        <polyline points="16 17 21 12 16 7"></polyline>
-                        <line x1="21" y1="12" x2="9" y2="12"></line>
-                    </svg>
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                     <span>Keluar</span>
                 </button>
             </div>
 
-            <!-- GRID MENU UTAMA ADMIN (4 KOLOM) -->
-            <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-3.5 mb-3.5">
-                <!-- 1. Database -->
-                <button type="button" onclick="bukaSpreadsheet()" class="bg-white border border-slate-200/80 p-4 rounded-2xl flex flex-col items-start text-left hover:border-oceanBlue hover:shadow-md transition-all group cursor-pointer">
-                    <div class="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
-                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
-                        </svg>
+            <!-- MENU UTAMA PENGAJUAN FAKULTAS & GENERATE DOKUMEN (ADMIN & SUPER ADMIN) -->
+            <button type="button" onclick="bukaHalamanPengajuanAdmin()" class="w-full mb-4 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white p-4 sm:p-5 rounded-2xl flex items-center justify-between shadow-md transition-all group cursor-pointer">
+                <div class="flex items-center space-x-3.5 text-left">
+                    <div class="w-11 h-11 rounded-2xl bg-white/20 border border-white/30 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="m9 15 2 2 4-4"></path></svg>
                     </div>
-                    <span class="text-xs font-extrabold text-slate-800 group-hover:text-oceanBlue">Database</span>
-                    <span class="text-[10px] text-slate-400 font-medium mt-0.5">Buka Google Sheets</span>
-                </button>
+                    <div>
+                        <span class="text-sm font-extrabold block">Pengajuan Fakultas, Surat Balasan & Lembar Presensi</span>
+                        <span class="text-[11px] text-emerald-50 font-medium">Approve/Reject calon peserta, pergantian nama, serta cetak surat & daftar hadir luring</span>
+                    </div>
+                </div>
+                <svg class="w-5 h-5 shrink-0 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
 
-                <!-- 2. Jadwal -->
+            <!-- GRID MENU ADMIN -->
+            <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-3.5 mb-3.5">
+                <!-- 1. Jadwal (Admin Biasa: Lihat Saja | Super Admin: Penuh) -->
                 <button type="button" onclick="tampilLayar('adminJadwalScreen')" class="bg-white border border-slate-200/80 p-4 rounded-2xl flex flex-col items-start text-left hover:border-oceanBlue hover:shadow-md transition-all group cursor-pointer">
                     <div class="w-11 h-11 rounded-2xl bg-sky-50 text-oceanBlue border border-sky-100 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                            <line x1="16" y1="2" x2="16" y2="6"></line>
-                            <line x1="8" y1="2" x2="8" y2="6"></line>
-                            <line x1="3" y1="10" x2="21" y2="10"></line>
-                        </svg>
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                     </div>
                     <span class="text-xs font-extrabold text-slate-800 group-hover:text-oceanBlue">Jadwal</span>
-                    <span class="text-[10px] text-slate-400 font-medium mt-0.5">Kelola Sesi & Kelas</span>
+                    <span id="subLabelJadwalAdmin" class="text-[10px] text-slate-400 font-medium mt-0.5">Kelola Sesi & Kelas</span>
                 </button>
 
-                <!-- 3. Peserta -->
+                <!-- 2. Peserta (Admin Biasa: Lihat & Export Saja | Super Admin: Penuh) -->
                 <button type="button" onclick="tampilLayar('adminPesertaScreen')" class="bg-white border border-slate-200/80 p-4 rounded-2xl flex flex-col items-start text-left hover:border-oceanBlue hover:shadow-md transition-all group cursor-pointer">
                     <div class="w-11 h-11 rounded-2xl bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                        </svg>
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                     </div>
                     <span class="text-xs font-extrabold text-slate-800 group-hover:text-oceanBlue">Peserta</span>
                     <span class="text-[10px] text-slate-400 font-medium mt-0.5">Biodata & Export XLS</span>
                 </button>
 
-                <!-- 4. Validasi Foto -->
-                <button type="button" onclick="muatGaleri()" class="bg-white border border-slate-200/80 p-4 rounded-2xl flex flex-col items-start text-left hover:border-oceanBlue hover:shadow-md transition-all group cursor-pointer">
+                <!-- 3. Database (Khusus Super Admin) -->
+                <button type="button" onclick="bukaSpreadsheet()" class="super-admin-only bg-white border border-slate-200/80 p-4 rounded-2xl flex flex-col items-start text-left hover:border-oceanBlue hover:shadow-md transition-all group cursor-pointer">
+                    <div class="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                    </div>
+                    <span class="text-xs font-extrabold text-slate-800 group-hover:text-oceanBlue">Database</span>
+                    <span class="text-[10px] text-slate-400 font-medium mt-0.5">Buka Google Sheets</span>
+                </button>
+
+                <!-- 4. Validasi Foto (Khusus Super Admin) -->
+                <button type="button" onclick="muatGaleri()" class="super-admin-only bg-white border border-slate-200/80 p-4 rounded-2xl flex flex-col items-start text-left hover:border-oceanBlue hover:shadow-md transition-all group cursor-pointer">
                     <div class="w-11 h-11 rounded-2xl bg-violet-50 text-violet-600 border border-violet-100 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                            <circle cx="12" cy="13" r="4"></circle>
-                        </svg>
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
                     </div>
                     <span class="text-xs font-extrabold text-slate-800 group-hover:text-oceanBlue">Validasi</span>
                     <span class="text-[10px] text-slate-400 font-medium mt-0.5">Galeri Foto Selfie</span>
                 </button>
 
-                <!-- 5. Permohonan Lupa Presensi -->
-                <button type="button" onclick="muatLupaPresensiAdmin()" class="bg-white border border-slate-200/80 p-4 rounded-2xl flex flex-col items-start text-left hover:border-rose-400 hover:shadow-md transition-all group cursor-pointer">
+                <!-- 5. Permohonan Lupa Presensi (Khusus Super Admin) -->
+                <button type="button" onclick="muatLupaPresensiAdmin()" class="super-admin-only bg-white border border-slate-200/80 p-4 rounded-2xl flex flex-col items-start text-left hover:border-rose-400 hover:shadow-md transition-all group cursor-pointer">
                     <div class="w-11 h-11 rounded-2xl bg-rose-50 text-rose-600 border border-rose-100 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="12" y1="18" x2="12" y2="12"></line>
-                            <line x1="9" y1="15" x2="15" y2="15"></line>
-                        </svg>
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
                     </div>
                     <span class="text-xs font-extrabold text-slate-800 group-hover:text-rose-600">Permohonan</span>
-                    <span class="text-[10px] text-slate-400 font-medium mt-0.5">persetujuan Lupa Absen</span>
+                    <span class="text-[10px] text-slate-400 font-medium mt-0.5">Validasi Lupa Presensi</span>
                 </button>
 
-                <!-- 6. Rekap Presensi -->
-                <button type="button" onclick="tampilLayar('adminRekapScreen')" class="bg-white border border-slate-200/80 p-4 rounded-2xl flex flex-col items-start text-left hover:border-oceanBlue hover:shadow-md transition-all group cursor-pointer">
+                <!-- 6. Rekap Presensi (Khusus Super Admin) -->
+                <button type="button" onclick="tampilLayar('adminRekapScreen')" class="super-admin-only bg-white border border-slate-200/80 p-4 rounded-2xl flex flex-col items-start text-left hover:border-oceanBlue hover:shadow-md transition-all group cursor-pointer">
                     <div class="w-11 h-11 rounded-2xl bg-cyan-50 text-cyan-600 border border-cyan-100 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M9 11l3 3L22 4"></path>
-                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-                        </svg>
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
                     </div>
                     <span class="text-xs font-extrabold text-slate-800 group-hover:text-oceanBlue">Rekap Presensi</span>
                     <span class="text-[10px] text-slate-400 font-medium mt-0.5">Statistik Kehadiran</span>
                 </button>
 
-                <!-- 7. Gamifikasi / Materi -->
-                <button type="button" onclick="tampilLayar('adminRewardScreen')" class="bg-white border border-slate-200/80 p-4 rounded-2xl flex flex-col items-start text-left hover:border-amber-400 hover:shadow-md transition-all group cursor-pointer">
+                <!-- 7. Gamifikasi / Materi (Khusus Super Admin) -->
+                <button type="button" onclick="tampilLayar('adminRewardScreen')" class="super-admin-only bg-white border border-slate-200/80 p-4 rounded-2xl flex flex-col items-start text-left hover:border-amber-400 hover:shadow-md transition-all group cursor-pointer">
                     <div class="w-11 h-11 rounded-2xl bg-amber-50 text-amber-600 border border-amber-100 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-                        </svg>
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                     </div>
                     <span class="text-xs font-extrabold text-slate-800 group-hover:text-amber-600">Gamifikasi</span>
                     <span class="text-[10px] text-slate-400 font-medium mt-0.5">Akses Materi & Reward</span>
                 </button>
 
-                <!-- 8. GPS Setup -->
-                <button type="button" onclick="tampilLayar('adminPengaturanScreen')" class="bg-white border border-slate-200/80 p-4 rounded-2xl flex flex-col items-start text-left hover:border-oceanBlue hover:shadow-md transition-all group cursor-pointer">
+                <!-- 8. GPS Setup (Khusus Super Admin) -->
+                <button type="button" onclick="tampilLayar('adminPengaturanScreen')" class="super-admin-only bg-white border border-slate-200/80 p-4 rounded-2xl flex flex-col items-start text-left hover:border-oceanBlue hover:shadow-md transition-all group cursor-pointer">
                     <div class="w-11 h-11 rounded-2xl bg-slate-100 text-slate-700 border border-slate-200 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                            <circle cx="12" cy="10" r="3"></circle>
-                        </svg>
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                     </div>
                     <span class="text-xs font-extrabold text-slate-800 group-hover:text-oceanBlue">GPS Setup</span>
                     <span class="text-[10px] text-slate-400 font-medium mt-0.5">Titik Koordinat & Radius</span>
                 </button>
             </div>
 
-            <!-- TOMBOL KELOLA FAKULTAS & PRODI -->
-            <button type="button" onclick="bukaHalamanAdminProdi()" class="w-full bg-white hover:bg-sky-50/60 border border-sky-200/90 p-4 rounded-2xl flex items-center justify-between transition-all shadow-sm group cursor-pointer">
-                <div class="flex items-center space-x-3.5">
-                    <div class="w-10 h-10 rounded-xl bg-sky-50 text-oceanBlue border border-sky-100 flex items-center justify-center group-hover:scale-105 transition-transform">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="3" y1="22" x2="21" y2="22"></line>
-                            <line x1="6" y1="18" x2="6" y2="11"></line>
-                            <line x1="10" y1="18" x2="10" y2="11"></line>
-                            <line x1="14" y1="18" x2="14" y2="11"></line>
-                            <line x1="18" y1="18" x2="18" y2="11"></line>
-                            <polygon points="12 2 20 7 4 7"></polygon>
-                        </svg>
+            <!-- MENU KHUSUS SUPER ADMIN (FAKULTAS & KELOLA AKUN) -->
+            <div class="super-admin-only grid grid-cols-1 md:grid-cols-2 gap-3">
+                <button type="button" onclick="bukaHalamanAdminProdi()" class="w-full bg-white hover:bg-sky-50/60 border border-sky-200/90 p-4 rounded-2xl flex items-center justify-between transition-all shadow-sm group cursor-pointer">
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-10 h-10 rounded-xl bg-sky-50 text-oceanBlue border border-sky-100 flex items-center justify-center group-hover:scale-105 transition-transform">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"></line><line x1="6" y1="18" x2="6" y2="11"></line><line x1="10" y1="18" x2="10" y2="11"></line><line x1="14" y1="18" x2="14" y2="11"></line><line x1="18" y1="18" x2="18" y2="11"></line><polygon points="12 2 20 7 4 7"></polygon></svg>
+                        </div>
+                        <div class="text-left">
+                            <span class="text-xs font-extrabold text-oceanDark block">Kelola Fakultas & Prodi</span>
+                            <span class="text-[10px] text-slate-400 font-medium">Atur pilihan fakultas & program studi</span>
+                        </div>
                     </div>
-                    <div class="text-left">
-                        <span class="text-xs font-extrabold text-oceanDark block">Kelola Daftar Fakultas & Program Studi</span>
-                        <span class="text-[10px] text-slate-400 font-medium">Tambah atau perbarui pilihan fakultas dan prodi peserta</span>
+                    <svg class="w-4 h-4 text-oceanBlue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+
+                <button type="button" onclick="bukaHalamanKelolaUser()" class="w-full bg-white hover:bg-indigo-50/60 border border-indigo-200/90 p-4 rounded-2xl flex items-center justify-between transition-all shadow-sm group cursor-pointer">
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center group-hover:scale-105 transition-transform">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+                        </div>
+                        <div class="text-left">
+                            <span class="text-xs font-extrabold text-indigo-900 block">Kelola Akses Admin & Operator</span>
+                            <span class="text-[10px] text-slate-400 font-medium">Tambah akun Admin & Operator Fakultas</span>
+                        </div>
                     </div>
-                </div>
-                <svg class="w-4 h-4 text-oceanBlue group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-            </button>
+                    <svg class="w-4 h-4 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
         </div>
 
         <!-- LAYER 20: ADMIN REKAP MODERN -->
@@ -1158,12 +1140,218 @@
 
             <button type="button" onclick="tampilLayar('adminScreen')" class="w-full bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/80 text-xs font-bold py-3 rounded-2xl shadow-sm transition-colors cursor-pointer">Kembali Ke Dasbor</button>
         </div>
+		
+		<!-- LAYER 22: KELOLA AKSES PENGGUNA (KHUSUS SUPER ADMIN) -->
+        <div id="adminManageUsersScreen" class="hidden flex flex-col w-full p-5 sm:p-8 bg-[#F4F8FB]">
+            <div class="flex items-center justify-between gap-3 mb-5">
+                <div class="flex items-center space-x-3.5">
+                    <div class="w-11 h-11 rounded-2xl bg-indigo-50 text-indigo-600 border border-indigo-200/80 flex items-center justify-center shadow-sm shrink-0">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-extrabold text-slate-800 tracking-tight">Kelola Akses Admin & Operator</h2>
+                        <p class="text-xs text-slate-500">Buat atau perbarui akun Super Admin, Admin Biasa, dan Operator Fakultas.</p>
+                    </div>
+                </div>
+                <button type="button" onclick="tampilLayar('adminScreen')" class="bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 px-3.5 py-2 rounded-xl text-xs font-bold shadow-sm cursor-pointer">‹ Dasbor</button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200/80 space-y-3">
+                    <h3 class="text-xs font-extrabold text-oceanDark uppercase tracking-wider">Tambah / Edit Akun Pengelola</h3>
+                    <div>
+                        <label class="text-[11px] font-semibold text-slate-600 block mb-1">Email / Username*</label>
+                        <input type="text" id="staffUsername" placeholder="contoh: operator.fkip@ulm.ac.id" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs bg-slate-50/50 focus:bg-white">
+                    </div>
+                    <div>
+                        <label class="text-[11px] font-semibold text-slate-600 block mb-1">Kata Sandi*</label>
+                        <input type="text" id="staffPassword" placeholder="Masukkan kata sandi" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs bg-slate-50/50 focus:bg-white">
+                    </div>
+                    <div>
+                        <label class="text-[11px] font-semibold text-slate-600 block mb-1">Nama Lengkap*</label>
+                        <input type="text" id="staffNama" placeholder="Nama pengelola / operator" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs bg-slate-50/50 focus:bg-white">
+                    </div>
+                    <div>
+                        <label class="text-[11px] font-semibold text-slate-600 block mb-1">Hak Akses (Role)*</label>
+                        <select id="staffRole" onchange="toggleStaffFakultasField()" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold bg-white">
+                            <option value="operator">Operator Fakultas (Pengajuan Calon Peserta)</option>
+                            <option value="admin">Admin Biasa (Validasi Pengajuan, Lihat Peserta & Jadwal)</option>
+                            <option value="super_admin">Super Admin (Akses Penuh)</option>
+                        </select>
+                    </div>
+                    <div id="wadahStaffFakultas">
+                        <label class="text-[11px] font-semibold text-slate-600 block mb-1">Fakultas (Khusus Operator Fakultas)*</label>
+                        <select id="staffFakultas" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold bg-white"></select>
+                    </div>
+                    <div class="flex gap-2 pt-1">
+                        <button type="button" onclick="simpanAkunStaff(this)" class="w-2/3 bg-gradient-to-r from-oceanDark to-oceanBlue text-white text-xs font-bold py-3 rounded-xl shadow-sm cursor-pointer">Simpan Akun</button>
+                        <button type="button" onclick="resetFormStaff()" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-bold py-3 rounded-xl cursor-pointer">Reset</button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200/80 flex flex-col">
+                    <h3 class="text-xs font-extrabold text-oceanDark uppercase tracking-wider mb-3">Daftar Akun Aktif</h3>
+                    <div id="wadahDaftarStaff" class="space-y-2.5 overflow-y-auto max-h-[48vh] pr-1 flex-grow"></div>
+                </div>
+            </div>
+            <button type="button" onclick="tampilLayar('adminScreen')" class="w-full bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/80 text-xs font-bold py-3 rounded-2xl shadow-sm cursor-pointer">Kembali Ke Dasbor</button>
+        </div>
+
+        <!-- LAYER 23: VALIDASI PENGAJUAN FAKULTAS & GENERATOR DOKUMEN (ADMIN & SUPER ADMIN) -->
+        <div id="adminPengajuanScreen" class="hidden flex flex-col w-full p-5 sm:p-8 bg-[#F4F8FB]">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+                <div class="flex items-center space-x-3.5">
+                    <div class="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-200/80 flex items-center justify-center shadow-sm shrink-0">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="m9 15 2 2 4-4"></path></svg>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-extrabold text-slate-800 tracking-tight">Pengajuan Fakultas & Cetak Dokumen</h2>
+                        <p class="text-xs text-slate-500">Seleksi usulan peserta dari fakultas, proses pergantian, dan cetak Surat Balasan / Presensi Luring.</p>
+                    </div>
+                </div>
+                <button type="button" onclick="tampilLayar('adminScreen')" class="bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 px-3.5 py-2 rounded-xl text-xs font-bold shadow-sm cursor-pointer shrink-0">‹ Dasbor</button>
+            </div>
+
+            <!-- FILTER & BULK ACTION -->
+            <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200/80 mb-4 space-y-3">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5">
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Pilih Pelatihan</label>
+                        <select id="filterPelPengajuan" onchange="muatPengajuanAdmin()" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50/70 focus:bg-white"><option value="">-- Pilih Pelatihan --</option></select>
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Filter Fakultas</label>
+                        <select id="filterFakPengajuan" onchange="renderDaftarPengajuanAdmin()" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50/70 focus:bg-white"><option value="">Semua Fakultas</option></select>
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Filter Status</label>
+                        <select id="filterStatusPengajuan" onchange="renderDaftarPengajuanAdmin()" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50/70 focus:bg-white">
+                            <option value="">Semua Status</option>
+                            <option value="Pending">Menunggu Persetujuan</option>
+                            <option value="Pending_Replace">Permohonan Pergantian</option>
+                            <option value="Approved">Disetujui (Approved)</option>
+                            <option value="Rejected">Ditolak (Rejected)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- TOOLBAR BULK -->
+                <div class="bg-slate-50 border border-slate-200/80 px-4 py-2.5 rounded-2xl flex flex-wrap items-center justify-between gap-2">
+                    <label class="flex items-center space-x-2 text-xs font-bold text-slate-700 cursor-pointer">
+                        <input type="checkbox" id="cekSemuaPengajuan" onchange="togglePilihSemuaPengajuan(this)" class="w-4 h-4 rounded text-oceanBlue">
+                        <span>Pilih Semua Tampil</span>
+                    </label>
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" onclick="prosesBulkPengajuan('Approved')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold px-3.5 py-1.5 rounded-xl cursor-pointer">✓ Approve Terpilih</button>
+                        <button type="button" onclick="prosesBulkPengajuan('Rejected')" class="bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 text-[11px] font-bold px-3.5 py-1.5 rounded-xl cursor-pointer">✕ Reject Terpilih</button>
+                    </div>
+                </div>
+
+                <div id="wadahPengajuanAdmin" class="space-y-2.5 overflow-y-auto max-h-[42vh] pr-1">
+                    <p class="text-center text-slate-400 text-xs py-6">Pilih pelatihan di atas untuk melihat daftar pengajuan peserta.</p>
+                </div>
+            </div>
+
+            <!-- PANEL GENERATE SURAT BALASAN & LEMBAR PRESENSI LURING -->
+            <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-sky-200/90 space-y-4 mb-4">
+                <div class="flex items-center space-x-2.5">
+                    <div class="w-8 h-8 rounded-xl bg-sky-50 text-oceanBlue flex items-center justify-center">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xs font-extrabold text-oceanDark uppercase tracking-wider">Generate Surat Balasan & Lembar Presensi Luring</h3>
+                        <p class="text-[11px] text-slate-500">Otomatis menarik seluruh peserta berstatus <b>Approved</b> dan mengelompokkannya per Fakultas.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Nomor Depan Surat*</label>
+                        <input type="text" id="docNomorDepan" placeholder="cth: 010" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs bg-slate-50/50 focus:bg-white">
+                        <p class="text-[9px] text-oceanBlue font-semibold mt-0.5">Format: [No]/UN8.3/DL.01/[Tahun]</p>
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Tanggal Surat*</label>
+                        <input type="date" id="docTanggalSurat" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs bg-slate-50/50 focus:bg-white">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Tempat Kegiatan</label>
+                        <input type="text" id="docTempatKegiatan" placeholder="AULA LPMPP BJM" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs bg-slate-50/50 focus:bg-white">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Waktu Kegiatan</label>
+                        <input type="text" id="docWaktuKegiatan" value="08.30 s.d selesai" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs bg-slate-50/50 focus:bg-white">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Hari, Tanggal Kegiatan (Untuk Header Lembar Presensi - Otomatis terisi dari database, bisa diedit)</label>
+                    <input type="text" id="docHariTglPresensi" placeholder="Contoh: Rabu, 11 Februari 2026" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs bg-slate-50/50 focus:bg-white">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                    <div class="bg-sky-50/60 border border-sky-200/70 p-3.5 rounded-2xl space-y-2">
+                        <p class="text-[11px] font-extrabold text-oceanDark">1. Surat Balasan ke Fakultas (+ Lampiran)</p>
+                        <div class="flex gap-2">
+                            <button type="button" onclick="generateSuratBalasan('print')" class="w-1/2 bg-oceanBlue hover:bg-oceanDark text-white text-[11px] font-bold py-2.5 rounded-xl cursor-pointer">Cetak / PDF</button>
+                            <button type="button" onclick="generateSuratBalasan('doc')" class="w-1/2 bg-white hover:bg-sky-100 text-oceanDark border border-sky-300 text-[11px] font-bold py-2.5 rounded-xl cursor-pointer">Unduh Word (.doc)</button>
+                        </div>
+                    </div>
+                    <div class="bg-emerald-50/60 border border-emerald-200/70 p-3.5 rounded-2xl space-y-2">
+                        <p class="text-[11px] font-extrabold text-emerald-800">2. Lembar Presensi Luring (+ Panitia LPMPP)</p>
+                        <div class="flex gap-2">
+                            <button type="button" onclick="generateLembarPresensi('print')" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold py-2.5 rounded-xl cursor-pointer">Cetak / PDF</button>
+                            <button type="button" onclick="generateLembarPresensi('doc')" class="w-1/2 bg-white hover:bg-emerald-100 text-emerald-700 border border-emerald-300 text-[11px] font-bold py-2.5 rounded-xl cursor-pointer">Unduh Word (.doc)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" onclick="tampilLayar('adminScreen')" class="w-full bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/80 text-xs font-bold py-3 rounded-2xl shadow-sm cursor-pointer">Kembali Ke Dasbor</button>
+        </div>
+
+        <!-- LAYER 24: DASBOR OPERATOR FAKULTAS -->
+        <div id="operatorScreen" class="hidden flex flex-col w-full p-5 sm:p-8 bg-[#F4F8FB]">
+            <div class="w-full bg-gradient-to-r from-oceanDark via-oceanBlue to-skyBlue rounded-3xl p-6 text-white shadow-md mb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <span class="inline-block text-[10px] font-extrabold uppercase tracking-widest bg-white/20 px-2.5 py-0.5 rounded-full mb-1">Operator Fakultas</span>
+                    <h2 id="opNameDisplay" class="text-xl font-extrabold tracking-tight">Nama Operator</h2>
+                    <p id="opFakultasDisplay" class="text-xs text-sky-100 font-semibold mt-0.5">Fakultas</p>
+                </div>
+                <button type="button" onclick="location.reload()" class="bg-white/15 hover:bg-rose-500 text-white border border-white/25 px-4 py-2.5 rounded-xl text-xs font-bold cursor-pointer shrink-0">Keluar</button>
+            </div>
+
+            <!-- FORM AJUKAN CALON PESERTA -->
+            <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-slate-200/80 space-y-3.5 mb-5">
+                <h3 class="text-xs font-extrabold text-oceanDark uppercase tracking-wider">Ajukan Nama Calon Peserta Pelatihan</h3>
+                <div>
+                    <label class="text-[11px] font-semibold text-slate-600 block mb-1">Pilih Program Pelatihan*</label>
+                    <select id="opPelatihanSelect" onchange="muatPengajuanOperator()" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs sm:text-sm font-semibold bg-slate-50/70 focus:bg-white"><option value="">-- Pilih Pelatihan --</option></select>
+                </div>
+                <div>
+                    <label class="text-[11px] font-semibold text-slate-600 block mb-1">Daftar Nama Calon Peserta Beserta Gelar (Ketik satu nama per baris)*</label>
+                    <textarea id="opNamaPesertaArea" rows="5" placeholder="Contoh:&#10;Dr. Budi Santoso, M.Pd&#10;Siti Rahmah, S.Kom., M.Kom" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-xs sm:text-sm bg-slate-50/50 focus:bg-white"></textarea>
+                </div>
+                <button type="button" onclick="kirimPengajuanOperator(this)" class="w-full bg-gradient-to-r from-oceanDark to-oceanBlue hover:from-oceanBlue hover:to-skyBlue text-white text-xs sm:text-sm font-bold py-3.5 rounded-xl shadow-sm cursor-pointer">Kirim Pengajuan Ke Admin LPMPP</button>
+            </div>
+
+            <!-- DAFTAR PENGAJUAN FAKULTAS INI -->
+            <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-slate-200/80">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-xs font-extrabold text-oceanDark uppercase tracking-wider">Status Pengajuan Fakultas Anda</h3>
+                    <button type="button" onclick="muatPengajuanOperator()" class="text-[11px] font-bold text-oceanBlue hover:underline cursor-pointer">Segarkan</button>
+                </div>
+                <div id="wadahPengajuanOperator" class="space-y-2.5 overflow-y-auto max-h-[45vh] pr-1">
+                    <p class="text-center text-slate-400 text-xs py-6">Pilih pelatihan di atas untuk melihat daftar pengajuan fakultas Anda.</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
         var API_URL = "https://script.google.com/macros/s/AKfycbzkeGOglouiCbiAq5VNRXt7Wfie2NDQ8DqcJnMMZ-cOwkeokbRGCpL-W4gizcGn0IdZ/exec";
         var TARGET_LAT = -3.29687, TARGET_LNG = 114.58823, RADIUS_MAX = 50; 
-        var session = { username: "", nama: "", pelatihan: "", hari: "", sesi: "", lat: 0, lng: 0, targetLat: -3.29687, targetLng: 114.58823, targetRadius: 50, mode: "Offline" };
+        var session = { username: "", nama: "", role: "", fakultas: "", pelatihan: "", hari: "", sesi: "", lat: 0, lng: 0, targetLat: -3.29687, targetLng: 114.58823, targetRadius: 50, mode: "Offline" };
         var streamKamera = null, dataGaleriGlobal = [], listPelatihanPublik = [], listRiwayatGlobal = [];
 
         var namaBulan = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
@@ -1358,21 +1546,24 @@
         var calYear = new Date().getFullYear();
 
 		function tampilLayar(idLayar) {
-            ['loginScreen', 'registerScreen', 'userProfileScreen', 'presensiScreen', 'notifikasiScreen', 'kalenderScreen', 'myAttendanceScreen', 'lupaPresensiFormScreen', 'myGroupScreen', 'userEnrollScreen', 'myRewardScreen', 'kameraScreen', 'suksesScreen', 'suksesDaftarScreen', 'adminScreen', 'adminLupaPresensiScreen', 'adminJadwalScreen', 'adminPesertaScreen', 'adminValidasiScreen', 'adminPengaturanScreen', 'adminRewardScreen', 'adminRekapScreen', 'adminProdiScreen'].forEach(id => { 
+            ['loginScreen', 'registerScreen', 'userProfileScreen', 'presensiScreen', 'notifikasiScreen', 'kalenderScreen', 'myAttendanceScreen', 'lupaPresensiFormScreen', 'myGroupScreen', 'userEnrollScreen', 'myRewardScreen', 'kameraScreen', 'suksesScreen', 'suksesDaftarScreen', 'adminScreen', 'adminLupaPresensiScreen', 'adminJadwalScreen', 'adminPesertaScreen', 'adminValidasiScreen', 'adminPengaturanScreen', 'adminRewardScreen', 'adminRekapScreen', 'adminProdiScreen', 'adminManageUsersScreen', 'adminPengajuanScreen', 'operatorScreen'].forEach(id => { 
                 const el = document.getElementById(id); if(el) el.classList.add('hidden'); 
             });
             const wadah = document.getElementById('mainWadah'); 
-            wadah.classList.remove('max-w-md', 'sm:max-w-lg', 'md:max-w-xl', 'max-w-2xl', 'max-w-4xl', 'lg:max-w-5xl');
-            const adminScreens = ['adminScreen', 'adminJadwalScreen', 'adminPengaturanScreen', 'adminValidasiScreen', 'adminPesertaScreen', 'adminRewardScreen', 'adminLupaPresensiScreen', 'adminRekapScreen', 'adminProdiScreen'];
+            wadah.classList.remove('max-w-md', 'sm:max-w-md', 'sm:max-w-lg', 'sm:max-w-xl', 'md:max-w-xl', 'md:max-w-2xl', 'max-w-2xl', 'max-w-4xl', 'lg:max-w-5xl');
+            const wideScreens = ['adminScreen', 'adminJadwalScreen', 'adminPengaturanScreen', 'adminValidasiScreen', 'adminPesertaScreen', 'adminRewardScreen', 'adminLupaPresensiScreen', 'adminRekapScreen', 'adminProdiScreen', 'adminManageUsersScreen', 'adminPengajuanScreen', 'operatorScreen'];
             if (idLayar === 'loginScreen') {
                 wadah.classList.add('sm:max-w-md');
-            } else if (adminScreens.includes(idLayar)) {
+            } else if (wideScreens.includes(idLayar)) {
                 wadah.classList.add('max-w-4xl', 'lg:max-w-5xl');
             } else {
                 wadah.classList.add('sm:max-w-xl', 'md:max-w-2xl');
             }
             const target = document.getElementById(idLayar); if(target) target.classList.remove('hidden');
-            if (['adminJadwalScreen', 'adminPesertaScreen', 'adminRewardScreen', 'adminRekapScreen', 'adminPengaturanScreen'].includes(idLayar)) muatDaftarPelatihanAdmin();
+            if (['adminJadwalScreen', 'adminPesertaScreen', 'adminRewardScreen', 'adminRekapScreen', 'adminPengaturanScreen'].includes(idLayar)) {
+                muatDaftarPelatihanAdmin();
+                terapkanModeReadOnlyAdminBiasa();
+            }
         }
 
         function ubahStatusMsg(text, colorClass) { 
@@ -1647,9 +1838,29 @@
             try { 
                 const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "login", username: user, password: pass }) })).json(); 
                 if (res.status === "success") { 
-                    session.username = user; session.nama = res.nama || user; 
-                    if(res.role === "admin") { document.getElementById('adminNameDisplay').innerText = session.nama; tampilLayar('adminScreen'); } 
-                    else { tampilLayar('presensiScreen'); cekJadwalKeamananTinggi(); } 
+                    session.username = user; 
+                    session.nama = res.nama || user; 
+                    session.role = res.role || "user";
+                    session.fakultas = res.fakultas || "";
+
+                    if (session.role === "super_admin" || session.role === "admin") {
+                        document.getElementById('adminNameDisplay').innerText = session.nama;
+                        const isSuper = (session.role === "super_admin");
+                        document.getElementById('adminRoleBadge').innerText = isSuper ? "Super Administrator" : "Administrator";
+                        document.querySelectorAll('.super-admin-only').forEach(el => el.classList.toggle('hidden', !isSuper));
+                        if (document.getElementById('subLabelJadwalAdmin')) {
+                            document.getElementById('subLabelJadwalAdmin').innerText = isSuper ? "Kelola Sesi & Kelas" : "Lihat Jadwal Pelatihan";
+                        }
+                        tampilLayar('adminScreen');
+                    } else if (session.role === "operator") {
+                        document.getElementById('opNameDisplay').innerText = session.nama;
+                        document.getElementById('opFakultasDisplay').innerText = "Fakultas: " + (session.fakultas || "-");
+                        tampilLayar('operatorScreen');
+                        muatPelatihanOperator();
+                    } else { 
+                        tampilLayar('presensiScreen'); 
+                        cekJadwalKeamananTinggi(); 
+                    } 
                 } else { msg.innerText = res.message; msg.classList.remove('hidden'); } 
             } catch (e) { msg.innerText = "Gagal menghubungi server."; msg.classList.remove('hidden'); } 
             btn.innerText = "Masuk Ke Aplikasi"; btn.disabled = false;
@@ -2562,6 +2773,686 @@
             } catch (e) {
                 alert("Koneksi gagal.");
             }
+        }
+		
+		// =========================================================================
+        // PEMBATASAN MODE LIHAT SAJA (READ-ONLY) UNTUK ADMIN BIASA
+        // =========================================================================
+        function terapkanModeReadOnlyAdminBiasa() {
+            const isAdminBiasa = (session.role === "admin");
+            // 1. Pada Layar Jadwal: sembunyikan opsi Buat Baru, Tambah Sesi, Simpan, dan Hapus
+            const jadwalScreen = document.getElementById('adminJadwalScreen');
+            if (jadwalScreen) {
+                jadwalScreen.querySelectorAll('button').forEach(btn => {
+                    const txt = btn.innerText.toLowerCase();
+                    if (txt.includes('simpan') || txt.includes('hapus') || txt.includes('tambah sesi') || txt.includes('gunakan lokasi')) {
+                        btn.classList.toggle('hidden', isAdminBiasa);
+                    }
+                });
+                jadwalScreen.querySelectorAll('input, select').forEach(el => {
+                    if (el.id !== 'jadwalPelatihanSelect') el.disabled = isAdminBiasa;
+                });
+            }
+            // 2. Pada Layar Peserta: sembunyikan tombol Update Daftar Email & kunci textarea
+            const pesertaScreen = document.getElementById('adminPesertaScreen');
+            if (pesertaScreen) {
+                pesertaScreen.querySelectorAll('button').forEach(btn => {
+                    if (btn.innerText.toLowerCase().includes('update daftar email')) {
+                        btn.classList.toggle('hidden', isAdminBiasa);
+                    }
+                });
+                const areaP = document.getElementById('areaPeserta');
+                if (areaP) areaP.readOnly = isAdminBiasa;
+            }
+        }
+
+        // =========================================================================
+        // MANAJEMEN AKUN ADMIN & OPERATOR (KHUSUS SUPER ADMIN)
+        // =========================================================================
+        var cachedStaffList = [];
+
+        async function bukaHalamanKelolaUser() {
+            if (session.role !== "super_admin") return alert("Akses ditolak! Menu ini khusus Super Admin.");
+            tampilLayar('adminManageUsersScreen');
+            const selFak = document.getElementById('staffFakultas');
+            if (selFak) {
+                selFak.innerHTML = '<option value="">-- Pilih Fakultas --</option>' + Object.keys(prodiMap).map(f => `<option value="${f}">${f}</option>`).join('');
+            }
+            resetFormStaff();
+            muatDaftarStaff();
+        }
+
+        function toggleStaffFakultasField() {
+            const roleVal = document.getElementById('staffRole').value;
+            document.getElementById('wadahStaffFakultas').classList.toggle('hidden', roleVal !== 'operator');
+        }
+
+        function resetFormStaff() {
+            document.getElementById('staffUsername').value = "";
+            document.getElementById('staffUsername').readOnly = false;
+            document.getElementById('staffPassword').value = "";
+            document.getElementById('staffNama').value = "";
+            document.getElementById('staffRole').value = "operator";
+            document.getElementById('staffFakultas').value = "";
+            toggleStaffFakultasField();
+        }
+
+        async function muatDaftarStaff() {
+            const wadah = document.getElementById('wadahDaftarStaff');
+            wadah.innerHTML = '<p class="text-xs text-oceanBlue text-center py-4">Memuat daftar akun...</p>';
+            try {
+                const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_staff_users" }) })).json();
+                if (res.status === "success" && res.data.length > 0) {
+                    cachedStaffList = res.data;
+                    wadah.innerHTML = res.data.map((u, idx) => {
+                        const badgeColor = u.role === 'super_admin' ? 'bg-indigo-100 text-indigo-700' : (u.role === 'admin' ? 'bg-sky-100 text-oceanDark' : 'bg-emerald-100 text-emerald-700');
+                        const roleLabel = u.role === 'super_admin' ? 'SUPER ADMIN' : (u.role === 'admin' ? 'ADMIN' : 'OPERATOR FAKULTAS');
+                        return `
+                        <div class="bg-slate-50 border border-slate-200/80 p-3.5 rounded-2xl flex flex-col gap-1.5">
+                            <div class="flex items-start justify-between gap-2">
+                                <div>
+                                    <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full ${badgeColor}">${roleLabel}</span>
+                                    <h4 class="text-xs font-extrabold text-slate-800 mt-1">${u.nama}</h4>
+                                    <p class="text-[11px] text-oceanBlue font-medium">${u.username}</p>
+                                    ${u.role === 'operator' ? `<p class="text-[10px] text-slate-500 font-semibold">Fakultas: ${u.fakultas || '-'}</p>` : ''}
+                                </div>
+                                <div class="flex gap-1.5 shrink-0">
+                                    <button type="button" onclick="editStaffIndex(${idx})" class="bg-white border border-slate-200 hover:border-oceanBlue text-slate-700 text-[10px] font-bold px-2.5 py-1 rounded-lg cursor-pointer">Edit</button>
+                                    ${u.username.toLowerCase() !== session.username.toLowerCase() ? `<button type="button" onclick="hapusAkunStaff('${u.username}')" class="bg-rose-50 hover:bg-rose-100 text-rose-600 text-[10px] font-bold px-2.5 py-1 rounded-lg cursor-pointer">Hapus</button>` : ''}
+                                </div>
+                            </div>
+                        </div>`;
+                    }).join('');
+                } else wadah.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">Belum ada akun pengelola.</p>';
+            } catch (e) { wadah.innerHTML = '<p class="text-xs text-red-500 text-center py-4">Gagal memuat akun.</p>'; }
+        }
+
+        function editStaffIndex(idx) {
+            const u = cachedStaffList[idx];
+            if (!u) return;
+            document.getElementById('staffUsername').value = u.username;
+            document.getElementById('staffUsername').readOnly = true;
+            document.getElementById('staffPassword').value = u.password;
+            document.getElementById('staffNama').value = u.nama;
+            document.getElementById('staffRole').value = u.role;
+            toggleStaffFakultasField();
+            if (u.role === 'operator') document.getElementById('staffFakultas').value = u.fakultas || "";
+        }
+
+        async function simpanAkunStaff(btn) {
+            const username = document.getElementById('staffUsername').value.trim();
+            const password = document.getElementById('staffPassword').value;
+            const nama = document.getElementById('staffNama').value.trim();
+            const role = document.getElementById('staffRole').value;
+            const fakultas = role === 'operator' ? document.getElementById('staffFakultas').value : "";
+
+            if (!username || !password || !nama) return alert("Email/Username, Kata Sandi, dan Nama wajib diisi!");
+            if (role === 'operator' && !fakultas) return alert("Pilih Fakultas untuk akun Operator Fakultas!");
+
+            const teksAsli = btn.innerText; btn.innerText = "Menyimpan..."; btn.disabled = true;
+            try {
+                const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "save_staff_user", username, password, nama, role, fakultas }) })).json();
+                alert(res.message);
+                if (res.status === "success") { resetFormStaff(); muatDaftarStaff(); }
+            } catch (e) { alert("Koneksi gagal."); }
+            btn.innerText = teksAsli; btn.disabled = false;
+        }
+
+        async function hapusAkunStaff(uname) {
+            if (!confirm(`Yakin ingin menghapus akun "${uname}"?`)) return;
+            try {
+                const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "delete_staff_user", username: uname }) })).json();
+                alert(res.message);
+                muatDaftarStaff();
+            } catch (e) { alert("Gagal menghapus akun."); }
+        }
+
+        // =========================================================================
+        // FITUR OPERATOR FAKULTAS (PENGAJUAN & PERGANTIAN PESERTA)
+        // =========================================================================
+        async function muatPelatihanOperator() {
+            const sel = document.getElementById('opPelatihanSelect');
+            sel.innerHTML = '<option value="">Memuat daftar pelatihan...</option>';
+            try {
+                const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_public_pelatihan" }) })).json();
+                if (res.status === "success") {
+                    const aktif = urutkanPelatihanBerdasarkanTanggal(res.data);
+                    sel.innerHTML = '<option value="">-- Pilih Pelatihan --</option>' + aktif.map(p => `<option value="${p.nama}">${p.nama}${p.info ? ' (' + p.info.split('|')[0].trim() + ')' : ''}</option>`).join('');
+                }
+            } catch (e) { sel.innerHTML = '<option value="">Gagal memuat pelatihan</option>'; }
+        }
+
+        async function kirimPengajuanOperator(btn) {
+            const pel = document.getElementById('opPelatihanSelect').value;
+            const rawNames = document.getElementById('opNamaPesertaArea').value.split('\n').map(s => s.trim()).filter(s => s !== "");
+            if (!pel) return alert("Pilih program pelatihan terlebih dahulu!");
+            if (rawNames.length === 0) return alert("Ketik minimal 1 nama calon peserta!");
+
+            const teksAsli = btn.innerText; btn.innerText = "Mengirim Pengajuan..."; btn.disabled = true;
+            try {
+                const res = await (await fetch(API_URL, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        action: "submit_pengajuan_fakultas",
+                        pelatihan: pel,
+                        fakultas: session.fakultas,
+                        operator: session.username,
+                        nama_list: rawNames
+                    })
+                })).json();
+                alert(res.message);
+                if (res.status === "success") {
+                    document.getElementById('opNamaPesertaArea').value = "";
+                    muatPengajuanOperator();
+                }
+            } catch (e) { alert("Gagal mengirim pengajuan."); }
+            btn.innerText = teksAsli; btn.disabled = false;
+        }
+
+        async function muatPengajuanOperator() {
+            const pel = document.getElementById('opPelatihanSelect').value;
+            const wadah = document.getElementById('wadahPengajuanOperator');
+            if (!pel) { wadah.innerHTML = '<p class="text-center text-slate-400 text-xs py-6">Pilih pelatihan di atas untuk melihat daftar pengajuan fakultas Anda.</p>'; return; }
+            wadah.innerHTML = '<p class="text-center text-oceanBlue text-xs font-semibold py-6">Memuat daftar pengajuan...</p>';
+            try {
+                const res = await (await fetch(API_URL, {
+                    method: "POST",
+                    body: JSON.stringify({ action: "get_pengajuan_fakultas", pelatihan: pel, fakultas: session.fakultas })
+                })).json();
+                if (res.status === "success" && res.data.length > 0) {
+                    wadah.innerHTML = res.data.map((item, idx) => {
+                        let badge = "", aksi = "";
+                        if (item.status === "Approved") {
+                            badge = '<span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full">✓ Approved</span>';
+                            aksi = `<button type="button" onclick="ajukanPergantianOperator('${item.id}', '${item.nama.replace(/'/g, "\\'")}')" class="mt-2 w-full bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 text-[11px] font-bold py-2 rounded-xl cursor-pointer">Ajukan Pergantian Peserta</button>`;
+                        } else if (item.status === "Pending_Replace") {
+                            badge = '<span class="bg-amber-50 text-amber-700 border border-amber-200 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full">Menunggu Pergantian</span>';
+                            aksi = `<div class="mt-2 bg-amber-50/70 border border-amber-200 p-2.5 rounded-xl text-[11px] text-amber-800"><b>Pengganti:</b> ${item.nama_pengganti}<br><b>Alasan:</b> ${item.alasan_ganti}</div>`;
+                        } else if (item.status === "Rejected") {
+                            badge = '<span class="bg-rose-50 text-rose-700 border border-rose-200 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full">✕ Rejected</span>';
+                            aksi = `${item.catatan ? `<p class="text-[11px] text-rose-600 mt-1.5"><b>Alasan Admin:</b> ${item.catatan}</p>` : ''}<button type="button" onclick="hapusPengajuanOperator('${item.id}')" class="mt-2 text-[10px] text-slate-400 hover:text-rose-600 font-bold underline cursor-pointer">Hapus dari daftar</button>`;
+                        } else {
+                            badge = '<span class="bg-slate-100 text-slate-600 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full">Menunggu Persetujuan</span>';
+                            aksi = `<button type="button" onclick="hapusPengajuanOperator('${item.id}')" class="mt-2 text-[10px] text-rose-500 hover:underline font-bold cursor-pointer">Batalkan Pengajuan</button>`;
+                        }
+                        return `
+                        <div class="bg-slate-50/70 border border-slate-200/90 p-3.5 rounded-2xl">
+                            <div class="flex items-start justify-between gap-2">
+                                <div>
+                                    <span class="text-[10px] font-bold text-slate-400">#${idx + 1}</span>
+                                    <h4 class="text-xs sm:text-sm font-extrabold text-slate-800">${item.nama}</h4>
+                                    ${item.catatan && item.status === 'Approved' ? `<p class="text-[10px] text-emerald-700 mt-0.5">${item.catatan}</p>` : ''}
+                                </div>
+                                ${badge}
+                            </div>
+                            ${aksi}
+                        </div>`;
+                    }).join('');
+                } else wadah.innerHTML = '<p class="text-center text-slate-400 text-xs py-6">Belum ada pengajuan dari fakultas Anda untuk pelatihan ini.</p>';
+            } catch (e) { wadah.innerHTML = '<p class="text-center text-red-500 text-xs py-6">Gagal memuat data.</p>'; }
+        }
+
+        async function ajukanPergantianOperator(id, namaLama) {
+            const namaBaru = prompt(`Masukkan Nama Lengkap (beserta gelar) peserta PENGGANTI untuk menggantikan "${namaLama}":`);
+            if (!namaBaru || namaBaru.trim() === "") return;
+            const alasan = prompt("Tuliskan alasan pergantian peserta:");
+            if (alasan === null) return;
+            try {
+                const res = await (await fetch(API_URL, {
+                    method: "POST",
+                    body: JSON.stringify({ action: "request_replace_pengajuan", id, nama_pengganti: namaBaru.trim(), alasan_ganti: alasan.trim() || "-" })
+                })).json();
+                alert(res.message);
+                muatPengajuanOperator();
+            } catch (e) { alert("Gagal mengajukan pergantian."); }
+        }
+
+        async function hapusPengajuanOperator(id) {
+            if (!confirm("Yakin ingin menghapus pengajuan ini?")) return;
+            try {
+                const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "delete_pengajuan_fakultas", id }) })).json();
+                if (res.status === "success") muatPengajuanOperator();
+            } catch (e) { alert("Gagal menghapus."); }
+        }
+
+        // =========================================================================
+        // VALIDASI PENGAJUAN FAKULTAS OLEH ADMIN & SUPER ADMIN
+        // =========================================================================
+        var cachedPengajuanAdmin = [];
+
+        async function bukaHalamanPengajuanAdmin() {
+            tampilLayar('adminPengajuanScreen');
+            await muatDaftarPelatihanAdmin();
+            const selPel = document.getElementById('filterPelPengajuan');
+            if (window.pelatihanData && selPel) {
+                selPel.innerHTML = '<option value="">-- Pilih Pelatihan --</option>' + window.pelatihanData.map(p => `<option value="${p.nama}">${p.nama}</option>`).join('');
+            }
+            const today = new Date();
+            document.getElementById('docTanggalSurat').value = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+            document.getElementById('wadahPengajuanAdmin').innerHTML = '<p class="text-center text-slate-400 text-xs py-6">Pilih pelatihan di atas untuk melihat daftar pengajuan peserta.</p>';
+        }
+
+        async function muatPengajuanAdmin() {
+            const pel = document.getElementById('filterPelPengajuan').value;
+            const wadah = document.getElementById('wadahPengajuanAdmin');
+            if (!pel) { wadah.innerHTML = '<p class="text-center text-slate-400 text-xs py-6">Pilih pelatihan di atas.</p>'; return; }
+
+            // Auto-fill Tempat & Tanggal Kegiatan dari database Jadwal_Pelatihan
+            if (window.pelatihanData) {
+                const found = window.pelatihanData.find(p => p.nama === pel);
+                if (found && found.info) {
+                    const parts = found.info.split("|").map(s => s.trim());
+                    document.getElementById('docHariTglPresensi').value = parts[0] || "";
+                    const offPart = parts.find(s => s.toLowerCase().startsWith("offline:"));
+                    const onPart = parts.find(s => s.toLowerCase().startsWith("online:"));
+                    if (offPart) document.getElementById('docTempatKegiatan').value = offPart.split(":").slice(1).join(":").trim();
+                    else if (onPart) document.getElementById('docTempatKegiatan').value = onPart.split(":").slice(1).join(":").trim();
+                    else document.getElementById('docTempatKegiatan').value = "AULA LPMPP BJM";
+                }
+            }
+
+            wadah.innerHTML = '<p class="text-center text-oceanBlue text-xs font-semibold py-6">Memuat pengajuan...</p>';
+            try {
+                const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_pengajuan_fakultas", pelatihan: pel }) })).json();
+                if (res.status === "success") {
+                    cachedPengajuanAdmin = res.data || [];
+                    const faks = [...new Set(cachedPengajuanAdmin.map(x => x.fakultas))].sort();
+                    document.getElementById('filterFakPengajuan').innerHTML = '<option value="">Semua Fakultas</option>' + faks.map(f => `<option value="${f}">${f}</option>`).join('');
+                    renderDaftarPengajuanAdmin();
+                }
+            } catch (e) { wadah.innerHTML = '<p class="text-center text-red-500 text-xs py-6">Gagal memuat data pengajuan.</p>'; }
+        }
+
+        function renderDaftarPengajuanAdmin() {
+            const fFak = document.getElementById('filterFakPengajuan').value;
+            const fStat = document.getElementById('filterStatusPengajuan').value;
+            const wadah = document.getElementById('wadahPengajuanAdmin');
+            document.getElementById('cekSemuaPengajuan').checked = false;
+
+            const list = cachedPengajuanAdmin.filter(item => {
+                if (fFak && item.fakultas !== fFak) return false;
+                if (fStat && item.status !== fStat) return false;
+                return true;
+            });
+
+            if (list.length === 0) {
+                wadah.innerHTML = '<p class="text-center text-slate-400 text-xs py-6">Tidak ada data pengajuan yang cocok.</p>';
+                return;
+            }
+
+            wadah.innerHTML = list.map(item => {
+                let badge = "", infoGanti = "";
+                if (item.status === "Approved") badge = '<span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full">✓ Approved</span>';
+                else if (item.status === "Rejected") badge = '<span class="bg-rose-50 text-rose-700 border border-rose-200 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full">✕ Rejected</span>';
+                else if (item.status === "Pending_Replace") {
+                    badge = '<span class="bg-amber-100 text-amber-800 border border-amber-300 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full">Permohonan Pergantian</span>';
+                    infoGanti = `<div class="mt-2 ml-6 bg-amber-50 border border-amber-200 p-2.5 rounded-xl text-[11px] text-amber-900"><b>Diajukan diganti menjadi:</b> ${item.nama_pengganti}<br><b>Alasan:</b> "${item.alasan_ganti}"</div>`;
+                } else badge = '<span class="bg-sky-50 text-oceanBlue border border-sky-200 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full">Menunggu</span>';
+
+                return `
+                <div class="bg-slate-50/70 hover:bg-white border border-slate-200/90 p-3.5 rounded-2xl transition-all">
+                    <div class="flex items-start justify-between gap-2">
+                        <label class="flex items-start space-x-2.5 cursor-pointer">
+                            <input type="checkbox" value="${item.id}" class="cek-item-pengajuan w-4 h-4 mt-0.5 rounded text-oceanBlue">
+                            <div>
+                                <span class="text-[10px] font-extrabold text-oceanBlue uppercase">${item.fakultas}</span>
+                                <h4 class="text-xs sm:text-sm font-extrabold text-slate-800">${item.nama}</h4>
+                                ${item.catatan ? `<p class="text-[10px] text-slate-500 mt-0.5">${item.catatan}</p>` : ''}
+                            </div>
+                        </label>
+                        ${badge}
+                    </div>
+                    ${infoGanti}
+                    <div class="flex gap-2 mt-2.5 pl-6">
+                        <button type="button" onclick="prosesSatuPengajuan('${item.id}', 'Approved')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold px-3.5 py-1.5 rounded-lg cursor-pointer">${item.status === 'Pending_Replace' ? 'Setujui Pergantian' : 'Approve'}</button>
+                        <button type="button" onclick="prosesSatuPengajuan('${item.id}', 'Rejected')" class="bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 text-[11px] font-bold px-3.5 py-1.5 rounded-lg cursor-pointer">${item.status === 'Pending_Replace' ? 'Tolak Pergantian' : 'Reject'}</button>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function togglePilihSemuaPengajuan(master) {
+            document.querySelectorAll('.cek-item-pengajuan').forEach(cb => cb.checked = master.checked);
+        }
+
+        async function prosesSatuPengajuan(id, status) {
+            let catatan = "";
+            if (status === "Rejected") {
+                catatan = prompt("Tuliskan alasan penolakan (opsional):");
+                if (catatan === null) return;
+            }
+            try {
+                const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "process_pengajuan_fakultas", id, keputusan: status, catatan }) })).json();
+                if (res.status === "success") muatPengajuanAdmin();
+            } catch (e) { alert("Gagal memproses."); }
+        }
+
+        async function prosesBulkPengajuan(status) {
+            const ids = Array.from(document.querySelectorAll('.cek-item-pengajuan:checked')).map(cb => cb.value);
+            if (ids.length === 0) return alert("Centang minimal 1 nama terlebih dahulu!");
+            let catatan = "";
+            if (status === "Rejected") {
+                catatan = prompt(`Tuliskan alasan penolakan untuk ${ids.length} nama terpilih:`);
+                if (catatan === null) return;
+            } else if (!confirm(`Yakin ingin MENYETUJUI ${ids.length} pengajuan terpilih?`)) return;
+
+            try {
+                const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "process_pengajuan_fakultas", ids, keputusan: status, catatan }) })).json();
+                alert(res.message);
+                muatPengajuanAdmin();
+            } catch (e) { alert("Gagal memproses."); }
+        }
+
+        // =========================================================================
+        // GENERATOR SURAT BALASAN & LEMBAR PRESENSI LURING (KELOMPOK PER FAKULTAS)
+        // =========================================================================
+        const LOGO_ULM_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Lambang_Universitas_Lambung_Mangkurat.png/240px-Lambang_Universitas_Lambung_Mangkurat.png";
+        const LOGO_LPMPP_URL = "https://i.ibb.co.com/KphQrZDB/Logo-LPMPP-ULM.png";
+
+        // Daftar tetap Panitia/Staf LPMPP yang otomatis ditambahkan di bawah daftar peserta Lembar Presensi
+        const DAFTAR_PANITIA_LPMPP = [
+            "Herry Setiawan, S.Kep., Ns., M.Kep",
+            "Dr. Ananda Setiawan, S.Pd., M.Pd",
+            "Dr. Maya Sari Dewi, S.Sos, MM",
+            "Dr. Heri Susanto, M.Pd",
+            "Rusdayanti Asma, S.E. M.Si",
+            "Dr. Muhammad Najamudin, S.Pd., M.Pd",
+            "Dr. Saiyidah Mahtari, S.Pd, M.Pd",
+            "Dr. Candra, S.Pi, M.Si",
+            "Jefriadi, S.T., M.Eng",
+            "Meydisa Utami Tanau, M.Psi, Psikologi",
+            "Fakhriyah, S.ST, MKM",
+            "Dr. Utomo, S.Pd., M.Pd",
+            "Zuliyan Agus Nur Muchlis Majid, S.T.P, MT",
+            "Muhammad Itqan Mazdadi, S.Kom., M.Kom",
+            "Resny Hayati, S.E",
+            "Ima Mentayani, S.T",
+            "Siti Norma Kamariah, S.H",
+            "Erna Wahyunie, S.E",
+            "Fitriyanti, S.Si",
+            "Reza Fahlevi, S.Kom",
+            "Nella Marisca Lolowang, S.Kom",
+            "Nurul Hikmah",
+            "M. Rifani"
+        ];
+
+        function formatTanggalLengkapIndo(tglInput) {
+            if (!tglInput) {
+                const now = new Date();
+                return `${now.getDate()} ${namaBulanLengkap[now.getMonth()]} ${now.getFullYear()}`;
+            }
+            const p = tglInput.split('-');
+            if (p.length !== 3) return tglInput;
+            return `${parseInt(p[2], 10)} ${namaBulanLengkap[parseInt(p[1], 10) - 1]} ${p[0]}`;
+        }
+
+        function ambilPesertaApprovedPerFakultas() {
+            // Peserta Approved (atau Pending_Replace yang nama lamanya tetap sah sebelum pergantian disetujui)
+            const fFak = document.getElementById('filterFakPengajuan').value;
+            const approved = cachedPengajuanAdmin.filter(x => (x.status === "Approved" || x.status === "Pending_Replace") && (!fFak || x.fakultas === fFak));
+            // Kelompokkan (urutkan) berdasarkan Fakultas lalu Nama
+            return approved.slice().sort((a, b) => {
+                const cmpFak = (a.fakultas || "").localeCompare(b.fakultas || "");
+                if (cmpFak !== 0) return cmpFak;
+                return (a.nama || "").localeCompare(b.nama || "");
+            });
+        }
+
+        function bukaAtauUnduhDokumen(htmlContent, mode, filename) {
+            if (mode === 'doc') {
+                const blob = new Blob(['\ufeff', htmlContent], { type: 'application/msword' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            } else {
+                const win = window.open('', '_blank');
+                win.document.open();
+                win.document.write(htmlContent);
+                win.document.close();
+                setTimeout(() => { win.focus(); win.print(); }, 600);
+            }
+        }
+
+        function generateSuratBalasan(mode) {
+            const pel = document.getElementById('filterPelPengajuan').value;
+            if (!pel) return alert("Pilih pelatihan terlebih dahulu!");
+            const noDepan = document.getElementById('docNomorDepan').value.trim();
+            const tglSuratRaw = document.getElementById('docTanggalSurat').value;
+            if (!noDepan || !tglSuratRaw) return alert("Isi Nomor Depan Surat dan Tanggal Surat terlebih dahulu!");
+
+            const listApproved = ambilPesertaApprovedPerFakultas();
+            if (listApproved.length === 0) return alert("Belum ada calon peserta berstatus Approved untuk pelatihan ini!");
+
+            const tahunSurat = tglSuratRaw.split('-')[0];
+            const nomorLengkap = `${noDepan}/UN8.3/DL.01/${tahunSurat}`;
+            const tglSuratIndo = formatTanggalLengkapIndo(tglSuratRaw);
+            const tempat = document.getElementById('docTempatKegiatan').value.trim() || "AULA LPMPP BJM";
+            const waktu = document.getElementById('docWaktuKegiatan').value.trim() || "08.30 s.d selesai";
+
+            let tglPelaksanaan = document.getElementById('docHariTglPresensi').value.trim();
+            if (!tglPelaksanaan && window.pelatihanData) {
+                const found = window.pelatihanData.find(p => p.nama === pel);
+                if (found && found.info) tglPelaksanaan = found.info.split("|")[0].trim();
+            }
+
+            const rowsLampiran = listApproved.map((p, idx) => `
+                <tr>
+                    <td style="text-align:center;">${idx + 1}</td>
+                    <td>${p.nama}</td>
+                    <td style="text-align:center;">${p.fakultas}</td>
+                </tr>`).join('');
+
+            const html = `<!DOCTYPE html>
+            <html><head><meta charset="UTF-8"><title>Surat Balasan - ${pel}</title>
+            <style>
+                @page { size: A4; margin: 1.8cm 2cm; }
+                body { font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.45; color: #000; }
+                .kop { width: 100%; border-bottom: 3px double #000; padding-bottom: 8px; margin-bottom: 14px; }
+                .kop td { border: none; vertical-align: middle; }
+                table.meta td { border: none; padding: 2px 4px; vertical-align: top; }
+                table.data { width: 100%; border-collapse: collapse; margin: 12px 0; }
+                table.data th, table.data td { border: 1px solid #000; padding: 6px 8px; font-size: 11pt; }
+                table.data th { background: #f2f2f2; font-weight: bold; text-align: center; }
+                .page-break { page-break-before: always; }
+                .ttd-wrap { width: 260px; margin-left: auto; margin-top: 28px; text-align: left; }
+            </style></head><body>
+                <!-- KOP SURAT RESMI -->
+                <table class="kop"><tr>
+                    <td style="width:85px; text-align:center;"><img src="${LOGO_ULM_URL}" width="75" alt="ULM"></td>
+                    <td style="text-align:center;">
+                        <div style="font-size:12pt; font-weight:bold;">KEMENTERIAN PENDIDIKAN TINGGI, SAINS, DAN TEKNOLOGI</div>
+                        <div style="font-size:13pt; font-weight:bold;">UNIVERSITAS LAMBUNG MANGKURAT</div>
+                        <div style="font-size:12pt; font-weight:bold;">LEMBAGA PENJAMINAN MUTU DAN PENGEMBANGAN PEMBELAJARAN (LPMPP)</div>
+                        <div style="font-size:9pt;">Jl. Brigjen H. Hasan Basry Banjarmasin 70123 | Website: lpmpp.ulm.ac.id</div>
+                    </td>
+                    <td style="width:85px; text-align:center;"><img src="${LOGO_LPMPP_URL}" width="75" alt="LPMPP"></td>
+                </tr></table>
+
+                <div style="text-align:right; margin-bottom:10px;">Banjarmasin, ${tglSuratIndo}</div>
+
+                <table class="meta" style="margin-bottom:14px;">
+                    <tr><td style="width:90px;">Nomor</td><td style="width:12px;">:</td><td>${nomorLengkap}</td></tr>
+                    <tr><td>Lampiran</td><td>:</td><td>1 (satu) berkas</td></tr>
+                    <tr><td>Hal</td><td>:</td><td><b>Daftar Peserta Kegiatan ${pel}</b></td></tr>
+                </table>
+
+                <p style="margin-bottom:12px;">
+                    Kepada Yth,<br>
+                    <b>Dekan Fakultas</b><br>
+                    Universitas Lambung Mangkurat<br>
+                    di-<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Banjarmasin/Banjarbaru
+                </p>
+
+                <p>Dengan Hormat,</p>
+                <p style="text-align:justify;">Berikut kami kirimkan daftar Peserta <b>${pel}</b> tanggal ${tglPelaksanaan} (terlampir) yang akan dilaksanakan pada:</p>
+
+                <table class="data">
+                    <thead><tr><th>Nama Kegiatan</th><th>Tanggal</th><th>Tempat</th><th>Waktu</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>${pel}</td>
+                            <td style="text-align:center;">${tglPelaksanaan}</td>
+                            <td style="text-align:center;">${tempat}</td>
+                            <td style="text-align:center;">${waktu}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p style="text-align:justify;">Peserta yang telah terdaftar Wajib registrasi ulang melalui link <b>https://siplpmpp.my.id/</b> dan bergabung ke WhatsApp grup untuk memudahkan koordinasi selama kegiatan berlangsung.</p>
+                <p style="text-align:justify;">Demikian pemberitahuan ini disampaikan, atas perhatian dan kerjasamanya diucapkan terima kasih.</p>
+
+                <div class="ttd-wrap">
+                    Kepala,<br><br><br><br>
+                    <b>AGUNG NUGROHO</b><br>
+                    NIP 198307192008011005
+                </div>
+
+                <!-- HALAMAN 2: LAMPIRAN DAFTAR PESERTA -->
+                <div class="page-break"></div>
+                <p style="margin-bottom:4px;">Lampiran</p>
+                <h3 style="text-align:center; margin:4px 0 12px 0; text-transform:uppercase;">DAFTAR PESERTA</h3>
+
+                <table class="meta" style="margin-bottom:10px;">
+                    <tr><td style="width:155px;">Kegiatan</td><td style="width:12px;">:</td><td><b>${pel}</b></td></tr>
+                    <tr><td>Tanggal Pelaksanaan</td><td>:</td><td>${tglPelaksanaan}</td></tr>
+                </table>
+
+                <table class="data">
+                    <thead>
+                        <tr><th style="width:45px;">No.</th><th>Nama</th><th style="width:200px;">Fakultas</th></tr>
+                    </thead>
+                    <tbody>${rowsLampiran}</tbody>
+                </table>
+            </body></html>`;
+
+            bukaAtauUnduhDokumen(html, mode, `Surat_Balasan_${pel.replace(/[^a-zA-Z0-9]/g, '_')}.doc`);
+        }
+
+        function generateLembarPresensi(mode) {
+            const pel = document.getElementById('filterPelPengajuan').value;
+            if (!pel) return alert("Pilih pelatihan terlebih dahulu!");
+
+            const listApproved = ambilPesertaApprovedPerFakultas();
+            if (listApproved.length === 0) return alert("Belum ada calon peserta berstatus Approved untuk pelatihan ini!");
+
+            // Gabungkan Peserta (dikelompokkan per Fakultas) + Panitia LPMPP di bagian paling bawah
+            const semuaBaris = listApproved.map(p => ({ nama: p.nama, unit: p.fakultas }))
+                .concat(DAFTAR_PANITIA_LPMPP.map(nm => ({ nama: nm, unit: "LPMPP" })));
+
+            const tglTerbitIndo = formatTanggalLengkapIndo(""); // Otomatis tanggal hari ini (kapan digenerate)
+            let hariTglKegiatan = document.getElementById('docHariTglPresensi').value.trim();
+            if (!hariTglKegiatan && window.pelatihanData) {
+                const found = window.pelatihanData.find(p => p.nama === pel);
+                if (found && found.info) hariTglKegiatan = found.info.split("|")[0].trim();
+            }
+
+            const perPage = 20;
+            const totalPages = Math.ceil(semuaBaris.length / perPage);
+            let pagesHtml = "";
+
+            for (let pIdx = 0; pIdx < totalPages; pIdx++) {
+                const slice = semuaBaris.slice(pIdx * perPage, (pIdx + 1) * perPage);
+                const startNo = pIdx * perPage + 1;
+                const isFirst = (pIdx === 0);
+                const isLast = (pIdx === totalPages - 1);
+
+                const rowsHtml = slice.map((item, idx) => {
+                    const no = startNo + idx;
+                    const ttdHtml = (no % 2 === 1)
+                        ? `<div style="text-align:left; padding-left:4px;">${no}</div>`
+                        : `<div style="text-align:center; padding-left:20px;">${no}</div>`;
+                    return `
+                    <tr>
+                        <td style="text-align:center; height:29px;">${no}</td>
+                        <td style="padding-left:8px;">${item.nama}</td>
+                        <td style="text-align:center;">${item.unit}</td>
+                        <td>${ttdHtml}</td>
+                    </tr>`;
+                }).join('');
+
+                pagesHtml += `
+                <div class="${isFirst ? '' : 'page-break'}">
+                    <!-- HEADER FORMULIR LPMPP -->
+                    <table class="form-header">
+                        <tr>
+                            <td style="width:16%; text-align:center; padding:6px;"><img src="${LOGO_ULM_URL}" width="68" alt="ULM"></td>
+                            <td style="width:68%; text-align:center; padding:6px; font-weight:bold; line-height:1.25;">
+                                <div style="font-size:10.5pt;">KEMENTERIAN PENDIDIKAN TINGGI, SAINS DAN TEKNOLOGI</div>
+                                <div style="font-size:12pt;">UNIVERSITAS LAMBUNG MANGKURAT</div>
+                                <div style="font-size:12pt;">LEMBAGA PENJAMINAN MUTU DAN</div>
+                                <div style="font-size:12pt;">PENGEMBANGAN PEMBELAJARAN (LPMPP)</div>
+                            </td>
+                            <td style="width:16%; text-align:center; padding:6px;"><img src="${LOGO_LPMPP_URL}" width="68" alt="LPMPP"></td>
+                        </tr>
+                        <tr><td colspan="3" style="text-align:center; font-weight:bold; font-size:10pt; letter-spacing:3px; padding:3px;">FORMULIR</td></tr>
+                        <tr><td colspan="3" style="text-align:center; font-weight:bold; font-size:11.5pt; padding:4px;">DAFTAR HADIR KEGIATAN</td></tr>
+                    </table>
+                    <table class="form-meta">
+                        <tr>
+                            <td style="width:36%;">Kode. Dok</td>
+                            <td style="width:22%;">Revisi</td>
+                            <td style="width:27%;">Tgl Terbit</td>
+                            <td style="width:15%;">Halaman</td>
+                        </tr>
+                        <tr>
+                            <td>LPMPP–FRM-SEK-22</td>
+                            <td>07</td>
+                            <td>${tglTerbitIndo}</td>
+                            <td>${pIdx + 1} dari ${totalPages}</td>
+                        </tr>
+                    </table>
+
+                    ${isFirst ? `
+                    <table class="info-kegiatan">
+                        <tr><td style="width:150px;">Hari, Tanggal</td><td style="width:12px;">:</td><td>${hariTglKegiatan}</td></tr>
+                        <tr><td>Nama Kegiatan</td><td>:</td><td>${pel}</td></tr>
+                    </table>` : '<div style="height:12px;"></div>'}
+
+                    <table class="presensi-table">
+                        <thead>
+                            <tr>
+                                <th style="width:38px;">NO</th>
+                                <th>NAMA</th>
+                                <th style="width:130px;">UNIT KERJA</th>
+                                <th style="width:160px;">TANDA TANGAN</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rowsHtml}</tbody>
+                    </table>
+
+                    ${isLast ? `
+                    <div class="ttd-sekretaris">
+                        Sekretaris,<br><br><br><br>
+                        Prof. Dr. Arif Sholahuddin, S.Pd., M.Si<br>
+                        NIP. 196902141994031003
+                    </div>` : ''}
+                </div>`;
+            }
+
+            const html = `<!DOCTYPE html>
+            <html><head><meta charset="UTF-8"><title>Daftar Hadir - ${pel}</title>
+            <style>
+                @page { size: A4; margin: 1.2cm 1.5cm; }
+                body { font-family: Arial, Helvetica, sans-serif; font-size: 10pt; color: #000; }
+                table { border-collapse: collapse; width: 100%; }
+                .form-header td { border: 1px solid #000; vertical-align: middle; }
+                .form-meta { margin-top: -1px; margin-bottom: 10px; }
+                .form-meta td { border: 1px solid #000; padding: 2px 6px; font-size: 8.5pt; }
+                .info-kegiatan { margin: 8px 0 10px 0; font-size: 10.5pt; }
+                .info-kegiatan td { border: none; padding: 2px 4px; }
+                .presensi-table th, .presensi-table td { border: 1px solid #000; padding: 4px 6px; font-size: 10pt; }
+                .presensi-table th { text-align: center; font-weight: normal; height: 28px; }
+                .page-break { page-break-before: always; }
+                .ttd-sekretaris { width: 280px; margin-left: auto; margin-top: 24px; font-size: 10.5pt; line-height: 1.4; }
+            </style></head><body>${pagesHtml}</body></html>`;
+
+            bukaAtauUnduhDokumen(html, mode, `Lembar_Presensi_${pel.replace(/[^a-zA-Z0-9]/g, '_')}.doc`);
         }
 	</script>
 </body>
