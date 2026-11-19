@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+	<script src="https://cdn.jsdelivr.net/npm/html-docx-js@0.3.1/dist/html-docx.js"></script>
     <script>
         tailwind.config = {
             theme: { 
@@ -1294,14 +1295,14 @@
                         <p class="text-[11px] font-extrabold text-oceanDark">1. Surat Balasan ke Fakultas (+ Lampiran)</p>
                         <div class="flex gap-2">
                             <button type="button" onclick="generateSuratBalasan('print')" class="w-1/2 bg-oceanBlue hover:bg-oceanDark text-white text-[11px] font-bold py-2.5 rounded-xl cursor-pointer">Cetak / PDF</button>
-                            <button type="button" onclick="generateSuratBalasan('doc')" class="w-1/2 bg-white hover:bg-sky-100 text-oceanDark border border-sky-300 text-[11px] font-bold py-2.5 rounded-xl cursor-pointer">Unduh Word (.doc)</button>
+                            <button type="button" onclick="generateSuratBalasan('docx')" class="w-1/2 bg-white hover:bg-sky-100 text-oceanDark border border-sky-300 text-[11px] font-bold py-2.5 rounded-xl cursor-pointer">Unduh Word (.docx)</button>
                         </div>
                     </div>
                     <div class="bg-emerald-50/60 border border-emerald-200/70 p-3.5 rounded-2xl space-y-2">
                         <p class="text-[11px] font-extrabold text-emerald-800">2. Lembar Presensi Luring (+ Panitia LPMPP)</p>
                         <div class="flex gap-2">
                             <button type="button" onclick="generateLembarPresensi('print')" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold py-2.5 rounded-xl cursor-pointer">Cetak / PDF</button>
-                            <button type="button" onclick="generateLembarPresensi('doc')" class="w-1/2 bg-white hover:bg-emerald-100 text-emerald-700 border border-emerald-300 text-[11px] font-bold py-2.5 rounded-xl cursor-pointer">Unduh Word (.doc)</button>
+                            <button type="button" onclick="generateLembarPresensi('docx')" class="w-1/2 bg-white hover:bg-emerald-100 text-emerald-700 border border-emerald-300 text-[11px] font-bold py-2.5 rounded-xl cursor-pointer">Unduh Word (.docx)</button>
                         </div>
                     </div>
                 </div>
@@ -3199,12 +3200,21 @@
         }
 
         function bukaAtauUnduhDokumen(htmlContent, mode, filename) {
-            if (mode === 'doc') {
-                const blob = new Blob(['\ufeff', htmlContent], { type: 'application/msword' });
+            if (mode === 'docx' || mode === 'doc') {
+                if (typeof htmlDocx === 'undefined') {
+                    return alert("Library konversi DOCX belum termuat. Pastikan koneksi internet aktif lalu muat ulang halaman.");
+                }
+                const isPresensi = filename.toLowerCase().includes('presensi');
+                const margins = isPresensi
+                    ? { top: 680, right: 850, bottom: 680, left: 850 }
+                    : { top: 1020, right: 1134, bottom: 1020, left: 1134 };
+
+                const finalFilename = filename.replace(/\.docx?$/i, '') + '.docx';
+                const blob = htmlDocx.asBlob(htmlContent, { orientation: 'portrait', margins: margins });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = filename;
+                a.download = finalFilename;
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
