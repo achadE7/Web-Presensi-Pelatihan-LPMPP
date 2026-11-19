@@ -3269,9 +3269,40 @@
             return `${parseInt(p[2], 10)} ${namaBulanLengkap[parseInt(p[1], 10) - 1]} ${p[0]}`;
         }
 
+        function singkatFakultas(namaFak) {
+            if (!namaFak) return "";
+            const key = namaFak.toString().trim().toLowerCase()
+                .replace(/^fakultas\s+/i, '')
+                .replace(/\s+/g, ' ');
+            const mapSingkatan = {
+                "keguruan & ilmu pendidikan": "FKIP",
+                "keguruan dan ilmu pendidikan": "FKIP",
+                "ekonomi & bisnis": "FEB",
+                "ekonomi dan bisnis": "FEB",
+                "hukum": "F. Hukum",
+                "ilmu sosial dan ilmu politik": "FISIP",
+                "ilmu sosial & ilmu politik": "FISIP",
+                "matematika dan ilmu pengetahuan alam": "FMIPA",
+                "matematika & ilmu pengetahuan alam": "FMIPA",
+                "perikanan & kelautan": "FAPERIK",
+                "perikanan dan kelautan": "FAPERIK",
+                "kehutanan": "FAHUTAN",
+                "pertanian": "FAPERTA",
+                "teknik": "F. Teknik",
+                "kedokteran": "FKIK",
+                "kedokteran dan ilmu kesehatan": "FKIK",
+                "kedokteran & ilmu kesehatan": "FKIK",
+                "kedokteran gigi": "FKG"
+            };
+            return mapSingkatan[key] || namaFak.toString().trim();
+        }
+
         function ambilPesertaApprovedPerFakultas() {
             const fFak = document.getElementById('filterFakPengajuan').value;
-            const approved = cachedPengajuanAdmin.filter(x => (x.status === "Approved" || x.status === "Pending_Replace") && (!fFak || x.fakultas === fFak));
+            const approved = cachedPengajuanAdmin
+                .filter(x => (x.status === "Approved" || x.status === "Pending_Replace") && (!fFak || x.fakultas === fFak))
+                .map(x => ({ ...x, fakultas: singkatFakultas(x.fakultas) }));
+
             return approved.slice().sort((a, b) => {
                 const cmpFak = (a.fakultas || "").localeCompare(b.fakultas || "");
                 if (cmpFak !== 0) return cmpFak;
