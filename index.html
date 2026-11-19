@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 	<script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <script>
         tailwind.config = {
             theme: { 
@@ -74,7 +75,7 @@
                         </div>
                     </div>
                     <button type="button" onclick="login()" id="btnLogin" class="w-full bg-gradient-to-r from-oceanDark to-oceanBlue hover:from-oceanBlue hover:to-skyBlue text-white font-bold text-sm py-3.5 rounded-xl mt-2 transition-all shadow-md shadow-sky-600/20 cursor-pointer">Masuk Ke Aplikasi</button>
-                    <p class="text-center text-xs text-slate-500 pt-1">Belum memiliki akun? <a href="javascript:void(0)" onclick="bukaHalamanRegister()" class="text-oceanBlue font-bold hover:underline">Buat Akun Baru</a></p>
+                    <p class="text-center text-xs text-slate-500 pt-1">Belum memiliki akun? <button type="button" onclick="bukaHalamanRegister()" class="text-oceanBlue font-bold hover:underline cursor-pointer">Buat Akun Baru</button></p>
                     <p id="loginMsg" class="text-xs font-semibold text-red-600 bg-red-50 border border-red-100 py-2 px-3 rounded-xl text-center mt-2 hidden"></p>
                 </div>
             </div>
@@ -912,7 +913,7 @@
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-2.5 pt-2">
-                    <button type="button" onclick="simpanDataAdmin('jadwal_multi')" class="w-full sm:w-2/3 bg-gradient-to-r from-oceanDark to-oceanBlue hover:from-oceanBlue hover:to-skyBlue text-white text-xs font-bold py-3.5 rounded-xl shadow-sm transition-all cursor-pointer">Simpan Jadwal Pelatihan</button>
+                    <button type="button" onclick="simpanDataAdmin('jadwal_multi', this)" class="w-full sm:w-2/3 bg-gradient-to-r from-oceanDark to-oceanBlue hover:from-oceanBlue hover:to-skyBlue text-white text-xs font-bold py-3.5 rounded-xl shadow-sm transition-all cursor-pointer">Simpan Jadwal Pelatihan</button>
                     <button type="button" onclick="hapusJadwalLama()" class="w-full sm:w-1/3 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200/80 text-xs font-bold py-3.5 rounded-xl transition-colors cursor-pointer">Hapus Pelatihan</button>
                 </div>
             </div>
@@ -955,7 +956,7 @@
                         <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Daftar Email Peserta (Satu per baris)</label>
                         <textarea id="areaPeserta" rows="8" placeholder="nama.peserta@ulm.ac.id" class="w-full px-3.5 py-2.5 mb-3 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white text-xs"></textarea>
                     </div>
-                    <button type="button" onclick="simpanDaftarPeserta()" class="w-full bg-gradient-to-r from-oceanDark to-oceanBlue hover:from-oceanBlue hover:to-skyBlue text-white text-xs font-bold py-3 rounded-xl shadow-sm transition-all cursor-pointer">Update Daftar Email</button>
+                    <button type="button" onclick="simpanDaftarPeserta(this)" class="w-full bg-gradient-to-r from-oceanDark to-oceanBlue hover:from-oceanBlue hover:to-skyBlue text-white text-xs font-bold py-3 rounded-xl shadow-sm transition-all cursor-pointer">Update Daftar Email</button>
                 </div>
 
                 <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200/80 flex flex-col h-full min-h-[320px]">
@@ -1057,7 +1058,7 @@
                     </div>
                 </div>
 
-                <button type="button" onclick="simpanDataAdmin('pengaturan')" class="w-full bg-gradient-to-r from-oceanDark to-oceanBlue hover:from-oceanBlue hover:to-skyBlue text-white text-xs sm:text-sm font-bold py-3.5 rounded-xl shadow-sm transition-all cursor-pointer">Simpan Titik Koordinat</button>
+                <button type="button" onclick="simpanDataAdmin('pengaturan', this)" class="w-full bg-gradient-to-r from-oceanDark to-oceanBlue hover:from-oceanBlue hover:to-skyBlue text-white text-xs sm:text-sm font-bold py-3.5 rounded-xl shadow-sm transition-all cursor-pointer">Simpan Titik Koordinat</button>
             </div>
 
             <button type="button" onclick="tampilLayar('adminScreen')" class="w-full bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/80 text-xs font-bold py-3 rounded-2xl shadow-sm transition-colors cursor-pointer">Kembali Ke Dasbor</button>
@@ -1094,7 +1095,7 @@
                     <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Tautan Google Drive Materi Pelatihan</label>
                     <input type="text" id="rewardLink" placeholder="Tempel (Paste) link folder/file Google Drive materi di sini..." class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/70 focus:bg-white text-xs sm:text-sm">
                 </div>
-                <button type="button" onclick="simpanDataAdmin('reward')" class="w-full bg-gradient-to-r from-oceanDark to-oceanBlue hover:from-oceanBlue hover:to-skyBlue text-white text-xs sm:text-sm font-bold py-3.5 rounded-xl shadow-sm transition-all cursor-pointer">Simpan & Aktifkan Materi</button>
+                <button type="button" onclick="simpanDataAdmin('reward', this)" class="w-full bg-gradient-to-r from-oceanDark to-oceanBlue hover:from-oceanBlue hover:to-skyBlue text-white text-xs sm:text-sm font-bold py-3.5 rounded-xl shadow-sm transition-all cursor-pointer">Simpan & Aktifkan Materi</button>
             </div>
 
             <button type="button" onclick="tampilLayar('adminScreen')" class="w-full bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/80 text-xs font-bold py-3 rounded-2xl shadow-sm transition-colors cursor-pointer">Kembali Ke Dasbor</button>
@@ -1363,16 +1364,22 @@
     </div>
 
     <script>
-        var API_URL = "https://script.google.com/macros/s/AKfycbzkeGOglouiCbiAq5VNRXt7Wfie2NDQ8DqcJnMMZ-cOwkeokbRGCpL-W4gizcGn0IdZ/exec";
-        var TARGET_LAT = -3.29687, TARGET_LNG = 114.58823, RADIUS_MAX = 50; 
-        var session = { username: "", nama: "", role: "", fakultas: "", pelatihan: "", hari: "", sesi: "", lat: 0, lng: 0, targetLat: -3.29687, targetLng: 114.58823, targetRadius: 50, mode: "Offline" };
-        var streamKamera = null, dataGaleriGlobal = [], listPelatihanPublik = [], listRiwayatGlobal = [];
+        const API_URL = "https://script.google.com/macros/s/AKfycbzkeGOglouiCbiAq5VNRXt7Wfie2NDQ8DqcJnMMZ-cOwkeokbRGCpL-W4gizcGn0IdZ/exec";
+        let TARGET_LAT = -3.29687, TARGET_LNG = 114.58823, RADIUS_MAX = 50;
+        const session = { username: "", nama: "", role: "", fakultas: "", pelatihan: "", hari: "", sesi: "", lat: 0, lng: 0, targetLat: -3.29687, targetLng: 114.58823, targetRadius: 50, mode: "Offline" };
+        let streamKamera = null, dataGaleriGlobal = [], listPelatihanPublik = [], listRiwayatGlobal = [];
 
-        var namaBulan = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
-        var namaBulanLengkap = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-        var namaHariIndo = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+        const namaBulan = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+        const namaBulanLengkap = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+        const namaHariIndo = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+		
+		async function apiPost(payload) {
+            const resp = await fetch(API_URL, { method: "POST", body: JSON.stringify(payload) });
+            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+            return resp.json();
+        }
 
-        var prodiMap = { "Keguruan & Ilmu Pendidikan": ["Pendidikan Sejarah", "PKN", "Pendidikan Ekonomi", "Pendidikan Sosiologi", "Pendidikan Geografi", "Pendidikan Bahasa & Sastra Indonesia", "Pendidikan Bahasa Inggris", "Pendidikan Seni Pertunjukan", "Pendidikan Matematika", "Pendidikan Biologi", "Pendidikan Kimia", "Pendidikan Fisika", "Pendidikan Jasmani", "Bimbingan & Konseling", "PGSD", "PGPAUD", "Pendidikan IPA", "Pendidikan IPS", "Teknologi Pendidikan", "Pendidikan Khusus"], "Ekonomi & Bisnis": ["S1 Prodi Manajemen", "S1 Prodi Akuntansi", "S1 Ilmu Ekonomi dan Studi Pembangunan"], "Hukum": ["S1 Hukum"], "Ilmu Sosial dan Ilmu Politik": ["Ilmu Pemerintahan", "Administrasi Publik", "Administrasi Bisnis", "Sosiologi", "Geografi", "Ilmu Komunikasi"], "Matematika dan Ilmu Pengetahuan Alam": ["S1 Matematika", "S1 Kimia", "S1 Biologi", "S1 Fisika", "S1 Farmasi", "S1 Ilmu Komputer", "S1 Statistika"], "Perikanan & Kelautan": ["Akuakultur", "Manajemen Sumberdaya Perairan", "Teknologi Hasil Perikanan", "Perikanan Tangkap", "Sosial Ekonomi Perikanan", "Ilmu Kelautan"], "Kehutanan": ["Kehutanan"], "Pertanian": ["Agronomi", "Agroekoteknologi", "Proteksi Tanaman", "Ilmu Tanah", "Agribisnis", "Peternakan", "Teknologi Industri Pertanian"], "Teknik": ["Teknik Sipil", "Arsitektur", "Teknik Pertambangan", "Teknik Kimia", "Teknik Lingkungan", "Teknik Mesin", "Teknologi Informasi", "Rekayasa Elektro", "Rekayasa Geologi"], "Kedokteran": ["Program Studi Kedokteran", "Program Studi Kesehatan Masyarakat", "Program Studi Keperawatan", "Psikologi", "Pendidikan Dokter", "Pendidikan Profesi Dokter", "Pendidikan Dokter Spesialis", "Pendidikan Dokter Spesialis Pulmunologi", "Pendidikan Dokter Spesialis Obstetri dan Ginekologi", "Pendidikan Dokter Spesialis Ilmu Bedah", "Pendidikan Dokter Spesialis Anestesiologi", "Pendidikan Dokter Spesialis Ilmu Kesehatan Anak", "Pendidikan Dokter Spesialis Ilmu Penyakit Dalam", "Pendidikan Dokter Spesialis Orthopaedi dan Traumatologi"], "Kedokteran Gigi": ["Kedokteran Gigi"], "Pascasarjana": ["Pascasarjana"] };
+        const prodiMap = { "Keguruan & Ilmu Pendidikan": ["Pendidikan Sejarah", "PKN", "Pendidikan Ekonomi", "Pendidikan Sosiologi", "Pendidikan Geografi", "Pendidikan Bahasa & Sastra Indonesia", "Pendidikan Bahasa Inggris", "Pendidikan Seni Pertunjukan", "Pendidikan Matematika", "Pendidikan Biologi", "Pendidikan Kimia", "Pendidikan Fisika", "Pendidikan Jasmani", "Bimbingan & Konseling", "PGSD", "PGPAUD", "Pendidikan IPA", "Pendidikan IPS", "Teknologi Pendidikan", "Pendidikan Khusus"], "Ekonomi & Bisnis": ["S1 Prodi Manajemen", "S1 Prodi Akuntansi", "S1 Ilmu Ekonomi dan Studi Pembangunan"], "Hukum": ["S1 Hukum"], "Ilmu Sosial dan Ilmu Politik": ["Ilmu Pemerintahan", "Administrasi Publik", "Administrasi Bisnis", "Sosiologi", "Geografi", "Ilmu Komunikasi"], "Matematika dan Ilmu Pengetahuan Alam": ["S1 Matematika", "S1 Kimia", "S1 Biologi", "S1 Fisika", "S1 Farmasi", "S1 Ilmu Komputer", "S1 Statistika"], "Perikanan & Kelautan": ["Akuakultur", "Manajemen Sumberdaya Perairan", "Teknologi Hasil Perikanan", "Perikanan Tangkap", "Sosial Ekonomi Perikanan", "Ilmu Kelautan"], "Kehutanan": ["Kehutanan"], "Pertanian": ["Agronomi", "Agroekoteknologi", "Proteksi Tanaman", "Ilmu Tanah", "Agribisnis", "Peternakan", "Teknologi Industri Pertanian"], "Teknik": ["Teknik Sipil", "Arsitektur", "Teknik Pertambangan", "Teknik Kimia", "Teknik Lingkungan", "Teknik Mesin", "Teknologi Informasi", "Rekayasa Elektro", "Rekayasa Geologi"], "Kedokteran": ["Program Studi Kedokteran", "Program Studi Kesehatan Masyarakat", "Program Studi Keperawatan", "Psikologi", "Pendidikan Dokter", "Pendidikan Profesi Dokter", "Pendidikan Dokter Spesialis", "Pendidikan Dokter Spesialis Pulmunologi", "Pendidikan Dokter Spesialis Obstetri dan Ginekologi", "Pendidikan Dokter Spesialis Ilmu Bedah", "Pendidikan Dokter Spesialis Anestesiologi", "Pendidikan Dokter Spesialis Ilmu Kesehatan Anak", "Pendidikan Dokter Spesialis Ilmu Penyakit Dalam", "Pendidikan Dokter Spesialis Orthopaedi dan Traumatologi"], "Kedokteran Gigi": ["Kedokteran Gigi"], "Pascasarjana": ["Pascasarjana"] };
 
         function buildBiodataFields(prefix) {
             const isEdit = prefix === 'edit';
@@ -1557,10 +1564,10 @@
             terapkanModeReadOnlyAdminBiasa();
         }
 
-        var cachedJadwalPeserta = [];
-        var cachedEnrolledInfo = [];
-        var calMonth = new Date().getMonth();
-        var calYear = new Date().getFullYear();
+        let cachedJadwalPeserta = [];
+        let cachedEnrolledInfo = [];
+        let calMonth = new Date().getMonth();
+        let calYear = new Date().getFullYear();
 
 		function tampilLayar(idLayar) {
             ['loginScreen', 'registerScreen', 'userProfileScreen', 'presensiScreen', 'notifikasiScreen', 'kalenderScreen', 'myAttendanceScreen', 'lupaPresensiFormScreen', 'myGroupScreen', 'userEnrollScreen', 'myRewardScreen', 'kameraScreen', 'suksesScreen', 'suksesDaftarScreen', 'adminScreen', 'adminLupaPresensiScreen', 'adminJadwalScreen', 'adminPesertaScreen', 'adminValidasiScreen', 'adminPengaturanScreen', 'adminRewardScreen', 'adminRekapScreen', 'adminProdiScreen', 'adminManageUsersScreen', 'adminPengajuanScreen', 'operatorScreen'].forEach(id => { 
@@ -2495,8 +2502,10 @@
             } catch(e) {} 
         }
 
-        async function simpanDataAdmin(jenis) { 
-            let payload = { action: "" }; const btnSimpan = event.target, teksAsli = btnSimpan.innerText; btnSimpan.innerText = "Proses..."; btnSimpan.disabled = true; 
+        async function simpanDataAdmin(jenis, btnSimpan) {
+            let payload = { action: "" };
+            const teksAsli = btnSimpan ? btnSimpan.innerText : "";
+            if (btnSimpan) { btnSimpan.innerText = "Proses..."; btnSimpan.disabled = true; } 
             if (jenis === "jadwal_multi") { 
                 let pName = document.getElementById("jadwalPelatihanSelect").value; if(pName === "BARU") pName = document.getElementById("jadwalPelatihanInput").value; 
                 payload.action = "save_jadwal"; payload.pelatihan = pName; payload.wa_link = document.getElementById("jadwalWALink").value; 
@@ -2540,7 +2549,7 @@
                     muatDaftarPelatihanAdmin(); 
                 } else alert("❌ Gagal: " + res.message); 
             } catch (e) { alert("Koneksi gagal."); } 
-            btnSimpan.innerText = teksAsli; btnSimpan.disabled = false; 
+            if (btnSimpan) { btnSimpan.innerText = teksAsli; btnSimpan.disabled = false; } 
         }
 
         async function bukaKamera() { tampilLayar('kameraScreen'); const video = document.getElementById('video'); try { streamKamera = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } }); video.srcObject = streamKamera; } catch (err) { alert("⚠️ Gagal mengakses kamera (" + err.message + ").\n\nMohon izinkan penggunaan KAMERA pada pengaturan browser di HP atau Laptop/PC Anda."); tampilLayar('presensiScreen'); } }
@@ -2567,8 +2576,8 @@
         function tambahSesiUI() { const wadah = document.getElementById('wadahSesi'), clone = wadah.firstElementChild.cloneNode(true); clone.querySelectorAll('input').forEach(inp => inp.value = ''); const isOnline = document.getElementById('cekOnline').checked, isOffline = document.getElementById('cekOffline').checked; if (clone.querySelector('.input-mode')) clone.querySelector('.input-mode').value = (isOnline && !isOffline) ? 'Online' : 'Offline'; wadah.appendChild(clone); document.querySelectorAll('.btn-hapus-sesi').forEach(b => b.classList.remove('hidden')); }
         function hapusSesi(btn) { if (session.role !== "super_admin") return; btn.closest('.sesi-item').remove(); if(document.querySelectorAll('.sesi-item').length === 1) document.querySelector('.btn-hapus-sesi').classList.add('hidden'); }
         async function hapusJadwalLama() { let pName = document.getElementById("jadwalPelatihanSelect").value; if(pName === "BARU") pName = document.getElementById("jadwalPelatihanInput").value; if(!pName) return alert("Pilih / Ketik nama pelatihan."); if(!confirm(`Yakin hapus seluruh sesi untuk "${pName}"?`)) return; try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "delete_pelatihan", pelatihan: pName }) })).json(); if(res.status === "success"){ alert("✅ Berhasil!"); document.getElementById("jadwalPelatihanSelect").value = ""; document.getElementById("jadwalPelatihanInput").value = ""; document.getElementById("jadwalPelatihanInput").classList.add('hidden'); resetKeteranganJadwal(); muatDaftarPelatihanAdmin(); } else alert("❌ Gagal: " + res.message); } catch(e) { alert("Gagal."); } }
-        var cachedDetailPesertaAdmin = [];
-        var cachedNamaPelatihanPeserta = "";
+        let cachedDetailPesertaAdmin = [];
+        let cachedNamaPelatihanPeserta = "";
 
         async function tarikDataPeserta() { 
             const pel = document.getElementById('inputPelatihanPeserta').value; 
@@ -2603,88 +2612,64 @@
             if (cachedNamaPelatihanPeserta !== pel || cachedDetailPesertaAdmin.length === 0) {
                 await tarikDataPeserta();
             }
-            if (!cachedDetailPesertaAdmin || cachedDetailPesertaAdmin.length === 0) {
+            if (!cachedDetailPesertaAdmin?.length) {
                 return alert("Belum ada data peserta yang terdaftar pada pelatihan ini untuk diekspor.");
             }
+            if (typeof XLSX === 'undefined') {
+                return alert("Library Excel (SheetJS) belum termuat. Muat ulang halaman lalu coba lagi.");
+            }
 
-            let tableHtml = `
-            <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
-            <head><meta charset="UTF-8"><style>td, th { border: 1px solid #000000; padding: 5px; font-family: Arial, sans-serif; font-size: 11pt; } th { background-color: #0284C7; color: #ffffff; font-weight: bold; } .str { mso-number-format:"\\@"; }</style></head>
-            <body>
-                <h3>Rekap Data Peserta - ${pel}</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Email</th>
-                            <th>Nama Lengkap (Tanpa Gelar)</th>
-                            <th>Gelar Depan</th>
-                            <th>Gelar Belakang</th>
-                            <th>Nama Lengkap & Gelar</th>
-                            <th>NIP</th>
-                            <th>NIDN/NIDK</th>
-                            <th>NUPTK</th>
-                            <th>Tempat Lahir</th>
-                            <th>Tanggal Lahir</th>
-                            <th>Status Kepegawaian</th>
-                            <th>Jenis Kelamin</th>
-                            <th>Pangkat/Golongan</th>
-                            <th>Jabatan Fungsional</th>
-                            <th>Instansi</th>
-                            <th>Nama Instansi</th>
-                            <th>Fakultas</th>
-                            <th>Program Studi</th>
-                            <th>Pendidikan Terakhir</th>
-                            <th>Nomor HP</th>
-                            <th>Alamat</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
+            const rows = cachedDetailPesertaAdmin.map((d, idx) => ({
+                "No": idx + 1,
+                "Email": d.email || "",
+                "Nama Lengkap (Tanpa Gelar)": d.nama || "",
+                "Gelar Depan": d.gelar_depan || "",
+                "Gelar Belakang": d.gelar_belakang || "",
+                "Nama Lengkap & Gelar": `${d.gelar_depan ? d.gelar_depan + ' ' : ''}${d.nama || ''}${d.gelar_belakang ? ', ' + d.gelar_belakang : ''}`,
+                "NIP": String(d.nip || ""),
+                "NIDN/NIDK": String(d.nidn || ""),
+                "NUPTK": String(d.nuptk || ""),
+                "Tempat Lahir": d.tempat_lahir || "",
+                "Tanggal Lahir": String(d.tanggal_lahir || ""),
+                "Status Kepegawaian": d.status_pegawai || "",
+                "Jenis Kelamin": d.jk || "",
+                "Pangkat/Golongan": d.pangkat || "",
+                "Jabatan Fungsional": d.jabatan || "",
+                "Instansi": d.instansi || "",
+                "Nama Instansi": d.nama_instansi || "",
+                "Fakultas": d.fakultas || "",
+                "Program Studi": d.prodi || "",
+                "Pendidikan Terakhir": d.pendidikan || "",
+                "Nomor HP": String(d.hp || ""),
+                "Alamat": d.alamat || ""
+            }));
 
-            cachedDetailPesertaAdmin.forEach((d, idx) => {
-                const namaGelar = `${d.gelar_depan ? d.gelar_depan + ' ' : ''}${d.nama || ''}${d.gelar_belakang ? ', ' + d.gelar_belakang : ''}`;
-                tableHtml += `
-                        <tr>
-                            <td>${idx + 1}</td>
-                            <td>${d.email || ''}</td>
-                            <td>${d.nama || ''}</td>
-                            <td>${d.gelar_depan || ''}</td>
-                            <td>${d.gelar_belakang || ''}</td>
-                            <td>${namaGelar}</td>
-                            <td class="str">${d.nip || ''}</td>
-                            <td class="str">${d.nidn || ''}</td>
-                            <td class="str">${d.nuptk || ''}</td>
-                            <td>${d.tempat_lahir || ''}</td>
-                            <td class="str">${d.tanggal_lahir || ''}</td>
-                            <td>${d.status_pegawai || ''}</td>
-                            <td>${d.jk || ''}</td>
-                            <td>${d.pangkat || ''}</td>
-                            <td>${d.jabatan || ''}</td>
-                            <td>${d.instansi || ''}</td>
-                            <td>${d.nama_instansi || ''}</td>
-                            <td>${d.fakultas || ''}</td>
-                            <td>${d.prodi || ''}</td>
-                            <td>${d.pendidikan || ''}</td>
-                            <td class="str">${d.hp || ''}</td>
-                            <td>${d.alamat || ''}</td>
-                        </tr>`;
-            });
+            const ws = XLSX.utils.json_to_sheet(rows);
+            ws['!cols'] = Object.keys(rows[0]).map((key) => ({
+                wch: Math.min(40, Math.max(key.length + 2, ...rows.map((r) => String(r[key]).length + 2)))
+            }));
 
-            tableHtml += `</tbody></table></body></html>`;
-
-            const blob = new Blob([tableHtml], { type: "application/vnd.ms-excel" });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = `Rekap_Peserta_${pel.replace(/[^a-zA-Z0-9]/g, '_')}.xls`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Rekap Peserta");
+            XLSX.writeFile(wb, `Rekap_Peserta_${pel.replace(/[^a-zA-Z0-9]/g, '_')}.xlsx`);
         }
 		
         function filterKartuPeserta() { const kw = document.getElementById('cariPesertaInput').value.toLowerCase(); document.querySelectorAll('.kartu-peserta').forEach(c => { c.style.display = c.innerText.toLowerCase().includes(kw) ? 'block' : 'none'; }); }
-        async function simpanDaftarPeserta() { const pel = document.getElementById('inputPelatihanPeserta').value, users = document.getElementById('areaPeserta').value.split('\n').filter(u => u.trim() !== ""); if(!pel || users.length === 0) return alert("Lengkapi isian!"); event.target.innerText = "Menyimpan..."; try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "save_peserta", pelatihan: pel, usernames: users }) })).json(); alert(res.status === "success" ? "✅ Tersimpan!" : "❌ Gagal."); tarikDataPeserta(); } catch(e) { alert("Gagal."); } event.target.innerText = "Update Daftar Email"; }
+        async function simpanDaftarPeserta(btn) {
+            const pel = document.getElementById('inputPelatihanPeserta').value;
+            const users = document.getElementById('areaPeserta').value.split('\n').map(u => u.trim()).filter(Boolean);
+            if (!pel || users.length === 0) return alert("Lengkapi isian!");
+            const teksAsli = btn ? btn.innerText : "Update Daftar Email";
+            if (btn) { btn.innerText = "Menyimpan..."; btn.disabled = true; }
+            try {
+                const res = await apiPost({ action: "save_peserta", pelatihan: pel, usernames: users });
+                alert(res.status === "success" ? "✅ Tersimpan!" : "❌ Gagal.");
+                tarikDataPeserta();
+            } catch (e) {
+                alert("Gagal.");
+            }
+            if (btn) { btn.innerText = teksAsli; btn.disabled = false; }
+        }
         async function muatGaleri() { tampilLayar('adminValidasiScreen'); document.getElementById('wadahGaleri').innerHTML = ""; document.getElementById('loadingGaleri').classList.remove('hidden'); try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_galeri" }) })).json(); if (res.status === "success") { dataGaleriGlobal = res.data; const listPelatihan = [...new Set(res.data.map(i => i.pelatihan))]; document.getElementById('filterPelatihan').innerHTML = '<option value="">Semua Pelatihan</option>' + listPelatihan.map(p => `<option value="${p}">${p}</option>`).join(''); renderGaleri(); } } catch (e) { document.getElementById('loadingGaleri').innerText = "Gagal memuat."; } document.getElementById('loadingGaleri').classList.add('hidden'); }
         function renderGaleri() { 
             const fPel = document.getElementById('filterPelatihan').value.toLowerCase(), fNama = document.getElementById('filterPeserta').value.toLowerCase(), wadah = document.getElementById('wadahGaleri'); 
@@ -2844,7 +2829,7 @@
         // =========================================================================
         // MANAJEMEN AKUN ADMIN & OPERATOR (KHUSUS SUPER ADMIN)
         // =========================================================================
-        var cachedStaffList = [];
+        let cachedStaffList = [];
 
         async function bukaHalamanKelolaUser() {
             if (session.role !== "super_admin") return alert("Akses ditolak! Menu ini khusus Super Admin.");
@@ -3095,7 +3080,7 @@
         // =========================================================================
         // VALIDASI PENGAJUAN FAKULTAS OLEH ADMIN & SUPER ADMIN
         // =========================================================================
-        var cachedPengajuanAdmin = [];
+        let cachedPengajuanAdmin = [];
 
         async function bukaHalamanPengajuanAdmin() {
             tampilLayar('adminPengajuanScreen');
