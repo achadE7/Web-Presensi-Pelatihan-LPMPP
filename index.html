@@ -1588,6 +1588,8 @@
             const firstItem = wadah.firstElementChild;
             if (firstItem) {
                 firstItem.querySelectorAll('input').forEach(inp => inp.value = '');
+				firstItem.dataset.origHari = '';
+                firstItem.dataset.origSesi = '';
                 if (firstItem.querySelector('.input-mode')) firstItem.querySelector('.input-mode').value = 'Offline';
                 if (firstItem.querySelector('.btn-hapus-sesi')) firstItem.querySelector('.btn-hapus-sesi').classList.add('hidden');
             }
@@ -1637,6 +1639,8 @@
                                 itemEl.querySelector('.input-hari').value = s.hari || "";
                                 itemEl.querySelector('.input-tanggal').value = s.tanggal && s.tanggal !== "-" ? s.tanggal : "";
                                 itemEl.querySelector('.input-sesi').value = s.sesi || "";
+								itemEl.dataset.origHari = s.hari || "";
+                                itemEl.dataset.origSesi = s.sesi || "";
                                 itemEl.querySelector('.input-mulai').value = s.jam_mulai && s.jam_mulai !== "-" ? s.jam_mulai : "";
                                 itemEl.querySelector('.input-selesai').value = s.jam_selesai && s.jam_selesai !== "-" ? s.jam_selesai : "";
                                 if (itemEl.querySelector('.input-mode')) itemEl.querySelector('.input-mode').value = s.mode || "Offline";
@@ -2616,7 +2620,16 @@
                     if(h && h.trim() !== "") {
                         let sMode = item.querySelector('.input-mode') ? item.querySelector('.input-mode').value : payload.default_mode;
                         if (isOnline && !isOffline) sMode = "Online";
-                        payload.list_sesi.push({ hari: h, tanggal: item.querySelector('.input-tanggal').value, sesi: item.querySelector('.input-sesi').value, jam_mulai: item.querySelector('.input-mulai').value, jam_selesai: item.querySelector('.input-selesai').value, mode: sMode });
+                        payload.list_sesi.push({
+                            hari: h,
+                            tanggal: item.querySelector('.input-tanggal').value,
+                            sesi: item.querySelector('.input-sesi').value,
+                            jam_mulai: item.querySelector('.input-mulai').value,
+                            jam_selesai: item.querySelector('.input-selesai').value,
+                            mode: sMode,
+                            orig_hari: item.dataset.origHari || "",
+                            orig_sesi: item.dataset.origSesi || ""
+                        });
                     }
                 });
             } else if (jenis === "pengaturan") { 
@@ -2660,7 +2673,18 @@
         }
 
         function bukaSpreadsheet() { window.open("https://docs.google.com/spreadsheets/d/1d3jMjww3PinwN1U1v-yVKz79YcLp_-56jSOATBPQi9U/edit", '_blank'); }
-        function tambahSesiUI() { const wadah = document.getElementById('wadahSesi'), clone = wadah.firstElementChild.cloneNode(true); clone.querySelectorAll('input').forEach(inp => inp.value = ''); const isOnline = document.getElementById('cekOnline').checked, isOffline = document.getElementById('cekOffline').checked; if (clone.querySelector('.input-mode')) clone.querySelector('.input-mode').value = (isOnline && !isOffline) ? 'Online' : 'Offline'; wadah.appendChild(clone); document.querySelectorAll('.btn-hapus-sesi').forEach(b => b.classList.remove('hidden')); }
+        function tambahSesiUI() {
+            const wadah = document.getElementById('wadahSesi');
+            const clone = wadah.firstElementChild.cloneNode(true);
+            clone.querySelectorAll('input').forEach(inp => inp.value = '');
+            clone.dataset.origHari = '';
+            clone.dataset.origSesi = '';
+            const isOnline = document.getElementById('cekOnline').checked;
+            const isOffline = document.getElementById('cekOffline').checked;
+            if (clone.querySelector('.input-mode')) clone.querySelector('.input-mode').value = (isOnline && !isOffline) ? 'Online' : 'Offline';
+            wadah.appendChild(clone);
+            document.querySelectorAll('.btn-hapus-sesi').forEach(b => b.classList.remove('hidden'));
+        }
         function hapusSesi(btn) { if (session.role !== "super_admin") return; btn.closest('.sesi-item').remove(); if(document.querySelectorAll('.sesi-item').length === 1) document.querySelector('.btn-hapus-sesi').classList.add('hidden'); }
         async function hapusJadwalLama() { let pName = document.getElementById("jadwalPelatihanSelect").value; if(pName === "BARU") pName = document.getElementById("jadwalPelatihanInput").value; if(!pName) return alert("Pilih / Ketik nama pelatihan."); if(!confirm(`Yakin hapus seluruh sesi untuk "${pName}"?`)) return; try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "delete_pelatihan", pelatihan: pName }) })).json(); if(res.status === "success"){ alert("✅ Berhasil!"); document.getElementById("jadwalPelatihanSelect").value = ""; document.getElementById("jadwalPelatihanInput").value = ""; document.getElementById("jadwalPelatihanInput").classList.add('hidden'); resetKeteranganJadwal(); muatDaftarPelatihanAdmin(); } else alert("❌ Gagal: " + res.message); } catch(e) { alert("Gagal."); } }
         let cachedDetailPesertaAdmin = [];
