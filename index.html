@@ -700,32 +700,45 @@
                 </button>
             </div>
 
-            <!-- MENU KHUSUS SUPER ADMIN (FAKULTAS & KELOLA AKUN) -->
-            <div class="super-admin-only grid grid-cols-1 md:grid-cols-2 gap-3">
+            <!-- MENU KHUSUS SUPER ADMIN (FAKULTAS, KELOLA AKUN, & TRANSFER PRESENSI) -->
+            <div class="super-admin-only grid grid-cols-1 md:grid-cols-3 gap-3">
                 <button type="button" onclick="bukaHalamanAdminProdi()" class="w-full bg-white hover:bg-sky-50/60 border border-sky-200/90 p-4 rounded-2xl flex items-center justify-between transition-all shadow-sm group cursor-pointer">
-                    <div class="flex items-center space-x-3.5">
-                        <div class="w-10 h-10 rounded-xl bg-sky-50 text-oceanBlue border border-sky-100 flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-sky-50 text-oceanBlue border border-sky-100 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
                             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"></line><line x1="6" y1="18" x2="6" y2="11"></line><line x1="10" y1="18" x2="10" y2="11"></line><line x1="14" y1="18" x2="14" y2="11"></line><line x1="18" y1="18" x2="18" y2="11"></line><polygon points="12 2 20 7 4 7"></polygon></svg>
                         </div>
                         <div class="text-left">
-                            <span class="text-xs font-extrabold text-oceanDark block">Kelola Fakultas & Prodi</span>
-                            <span class="text-[10px] text-slate-400 font-medium">Atur pilihan fakultas & program studi</span>
+                            <span class="text-xs font-extrabold text-oceanDark block">Fakultas & Prodi</span>
+                            <span class="text-[10px] text-slate-400 font-medium">Atur pilihan fakultas</span>
                         </div>
                     </div>
-                    <svg class="w-4 h-4 text-oceanBlue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <svg class="w-4 h-4 text-oceanBlue shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </button>
 
                 <button type="button" onclick="bukaHalamanKelolaUser()" class="w-full bg-white hover:bg-indigo-50/60 border border-indigo-200/90 p-4 rounded-2xl flex items-center justify-between transition-all shadow-sm group cursor-pointer">
-                    <div class="flex items-center space-x-3.5">
-                        <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-100 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
                             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
                         </div>
                         <div class="text-left">
-                            <span class="text-xs font-extrabold text-indigo-900 block">Kelola Akses Admin & Operator</span>
-                            <span class="text-[10px] text-slate-400 font-medium">Tambah akun Admin & Operator Fakultas</span>
+                            <span class="text-xs font-extrabold text-indigo-900 block">Akses Admin & Op</span>
+                            <span class="text-[10px] text-slate-400 font-medium">Kelola akun pengelola</span>
                         </div>
                     </div>
-                    <svg class="w-4 h-4 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <svg class="w-4 h-4 text-indigo-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+
+                <button type="button" onclick="bukaHalamanTransferPresensi()" class="w-full bg-white hover:bg-amber-50/60 border border-amber-200/90 p-4 rounded-2xl flex items-center justify-between transition-all shadow-sm group cursor-pointer">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 border border-amber-100 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
+                        </div>
+                        <div class="text-left">
+                            <span class="text-xs font-extrabold text-amber-900 block">Transfer Presensi</span>
+                            <span class="text-[10px] text-slate-400 font-medium">Pindah pelatihan peserta</span>
+                        </div>
+                    </div>
+                    <svg class="w-4 h-4 text-amber-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </button>
             </div>
         </div>
@@ -1361,6 +1374,80 @@
                 </div>
             </div>
         </div>
+		
+		<!-- LAYER 25: TRANSFER PRESENSI PESERTA (KHUSUS SUPER ADMIN) -->
+        <div id="adminTransferPresensiScreen" class="hidden flex flex-col w-full p-5 sm:p-8 bg-[#F4F8FB]">
+            <div class="flex items-center justify-between gap-3 mb-5">
+                <div class="flex items-center space-x-3.5">
+                    <div class="w-11 h-11 rounded-2xl bg-amber-50 text-amber-600 border border-amber-200/80 flex items-center justify-center shadow-sm shrink-0">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-extrabold text-slate-800 tracking-tight">Transfer Presensi Peserta</h2>
+                        <p class="text-xs text-slate-500">Pindahkan atau salin riwayat kehadiran peserta yang berpindah pelatihan.</p>
+                    </div>
+                </div>
+                <button type="button" onclick="tampilLayar('adminScreen')" class="bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 px-3.5 py-2 rounded-xl text-xs font-bold shadow-sm cursor-pointer shrink-0">‹ Dasbor</button>
+            </div>
+
+            <!-- LANGKAH 1: PILIH PELATIHAN ASAL, PESERTA, DAN PELATIHAN TUJUAN -->
+            <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-slate-200/80 space-y-3.5 mb-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div>
+                        <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">1. Pelatihan Asal (Lama)*</label>
+                        <select id="tfPelAsal" onchange="muatPesertaTransferAsal()" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50/70 focus:bg-white">
+                            <option value="">-- Pilih Pelatihan Asal --</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">2. Pelatihan Tujuan (Baru)*</label>
+                        <select id="tfPelTujuan" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50/70 focus:bg-white">
+                            <option value="">-- Pilih Pelatihan Tujuan --</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div>
+                        <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">3. Pilih Peserta dari Pelatihan Asal*</label>
+                        <select id="tfPesertaSelect" onchange="document.getElementById('tfEmailManual').value = this.value;" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50/70 focus:bg-white">
+                            <option value="">-- Pilih Pelatihan Asal dulu --</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Atau Ketik Email Peserta Manual</label>
+                        <input type="email" id="tfEmailManual" placeholder="Contoh: nama.peserta@ulm.ac.id" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs bg-slate-50/50 focus:bg-white">
+                    </div>
+                </div>
+
+                <button type="button" onclick="muatPreviewTransfer(this)" class="w-full bg-oceanDark hover:bg-oceanBlue text-white text-xs font-bold py-3 rounded-xl shadow-sm transition-colors cursor-pointer">Cek & Muat Riwayat Presensi Peserta</button>
+            </div>
+
+            <!-- LANGKAH 2: PEMETAAN SESI & EKSEKUSI TRANSFER -->
+            <div id="tfOpsiPanel" class="hidden bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-amber-200/90 space-y-4 mb-4">
+                <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-100">
+                    <label class="flex items-center space-x-2 text-xs font-extrabold text-slate-700 cursor-pointer">
+                        <input type="checkbox" id="cekSemuaTransfer" checked onchange="togglePilihSemuaTransfer(this)" class="w-4 h-4 rounded text-oceanBlue">
+                        <span>Pilih Semua Sesi yang Akan Ditransfer</span>
+                    </label>
+                    <span id="tfRingkasanBadge" class="text-[11px] font-extrabold text-amber-700 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full">0 Sesi Ditemukan</span>
+                </div>
+
+                <div id="tfWadahPreview" class="space-y-2.5 overflow-y-auto max-h-[40vh] pr-1"></div>
+
+                <div class="bg-slate-50 border border-slate-200/80 p-4 rounded-2xl space-y-2">
+                    <label class="text-[11px] font-extrabold text-slate-600 uppercase tracking-wider block">Mode Transfer Data</label>
+                    <select id="tfModeTransfer" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold bg-white">
+                        <option value="move">Pindah Penuh (Disarankan) — Pindahkan presensi & pendaftaran peserta dari A ke B, hapus dari A</option>
+                        <option value="copy">Salin Saja (Copy) — Salin presensi ke Pelatihan B tanpa menghapus catatan di Pelatihan A</option>
+                    </select>
+                </div>
+
+                <button type="button" id="btnProsesTransfer" onclick="eksekusiTransferPresensi(this)" class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs sm:text-sm font-bold py-3.5 rounded-xl shadow-md transition-all cursor-pointer">Proses Transfer Presensi Sekarang</button>
+            </div>
+
+            <button type="button" onclick="tampilLayar('adminScreen')" class="w-full bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/80 text-xs font-bold py-3 rounded-2xl shadow-sm cursor-pointer">Kembali Ke Dasbor</button>
+        </div>
     </div>
 
     <script>
@@ -1570,12 +1657,12 @@
         let calYear = new Date().getFullYear();
 
 		function tampilLayar(idLayar) {
-            ['loginScreen', 'registerScreen', 'userProfileScreen', 'presensiScreen', 'notifikasiScreen', 'kalenderScreen', 'myAttendanceScreen', 'lupaPresensiFormScreen', 'myGroupScreen', 'userEnrollScreen', 'myRewardScreen', 'kameraScreen', 'suksesScreen', 'suksesDaftarScreen', 'adminScreen', 'adminLupaPresensiScreen', 'adminJadwalScreen', 'adminPesertaScreen', 'adminValidasiScreen', 'adminPengaturanScreen', 'adminRewardScreen', 'adminRekapScreen', 'adminProdiScreen', 'adminManageUsersScreen', 'adminPengajuanScreen', 'operatorScreen'].forEach(id => { 
+            ['loginScreen', 'registerScreen', 'userProfileScreen', 'presensiScreen', 'notifikasiScreen', 'kalenderScreen', 'myAttendanceScreen', 'lupaPresensiFormScreen', 'myGroupScreen', 'userEnrollScreen', 'myRewardScreen', 'kameraScreen', 'suksesScreen', 'suksesDaftarScreen', 'adminScreen', 'adminLupaPresensiScreen', 'adminJadwalScreen', 'adminPesertaScreen', 'adminValidasiScreen', 'adminPengaturanScreen', 'adminRewardScreen', 'adminRekapScreen', 'adminProdiScreen', 'adminManageUsersScreen', 'adminPengajuanScreen', 'operatorScreen', 'adminTransferPresensiScreen'].forEach(id => { 
                 const el = document.getElementById(id); if(el) el.classList.add('hidden'); 
             });
             const wadah = document.getElementById('mainWadah'); 
             wadah.classList.remove('max-w-md', 'sm:max-w-md', 'sm:max-w-lg', 'sm:max-w-xl', 'md:max-w-xl', 'md:max-w-2xl', 'max-w-2xl', 'max-w-4xl', 'lg:max-w-5xl');
-            const wideScreens = ['adminScreen', 'adminJadwalScreen', 'adminPengaturanScreen', 'adminValidasiScreen', 'adminPesertaScreen', 'adminRewardScreen', 'adminLupaPresensiScreen', 'adminRekapScreen', 'adminProdiScreen', 'adminManageUsersScreen', 'adminPengajuanScreen', 'operatorScreen'];
+            const wideScreens = ['adminScreen', 'adminJadwalScreen', 'adminPengaturanScreen', 'adminValidasiScreen', 'adminPesertaScreen', 'adminRewardScreen', 'adminLupaPresensiScreen', 'adminRekapScreen', 'adminProdiScreen', 'adminManageUsersScreen', 'adminPengajuanScreen', 'operatorScreen', 'adminTransferPresensiScreen'];
             if (idLayar === 'loginScreen') {
                 wadah.classList.add('sm:max-w-md');
             } else if (wideScreens.includes(idLayar)) {
@@ -4033,6 +4120,202 @@
 
             cetakHtmlBersih(html);
         }
+		
+		// =========================================================================
+        // TRANSFER PRESENSI PESERTA ANTAR PELATIHAN (KHUSUS SUPER ADMIN)
+        // =========================================================================
+        let cachedTransferData = { attended_asal: [], sessions_tujuan: [], existing_tujuan: [] };
+
+        async function bukaHalamanTransferPresensi() {
+            if (session.role !== "super_admin") return alert("Akses ditolak! Menu ini khusus Super Admin.");
+            tampilLayar('adminTransferPresensiScreen');
+            document.getElementById('tfOpsiPanel').classList.add('hidden');
+            document.getElementById('tfEmailManual').value = "";
+            document.getElementById('tfPesertaSelect').innerHTML = '<option value="">-- Pilih Pelatihan Asal dulu --</option>';
+
+            await muatDaftarPelatihanAdmin();
+            if (window.pelatihanData) {
+                const opts = window.pelatihanData.map(p => `<option value="${p.nama}">${p.nama}</option>`).join('');
+                document.getElementById('tfPelAsal').innerHTML = '<option value="">-- Pilih Pelatihan Asal --</option>' + opts;
+                document.getElementById('tfPelTujuan').innerHTML = '<option value="">-- Pilih Pelatihan Tujuan --</option>' + opts;
+            }
+        }
+
+        async function muatPesertaTransferAsal() {
+            const pelAsal = document.getElementById('tfPelAsal').value;
+            const selPeserta = document.getElementById('tfPesertaSelect');
+            document.getElementById('tfOpsiPanel').classList.add('hidden');
+            if (!pelAsal) {
+                selPeserta.innerHTML = '<option value="">-- Pilih Pelatihan Asal dulu --</option>';
+                return;
+            }
+            selPeserta.innerHTML = '<option value="">Memuat daftar peserta...</option>';
+            try {
+                const res = await apiPost({ action: "get_peserta", pelatihan: pelAsal });
+                const detailMap = {};
+                (res.details || []).forEach(d => { detailMap[d.email] = d.nama; });
+                if (res.emails && res.emails.length > 0) {
+                    selPeserta.innerHTML = '<option value="">-- Pilih Peserta --</option>' + res.emails.map(em => {
+                        const nm = detailMap[em] ? `${detailMap[em]} (${em})` : em;
+                        return `<option value="${em}">${nm}</option>`;
+                    }).join('');
+                } else {
+                    selPeserta.innerHTML = '<option value="">Tidak ada peserta di daftar (ketik email manual)</option>';
+                }
+            } catch (e) {
+                selPeserta.innerHTML = '<option value="">Gagal memuat peserta</option>';
+            }
+        }
+
+        async function muatPreviewTransfer(btn) {
+            const pelAsal = document.getElementById('tfPelAsal').value;
+            const pelTujuan = document.getElementById('tfPelTujuan').value;
+            const email = (document.getElementById('tfEmailManual').value || document.getElementById('tfPesertaSelect').value).trim();
+
+            if (!pelAsal || !pelTujuan) return alert("Pilih Pelatihan Asal dan Pelatihan Tujuan terlebih dahulu!");
+            if (pelAsal === pelTujuan) return alert("Pelatihan Asal dan Pelatihan Tujuan tidak boleh sama!");
+            if (!email) return alert("Pilih atau ketik Email peserta terlebih dahulu!");
+
+            const teksAsli = btn.innerText;
+            btn.innerText = "Memeriksa Riwayat Presensi...";
+            btn.disabled = true;
+
+            try {
+                const res = await apiPost({
+                    action: "get_transfer_presensi_info",
+                    pelatihan_asal: pelAsal,
+                    pelatihan_tujuan: pelTujuan,
+                    username: email
+                });
+
+                if (res.status === "success") {
+                    cachedTransferData = res;
+                    const panel = document.getElementById('tfOpsiPanel');
+                    const wadah = document.getElementById('tfWadahPreview');
+                    const badge = document.getElementById('tfRingkasanBadge');
+
+                    panel.classList.remove('hidden');
+                    document.getElementById('cekSemuaTransfer').checked = true;
+                    badge.innerText = `${res.attended_asal.length} Sesi Hadir di Pelatihan Asal`;
+
+                    if (res.attended_asal.length === 0) {
+                        wadah.innerHTML = `<div class="bg-slate-50 border border-dashed border-slate-200 rounded-2xl p-6 text-center"><p class="text-xs text-slate-500 font-medium">Peserta <b>${email}</b> belum memiliki catatan presensi di <b>${pelAsal}</b>.</p></div>`;
+                        document.getElementById('btnProsesTransfer').disabled = true;
+                        document.getElementById('btnProsesTransfer').classList.add('opacity-50');
+                    } else {
+                        document.getElementById('btnProsesTransfer').disabled = false;
+                        document.getElementById('btnProsesTransfer').classList.remove('opacity-50');
+
+                        const existingSet = new Set(res.existing_tujuan || []);
+                        wadah.innerHTML = res.attended_asal.map((att, idx) => {
+                            const wkt = att.waktu ? new Date(att.waktu) : null;
+                            const wktStr = wkt && !isNaN(wkt.getTime())
+                                ? `${wkt.getDate()}/${wkt.getMonth()+1}/${wkt.getFullYear()} ${String(wkt.getHours()).padStart(2,'0')}:${String(wkt.getMinutes()).padStart(2,'0')}`
+                                : "-";
+
+                            // Cari sesi yang cocok otomatis di Pelatihan Tujuan
+                            const matched = res.sessions_tujuan.find(
+                                s => s.hari.toLowerCase() === att.hari.toLowerCase() && s.sesi.toLowerCase() === att.sesi.toLowerCase()
+                            );
+                            const defaultVal = matched ? `${matched.hari}|||${matched.sesi}` : `${att.hari}|||${att.sesi}`;
+                            const sudahAdaDiTujuan = existingSet.has(defaultVal);
+
+                            const tujuanOpts = res.sessions_tujuan.map(s => {
+                                const val = `${s.hari}|||${s.sesi}`;
+                                const isSel = (val === defaultVal) ? 'selected' : '';
+                                const dupTag = existingSet.has(val) ? ' [Sudah Hadir]' : '';
+                                return `<option value="${val}" ${isSel}>${s.hari} • ${s.sesi}${s.tanggal ? ' (' + s.tanggal + ')' : ''}${dupTag}</option>`;
+                            }).join('');
+
+                            const fallbackOpt = !matched
+                                ? `<option value="${att.hari}|||${att.sesi}" selected>Gunakan Nama Asal: ${att.hari} • ${att.sesi}</option>`
+                                : '';
+
+                            return `
+                            <div class="bg-slate-50/80 border ${sudahAdaDiTujuan ? 'border-amber-300' : 'border-slate-200/90'} p-3.5 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                <label class="flex items-start space-x-2.5 cursor-pointer sm:w-1/2">
+                                    <input type="checkbox" value="${att.rowIndex}" data-idx="${idx}" ${sudahAdaDiTujuan ? '' : 'checked'} class="cek-item-transfer w-4 h-4 mt-0.5 rounded text-oceanBlue shrink-0">
+                                    <div>
+                                        <span class="text-[10px] font-extrabold text-oceanBlue uppercase">Asal: ${pelAsal}</span>
+                                        <p class="text-xs font-extrabold text-slate-800">${att.hari} • ${att.sesi}</p>
+                                        <p class="text-[10px] text-slate-400">Waktu: ${wktStr}</p>
+                                    </div>
+                                </label>
+                                <div class="sm:w-1/2 pl-6 sm:pl-0">
+                                    <label class="text-[9px] font-bold text-slate-400 uppercase block mb-1">Masukkan ke Sesi di ${pelTujuan}:</label>
+                                    <select id="tfTargetSelect_${idx}" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-[11px] font-semibold bg-white">
+                                        ${fallbackOpt}
+                                        ${tujuanOpts}
+                                    </select>
+                                    ${sudahAdaDiTujuan ? `<p class="text-[9px] text-amber-600 font-bold mt-1">Catatan: Sesi ini sudah tercatat hadir di pelatihan tujuan (tidak dicentang otomatis).</p>` : ''}
+                                </div>
+                            </div>`;
+                        }).join('');
+                    }
+                } else {
+                    alert("Gagal memuat data: " + (res.message || ""));
+                }
+            } catch (e) {
+                alert("Kesalahan koneksi saat memeriksa riwayat presensi.");
+            }
+            btn.innerText = teksAsli;
+            btn.disabled = false;
+        }
+
+        function togglePilihSemuaTransfer(masterCb) {
+            document.querySelectorAll('.cek-item-transfer').forEach(cb => { cb.checked = masterCb.checked; });
+        }
+
+        async function eksekusiTransferPresensi(btn) {
+            const pelAsal = document.getElementById('tfPelAsal').value;
+            const pelTujuan = document.getElementById('tfPelTujuan').value;
+            const email = (document.getElementById('tfEmailManual').value || document.getElementById('tfPesertaSelect').value).trim();
+            const modeTransfer = document.getElementById('tfModeTransfer').value;
+
+            const checkedCbs = Array.from(document.querySelectorAll('.cek-item-transfer:checked'));
+            if (checkedCbs.length === 0) return alert("Centang minimal 1 sesi presensi yang ingin ditransfer!");
+
+            const items = checkedCbs.map(cb => {
+                const idx = cb.dataset.idx;
+                const selVal = document.getElementById(`tfTargetSelect_${idx}`).value;
+                const [target_hari, target_sesi] = selVal.split('|||');
+                return {
+                    rowIndex: parseInt(cb.value, 10),
+                    target_hari,
+                    target_sesi
+                };
+            });
+
+            const modeDesc = modeTransfer === 'move'
+                ? 'MEMINDAHKAN (hapus dari pelatihan asal & pindahkan pendaftaran kelas)'
+                : 'MENYALIN (arsip pelatihan asal tetap disimpan)';
+
+            if (!confirm(`Yakin ingin ${modeDesc} sebanyak ${items.length} sesi presensi milik "${email}"\n\nDari: ${pelAsal}\nKe: ${pelTujuan}?`)) return;
+
+            const teksAsli = btn.innerText;
+            btn.innerText = "Memproses Transfer...";
+            btn.disabled = true;
+
+            try {
+                const res = await apiPost({
+                    action: "execute_transfer_presensi",
+                    username: email,
+                    pelatihan_asal: pelAsal,
+                    pelatihan_tujuan: pelTujuan,
+                    mode_transfer: modeTransfer,
+                    items
+                });
+                alert(res.message);
+                if (res.status === "success") {
+                    muatPreviewTransfer(document.querySelector('#adminTransferPresensiScreen button[onclick*="muatPreviewTransfer"]'));
+                }
+            } catch (e) {
+                alert("Gagal memproses transfer presensi.");
+            }
+            btn.innerText = teksAsli;
+            btn.disabled = false;
+        }
+		
 	</script>
 </body>
 </html>
