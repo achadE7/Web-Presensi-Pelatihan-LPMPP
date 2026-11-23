@@ -4887,7 +4887,7 @@
             });
         }
 
-        function cetakHtmlBersih(htmlContent) {
+        function cetakHtmlBersih(htmlContent, beforePrintFn) {
             const win = window.open('', '_blank');
             if (!win) return alert("Pop-up diblokir oleh browser. Mohon izinkan pop-up untuk mencetak PDF.");
             win.document.open();
@@ -4898,6 +4898,9 @@
             const doPrint = () => {
                 if (printed) return;
                 printed = true;
+                try {
+                    if (typeof beforePrintFn === 'function') beforePrintFn(win);
+                } catch (_) {}
                 try { win.focus(); win.print(); } catch (_) {}
             };
 
@@ -5548,36 +5551,45 @@
                 return;
             }
 
-            // --- MODE CETAK / PDF LEMBAR PRESENSI ---
-            // Gunakan maksimal 13 baris per halaman agar aman untuk nama 2 baris + blok TTD Sekretaris tanpa terpotong
-            const perPage = 13;
-            const totalPages = Math.ceil(semuaBaris.length / perPage);
-            let pagesHtml = "";
+            // --- MODE CETAK / PDF LEMBAR PRESENSI (AUTO-PAGINATION BERBASIS TINGGI NYATA A4) ---
             const pelSafe = escapeHtml(pel);
             const hariTglSafe = escapeHtml(hariTglKegiatan);
 
-            for (let pIdx = 0; pIdx < totalPages; pIdx++) {
-                const slice = semuaBaris.slice(pIdx * perPage, (pIdx + 1) * perPage);
-                const startNo = pIdx * perPage + 1;
-                const isFirst = (pIdx === 0);
-                const isLast = (pIdx === totalPages - 1);
+            const allRowsHtml = semuaBaris.map((item, idx) => {
+                const no = idx + 1;
+                const ttdHtml = (no % 2 === 1)
+                    ? `<div style="text-align:left; padding-left:4px;">${no}</div>`
+                    : `<div style="text-align:center;">${no}</div>`;
+                return `
+                <tr>
+                    <td style="text-align:center;">${no}</td>
+                    <td style="padding-left:8px;">${escapeHtml(item.nama)}</td>
+                    <td style="text-align:center;">${escapeHtml(item.unit)}</td>
+                    <td>${ttdHtml}</td>
+                </tr>`;
+            }).join('');
 
-                const rowsHtml = slice.map((item, idx) => {
-                    const no = startNo + idx;
-                    const ttdHtml = (no % 2 === 1)
-                        ? `<div style="text-align:left; padding-left:4px;">${no}</div>`
-                        : `<div style="text-align:center;">${no}</div>`;
-                    return `
-                    <tr>
-                        <td style="text-align:center;">${no}</td>
-                        <td style="padding-left:8px;">${escapeHtml(item.nama)}</td>
-                        <td style="text-align:center;">${escapeHtml(item.unit)}</td>
-                        <td>${ttdHtml}</td>
-                    </tr>`;
-                }).join('');
-
-                pagesHtml += `
-                <div class="page">
+            const html = `<!DOCTYPE html>
+            <html><head><meta charset="UTF-8"><title></title>
+            <style>
+                @page { size: A4 portrait; margin: 0; }
+                * { box-sizing: border-box; }
+                body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; font-size: 10pt; color: #000; background: #fff; }
+                .page { width: 210mm; min-height: 295mm; padding: 11mm 14mm 10mm 16mm; page-break-after: always; }
+                .page:last-child { page-break-after: auto; min-height: auto; }
+                table { border-collapse: collapse; width: 100%; }
+                .form-header td { border: 1px solid #000; vertical-align: middle; }
+                .form-meta { margin-top: -1px; margin-bottom: 8px; }
+                .form-meta td { border: 1px solid #000; padding: 2px 6px; font-size: 8.5pt; }
+                .info-kegiatan { margin: 4px 0 8px 0; font-size: 10.5pt; line-height: 1.3; }
+                .info-kegiatan td { border: none; padding: 1px 4px; }
+                .presensi-table th, .presensi-table td { border: 1px solid #000; padding: 5px 6px; font-size: 10pt; line-height: 1.2; }
+                .presensi-table th { text-align: center; font-weight: normal; height: 30px; }
+                .presensi-table td { height: 40px; }
+                .ttd-sekretaris { width: 270px; margin-left: auto; margin-top: 18px; font-size: 10.5pt; line-height: 1.35; page-break-inside: avoid; }
+            </style></head><body>
+                <div id="probeUsableH" style="position:absolute; visibility:hidden; height:274mm; pointer-events:none;"></div>
+                <div id="presensiStaging" class="page">
                     <table class="form-header">
                         <tr>
                             <td style="width:17%; text-align:center; padding:5px;"><img src="${logos.ulm}" style="width:74px; height:75px; object-fit:contain;" alt="ULM"></td>
@@ -5604,16 +5616,13 @@
                             <td>LPMPP–FRM-SEK-22</td>
                             <td>07</td>
                             <td>${tglTerbitIndo}</td>
-                            <td>${pIdx + 1} dari ${totalPages}</td>
+                            <td class="cell-halaman">1 dari 1</td>
                         </tr>
                     </table>
-
-                    ${isFirst ? `
                     <table class="info-kegiatan">
                         <tr><td style="width:145px;">Hari, Tanggal</td><td style="width:12px;">:</td><td>${hariTglSafe}</td></tr>
                         <tr><td>Nama Kegiatan</td><td>:</td><td>${pelSafe}</td></tr>
-                    </table>` : '<div style="height:10px;"></div>'}
-
+                    </table>
                     <table class="presensi-table">
                         <thead>
                             <tr>
@@ -5623,39 +5632,117 @@
                                 <th style="width:26%;">TANDA TANGAN</th>
                             </tr>
                         </thead>
-                        <tbody>${rowsHtml}</tbody>
+                        <tbody>${allRowsHtml}</tbody>
                     </table>
-
-                    ${isLast ? `
                     <div class="ttd-sekretaris">
                         Sekretaris,<br><br><br><br>
                         Prof. Dr. Arif Sholahuddin, S.Pd., M.Si<br>
                         NIP. 196902141994031003
-                    </div>` : ''}
-                </div>`;
-            }
+                    </div>
+                </div>
+            </body></html>`;
 
-            const html = `<!DOCTYPE html>
-            <html><head><meta charset="UTF-8"><title></title>
-            <style>
-                @page { size: A4 portrait; margin: 0; }
-                * { box-sizing: border-box; }
-                body { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; font-size: 10pt; color: #000; background: #fff; }
-                .page { width: 210mm; min-height: 297mm; padding: 11mm 14mm 10mm 16mm; page-break-after: always; }
-                .page:last-child { page-break-after: auto; }
-                table { border-collapse: collapse; width: 100%; }
-                .form-header td { border: 1px solid #000; vertical-align: middle; }
-                .form-meta { margin-top: -1px; margin-bottom: 8px; }
-                .form-meta td { border: 1px solid #000; padding: 2px 6px; font-size: 8.5pt; }
-                .info-kegiatan { margin: 4px 0 8px 0; font-size: 10.5pt; line-height: 1.3; }
-                .info-kegiatan td { border: none; padding: 1px 4px; }
-                .presensi-table th, .presensi-table td { border: 1px solid #000; padding: 5px 6px; font-size: 10pt; line-height: 1.2; }
-                .presensi-table th { text-align: center; font-weight: normal; height: 30px; }
-                .presensi-table td { height: 38px; }
-                .ttd-sekretaris { width: 270px; margin-left: auto; margin-top: 18px; font-size: 10.5pt; line-height: 1.35; page-break-inside: avoid; }
-            </style></head><body>${pagesHtml}</body></html>`;
+            cetakHtmlBersih(html, (win) => {
+                const doc = win.document;
+                const staging = doc.getElementById('presensiStaging');
+                const probe = doc.getElementById('probeUsableH');
+                if (!staging || !probe) return;
 
-            cetakHtmlBersih(html);
+                const maxH = probe.getBoundingClientRect().height || 1035;
+                const outerH = (el) => {
+                    if (!el) return 0;
+                    const r = el.getBoundingClientRect();
+                    const cs = win.getComputedStyle(el);
+                    return r.height + (parseFloat(cs.marginTop) || 0) + (parseFloat(cs.marginBottom) || 0);
+                };
+
+                const hdrEl = staging.querySelector('.form-header');
+                const metaEl = staging.querySelector('.form-meta');
+                const infoEl = staging.querySelector('.info-kegiatan');
+                const tableEl = staging.querySelector('.presensi-table');
+                const theadEl = tableEl.querySelector('thead');
+                const rowEls = Array.from(tableEl.querySelectorAll('tbody tr'));
+                const ttdEl = staging.querySelector('.ttd-sekretaris');
+
+                const headerBlockH = outerH(hdrEl) + outerH(metaEl);
+                const infoH = outerH(infoEl);
+                const spacerH = 10;
+                const theadH = theadEl.getBoundingClientRect().height;
+                const ttdH = outerH(ttdEl);
+                const rowItems = rowEls.map(el => ({ el, h: el.getBoundingClientRect().height }));
+
+                const pages = [];
+                let curPage = [];
+                let curH = headerBlockH + infoH + theadH;
+
+                for (const item of rowItems) {
+                    if (curPage.length > 0 && curH + item.h > maxH) {
+                        pages.push(curPage);
+                        curPage = [];
+                        curH = headerBlockH + spacerH + theadH;
+                    }
+                    curPage.push(item);
+                    curH += item.h;
+                }
+                if (curPage.length > 0) pages.push(curPage);
+
+                // Pastikan blok TTD Sekretaris muat di halaman terakhir tanpa terpotong
+                if (pages.length > 0) {
+                    const lastIdx = pages.length - 1;
+                    let lastH = headerBlockH + (lastIdx === 0 ? infoH : spacerH) + theadH;
+                    pages[lastIdx].forEach(it => { lastH += it.h; });
+
+                    if (lastH + ttdH > maxH) {
+                        if (pages[lastIdx].length > 2) {
+                            pages.push(pages[lastIdx].splice(-2));
+                        } else if (pages[lastIdx].length > 1) {
+                            pages.push(pages[lastIdx].splice(-1));
+                        } else {
+                            pages.push([]);
+                        }
+                    }
+                }
+
+                const totalPages = Math.max(1, pages.length);
+                const frag = doc.createDocumentFragment();
+
+                pages.forEach((pageRows, pIdx) => {
+                    const pageDiv = doc.createElement('div');
+                    pageDiv.className = 'page';
+
+                    pageDiv.appendChild(hdrEl.cloneNode(true));
+                    const metaClone = metaEl.cloneNode(true);
+                    const halCell = metaClone.querySelector('.cell-halaman');
+                    if (halCell) halCell.textContent = `${pIdx + 1} dari ${totalPages}`;
+                    pageDiv.appendChild(metaClone);
+
+                    if (pIdx === 0) {
+                        pageDiv.appendChild(infoEl.cloneNode(true));
+                    } else {
+                        const sp = doc.createElement('div');
+                        sp.style.height = '10px';
+                        pageDiv.appendChild(sp);
+                    }
+
+                    if (pageRows.length > 0) {
+                        const tbl = doc.createElement('table');
+                        tbl.className = 'presensi-table';
+                        tbl.appendChild(theadEl.cloneNode(true));
+                        const tb = doc.createElement('tbody');
+                        pageRows.forEach(it => tb.appendChild(it.el));
+                        tbl.appendChild(tb);
+                        pageDiv.appendChild(tbl);
+                    }
+
+                    if (pIdx === totalPages - 1) {
+                        pageDiv.appendChild(ttdEl.cloneNode(true));
+                    }
+                    frag.appendChild(pageDiv);
+                });
+
+                doc.body.innerHTML = '';
+                doc.body.appendChild(frag);
+            });
         }
 
         // =========================================================================
