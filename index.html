@@ -51,6 +51,8 @@
         .animate-modal-pop {
             animation: modalPopIn 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
+		.no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="bg-slate-100 min-h-screen flex items-start sm:items-center justify-center p-0 sm:p-4 md:p-6 font-sans text-slate-800 antialiased">
@@ -228,38 +230,27 @@
                     </div>
                 </div>
 
-                <!-- KARTU 2: 3 LINGKARAN STATISTIK OTOMATIS -->
-                <div class="bg-white rounded-3xl p-4 shadow-sm border border-slate-100 grid grid-cols-3 divide-x divide-slate-100">
-                    <div class="flex flex-col items-center px-1">
-                        <div class="relative w-16 h-16 flex items-center justify-center mb-1.5">
-                            <svg class="w-full h-full" viewBox="0 0 36 36">
-                                <circle cx="18" cy="18" r="15" fill="none" stroke="#E0F2FE" stroke-width="3"></circle>
-                                <circle id="ringPersen" class="ring-progress" cx="18" cy="18" r="15" fill="none" stroke="#0284C7" stroke-width="3" stroke-dasharray="94.2" stroke-dashoffset="94.2" stroke-linecap="round"></circle>
-                            </svg>
-                            <span id="statPersenText" class="absolute text-xs font-extrabold text-oceanDark">0%</span>
+                <!-- KARTU 2: 3 LINGKARAN STATISTIK PER PELATIHAN (BISA DIGESER) -->
+                <div class="bg-white rounded-3xl p-4 shadow-sm border border-slate-100">
+                    <div class="flex items-center justify-between gap-2 pb-3 mb-3 border-b border-slate-100">
+                        <button type="button" id="btnStatPrev" onclick="geserStatistik(-1)" title="Pelatihan Sebelumnya" class="hidden w-7 h-7 rounded-full bg-slate-50 hover:bg-sky-50 text-slate-500 hover:text-oceanBlue border border-slate-200/80 flex items-center justify-center shrink-0 transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path></svg>
+                        </button>
+                        <div class="flex-1 min-w-0 text-center">
+                            <div class="flex items-center justify-center gap-1.5 flex-wrap">
+                                <span id="statNamaPelatihan" class="text-xs font-extrabold text-oceanDark truncate max-w-[210px] sm:max-w-[320px]">Statistik Kehadiran</span>
+                                <span id="statBadgePelatihan" class="hidden text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase shrink-0"></span>
+                            </div>
+                            <p id="statHintGeser" class="hidden text-[10px] text-slate-400 font-medium mt-0.5"></p>
                         </div>
-                        <span class="text-[10px] font-semibold text-slate-500">Kehadiran</span>
+                        <button type="button" id="btnStatNext" onclick="geserStatistik(1)" title="Pelatihan Berikutnya" class="hidden w-7 h-7 rounded-full bg-slate-50 hover:bg-sky-50 text-slate-500 hover:text-oceanBlue border border-slate-200/80 flex items-center justify-center shrink-0 transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path></svg>
+                        </button>
                     </div>
-                    <div class="flex flex-col items-center px-1">
-                        <div class="relative w-16 h-16 flex items-center justify-center mb-1.5">
-                            <svg class="w-full h-full" viewBox="0 0 36 36">
-                                <circle cx="18" cy="18" r="15" fill="none" stroke="#E0F2FE" stroke-width="3"></circle>
-                                <circle id="ringHadir" class="ring-progress" cx="18" cy="18" r="15" fill="none" stroke="#10B981" stroke-width="3" stroke-dasharray="94.2" stroke-dashoffset="94.2" stroke-linecap="round"></circle>
-                            </svg>
-                            <span id="statHadirText" class="absolute text-xs font-extrabold text-oceanDark">00</span>
-                        </div>
-                        <span class="text-[10px] font-semibold text-slate-500">Sesi Hadir</span>
-                    </div>
-                    <div class="flex flex-col items-center px-1">
-                        <div class="relative w-16 h-16 flex items-center justify-center mb-1.5">
-                            <svg class="w-full h-full" viewBox="0 0 36 36">
-                                <circle cx="18" cy="18" r="15" fill="none" stroke="#E0F2FE" stroke-width="3"></circle>
-                                <circle id="ringTotal" class="ring-progress" cx="18" cy="18" r="15" fill="none" stroke="#0369A1" stroke-width="3" stroke-dasharray="94.2" stroke-dashoffset="94.2" stroke-linecap="round"></circle>
-                            </svg>
-                            <span id="statTotalText" class="absolute text-xs font-extrabold text-oceanDark">00</span>
-                        </div>
-                        <span class="text-[10px] font-semibold text-slate-500">Total Sesi</span>
-                    </div>
+
+                    <div id="statCarouselTrack" onscroll="onScrollStatistikCarousel()" class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar"></div>
+
+                    <div id="statCarouselDots" class="hidden flex items-center justify-center space-x-1.5 mt-3 pt-1"></div>
                 </div>
 
                 <!-- KARTU 3: GRID MENU IKON 3x2 MODERN SVG -->
@@ -1816,61 +1807,220 @@
             el.className = text ? `text-xs font-semibold text-center mb-3 px-2 ${colorClass}` : "hidden";
         }
 
+        let cachedStatPelatihan = [];
+        let statAktifIndex = 0;
+
+        function buatHtmlSlideStatistik(persen, hadir, total) {
+            const c = 94.2;
+            const offsetPersen = c - (persen / 100) * c;
+            const offsetHadir = total > 0 ? c - (hadir / total) * c : c;
+            const offsetTotal = total > 0 ? 0 : c;
+
+            return `
+            <div class="w-full shrink-0 snap-center grid grid-cols-3 divide-x divide-slate-100">
+                <div class="flex flex-col items-center px-1">
+                    <div class="relative w-16 h-16 flex items-center justify-center mb-1.5">
+                        <svg class="w-full h-full" viewBox="0 0 36 36">
+                            <circle cx="18" cy="18" r="15" fill="none" stroke="#E0F2FE" stroke-width="3"></circle>
+                            <circle class="ring-progress" cx="18" cy="18" r="15" fill="none" stroke="#0284C7" stroke-width="3" stroke-dasharray="94.2" stroke-dashoffset="${offsetPersen}" stroke-linecap="round"></circle>
+                        </svg>
+                        <span class="absolute text-xs font-extrabold text-oceanDark">${persen}%</span>
+                    </div>
+                    <span class="text-[10px] font-semibold text-slate-500">Kehadiran</span>
+                </div>
+                <div class="flex flex-col items-center px-1">
+                    <div class="relative w-16 h-16 flex items-center justify-center mb-1.5">
+                        <svg class="w-full h-full" viewBox="0 0 36 36">
+                            <circle cx="18" cy="18" r="15" fill="none" stroke="#E0F2FE" stroke-width="3"></circle>
+                            <circle class="ring-progress" cx="18" cy="18" r="15" fill="none" stroke="#10B981" stroke-width="3" stroke-dasharray="94.2" stroke-dashoffset="${offsetHadir}" stroke-linecap="round"></circle>
+                        </svg>
+                        <span class="absolute text-xs font-extrabold text-oceanDark">${String(hadir).padStart(2, '0')}</span>
+                    </div>
+                    <span class="text-[10px] font-semibold text-slate-500">Sesi Hadir</span>
+                </div>
+                <div class="flex flex-col items-center px-1">
+                    <div class="relative w-16 h-16 flex items-center justify-center mb-1.5">
+                        <svg class="w-full h-full" viewBox="0 0 36 36">
+                            <circle cx="18" cy="18" r="15" fill="none" stroke="#E0F2FE" stroke-width="3"></circle>
+                            <circle class="ring-progress" cx="18" cy="18" r="15" fill="none" stroke="#0369A1" stroke-width="3" stroke-dasharray="94.2" stroke-dashoffset="${offsetTotal}" stroke-linecap="round"></circle>
+                        </svg>
+                        <span class="absolute text-xs font-extrabold text-oceanDark">${String(total).padStart(2, '0')}</span>
+                    </div>
+                    <span class="text-[10px] font-semibold text-slate-500">Total Sesi</span>
+                </div>
+            </div>`;
+        }
+
+        function updateHeaderStatistik() {
+            const namaEl = document.getElementById('statNamaPelatihan');
+            const badgeEl = document.getElementById('statBadgePelatihan');
+            const hintEl = document.getElementById('statHintGeser');
+            const btnPrev = document.getElementById('btnStatPrev');
+            const btnNext = document.getElementById('btnStatNext');
+            const dotsEl = document.getElementById('statCarouselDots');
+            const totalItem = cachedStatPelatihan.length;
+
+            if (totalItem === 0) {
+                if (namaEl) namaEl.innerText = 'Belum Ada Pelatihan';
+                if (badgeEl) badgeEl.classList.add('hidden');
+                if (hintEl) hintEl.classList.add('hidden');
+                if (btnPrev) btnPrev.classList.add('hidden');
+                if (btnNext) btnNext.classList.add('hidden');
+                if (dotsEl) dotsEl.classList.add('hidden');
+                return;
+            }
+
+            const cur = cachedStatPelatihan[statAktifIndex] || cachedStatPelatihan[0];
+            if (namaEl) {
+                namaEl.innerText = cur.pelatihan;
+                namaEl.title = cur.pelatihan;
+            }
+
+            if (badgeEl) {
+                badgeEl.classList.remove('hidden');
+                if (cur.status === 'aktif') {
+                    badgeEl.innerText = 'Berlangsung';
+                    badgeEl.className = 'text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase shrink-0 bg-emerald-50 text-emerald-600 border border-emerald-200';
+                } else if (cur.status === 'mendatang') {
+                    badgeEl.innerText = 'Akan Datang';
+                    badgeEl.className = 'text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase shrink-0 bg-sky-50 text-oceanBlue border border-sky-200';
+                } else {
+                    badgeEl.innerText = 'Selesai';
+                    badgeEl.className = 'text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase shrink-0 bg-slate-100 text-slate-500 border border-slate-200';
+                }
+            }
+
+            const multi = totalItem > 1;
+            if (btnPrev) {
+                btnPrev.classList.toggle('hidden', !multi);
+                btnPrev.disabled = statAktifIndex <= 0;
+            }
+            if (btnNext) {
+                btnNext.classList.toggle('hidden', !multi);
+                btnNext.disabled = statAktifIndex >= totalItem - 1;
+            }
+            if (hintEl) {
+                hintEl.classList.toggle('hidden', !multi);
+                hintEl.innerText = `Pelatihan ${statAktifIndex + 1} dari ${totalItem} • Geser untuk riwayat lain`;
+            }
+            if (dotsEl) {
+                dotsEl.classList.toggle('hidden', !multi);
+                if (multi) {
+                    dotsEl.innerHTML = cachedStatPelatihan.map((_, i) => `
+                        <button type="button" onclick="geserStatistikKe(${i}, true)" class="h-1.5 rounded-full transition-all cursor-pointer ${i === statAktifIndex ? 'w-5 bg-oceanBlue' : 'w-1.5 bg-slate-200 hover:bg-sky-300'}"></button>
+                    `).join('');
+                }
+            }
+        }
+
+        function geserStatistik(arah) {
+            const target = Math.max(0, Math.min(cachedStatPelatihan.length - 1, statAktifIndex + arah));
+            geserStatistikKe(target, true);
+        }
+
+        function geserStatistikKe(idx, smooth = true) {
+            const track = document.getElementById('statCarouselTrack');
+            if (!track || cachedStatPelatihan.length === 0) return;
+            statAktifIndex = Math.max(0, Math.min(cachedStatPelatihan.length - 1, idx));
+            const targetLeft = statAktifIndex * track.clientWidth;
+            if (smooth) {
+                track.scrollTo({ left: targetLeft, behavior: 'smooth' });
+            } else {
+                track.style.scrollBehavior = 'auto';
+                track.scrollLeft = targetLeft;
+                track.style.scrollBehavior = '';
+            }
+            updateHeaderStatistik();
+        }
+
+        function onScrollStatistikCarousel() {
+            const track = document.getElementById('statCarouselTrack');
+            if (!track || !track.clientWidth || cachedStatPelatihan.length <= 1) return;
+            const idx = Math.max(0, Math.min(cachedStatPelatihan.length - 1, Math.round(track.scrollLeft / track.clientWidth)));
+            if (idx !== statAktifIndex) {
+                statAktifIndex = idx;
+                updateHeaderStatistik();
+            }
+        }
+
         function updateStatistikDashboard(jadwalList, enrolledInfo, realTodayStr, currentTimeMinutes) {
             cachedJadwalPeserta = jadwalList || [];
             cachedEnrolledInfo = enrolledInfo || [];
 
-            // 1. KALKULASI PERSENTASE, SESI HADIR, DAN TOTAL SESI OTOMATIS
-            const total = cachedJadwalPeserta.length;
-            let hadir = 0;
-            cachedJadwalPeserta.forEach(j => { if (j.sudah_hadir) hadir++; });
-            const persen = total > 0 ? Math.round((hadir / total) * 100) : 0;
-            const c = 94.2;
+            // 1. HITUNG STATISTIK PER PELATIHAN (TERURUT KRONOLOGIS: LAMA -> BARU)
+            const pelatihanSedangAktif = new Set();
+            const statList = cachedEnrolledInfo.map(info => {
+                const sesiPel = cachedJadwalPeserta.filter(j => j.pelatihan === info.pelatihan);
+                const total = sesiPel.length;
+                const hadir = sesiPel.filter(j => j.sudah_hadir).length;
+                const persen = total > 0 ? Math.round((hadir / total) * 100) : 0;
 
-            document.getElementById('statPersenText').innerText = `${persen}%`;
-            document.getElementById('statHadirText').innerText = String(hadir).padStart(2, '0');
-            document.getElementById('statTotalText').innerText = String(total).padStart(2, '0');
-            document.getElementById('ringPersen').style.strokeDashoffset = c - (persen / 100) * c;
-            document.getElementById('ringHadir').style.strokeDashoffset = total > 0 ? c - (hadir / total) * c : c;
-            document.getElementById('ringTotal').style.strokeDashoffset = total > 0 ? 0 : c;
+                let tglMulai = "";
+                let tglAkhir = ambilTanggalAkhirPelatihan(info);
+
+                if (info.info_tanggal && info.info_tanggal !== "-") {
+                    const bagianTgl = info.info_tanggal.split("|")[0].trim();
+                    const parsedAwal = parseTglIndo(bagianTgl.split(/\s*-\s*/)[0].trim());
+                    if (parsedAwal) tglMulai = parsedAwal;
+                }
+
+                const validDates = sesiPel.map(s => s.tanggal).filter(t => t && t !== "-").sort();
+                if (validDates.length > 0) {
+                    if (!tglMulai || validDates[0] < tglMulai) tglMulai = validDates[0];
+                    if (!tglAkhir || validDates[validDates.length - 1] > tglAkhir) tglAkhir = validDates[validDates.length - 1];
+                }
+
+                let status = 'selesai';
+                if (tglMulai && tglAkhir) {
+                    if (realTodayStr >= tglMulai && realTodayStr <= tglAkhir) status = 'aktif';
+                    else if (realTodayStr < tglMulai) status = 'mendatang';
+                } else if (tglAkhir) {
+                    status = realTodayStr <= tglAkhir ? 'aktif' : 'selesai';
+                } else if (tglMulai) {
+                    status = realTodayStr >= tglMulai ? 'aktif' : 'mendatang';
+                } else if (sesiPel.length > 0) {
+                    status = 'aktif';
+                }
+
+                if (status === 'aktif') pelatihanSedangAktif.add(info.pelatihan);
+
+                return {
+                    pelatihan: info.pelatihan,
+                    total,
+                    hadir,
+                    persen,
+                    tglMulai,
+                    tglAkhir,
+                    status,
+                    sortKey: tglMulai || tglAkhir || '9999-12-31'
+                };
+            }).sort((a, b) => {
+                const cmp = a.sortKey.localeCompare(b.sortKey);
+                return cmp !== 0 ? cmp : a.pelatihan.localeCompare(b.pelatihan);
+            });
+
+            cachedStatPelatihan = statList;
+            const track = document.getElementById('statCarouselTrack');
+            if (track) {
+                if (statList.length === 0) {
+                    track.innerHTML = buatHtmlSlideStatistik(0, 0, 0);
+                    statAktifIndex = 0;
+                    updateHeaderStatistik();
+                } else {
+                    track.innerHTML = statList.map(s => buatHtmlSlideStatistik(s.persen, s.hadir, s.total)).join('');
+                    // Default buka pelatihan yang sedang aktif; jika tidak ada, buka yang akan datang terdekat atau terakhir diikuti
+                    let defaultIdx = statList.findLastIndex(s => s.status === 'aktif');
+                    if (defaultIdx === -1) defaultIdx = statList.findIndex(s => s.status === 'mendatang');
+                    if (defaultIdx === -1) defaultIdx = statList.length - 1;
+                    statAktifIndex = defaultIdx;
+                    requestAnimationFrame(() => geserStatistikKe(statAktifIndex, false));
+                }
+            }
 
             // 2. STATUS SESI HANYA TAMPIL JIKA PESERTA SEDANG BERADA DALAM PELATIHAN YANG AKTIF
             const wadahStatus = document.getElementById('wadahStatusSesiPelatihan');
             const dotsContainer = document.getElementById('weekStatusDots');
             if (wadahStatus && dotsContainer) {
-                const pelatihanSedangAktif = new Set();
-
-                cachedEnrolledInfo.forEach(info => {
-                    const sesiPel = cachedJadwalPeserta.filter(j => j.pelatihan === info.pelatihan);
-                    let tglMulai = "";
-                    let tglAkhir = ambilTanggalAkhirPelatihan(info);
-
-                    if (info.info_tanggal && info.info_tanggal !== "-") {
-                        const bagianTgl = info.info_tanggal.split("|")[0].trim();
-                        const parsedAwal = parseTglIndo(bagianTgl.split(/\s*-\s*/)[0].trim());
-                        if (parsedAwal) tglMulai = parsedAwal;
-                    }
-
-                    const validDates = sesiPel.map(s => s.tanggal).filter(t => t && t !== "-").sort();
-                    if (validDates.length > 0) {
-                        if (!tglMulai || validDates[0] < tglMulai) tglMulai = validDates[0];
-                        if (!tglAkhir || validDates[validDates.length - 1] > tglAkhir) tglAkhir = validDates[validDates.length - 1];
-                    }
-
-                    let sedangBerjalan = false;
-                    if (tglMulai && tglAkhir) {
-                        sedangBerjalan = (realTodayStr >= tglMulai && realTodayStr <= tglAkhir);
-                    } else if (tglAkhir) {
-                        sedangBerjalan = (realTodayStr <= tglAkhir);
-                    } else if (tglMulai) {
-                        sedangBerjalan = (realTodayStr >= tglMulai);
-                    } else if (sesiPel.length > 0) {
-                        sedangBerjalan = true;
-                    }
-
-                    if (sedangBerjalan) pelatihanSedangAktif.add(info.pelatihan);
-                });
-
                 const sesiAktifTampil = cachedJadwalPeserta.filter(j => pelatihanSedangAktif.has(j.pelatihan));
 
                 if (sesiAktifTampil.length === 0) {
