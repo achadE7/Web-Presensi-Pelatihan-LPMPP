@@ -2871,30 +2871,79 @@
         }
 
         async function pulihkanSesiLogin() {
+            let saved = null;
             try {
                 const raw = localStorage.getItem(SESSION_STORAGE_KEY);
                 if (!raw) return;
-                const saved = JSON.parse(raw);
-                if (!saved || !saved.username || !saved.token || (saved.expiresAt && Date.now() > saved.expiresAt)) {
-                    bersihkanSesiLokal();
-                    return;
+                saved = JSON.parse(raw);
+            } catch (_) {
+                bersihkanSesiLokal();
+                return;
+            }
+
+            if (!saved || !saved.username || (saved.expiresAt && Date.now() > saved.expiresAt)) {
+                bersihkanSesiLokal();
+                return;
+            }
+            if (!saved.token) {
+                bersihkanSesiLokal();
+                const msg = document.getElementById('loginMsg');
+                if (msg) {
+                    msg.innerText = "Pembaruan keamanan sistem diterapkan. Silakan login kembali satu kali.";
+                    msg.classList.remove('hidden');
                 }
-                session.token = saved.token;
+                return;
+            }
+
+            // 1. Pulihkan tampilan dasbor secara instan (tanpa jeda ke layar login saat refresh)
+            session.token = saved.token;
+            session.username = saved.username;
+            session.nama = saved.nama || saved.username;
+            session.gelar_depan = saved.gelar_depan || "";
+            session.gelar_belakang = saved.gelar_belakang || "";
+            session.role = saved.role || "user";
+            session.fakultas = saved.fakultas || "";
+            const prevRole = session.role;
+            masukKeDasborSesuaiRole();
+
+            // 2. Verifikasi token & sinkronkan role/profil secara senyap di latar belakang
+            try {
                 const res = await apiPost({ action: "verify_session" }, { skipAuthRedirect: true });
                 if (res && res.status === "success") {
-                    session.username = res.username || saved.username;
+                    session.username = res.username || session.username;
                     session.nama = res.nama || session.username;
                     session.gelar_depan = res.gelar_depan || "";
                     session.gelar_belakang = res.gelar_belakang || "";
                     session.role = res.role || "user";
                     session.fakultas = res.fakultas || "";
                     simpanSesiLogin();
-                    masukKeDasborSesuaiRole();
-                } else {
+
+                    if (session.role !== prevRole) {
+                        masukKeDasborSesuaiRole();
+                    } else if (session.role === "super_admin" || session.role === "admin") {
+                        const elAdm = document.getElementById('adminNameDisplay');
+                        if (elAdm) elAdm.innerText = session.nama;
+                    } else if (session.role === "operator") {
+                        const elOp = document.getElementById('opNameDisplay');
+                        const elFak = document.getElementById('opFakultasDisplay');
+                        if (elOp) elOp.innerText = session.nama;
+                        if (elFak) elFak.innerText = "Fakultas: " + (session.fakultas || "-");
+                    } else {
+                        const elUsr = document.getElementById('userNameDisplay');
+                        if (elUsr) elUsr.innerText = formatNamaDenganGelar(session.nama, session.gelar_depan, session.gelar_belakang);
+                    }
+                } else if (res && res.code === "UNAUTHORIZED") {
+                    // Hanya logout jika server secara eksplisit menyatakan token tidak valid / expired
                     bersihkanSesiLokal();
+                    tampilLayar('loginScreen');
+                    const msg = document.getElementById('loginMsg');
+                    if (msg) {
+                        msg.innerText = res.message || "Sesi login Anda telah berakhir. Silakan login kembali.";
+                        msg.classList.remove('hidden');
+                    }
                 }
             } catch (_) {
-                bersihkanSesiLokal();
+                // Gangguan jaringan sementara saat refresh: jangan hapus sesi lokal
             }
         }
 
