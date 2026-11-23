@@ -3479,154 +3479,165 @@
 
             const logos = getLogoUrls();
 
-            // --- MODE DOCX ASLI (MENGGUNAKAN DOCX.JS) ---
+            // --- MODE DOCX ASLI (MENGGUNAKAN DOCX.JS - SATU TABEL HEADER UTUH) ---
             if (mode === 'docx' || mode === 'doc') {
                 if (!window.docx) return alert("Library DOCX belum termuat. Pastikan koneksi internet aktif lalu muat ulang halaman.");
                 const {
                     Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
-                    WidthType, BorderStyle, AlignmentType, VerticalAlign, ImageRun, Header, PageBreak, TableLayoutType,
-                    HorizontalPositionRelativeFrom, VerticalPositionRelativeFrom, TextWrappingType
+                    WidthType, BorderStyle, AlignmentType, VerticalAlign, ImageRun, Header, PageNumber, HeightRule, TableLayoutType
                 } = window.docx;
 
-                const [ulmBytes, lpmppBytes, ttdBytes, stempelBytes] = await Promise.all([
+                const [ulmBytes, lpmppBytes] = await Promise.all([
                     fetchLogoBytes(logos.ulm),
-                    fetchLogoBytes(logos.lpmpp),
-                    fetchLogoBytes(logos.ttdKepala),
-                    fetchLogoBytes(logos.stempel)
+                    fetchLogoBytes(logos.lpmpp)
                 ]);
 
                 const noB = { style: BorderStyle.NONE, size: 0, color: "FFFFFF" };
                 const noBorders = { top: noB, bottom: noB, left: noB, right: noB, insideHorizontal: noB, insideVertical: noB };
                 const thinB = { style: BorderStyle.SINGLE, size: 4, color: "000000" };
                 const gridBorders = { top: thinB, bottom: thinB, left: thinB, right: thinB, insideHorizontal: thinB, insideVertical: thinB };
-                const kopBorders = { top: noB, left: noB, right: noB, insideHorizontal: noB, insideVertical: noB, bottom: { style: BorderStyle.SINGLE, size: 24, color: "000000" } };
 
-                const tnr = (text, opts = {}) => new TextRun({ text, font: "Times New Roman", size: 24, ...opts });
-                const arl = (text, sizeHalfPt, bold = false) => new Paragraph({
+                const ar = (text, sizeHalfPt, bold = false) => new TextRun({ text, font: "Arial", size: sizeHalfPt, bold, color: "000000" });
+                const arCenter = (text, sizeHalfPt, bold = false) => new Paragraph({
                     alignment: AlignmentType.CENTER,
-                    spacing: { before: 0, after: 0, line: 240 },
-                    children: [new TextRun({ text, font: "Arial", size: sizeHalfPt, bold })]
+                    spacing: { before: 0, after: 0, line: 230 },
+                    children: [ar(text, sizeHalfPt, bold)]
                 });
 
-                // Header Kop Surat (Otomatis tampil di Halaman 1 & Lampiran)
-                const kopTable = new Table({
-                    width: { size: 9616, type: WidthType.DXA },
+                // SATU TABEL HEADER UTUH (Grid 5 Kolom: 1650 + 2125 + 2245 + 2535 + 1650 = 10205 DXA)
+                const hdrTable = new Table({
+                    width: { size: 10205, type: WidthType.DXA },
+                    columnWidths: [1650, 2125, 2245, 2535, 1650],
                     layout: TableLayoutType.FIXED,
-                    borders: kopBorders,
+                    borders: gridBorders,
                     rows: [
+                        // Baris 1: Logo ULM | Judul Instansi (span 3 = 6905 DXA) | Logo LPMPP
                         new TableRow({
                             children: [
                                 new TableCell({
-                                    width: { size: 1450, type: WidthType.DXA },
+                                    width: { size: 1650, type: WidthType.DXA },
                                     verticalAlign: VerticalAlign.CENTER,
-                                    margins: { top: 0, bottom: 80, left: 0, right: 60 },
+                                    margins: { top: 60, bottom: 60, left: 60, right: 60 },
                                     children: [new Paragraph({
                                         alignment: AlignmentType.CENTER,
                                         spacing: { before: 0, after: 0 },
-                                        children: ulmBytes ? [new ImageRun({ data: ulmBytes, transformation: { width: 92, height: 93 } })] : []
+                                        children: ulmBytes ? [new ImageRun({ data: ulmBytes, transformation: { width: 74, height: 75 } })] : []
                                     })]
                                 }),
                                 new TableCell({
-                                    width: { size: 6566, type: WidthType.DXA },
+                                    columnSpan: 3,
+                                    width: { size: 6905, type: WidthType.DXA },
                                     verticalAlign: VerticalAlign.CENTER,
-                                    margins: { top: 0, bottom: 80, left: 40, right: 40 },
+                                    margins: { top: 60, bottom: 60, left: 40, right: 40 },
                                     children: [
-                                        arl("KEMENTERIAN PENDIDIKAN TINGGI, SAINS,", 28, false),
-                                        arl("DAN TEKNOLOGI", 28, false),
-                                        arl("UNIVERSITAS LAMBUNG MANGKURAT", 28, false),
-                                        arl("LEMBAGA PENJAMINAN MUTU DAN", 28, true),
-                                        arl("PENGEMBANGAN PEMBELAJARAN", 28, true),
-                                        arl("JL. Brigjen. H. Hasan Basry Kotak Pos 219 Telp. (0511) 3305195 Banjarmasin, 70123", 16, false),
-                                        arl("Kampus ULM Banjarbaru Telp. (0511) 6144419 Banjarbaru, 70714", 16, false),
-                                        arl("Email: lpmpp@ulm.ac.id", 20, false)
+                                        arCenter("KEMENTERIAN PENDIDIKAN TINGGI, SAINS DAN TEKNOLOGI", 20, true),
+                                        arCenter("UNIVERSITAS LAMBUNG MANGKURAT", 24, true),
+                                        arCenter("LEMBAGA PENJAMINAN MUTU DAN", 24, true),
+                                        arCenter("PENGEMBANGAN PEMBELAJARAN", 24, true),
+                                        arCenter("(LPMPP)", 24, true)
                                     ]
                                 }),
                                 new TableCell({
-                                    width: { size: 1600, type: WidthType.DXA },
+                                    width: { size: 1650, type: WidthType.DXA },
                                     verticalAlign: VerticalAlign.CENTER,
-                                    margins: { top: 0, bottom: 80, left: 60, right: 0 },
+                                    margins: { top: 60, bottom: 60, left: 60, right: 60 },
                                     children: [new Paragraph({
                                         alignment: AlignmentType.CENTER,
                                         spacing: { before: 0, after: 0 },
-                                        children: lpmppBytes ? [new ImageRun({ data: lpmppBytes, transformation: { width: 105, height: 93 } })] : []
+                                        children: lpmppBytes ? [new ImageRun({ data: lpmppBytes, transformation: { width: 84, height: 75 } })] : []
                                     })]
                                 })
+                            ]
+                        }),
+                        // Baris 2: FORMULIR (span 5 = 10205 DXA)
+                        new TableRow({
+                            children: [
+                                new TableCell({
+                                    columnSpan: 5,
+                                    width: { size: 10205, type: WidthType.DXA },
+                                    margins: { top: 30, bottom: 30, left: 60, right: 60 },
+                                    children: [arCenter("F O R M U L I R", 20, true)]
+                                })
+                            ]
+                        }),
+                        // Baris 3: DAFTAR HADIR KEGIATAN (span 5 = 10205 DXA)
+                        new TableRow({
+                            children: [
+                                new TableCell({
+                                    columnSpan: 5,
+                                    width: { size: 10205, type: WidthType.DXA },
+                                    margins: { top: 40, bottom: 40, left: 60, right: 60 },
+                                    children: [arCenter("DAFTAR HADIR KEGIATAN", 23, true)]
+                                })
+                            ]
+                        }),
+                        // Baris 4: Header Meta (Kode. Dok span 2 = 3775 | Revisi 2245 | Tgl Terbit 2535 | Halaman 1650)
+                        new TableRow({
+                            children: [
+                                new TableCell({ columnSpan: 2, width: { size: 3775, type: WidthType.DXA }, margins: { top: 25, bottom: 25, left: 80, right: 80 }, children: [new Paragraph({ spacing: { before: 0, after: 0 }, children: [ar("Kode. Dok", 17, false)] })] }),
+                                new TableCell({ width: { size: 2245, type: WidthType.DXA }, margins: { top: 25, bottom: 25, left: 80, right: 80 }, children: [new Paragraph({ spacing: { before: 0, after: 0 }, children: [ar("Revisi", 17, false)] })] }),
+                                new TableCell({ width: { size: 2535, type: WidthType.DXA }, margins: { top: 25, bottom: 25, left: 80, right: 80 }, children: [new Paragraph({ spacing: { before: 0, after: 0 }, children: [ar("Tgl Terbit", 17, false)] })] }),
+                                new TableCell({ width: { size: 1650, type: WidthType.DXA }, margins: { top: 25, bottom: 25, left: 80, right: 80 }, children: [new Paragraph({ spacing: { before: 0, after: 0 }, children: [ar("Halaman", 17, false)] })] })
+                            ]
+                        }),
+                        // Baris 5: Isi Meta
+                        new TableRow({
+                            children: [
+                                new TableCell({ columnSpan: 2, width: { size: 3775, type: WidthType.DXA }, margins: { top: 25, bottom: 25, left: 80, right: 80 }, children: [new Paragraph({ spacing: { before: 0, after: 0 }, children: [ar("LPMPP–FRM-SEK-22", 17, false)] })] }),
+                                new TableCell({ width: { size: 2245, type: WidthType.DXA }, margins: { top: 25, bottom: 25, left: 80, right: 80 }, children: [new Paragraph({ spacing: { before: 0, after: 0 }, children: [ar("07", 17, false)] })] }),
+                                new TableCell({ width: { size: 2535, type: WidthType.DXA }, margins: { top: 25, bottom: 25, left: 80, right: 80 }, children: [new Paragraph({ spacing: { before: 0, after: 0 }, children: [ar(tglTerbitIndo, 17, false)] })] }),
+                                new TableCell({ width: { size: 1650, type: WidthType.DXA }, margins: { top: 25, bottom: 25, left: 80, right: 80 }, children: [new Paragraph({
+                                    spacing: { before: 0, after: 0 },
+                                    children: [
+                                        new TextRun({ children: [PageNumber.CURRENT], font: "Arial", size: 17, color: "000000" }),
+                                        ar(" dari ", 17, false),
+                                        new TextRun({ children: [PageNumber.TOTAL_PAGES], font: "Arial", size: 17, color: "000000" })
+                                    ]
+                                })] })
                             ]
                         })
                     ]
                 });
 
-                // Tabel Meta Surat (Nomor, Lampiran, Hal)
-                const metaRow = (lbl, val) => new TableRow({
+                const infoRow = (lbl, val) => new TableRow({
                     children: [
-                        new TableCell({ width: { size: 1450, type: WidthType.DXA }, margins: { top: 20, bottom: 20, left: 0, right: 40 }, children: [new Paragraph({ spacing: { before: 0, after: 0, line: 260 }, children: [tnr(lbl)] })] }),
-                        new TableCell({ width: { size: 220, type: WidthType.DXA }, margins: { top: 20, bottom: 20, left: 0, right: 40 }, children: [new Paragraph({ spacing: { before: 0, after: 0, line: 260 }, children: [tnr(":")] })] }),
-                        new TableCell({ width: { size: 7946, type: WidthType.DXA }, margins: { top: 20, bottom: 20, left: 0, right: 0 }, children: [new Paragraph({ spacing: { before: 0, after: 0, line: 260 }, children: [tnr(val)] })] })
+                        new TableCell({ width: { size: 2300, type: WidthType.DXA }, margins: { top: 20, bottom: 20, left: 40, right: 40 }, children: [new Paragraph({ spacing: { before: 0, after: 0 }, children: [ar(lbl, 21, false)] })] }),
+                        new TableCell({ width: { size: 250, type: WidthType.DXA }, margins: { top: 20, bottom: 20, left: 0, right: 40 }, children: [new Paragraph({ spacing: { before: 0, after: 0 }, children: [ar(":", 21, false)] })] }),
+                        new TableCell({ width: { size: 7655, type: WidthType.DXA }, margins: { top: 20, bottom: 20, left: 0, right: 0 }, children: [new Paragraph({ spacing: { before: 0, after: 0 }, children: [ar(val, 21, false)] })] })
                     ]
                 });
 
-                // Tabel Pelaksanaan Kegiatan
-                const kegiatanTable = new Table({
-                    width: { size: 9616, type: WidthType.DXA },
-                    layout: TableLayoutType.FIXED,
-                    borders: gridBorders,
-                    rows: [
-                        new TableRow({
-                            children: [
-                                ["Nama Kegiatan", 3366], ["Tanggal", 2400], ["Tempat", 1950], ["Waktu", 1900]
-                            ].map(([txt, w]) => new TableCell({
-                                width: { size: w, type: WidthType.DXA },
-                                verticalAlign: VerticalAlign.CENTER,
-                                margins: { top: 80, bottom: 80, left: 100, right: 100 },
-                                children: [new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 0, after: 0 }, children: [tnr(txt, { bold: true })] })]
-                            }))
-                        }),
-                        new TableRow({
-                            children: [
-                                [pel, 3366, AlignmentType.LEFT],
-                                [tglPelaksanaan, 2400, AlignmentType.CENTER],
-                                [tempat, 1950, AlignmentType.CENTER],
-                                [waktu, 1900, AlignmentType.CENTER]
-                            ].map(([txt, w, al]) => new TableCell({
-                                width: { size: w, type: WidthType.DXA },
-                                verticalAlign: VerticalAlign.CENTER,
-                                margins: { top: 80, bottom: 80, left: 100, right: 100 },
-                                children: [new Paragraph({ alignment: al, spacing: { before: 0, after: 0 }, children: [tnr(txt)] })]
-                            }))
-                        })
-                    ]
-                });
-
-                // Tabel Lampiran Info
-                const lampiranMetaRow = (lbl, val) => new TableRow({
-                    children: [
-                        new TableCell({ width: { size: 2400, type: WidthType.DXA }, margins: { top: 20, bottom: 20, left: 0, right: 40 }, children: [new Paragraph({ spacing: { before: 0, after: 0 }, children: [tnr(lbl)] })] }),
-                        new TableCell({ width: { size: 250, type: WidthType.DXA }, margins: { top: 20, bottom: 20, left: 0, right: 40 }, children: [new Paragraph({ spacing: { before: 0, after: 0 }, children: [tnr(":")] })] }),
-                        new TableCell({ width: { size: 6966, type: WidthType.DXA }, margins: { top: 20, bottom: 20, left: 0, right: 0 }, children: [new Paragraph({ spacing: { before: 0, after: 0 }, children: [tnr(val)] })] })
-                    ]
-                });
-
-                // Tabel Peserta Lampiran
-                const pesertaRows = [
+                const presensiRows = [
                     new TableRow({
                         tableHeader: true,
+                        height: { value: 450, rule: HeightRule.ATLEAST },
                         children: [
-                            ["No.", 720], ["Nama", 6096], ["Fakultas", 2800]
+                            ["NO", 715], ["NAMA", 4690], ["UNIT KERJA", 2150], ["TANDA TANGAN", 2650]
                         ].map(([txt, w]) => new TableCell({
                             width: { size: w, type: WidthType.DXA },
                             verticalAlign: VerticalAlign.CENTER,
-                            margins: { top: 70, bottom: 70, left: 100, right: 100 },
-                            children: [new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 0, after: 0 }, children: [tnr(txt, { bold: true })] })]
+                            margins: { top: 60, bottom: 60, left: 80, right: 80 },
+                            children: [arCenter(txt, 20, false)]
                         }))
                     }),
-                    ...listApproved.map((p, idx) => new TableRow({
-                        cantSplit: true,
-                        children: [
-                            new TableCell({ width: { size: 720, type: WidthType.DXA }, verticalAlign: VerticalAlign.CENTER, margins: { top: 55, bottom: 55, left: 80, right: 80 }, children: [new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 0, after: 0 }, children: [tnr(String(idx + 1))] })] }),
-                            new TableCell({ width: { size: 6096, type: WidthType.DXA }, verticalAlign: VerticalAlign.CENTER, margins: { top: 55, bottom: 55, left: 100, right: 100 }, children: [new Paragraph({ spacing: { before: 0, after: 0 }, children: [tnr(p.nama)] })] }),
-                            new TableCell({ width: { size: 2800, type: WidthType.DXA }, verticalAlign: VerticalAlign.CENTER, margins: { top: 55, bottom: 55, left: 80, right: 80 }, children: [new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 0, after: 0 }, children: [tnr(p.fakultas)] })] })
-                        ]
-                    }))
+                    ...semuaBaris.map((item, idx) => {
+                        const no = idx + 1;
+                        const isOdd = (no % 2 === 1);
+                        return new TableRow({
+                            cantSplit: true,
+                            height: { value: 650, rule: HeightRule.ATLEAST },
+                            children: [
+                                new TableCell({ width: { size: 715, type: WidthType.DXA }, verticalAlign: VerticalAlign.CENTER, margins: { top: 80, bottom: 80, left: 60, right: 60 }, children: [arCenter(String(no), 20, false)] }),
+                                new TableCell({ width: { size: 4690, type: WidthType.DXA }, verticalAlign: VerticalAlign.CENTER, margins: { top: 80, bottom: 80, left: 100, right: 80 }, children: [new Paragraph({ spacing: { before: 0, after: 0 }, children: [ar(item.nama, 20, false)] })] }),
+                                new TableCell({ width: { size: 2150, type: WidthType.DXA }, verticalAlign: VerticalAlign.CENTER, margins: { top: 80, bottom: 80, left: 60, right: 60 }, children: [arCenter(item.unit, 20, false)] }),
+                                new TableCell({ width: { size: 2650, type: WidthType.DXA }, verticalAlign: VerticalAlign.CENTER, margins: { top: 80, bottom: 80, left: 100, right: 80 }, children: [new Paragraph({
+                                    alignment: isOdd ? AlignmentType.LEFT : AlignmentType.CENTER,
+                                    spacing: { before: 0, after: 0 },
+                                    children: [ar(String(no), 20, false)]
+                                })] })
+                            ]
+                        });
+                    })
                 ];
 
                 const doc = new Document({
@@ -3634,85 +3645,33 @@
                         properties: {
                             page: {
                                 size: { width: 11906, height: 16838 },
-                                margin: { top: 2650, right: 850, bottom: 900, left: 1440, header: 567 }
+                                margin: { top: 3150, right: 794, bottom: 680, left: 907, header: 450 }
                             }
                         },
-                        headers: { default: new Header({ children: [kopTable] }) },
-                        children: [
-                            new Paragraph({ alignment: AlignmentType.RIGHT, spacing: { before: 0, after: 120, line: 260 }, children: [tnr(`Banjarmasin, ${tglSuratIndo}`)] }),
-                            new Table({ width: { size: 9616, type: WidthType.DXA }, layout: TableLayoutType.FIXED, borders: noBorders, rows: [
-                                metaRow("Nomor", nomorLengkap),
-                                metaRow("Lampiran", "1 (satu) berkas"),
-                                metaRow("Hal", `Daftar Peserta Kegiatan ${pel}`)
-                            ]}),
-                            new Paragraph({ spacing: { before: 220, after: 0, line: 260 }, children: [tnr("Kepada Yth,")] }),
-                            new Paragraph({ spacing: { before: 0, after: 0, line: 260 }, children: [tnr("Dekan Fakultas")] }),
-                            new Paragraph({ spacing: { before: 0, after: 0, line: 260 }, children: [tnr("Universitas Lambung Mangkurat")] }),
-                            new Paragraph({ spacing: { before: 0, after: 0, line: 260 }, children: [tnr("di-")] }),
-                            new Paragraph({ indent: { left: 450 }, spacing: { before: 0, after: 220, line: 260 }, children: [tnr("Banjarmasin/Banjarbaru")] }),
-                            new Paragraph({ spacing: { before: 0, after: 200, line: 260 }, children: [tnr("Dengan Hormat,")] }),
-                            new Paragraph({ alignment: AlignmentType.JUSTIFIED, spacing: { before: 0, after: 180, line: 260 }, children: [
-                                tnr(`Berikut kami kirimkan daftar Peserta ${pel} tanggal ${tglPelaksanaan} (terlampir) yang akan dilaksanakan pada:`)
-                            ]}),
-                            kegiatanTable,
-                            new Paragraph({ alignment: AlignmentType.JUSTIFIED, spacing: { before: 200, after: 180, line: 260 }, children: [
-                                tnr("Peserta yang telah terdaftar "),
-                                tnr("Wajib", { bold: true }),
-                                tnr(" registrasi ulang melalui link https://siplpmpp.my.id/ dan bergabung ke "),
-                                tnr("WhatsApp", { italics: true }),
-                                tnr(" grup untuk memudahkan koordinasi selama kegiatan berlangsung.")
-                            ]}),
-                            new Paragraph({ alignment: AlignmentType.JUSTIFIED, spacing: { before: 0, after: 360, line: 260 }, children: [
-                                tnr("Demikian pemberitahuan ini disampaikan, atas perhatian dan kerjasamanya diucapkan terima kasih.")
-                            ]}),
-                            new Paragraph({
-                                indent: { left: 5900 },
-                                spacing: { before: 120, after: 0, line: 260 },
+                        headers: {
+                            default: new Header({
                                 children: [
-                                    ...(stempelBytes ? [new ImageRun({
-                                        data: stempelBytes,
-                                        transformation: { width: 124, height: 125 },
-                                        floating: {
-                                            horizontalPosition: { relative: HorizontalPositionRelativeFrom.COLUMN, offset: 3060700 },
-                                            verticalPosition: { relative: VerticalPositionRelativeFrom.PARAGRAPH, offset: 0 },
-                                            behindDocument: true,
-                                            allowOverlap: true,
-                                            wrap: { type: TextWrappingType.NONE }
-                                        }
-                                    })] : []),
-                                    ...(ttdBytes ? [new ImageRun({
-                                        data: ttdBytes,
-                                        transformation: { width: 162, height: 81 },
-                                        floating: {
-                                            horizontalPosition: { relative: HorizontalPositionRelativeFrom.COLUMN, offset: 3826500 },
-                                            verticalPosition: { relative: VerticalPositionRelativeFrom.PARAGRAPH, offset: 145000 },
-                                            behindDocument: true,
-                                            allowOverlap: true,
-                                            wrap: { type: TextWrappingType.NONE }
-                                        }
-                                    })] : []),
-                                    tnr("Kepala,")
+                                    hdrTable,
+                                    new Paragraph({ spacing: { before: 0, after: 80 }, children: [new TextRun({ text: "", size: 4 })] })
                                 ]
-                            }),
-                            new Paragraph({ indent: { left: 5900 }, spacing: { before: 1280, after: 0, line: 260 }, children: [tnr("AGUNG NUGROHO", { bold: true })] }),
-                            new Paragraph({ indent: { left: 5900 }, spacing: { before: 0, after: 0, line: 260 }, children: [tnr("NIP 198307192008011005")] }),
-
-                            // HALAMAN 2: LAMPIRAN
-                            new Paragraph({ children: [new PageBreak()] }),
-                            new Paragraph({ spacing: { before: 0, after: 100, line: 260 }, children: [tnr("Lampiran")] }),
-                            new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 0, after: 180, line: 260 }, children: [tnr("DAFTAR PESERTA", { bold: true })] }),
-                            new Table({ width: { size: 9616, type: WidthType.DXA }, layout: TableLayoutType.FIXED, borders: noBorders, rows: [
-                                lampiranMetaRow("Kegiatan", pel),
-                                lampiranMetaRow("Tanggal Pelaksanaan", tglPelaksanaan)
+                            })
+                        },
+                        children: [
+                            new Table({ width: { size: 10205, type: WidthType.DXA }, columnWidths: [2300, 250, 7655], layout: TableLayoutType.FIXED, borders: noBorders, rows: [
+                                infoRow("Hari, Tanggal", hariTglKegiatan),
+                                infoRow("Nama Kegiatan", pel)
                             ]}),
-                            new Paragraph({ spacing: { before: 140, after: 0 }, children: [] }),
-                            new Table({ width: { size: 9616, type: WidthType.DXA }, layout: TableLayoutType.FIXED, borders: gridBorders, rows: pesertaRows })
+                            new Paragraph({ spacing: { before: 100, after: 0 }, children: [] }),
+                            new Table({ width: { size: 10205, type: WidthType.DXA }, columnWidths: [715, 4690, 2150, 2650], layout: TableLayoutType.FIXED, borders: gridBorders, rows: presensiRows }),
+                            new Paragraph({ indent: { left: 5700 }, spacing: { before: 320, after: 0, line: 260 }, children: [ar("Sekretaris,", 21, false)] }),
+                            new Paragraph({ indent: { left: 5700 }, spacing: { before: 840, after: 0, line: 260 }, children: [ar("Prof. Dr. Arif Sholahuddin, S.Pd., M.Si", 21, false)] }),
+                            new Paragraph({ indent: { left: 5700 }, spacing: { before: 0, after: 0, line: 260 }, children: [ar("NIP. 196902141994031003", 21, false)] })
                         ]
                     }]
                 });
 
                 const blob = await Packer.toBlob(doc);
-                unduhBlobFile(blob, `Surat_Balasan_${pel.replace(/[^a-zA-Z0-9]/g, '_')}.docx`);
+                unduhBlobFile(blob, `Lembar_Presensi_${pel.replace(/[^a-zA-Z0-9]/g, '_')}.docx`);
                 return;
             }
 
