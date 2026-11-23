@@ -184,7 +184,7 @@
                         <button type="button" onclick="bukaHalamanProfil()" title="Profil" class="w-9 h-9 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center">
                             <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                         </button>
-                        <button type="button" onclick="location.reload()" title="Keluar" class="w-9 h-9 rounded-full bg-white/15 hover:bg-red-500/80 flex items-center justify-center">
+                        <button type="button" onclick="logout()" title="Keluar" class="w-9 h-9 rounded-full bg-white/15 hover:bg-red-500/80 flex items-center justify-center">
                             <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                         </button>
                     </div>
@@ -615,7 +615,7 @@
                         <h2 id="adminNameDisplay" class="text-xl font-extrabold tracking-tight">Admin</h2>
                     </div>
                 </div>
-                <button type="button" onclick="location.reload()" class="bg-white/15 hover:bg-rose-500 text-white border border-white/25 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center space-x-2 transition-all cursor-pointer shrink-0">
+                <button type="button" onclick="logout()" class="bg-white/15 hover:bg-rose-500 text-white border border-white/25 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center space-x-2 transition-all cursor-pointer shrink-0">
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                     <span>Keluar</span>
                 </button>
@@ -1368,7 +1368,8 @@
                     <h2 id="opNameDisplay" class="text-xl font-extrabold tracking-tight">Nama Operator</h2>
                     <p id="opFakultasDisplay" class="text-xs text-sky-100 font-semibold mt-0.5">Fakultas</p>
                 </div>
-                <button type="button" onclick="location.reload()" class="bg-white/15 hover:bg-rose-500 text-white border border-white/25 px-4 py-2.5 rounded-xl text-xs font-bold cursor-pointer shrink-0">Keluar</button>
+                <button type="button" onclick="logout()" class="bg-white/15 hover:bg-rose-500 text-white border border-white/25 px-4 py-2.5 rounded-xl text-xs font-bold cursor-pointer shrink-0">Keluar</button>
+```
             </div>
 
             <!-- FORM AJUKAN CALON PESERTA -->
@@ -2282,39 +2283,83 @@
             `).join('');
         }
 
-        async function login() { 
-            const user = document.getElementById('username').value.trim(), pass = document.getElementById('password').value; 
-            const msg = document.getElementById('loginMsg'), btn = document.getElementById('btnLogin'); 
+        const SESSION_STORAGE_KEY = "siplpmpp_user_session";
+        const SESSION_DURATION_MS = 7 * 24 * 60 * 60 * 1000; // Masa aktif sesi: 7 hari
+
+        function simpanSesiLogin() {
+            try {
+                const dataSesi = {
+                    username: session.username,
+                    nama: session.nama,
+                    role: session.role,
+                    fakultas: session.fakultas,
+                    expiresAt: Date.now() + SESSION_DURATION_MS
+                };
+                localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(dataSesi));
+            } catch (_) {}
+        }
+
+        function masukKeDasborSesuaiRole() {
+            if (session.role === "super_admin" || session.role === "admin") {
+                document.getElementById('adminNameDisplay').innerText = session.nama;
+                const isSuper = (session.role === "super_admin");
+                document.getElementById('adminRoleBadge').innerText = isSuper ? "Super Administrator" : "Administrator";
+                document.querySelectorAll('.super-admin-only').forEach(el => el.classList.toggle('hidden', !isSuper));
+                if (document.getElementById('subLabelJadwalAdmin')) {
+                    document.getElementById('subLabelJadwalAdmin').innerText = isSuper ? "Kelola Sesi & Kelas" : "Lihat Jadwal Pelatihan";
+                }
+                tampilLayar('adminScreen');
+            } else if (session.role === "operator") {
+                document.getElementById('opNameDisplay').innerText = session.nama;
+                document.getElementById('opFakultasDisplay').innerText = "Fakultas: " + (session.fakultas || "-");
+                tampilLayar('operatorScreen');
+                muatPelatihanOperator();
+            } else {
+                tampilLayar('presensiScreen');
+                cekJadwalKeamananTinggi();
+            }
+        }
+
+        function pulihkanSesiLogin() {
+            try {
+                const raw = localStorage.getItem(SESSION_STORAGE_KEY);
+                if (!raw) return;
+                const saved = JSON.parse(raw);
+                if (!saved || !saved.username || (saved.expiresAt && Date.now() > saved.expiresAt)) {
+                    localStorage.removeItem(SESSION_STORAGE_KEY);
+                    return;
+                }
+                session.username = saved.username;
+                session.nama = saved.nama || saved.username;
+                session.role = saved.role || "user";
+                session.fakultas = saved.fakultas || "";
+                masukKeDasborSesuaiRole();
+            } catch (_) {
+                try { localStorage.removeItem(SESSION_STORAGE_KEY); } catch (__) {}
+            }
+        }
+
+        function logout() {
+            try { localStorage.removeItem(SESSION_STORAGE_KEY); } catch (_) {}
+            location.reload();
+        }
+
+        async function login() {
+            const user = document.getElementById('username').value.trim(), pass = document.getElementById('password').value;
+            const msg = document.getElementById('loginMsg'), btn = document.getElementById('btnLogin');
             if (!user || !pass) { msg.innerText = "Mohon isi Email dan Kata Sandi terlebih dahulu!"; msg.classList.remove('hidden'); return; }
-            btn.innerText = "Sinkronisasi..."; btn.disabled = true; msg.classList.add('hidden'); 
-            try { 
-                const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "login", username: user, password: pass }) })).json(); 
-                if (res.status === "success") { 
-                    session.username = user; 
-                    session.nama = res.nama || user; 
+            btn.innerText = "Sinkronisasi..."; btn.disabled = true; msg.classList.add('hidden');
+            try {
+                const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "login", username: user, password: pass }) })).json();
+                if (res.status === "success") {
+                    session.username = user;
+                    session.nama = res.nama || user;
                     session.role = res.role || "user";
                     session.fakultas = res.fakultas || "";
-
-                    if (session.role === "super_admin" || session.role === "admin") {
-                        document.getElementById('adminNameDisplay').innerText = session.nama;
-                        const isSuper = (session.role === "super_admin");
-                        document.getElementById('adminRoleBadge').innerText = isSuper ? "Super Administrator" : "Administrator";
-                        document.querySelectorAll('.super-admin-only').forEach(el => el.classList.toggle('hidden', !isSuper));
-                        if (document.getElementById('subLabelJadwalAdmin')) {
-                            document.getElementById('subLabelJadwalAdmin').innerText = isSuper ? "Kelola Sesi & Kelas" : "Lihat Jadwal Pelatihan";
-                        }
-                        tampilLayar('adminScreen');
-                    } else if (session.role === "operator") {
-                        document.getElementById('opNameDisplay').innerText = session.nama;
-                        document.getElementById('opFakultasDisplay').innerText = "Fakultas: " + (session.fakultas || "-");
-                        tampilLayar('operatorScreen');
-                        muatPelatihanOperator();
-                    } else { 
-                        tampilLayar('presensiScreen'); 
-                        cekJadwalKeamananTinggi(); 
-                    } 
-                } else { msg.innerText = res.message; msg.classList.remove('hidden'); } 
-            } catch (e) { msg.innerText = "Gagal menghubungi server."; msg.classList.remove('hidden'); } 
+                    simpanSesiLogin();
+                    masukKeDasborSesuaiRole();
+                } else { msg.innerText = res.message; msg.classList.remove('hidden'); }
+            } catch (e) { msg.innerText = "Gagal menghubungi server."; msg.classList.remove('hidden'); }
             btn.innerText = "Masuk Ke Aplikasi"; btn.disabled = false;
         }
 		
@@ -2819,7 +2864,7 @@
 
         async function bukaHalamanProfil() { tampilLayar('userProfileScreen'); const btn = document.getElementById('btnSubmitEdit'); btn.innerText = "Memuat Data..."; btn.disabled = true; try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify({ action: "get_user_profile", username: session.username }) })).json(); if(res.status === "success") { const d = res.data; document.getElementById('editNama').value = d.nama; cekGelarPadaNama('edit', true); document.getElementById('editGelarDepan').value = d.gelar_depan || ""; document.getElementById('editGelarBelakang').value = d.gelar_belakang || ""; document.getElementById('editUser').value = d.username; document.getElementById('editPass').value = d.password; document.getElementById('editHP').value = d.hp; document.getElementById('editNIP').value = d.nip; document.getElementById('editNIDN').value = d.nidn; document.getElementById('editNUPTK').value = d.nuptk || ""; document.getElementById('editTempatLahir').value = d.tempat_lahir; let tgl = d.tanggal_lahir; if(tgl && tgl.includes('T')) tgl = tgl.split('T')[0]; document.getElementById('editTanggalLahir').value = tgl; document.getElementById('editStatusPegawai').value = d.status_pegawai; document.getElementById('editJK').value = d.jk; document.getElementById('editPangkat').value = d.pangkat; document.getElementById('editJabatan').value = d.jabatan; document.getElementById('editInstansi').value = d.instansi; document.getElementById('editNamaInstansi').value = d.nama_instansi; document.getElementById('editFakultas').value = d.fakultas; updateProdi('edit'); if(d.fakultas === "Lainnya") document.getElementById('editProdiInput').value = d.prodi; else document.getElementById('editProdiSelect').value = d.prodi; document.getElementById('editPendidikan').value = d.pendidikan; document.getElementById('editAlamat').value = d.alamat; } else { alert("Gagal memuat profil: " + res.message); tampilLayar('presensiScreen'); } } catch(e) { alert("Koneksi gagal."); tampilLayar('presensiScreen'); } btn.innerText = "Simpan Perubahan Biodata"; btn.disabled = false; }
 
-        async function prosesUpdateProfil() { const fakVal = document.getElementById('editFakultas').value; const prodiVal = (fakVal === "Lainnya") ? document.getElementById('editProdiInput').value : document.getElementById('editProdiSelect').value; const data = { action: "update_user_profile", nama: document.getElementById('editNama').value, gelar_depan: document.getElementById('editGelarDepan').value, gelar_belakang: document.getElementById('editGelarBelakang').value, username: document.getElementById('editUser').value, password: document.getElementById('editPass').value, nip: document.getElementById('editNIP').value, nidn: document.getElementById('editNIDN').value, nuptk: document.getElementById('editNUPTK').value, tempat_lahir: document.getElementById('editTempatLahir').value, tanggal_lahir: document.getElementById('editTanggalLahir').value, status_pegawai: document.getElementById('editStatusPegawai').value, jk: document.getElementById('editJK').value, pangkat: document.getElementById('editPangkat').value, jabatan: document.getElementById('editJabatan').value, instansi: document.getElementById('editInstansi').value, nama_instansi: document.getElementById('editNamaInstansi').value, fakultas: fakVal, prodi: prodiVal, pendidikan: document.getElementById('editPendidikan').value, hp: document.getElementById('editHP').value, alamat: document.getElementById('editAlamat').value }; const btn = document.getElementById('btnSubmitEdit'); if(!data.nama.trim() || !data.password || !data.nip.trim() || !data.nidn.trim() || !data.nuptk.trim() || !data.status_pegawai || !data.jk || !data.fakultas || !data.prodi) return alert("Kolom bertanda bintang (*) tidak boleh dikosongkan, termasuk NIP, NIDN/NIDK (isi angka 0 jika tidak memiliki), dan NUPTK."); if (deteksiGelar(data.nama)) { cekGelarPadaNama('edit', true); tampilModalPeringatanGelar('edit'); return; } btn.innerText = "Memperbarui Biodata..."; btn.disabled = true; try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify(data) })).json(); if (res.status === "success") { alert("✅ Biodata berhasil diperbarui!"); session.nama = data.nama; tampilLayar('presensiScreen'); cekJadwalKeamananTinggi(); } else alert("❌ Gagal: " + res.message); } catch(e) { alert("Kesalahan koneksi."); } btn.innerText = "Simpan Perubahan Biodata"; btn.disabled = false; }
+        async function prosesUpdateProfil() { const fakVal = document.getElementById('editFakultas').value; const prodiVal = (fakVal === "Lainnya") ? document.getElementById('editProdiInput').value : document.getElementById('editProdiSelect').value; const data = { action: "update_user_profile", nama: document.getElementById('editNama').value, gelar_depan: document.getElementById('editGelarDepan').value, gelar_belakang: document.getElementById('editGelarBelakang').value, username: document.getElementById('editUser').value, password: document.getElementById('editPass').value, nip: document.getElementById('editNIP').value, nidn: document.getElementById('editNIDN').value, nuptk: document.getElementById('editNUPTK').value, tempat_lahir: document.getElementById('editTempatLahir').value, tanggal_lahir: document.getElementById('editTanggalLahir').value, status_pegawai: document.getElementById('editStatusPegawai').value, jk: document.getElementById('editJK').value, pangkat: document.getElementById('editPangkat').value, jabatan: document.getElementById('editJabatan').value, instansi: document.getElementById('editInstansi').value, nama_instansi: document.getElementById('editNamaInstansi').value, fakultas: fakVal, prodi: prodiVal, pendidikan: document.getElementById('editPendidikan').value, hp: document.getElementById('editHP').value, alamat: document.getElementById('editAlamat').value }; const btn = document.getElementById('btnSubmitEdit'); if(!data.nama.trim() || !data.password || !data.nip.trim() || !data.nidn.trim() || !data.nuptk.trim() || !data.status_pegawai || !data.jk || !data.fakultas || !data.prodi) return alert("Kolom bertanda bintang (*) tidak boleh dikosongkan, termasuk NIP, NIDN/NIDK (isi angka 0 jika tidak memiliki), dan NUPTK."); if (deteksiGelar(data.nama)) { cekGelarPadaNama('edit', true); tampilModalPeringatanGelar('edit'); return; } btn.innerText = "Memperbarui Biodata..."; btn.disabled = true; try { const res = await (await fetch(API_URL, { method: "POST", body: JSON.stringify(data) })).json(); if (res.status === "success") { alert("✅ Biodata berhasil diperbarui!"); session.nama = data.nama; simpanSesiLogin(); tampilLayar('presensiScreen'); cekJadwalKeamananTinggi(); } else alert("❌ Gagal: " + res.message); } catch(e) { alert("Kesalahan koneksi."); } btn.innerText = "Simpan Perubahan Biodata"; btn.disabled = false; }
 
         function formatInfoBoxHtml(infoStr) {
             if (!infoStr || infoStr === "-") return `<p class="text-[11px] text-slate-400 italic mb-3">Jadwal & keterangan menyusul</p>`;
@@ -4776,6 +4821,8 @@
             btn.innerText = teksAsli;
             btn.disabled = false;
         }
+		
+		pulihkanSesiLogin();
 		
 	</script>
 </body>
