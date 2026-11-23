@@ -168,12 +168,17 @@
         </div>
 
         <!-- LAYER 4: DASHBOARD PESERTA -->
-        <div id="presensiScreen" class="hidden flex flex-col w-full">
-            <div class="ocean-header px-6 pt-7 pb-12 text-white relative z-30 shadow-md">
-                <div class="flex justify-between items-start gap-2 mb-2">
-                    <div class="min-w-0">
-                        <span class="text-xl font-extrabold tracking-tight block">SIP LPMPP</span>
-                        <p id="userNameDisplay" class="text-xs text-sky-100 font-medium leading-snug mt-0.5 max-w-[230px] sm:max-w-[380px] break-words">Nama Peserta</p>
+        <div id="presensiScreen" class="hidden flex flex-col w-full relative">
+            <div class="ocean-header px-5 sm:px-6 pt-6 pb-14 text-white relative shadow-md">
+                <div class="flex justify-between items-center gap-3">
+                    <div class="flex items-center space-x-3 min-w-0">
+                        <div class="w-11 h-11 rounded-xl bg-white/95 p-1.5 flex items-center justify-center shadow-sm shrink-0">
+                            <img src="logo-lpmpp.png" onerror="this.onerror=null; this.src='https://i.ibb.co.com/KphQrZDB/Logo-LPMPP-ULM.png';" alt="Logo LPMPP" class="w-full h-full object-contain">
+                        </div>
+                        <div class="min-w-0">
+                            <span class="text-sm sm:text-base md:text-lg font-extrabold tracking-tight leading-tight block">Sistem Informasi Pelatihan LPMPP</span>
+                            <p id="userNameDisplay" class="text-[11px] sm:text-xs text-sky-100 font-medium leading-snug mt-0.5 break-words">Nama Peserta</p>
+                        </div>
                     </div>
                     <div class="flex items-center space-x-2 shrink-0">
                         <!-- TOMBOL LONCENG NOTIFIKASI (DROPDOWN) -->
@@ -189,25 +194,25 @@
                         </button>
                     </div>
                 </div>
+            </div>
 
-                <!-- DROPDOWN NOTIFIKASI GAYA FACEBOOK -->
-                <div id="notifDropdown" class="hidden absolute right-4 sm:right-6 top-[74px] w-[calc(100%-2rem)] sm:w-[370px] bg-white text-slate-800 rounded-2xl shadow-[0_14px_45px_rgba(15,23,42,0.22)] border border-slate-200/90 z-50 overflow-hidden text-left animate-modal-pop">
-                    <div class="px-4 pt-3.5 pb-2">
-                        <div class="flex items-center justify-between mb-2.5">
-                            <h3 class="text-lg font-extrabold text-slate-900 tracking-tight">Notifikasi</h3>
-                            <button type="button" onclick="tandaiSemuaNotifDibaca()" class="text-[11px] font-bold text-oceanBlue hover:bg-sky-50 px-2.5 py-1 rounded-lg transition-colors cursor-pointer">Tandai dibaca</button>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <button type="button" id="btnFilterNotifAll" onclick="setFilterNotif('all')" class="px-3.5 py-1.5 rounded-full text-xs font-bold bg-sky-100 text-oceanBlue transition-colors cursor-pointer">Semua</button>
-                            <button type="button" id="btnFilterNotifUnread" onclick="setFilterNotif('unread')" class="px-3.5 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer">Belum dibaca</button>
-                        </div>
+            <!-- DROPDOWN NOTIFIKASI GAYA FACEBOOK (DI LUAR HEADER AGAR TETAP DI ATAS KARTU PUTIH) -->
+            <div id="notifDropdown" class="hidden absolute right-4 sm:right-6 top-[74px] w-[calc(100%-2rem)] sm:w-[370px] bg-white text-slate-800 rounded-2xl shadow-[0_14px_45px_rgba(15,23,42,0.22)] border border-slate-200/90 z-50 overflow-hidden text-left animate-modal-pop">
+                <div class="px-4 pt-3.5 pb-2">
+                    <div class="flex items-center justify-between mb-2.5">
+                        <h3 class="text-lg font-extrabold text-slate-900 tracking-tight">Notifikasi</h3>
+                        <button type="button" onclick="tandaiSemuaNotifDibaca()" class="text-[11px] font-bold text-oceanBlue hover:bg-sky-50 px-2.5 py-1 rounded-lg transition-colors cursor-pointer">Tandai dibaca</button>
                     </div>
-
-                    <div id="notifDropdownBody" class="max-h-[340px] overflow-y-auto px-2 pb-2 space-y-1"></div>
-
-                    <div id="wadahBtnNotifPrev" class="px-3 pb-3 pt-1 border-t border-slate-100 bg-white">
-                        <button type="button" id="btnLihatNotifSebelumnya" onclick="toggleNotifikasiSebelumnya()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs py-2.5 rounded-xl transition-colors cursor-pointer">Lihat notifikasi sebelumnya</button>
+                    <div class="flex items-center space-x-2">
+                        <button type="button" id="btnFilterNotifAll" onclick="setFilterNotif('all')" class="px-3.5 py-1.5 rounded-full text-xs font-bold bg-sky-100 text-oceanBlue transition-colors cursor-pointer">Semua</button>
+                        <button type="button" id="btnFilterNotifUnread" onclick="setFilterNotif('unread')" class="px-3.5 py-1.5 rounded-full text-xs font-semibold text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer">Belum dibaca</button>
                     </div>
+                </div>
+
+                <div id="notifDropdownBody" class="max-h-[340px] overflow-y-auto px-2 pb-2 space-y-1"></div>
+
+                <div id="wadahBtnNotifPrev" class="px-3 pb-3 pt-1 border-t border-slate-100 bg-white">
+                    <button type="button" id="btnLihatNotifSebelumnya" onclick="toggleNotifikasiSebelumnya()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs py-2.5 rounded-xl transition-colors cursor-pointer">Lihat notifikasi sebelumnya</button>
                 </div>
             </div>
 
