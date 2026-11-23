@@ -231,7 +231,7 @@
                 </div>
 
                 <!-- KARTU 2: 3 LINGKARAN STATISTIK PER PELATIHAN (BISA DIGESER) -->
-                <div class="bg-white rounded-3xl p-4 shadow-sm border border-slate-100">
+                <div id="kartuStatistikPelatihan" class="bg-white rounded-3xl p-4 shadow-sm border border-slate-100 select-none">
                     <div class="flex items-center justify-between gap-2 pb-3 mb-3 border-b border-slate-100">
                         <button type="button" id="btnStatPrev" onclick="geserStatistik(-1)" title="Pelatihan Sebelumnya" class="hidden w-7 h-7 rounded-full bg-slate-50 hover:bg-sky-50 text-slate-500 hover:text-oceanBlue border border-slate-200/80 flex items-center justify-center shrink-0 transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path></svg>
@@ -248,7 +248,38 @@
                         </button>
                     </div>
 
-                    <div id="statCarouselTrack" onscroll="onScrollStatistikCarousel()" class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar"></div>
+                    <div id="statRingContainer" class="grid grid-cols-3 divide-x divide-slate-100 transition-opacity duration-150">
+                        <div class="flex flex-col items-center px-1">
+                            <div class="relative w-16 h-16 flex items-center justify-center mb-1.5">
+                                <svg class="w-full h-full" viewBox="0 0 36 36">
+                                    <circle cx="18" cy="18" r="15" fill="none" stroke="#E0F2FE" stroke-width="3"></circle>
+                                    <circle id="ringPersen" class="ring-progress" cx="18" cy="18" r="15" fill="none" stroke="#0284C7" stroke-width="3" stroke-dasharray="94.2" stroke-dashoffset="94.2" stroke-linecap="round"></circle>
+                                </svg>
+                                <span id="statPersenText" class="absolute text-xs font-extrabold text-oceanDark">0%</span>
+                            </div>
+                            <span class="text-[10px] font-semibold text-slate-500">Kehadiran</span>
+                        </div>
+                        <div class="flex flex-col items-center px-1">
+                            <div class="relative w-16 h-16 flex items-center justify-center mb-1.5">
+                                <svg class="w-full h-full" viewBox="0 0 36 36">
+                                    <circle cx="18" cy="18" r="15" fill="none" stroke="#E0F2FE" stroke-width="3"></circle>
+                                    <circle id="ringHadir" class="ring-progress" cx="18" cy="18" r="15" fill="none" stroke="#10B981" stroke-width="3" stroke-dasharray="94.2" stroke-dashoffset="94.2" stroke-linecap="round"></circle>
+                                </svg>
+                                <span id="statHadirText" class="absolute text-xs font-extrabold text-oceanDark">00</span>
+                            </div>
+                            <span class="text-[10px] font-semibold text-slate-500">Sesi Hadir</span>
+                        </div>
+                        <div class="flex flex-col items-center px-1">
+                            <div class="relative w-16 h-16 flex items-center justify-center mb-1.5">
+                                <svg class="w-full h-full" viewBox="0 0 36 36">
+                                    <circle cx="18" cy="18" r="15" fill="none" stroke="#E0F2FE" stroke-width="3"></circle>
+                                    <circle id="ringTotal" class="ring-progress" cx="18" cy="18" r="15" fill="none" stroke="#0369A1" stroke-width="3" stroke-dasharray="94.2" stroke-dashoffset="94.2" stroke-linecap="round"></circle>
+                                </svg>
+                                <span id="statTotalText" class="absolute text-xs font-extrabold text-oceanDark">00</span>
+                            </div>
+                            <span class="text-[10px] font-semibold text-slate-500">Total Sesi</span>
+                        </div>
+                    </div>
 
                     <div id="statCarouselDots" class="hidden flex items-center justify-center space-x-1.5 mt-3 pt-1"></div>
                 </div>
@@ -1809,49 +1840,33 @@
 
         let cachedStatPelatihan = [];
         let statAktifIndex = 0;
+        let statSwipeBound = false;
 
-        function buatHtmlSlideStatistik(persen, hadir, total) {
-            const c = 94.2;
-            const offsetPersen = c - (persen / 100) * c;
-            const offsetHadir = total > 0 ? c - (hadir / total) * c : c;
-            const offsetTotal = total > 0 ? 0 : c;
+        function pasangSwipeStatistik() {
+            if (statSwipeBound) return;
+            const kartu = document.getElementById('kartuStatistikPelatihan');
+            if (!kartu) return;
+            statSwipeBound = true;
 
-            return `
-            <div class="w-full shrink-0 snap-center grid grid-cols-3 divide-x divide-slate-100">
-                <div class="flex flex-col items-center px-1">
-                    <div class="relative w-16 h-16 flex items-center justify-center mb-1.5">
-                        <svg class="w-full h-full" viewBox="0 0 36 36">
-                            <circle cx="18" cy="18" r="15" fill="none" stroke="#E0F2FE" stroke-width="3"></circle>
-                            <circle class="ring-progress" cx="18" cy="18" r="15" fill="none" stroke="#0284C7" stroke-width="3" stroke-dasharray="94.2" stroke-dashoffset="${offsetPersen}" stroke-linecap="round"></circle>
-                        </svg>
-                        <span class="absolute text-xs font-extrabold text-oceanDark">${persen}%</span>
-                    </div>
-                    <span class="text-[10px] font-semibold text-slate-500">Kehadiran</span>
-                </div>
-                <div class="flex flex-col items-center px-1">
-                    <div class="relative w-16 h-16 flex items-center justify-center mb-1.5">
-                        <svg class="w-full h-full" viewBox="0 0 36 36">
-                            <circle cx="18" cy="18" r="15" fill="none" stroke="#E0F2FE" stroke-width="3"></circle>
-                            <circle class="ring-progress" cx="18" cy="18" r="15" fill="none" stroke="#10B981" stroke-width="3" stroke-dasharray="94.2" stroke-dashoffset="${offsetHadir}" stroke-linecap="round"></circle>
-                        </svg>
-                        <span class="absolute text-xs font-extrabold text-oceanDark">${String(hadir).padStart(2, '0')}</span>
-                    </div>
-                    <span class="text-[10px] font-semibold text-slate-500">Sesi Hadir</span>
-                </div>
-                <div class="flex flex-col items-center px-1">
-                    <div class="relative w-16 h-16 flex items-center justify-center mb-1.5">
-                        <svg class="w-full h-full" viewBox="0 0 36 36">
-                            <circle cx="18" cy="18" r="15" fill="none" stroke="#E0F2FE" stroke-width="3"></circle>
-                            <circle class="ring-progress" cx="18" cy="18" r="15" fill="none" stroke="#0369A1" stroke-width="3" stroke-dasharray="94.2" stroke-dashoffset="${offsetTotal}" stroke-linecap="round"></circle>
-                        </svg>
-                        <span class="absolute text-xs font-extrabold text-oceanDark">${String(total).padStart(2, '0')}</span>
-                    </div>
-                    <span class="text-[10px] font-semibold text-slate-500">Total Sesi</span>
-                </div>
-            </div>`;
+            let startX = 0;
+            let startY = 0;
+            kartu.addEventListener('touchstart', (e) => {
+                if (e.touches.length !== 1) return;
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+            }, { passive: true });
+
+            kartu.addEventListener('touchend', (e) => {
+                if (cachedStatPelatihan.length <= 1 || !e.changedTouches.length) return;
+                const dx = e.changedTouches[0].clientX - startX;
+                const dy = e.changedTouches[0].clientY - startY;
+                if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+                    geserStatistik(dx > 0 ? -1 : 1);
+                }
+            }, { passive: true });
         }
 
-        function updateHeaderStatistik() {
+        function renderStatistikAktif() {
             const namaEl = document.getElementById('statNamaPelatihan');
             const badgeEl = document.getElementById('statBadgePelatihan');
             const hintEl = document.getElementById('statHintGeser');
@@ -1859,6 +1874,16 @@
             const btnNext = document.getElementById('btnStatNext');
             const dotsEl = document.getElementById('statCarouselDots');
             const totalItem = cachedStatPelatihan.length;
+            const c = 94.2;
+
+            const setRings = (persen, hadir, total) => {
+                document.getElementById('statPersenText').innerText = `${persen}%`;
+                document.getElementById('statHadirText').innerText = String(hadir).padStart(2, '0');
+                document.getElementById('statTotalText').innerText = String(total).padStart(2, '0');
+                document.getElementById('ringPersen').style.strokeDashoffset = c - (persen / 100) * c;
+                document.getElementById('ringHadir').style.strokeDashoffset = total > 0 ? c - (hadir / total) * c : c;
+                document.getElementById('ringTotal').style.strokeDashoffset = total > 0 ? 0 : c;
+            };
 
             if (totalItem === 0) {
                 if (namaEl) namaEl.innerText = 'Belum Ada Pelatihan';
@@ -1867,10 +1892,13 @@
                 if (btnPrev) btnPrev.classList.add('hidden');
                 if (btnNext) btnNext.classList.add('hidden');
                 if (dotsEl) dotsEl.classList.add('hidden');
+                setRings(0, 0, 0);
                 return;
             }
 
-            const cur = cachedStatPelatihan[statAktifIndex] || cachedStatPelatihan[0];
+            statAktifIndex = Math.max(0, Math.min(totalItem - 1, statAktifIndex));
+            const cur = cachedStatPelatihan[statAktifIndex];
+
             if (namaEl) {
                 namaEl.innerText = cur.pelatihan;
                 namaEl.title = cur.pelatihan;
@@ -1890,6 +1918,8 @@
                 }
             }
 
+            setRings(cur.persen, cur.hadir, cur.total);
+
             const multi = totalItem > 1;
             if (btnPrev) {
                 btnPrev.classList.toggle('hidden', !multi);
@@ -1907,7 +1937,7 @@
                 dotsEl.classList.toggle('hidden', !multi);
                 if (multi) {
                     dotsEl.innerHTML = cachedStatPelatihan.map((_, i) => `
-                        <button type="button" onclick="geserStatistikKe(${i}, true)" class="h-1.5 rounded-full transition-all cursor-pointer ${i === statAktifIndex ? 'w-5 bg-oceanBlue' : 'w-1.5 bg-slate-200 hover:bg-sky-300'}"></button>
+                        <button type="button" onclick="geserStatistikKe(${i})" class="h-1.5 rounded-full transition-all cursor-pointer ${i === statAktifIndex ? 'w-5 bg-oceanBlue' : 'w-1.5 bg-slate-200 hover:bg-sky-300'}"></button>
                     `).join('');
                 }
             }
@@ -1915,42 +1945,37 @@
 
         function geserStatistik(arah) {
             const target = Math.max(0, Math.min(cachedStatPelatihan.length - 1, statAktifIndex + arah));
-            geserStatistikKe(target, true);
+            geserStatistikKe(target);
         }
 
-        function geserStatistikKe(idx, smooth = true) {
-            const track = document.getElementById('statCarouselTrack');
-            if (!track || cachedStatPelatihan.length === 0) return;
+        function geserStatistikKe(idx) {
+            if (cachedStatPelatihan.length === 0) return;
             statAktifIndex = Math.max(0, Math.min(cachedStatPelatihan.length - 1, idx));
-            const targetLeft = statAktifIndex * track.clientWidth;
-            if (smooth) {
-                track.scrollTo({ left: targetLeft, behavior: 'smooth' });
-            } else {
-                track.style.scrollBehavior = 'auto';
-                track.scrollLeft = targetLeft;
-                track.style.scrollBehavior = '';
-            }
-            updateHeaderStatistik();
-        }
-
-        function onScrollStatistikCarousel() {
-            const track = document.getElementById('statCarouselTrack');
-            if (!track || !track.clientWidth || cachedStatPelatihan.length <= 1) return;
-            const idx = Math.max(0, Math.min(cachedStatPelatihan.length - 1, Math.round(track.scrollLeft / track.clientWidth)));
-            if (idx !== statAktifIndex) {
-                statAktifIndex = idx;
-                updateHeaderStatistik();
-            }
+            renderStatistikAktif();
         }
 
         function updateStatistikDashboard(jadwalList, enrolledInfo, realTodayStr, currentTimeMinutes) {
             cachedJadwalPeserta = jadwalList || [];
             cachedEnrolledInfo = enrolledInfo || [];
+            pasangSwipeStatistik();
 
-            // 1. HITUNG STATISTIK PER PELATIHAN (TERURUT KRONOLOGIS: LAMA -> BARU)
+            const normKey = (s) => String(s || '').trim().toLowerCase();
             const pelatihanSedangAktif = new Set();
-            const statList = cachedEnrolledInfo.map(info => {
-                const sesiPel = cachedJadwalPeserta.filter(j => j.pelatihan === info.pelatihan);
+
+            // Deduplikasi daftar pelatihan yang diikuti lalu hitung STRICT per pelatihan
+            const seenPel = new Set();
+            const uniqueEnrolled = cachedEnrolledInfo.filter(info => {
+                const k = normKey(info.pelatihan);
+                if (!k || seenPel.has(k)) return false;
+                seenPel.add(k);
+                return true;
+            });
+
+            const statList = uniqueEnrolled.map(info => {
+                const keyPel = normKey(info.pelatihan);
+                const sesiPel = cachedJadwalPeserta.filter(j =>
+                    normKey(j.pelatihan) === keyPel && normKey(j.hari) !== 'info'
+                );
                 const total = sesiPel.length;
                 const hadir = sesiPel.filter(j => j.sudah_hadir).length;
                 const persen = total > 0 ? Math.round((hadir / total) * 100) : 0;
@@ -1982,7 +2007,7 @@
                     status = 'aktif';
                 }
 
-                if (status === 'aktif') pelatihanSedangAktif.add(info.pelatihan);
+                if (status === 'aktif') pelatihanSedangAktif.add(keyPel);
 
                 return {
                     pelatihan: info.pelatihan,
@@ -2000,28 +2025,23 @@
             });
 
             cachedStatPelatihan = statList;
-            const track = document.getElementById('statCarouselTrack');
-            if (track) {
-                if (statList.length === 0) {
-                    track.innerHTML = buatHtmlSlideStatistik(0, 0, 0);
-                    statAktifIndex = 0;
-                    updateHeaderStatistik();
-                } else {
-                    track.innerHTML = statList.map(s => buatHtmlSlideStatistik(s.persen, s.hadir, s.total)).join('');
-                    // Default buka pelatihan yang sedang aktif; jika tidak ada, buka yang akan datang terdekat atau terakhir diikuti
-                    let defaultIdx = statList.findLastIndex(s => s.status === 'aktif');
-                    if (defaultIdx === -1) defaultIdx = statList.findIndex(s => s.status === 'mendatang');
-                    if (defaultIdx === -1) defaultIdx = statList.length - 1;
-                    statAktifIndex = defaultIdx;
-                    requestAnimationFrame(() => geserStatistikKe(statAktifIndex, false));
-                }
+
+            // Default tampilkan pelatihan yang sedang berlangsung; jika tidak ada, yang akan datang atau terakhir diikuti
+            let defaultIdx = -1;
+            for (let i = statList.length - 1; i >= 0; i--) {
+                if (statList[i].status === 'aktif') { defaultIdx = i; break; }
             }
+            if (defaultIdx === -1) defaultIdx = statList.findIndex(s => s.status === 'mendatang');
+            if (defaultIdx === -1) defaultIdx = Math.max(0, statList.length - 1);
+
+            statAktifIndex = defaultIdx;
+            renderStatistikAktif();
 
             // 2. STATUS SESI HANYA TAMPIL JIKA PESERTA SEDANG BERADA DALAM PELATIHAN YANG AKTIF
             const wadahStatus = document.getElementById('wadahStatusSesiPelatihan');
             const dotsContainer = document.getElementById('weekStatusDots');
             if (wadahStatus && dotsContainer) {
-                const sesiAktifTampil = cachedJadwalPeserta.filter(j => pelatihanSedangAktif.has(j.pelatihan));
+                const sesiAktifTampil = cachedJadwalPeserta.filter(j => pelatihanSedangAktif.has(normKey(j.pelatihan)));
 
                 if (sesiAktifTampil.length === 0) {
                     wadahStatus.classList.add('hidden');
