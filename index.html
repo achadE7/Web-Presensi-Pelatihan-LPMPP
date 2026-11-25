@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://i.ibb.co.com https://drive.google.com https://lh3.googleusercontent.com https://*.googleusercontent.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://*.workers.dev https://*.siplpmpp.my.id; media-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self';">
     <title>Sistem Informasi Pelatihan</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-	<script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" crossorigin="anonymous"></script>
     <script>
         tailwind.config = {
             theme: { 
@@ -73,12 +75,12 @@
                 <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 space-y-4">
                     <div>
                         <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Email / Username</label>
-                        <input type="text" id="username" placeholder="Masukkan email aktif Anda" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/60 focus:bg-white text-sm">
+                        <input type="text" id="username" autocomplete="username" placeholder="Masukkan email aktif Anda" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/60 focus:bg-white text-sm">
                     </div>
                     <div>
                         <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Kata Sandi</label>
                         <div class="relative">
-                            <input type="password" id="password" placeholder="Masukkan kata sandi" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/60 focus:bg-white text-sm pr-11">
+                            <input type="password" id="password" autocomplete="current-password" placeholder="Masukkan kata sandi" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/60 focus:bg-white text-sm pr-11">
                             <button type="button" onclick="togglePassword('password', this)" title="Tampilkan / Sembunyikan Kata Sandi" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-oceanBlue transition-colors p-1 cursor-pointer">
                                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                             </button>
@@ -165,6 +167,7 @@
             <div class="space-y-2.5">
                 <button type="button" onclick="prosesUpdateProfil()" id="btnSubmitEdit" class="w-full bg-gradient-to-r from-oceanDark to-oceanBlue hover:from-oceanBlue hover:to-skyBlue text-white font-bold text-xs sm:text-sm py-3.5 rounded-2xl shadow-md transition-all cursor-pointer">Simpan Perubahan Biodata</button>
                 <button type="button" onclick="tampilLayar('presensiScreen'); cekJadwalKeamananTinggi();" class="w-full bg-white hover:bg-slate-100 text-slate-600 border border-slate-200/80 rounded-2xl text-xs font-bold py-3 shadow-sm transition-colors cursor-pointer">Batal & Kembali</button>
+                <button type="button" onclick="logoutSemuaPerangkat()" class="w-full bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200/80 rounded-2xl text-xs font-bold py-3 shadow-sm transition-colors cursor-pointer">Keluar dari Semua Perangkat</button>
             </div>
         </div>
 
@@ -648,10 +651,13 @@
                         <h2 id="adminNameDisplay" class="text-xl font-extrabold tracking-tight">Admin</h2>
                     </div>
                 </div>
-                <button type="button" onclick="logout()" class="bg-white/15 hover:bg-rose-500 text-white border border-white/25 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center space-x-2 transition-all cursor-pointer shrink-0">
-                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                    <span>Keluar</span>
-                </button>
+                <div class="flex items-center gap-2 shrink-0">
+                    <button type="button" onclick="logoutSemuaPerangkat()" title="Akhiri semua sesi login akun ini di perangkat lain" class="bg-white/10 hover:bg-amber-500 text-white border border-white/25 px-3 py-2.5 rounded-xl text-[11px] font-bold transition-all cursor-pointer shrink-0">Keluar Semua</button>
+                    <button type="button" onclick="logout()" class="bg-white/15 hover:bg-rose-500 text-white border border-white/25 px-4 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center space-x-2 transition-all cursor-pointer shrink-0">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        <span>Keluar</span>
+                    </button>
+                </div>
             </div>
 
             <!-- MENU UTAMA PENGAJUAN FAKULTAS & GENERATE DOKUMEN (ADMIN & SUPER ADMIN) -->
@@ -733,13 +739,13 @@
                     <span class="text-[10px] text-slate-400 font-medium mt-0.5">Akses Materi & Reward</span>
                 </button>
 
-                <!-- 8. GPS Setup (Khusus Super Admin) -->
+                <!-- 8. GPS & Wi-Fi Setup (Khusus Super Admin) -->
                 <button type="button" onclick="tampilLayar('adminPengaturanScreen')" class="super-admin-only bg-white border border-slate-200/80 p-4 rounded-2xl flex flex-col items-start text-left hover:border-oceanBlue hover:shadow-md transition-all group cursor-pointer">
                     <div class="w-11 h-11 rounded-2xl bg-slate-100 text-slate-700 border border-slate-200 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                     </div>
-                    <span class="text-xs font-extrabold text-slate-800 group-hover:text-oceanBlue">GPS Setup</span>
-                    <span class="text-[10px] text-slate-400 font-medium mt-0.5">Titik Koordinat & Radius</span>
+                    <span class="text-xs font-extrabold text-slate-800 group-hover:text-oceanBlue">GPS & Wi-Fi</span>
+                    <span class="text-[10px] text-slate-400 font-medium mt-0.5">Lokasi & Jaringan Ruangan</span>
                 </button>
             </div>
 
@@ -1072,8 +1078,8 @@
                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                     </div>
                     <div>
-                        <h2 class="text-lg font-extrabold text-slate-800 tracking-tight">Pengaturan Titik Koordinat GPS</h2>
-                        <p class="text-xs text-slate-500">Atur koordinat lokasi khusus per pelatihan atau nilai standar LPMPP.</p>
+                        <h2 class="text-lg font-extrabold text-slate-800 tracking-tight">Pengaturan GPS & Wi-Fi Ruangan</h2>
+                        <p class="text-xs text-slate-500">Atur koordinat lokasi dan validasi jaringan Wi-Fi gedung (anti Fake GPS).</p>
                     </div>
                 </div>
                 <button type="button" onclick="tampilLayar('adminScreen')" class="bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center space-x-1.5 shadow-sm transition-all cursor-pointer shrink-0">
@@ -1082,6 +1088,7 @@
                 </button>
             </div>
 
+            <!-- KARTU 1: KOORDINAT GPS -->
             <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-slate-200/80 space-y-4 mb-4">
                 <div>
                     <label class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Target Pengaturan Lokasi</label>
@@ -1115,6 +1122,54 @@
                 </div>
 
                 <button type="button" onclick="simpanDataAdmin('pengaturan', this)" class="w-full bg-gradient-to-r from-oceanDark to-oceanBlue hover:from-oceanBlue hover:to-skyBlue text-white text-xs sm:text-sm font-bold py-3.5 rounded-xl shadow-sm transition-all cursor-pointer">Simpan Titik Koordinat</button>
+            </div>
+
+            <!-- KARTU 2: VALIDASI JARINGAN WI-FI RUANGAN (ANTI FAKE GPS) -->
+            <div class="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-slate-200/80 space-y-4 mb-4">
+                <div class="flex flex-wrap items-start justify-between gap-3">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-200/80 flex items-center justify-center shrink-0">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-extrabold text-slate-800">Validasi Jaringan Wi-Fi Ruangan</h3>
+                            <p class="text-[11px] text-slate-500 mt-0.5 leading-relaxed">Peserta sesi <b>Offline</b> wajib tersambung ke Wi-Fi gedung LPMPP (IP Publik resmi). Matikan kapan saja bila Wi-Fi lokasi sedang gangguan.</p>
+                        </div>
+                    </div>
+                    <span id="wifiStatusBadge" class="text-[10px] font-extrabold px-3 py-1 rounded-full bg-slate-100 text-slate-600 border border-slate-200 shrink-0">Memuat...</span>
+                </div>
+
+                <!-- SAKELAR AKTIF / NONAKTIF (DARURAT GANGGUAN WI-FI) -->
+                <div class="bg-slate-50/90 border border-slate-200/80 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <label class="flex items-center space-x-3 cursor-pointer select-none">
+                        <input type="checkbox" id="toggleWifiAktif" onchange="updateTampilanToggleWifi()" class="w-5 h-5 rounded accent-emerald-600 cursor-pointer">
+                        <div>
+                            <span class="text-xs font-extrabold text-slate-800 block">Wajibkan Koneksi Wi-Fi Ruangan (Sesi Offline)</span>
+                            <span id="wifiToggleHint" class="text-[11px] text-slate-500 block">Nonaktif: peserta bebas menggunakan Wi-Fi atau paket data seluler.</span>
+                        </div>
+                    </label>
+                    <button type="button" id="btnMatikanWifiDarurat" onclick="matikanWifiDarurat(this)" class="hidden bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 px-3.5 py-2 rounded-xl text-[11px] font-extrabold transition-colors cursor-pointer shrink-0">⚡ Matikan Cepat (Darurat Wi-Fi)</button>
+                </div>
+
+                <!-- STATUS PROXY IP & DETEKSI IP SAAT INI -->
+                <div id="wifiProxyStatusBox" class="rounded-2xl p-3.5 border border-slate-200 bg-slate-50 text-xs text-slate-600">
+                    Memeriksa status verifikasi Proxy IP (HMAC)...
+                </div>
+
+                <!-- DAFTAR IP PUBLIK WI-FI DIIZINKAN -->
+                <div class="space-y-2">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <label for="setWifiAllowedIps" class="text-[11px] font-bold text-slate-600 uppercase tracking-wider">Daftar IP Publik Wi-Fi Diizinkan (1 IP per baris)</label>
+                        <div class="flex items-center gap-2">
+                            <button type="button" onclick="muatStatusWifiAdmin()" class="text-[11px] bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 font-bold px-2.5 py-1.5 rounded-xl transition-colors cursor-pointer">Segarkan IP</button>
+                            <button type="button" id="btnTambahIpSaatIni" onclick="tambahkanIpWifiSaatIni()" class="text-[11px] bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 font-bold px-3 py-1.5 rounded-xl transition-colors cursor-pointer">+ Gunakan IP Wi-Fi Saat Ini</button>
+                        </div>
+                    </div>
+                    <textarea id="setWifiAllowedIps" rows="3" placeholder="Contoh (1 per baris):&#10;103.24.56.78&#10;103.24.56.0/24&#10;182.253.12.*" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white text-xs font-mono"></textarea>
+                    <p class="text-[10px] text-slate-400">Mendukung IP tunggal (IPv4/IPv6), rentang CIDR (<code class="text-slate-600">103.24.56.0/24</code>), atau wildcard (<code class="text-slate-600">103.24.56.*</code>). Anda bisa memasukkan lebih dari satu IP jika ruangan memiliki beberapa jaringan/ISP.</p>
+                </div>
+
+                <button type="button" id="btnSimpanWifi" onclick="simpanPengaturanWifi(this)" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-xs sm:text-sm font-bold py-3.5 rounded-xl shadow-sm transition-all cursor-pointer">Simpan Pengaturan Wi-Fi Ruangan</button>
             </div>
 
             <button type="button" onclick="tampilLayar('adminScreen')" class="w-full bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/80 text-xs font-bold py-3 rounded-2xl shadow-sm transition-colors cursor-pointer">Kembali Ke Dasbor</button>
@@ -1224,7 +1279,7 @@
                     <div>
                         <label id="staffPasswordLabel" class="text-[11px] font-semibold text-slate-600 block mb-1">Kata Sandi*</label>
                         <div class="relative">
-                            <input type="password" id="staffPassword" placeholder="Masukkan kata sandi (min. 4 karakter)" class="w-full px-3.5 py-2.5 pr-10 rounded-xl border border-slate-200 text-xs bg-slate-50/50 focus:bg-white">
+                            <input type="password" id="staffPassword" autocomplete="new-password" placeholder="Min. 8 karakter (huruf & angka)" class="w-full px-3.5 py-2.5 pr-10 rounded-xl border border-slate-200 text-xs bg-slate-50/50 focus:bg-white">
                             <button type="button" onclick="togglePassword('staffPassword', this)" title="Tampilkan / Sembunyikan Kata Sandi" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-oceanBlue transition-colors cursor-pointer">
                                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                             </button>
@@ -1413,7 +1468,10 @@
                     <h2 id="opNameDisplay" class="text-xl font-extrabold tracking-tight">Nama Operator</h2>
                     <p id="opFakultasDisplay" class="text-xs text-sky-100 font-semibold mt-0.5">Fakultas</p>
                 </div>
-                <button type="button" onclick="logout()" class="bg-white/15 hover:bg-rose-500 text-white border border-white/25 px-4 py-2.5 rounded-xl text-xs font-bold cursor-pointer shrink-0">Keluar</button>
+                <div class="flex items-center gap-2 shrink-0">
+                    <button type="button" onclick="logoutSemuaPerangkat()" title="Akhiri semua sesi login akun ini di perangkat lain" class="bg-white/10 hover:bg-amber-500 text-white border border-white/25 px-3 py-2.5 rounded-xl text-[11px] font-bold cursor-pointer shrink-0">Keluar Semua</button>
+                    <button type="button" onclick="logout()" class="bg-white/15 hover:bg-rose-500 text-white border border-white/25 px-4 py-2.5 rounded-xl text-xs font-bold cursor-pointer shrink-0">Keluar</button>
+                </div>
             </div>
 
             <!-- FORM AJUKAN CALON PESERTA -->
@@ -1770,6 +1828,28 @@
             if (video) video.srcObject = null;
         }
 
+        // Anti-Clickjacking Frame-Buster
+        if (window.top !== window.self) {
+            try { window.top.location = window.self.location; } catch (_) {
+                document.documentElement.style.display = 'none';
+            }
+        }
+
+        function validasiKataSandiKuat(pwd) {
+            const s = String(pwd || '');
+            if (s.length < 8) return "Kata sandi minimal 8 karakter dan wajib mengandung huruf serta angka.";
+            if (s.length > 128) return "Kata sandi maksimal 128 karakter.";
+            if (!/[A-Za-z]/.test(s) || !/[0-9]/.test(s)) {
+                return "Kata sandi wajib merupakan kombinasi huruf dan angka (minimal 8 karakter).";
+            }
+            return "";
+        }
+
+        function safeExcelCell(val) {
+            const s = (val === null || val === undefined) ? "" : String(val);
+            return /^[=+\-@\t\r]/.test(s) ? "'" + s : s;
+        }
+
         function bersihkanSesiLokal() {
             session.token = "";
             session.username = "";
@@ -1778,6 +1858,7 @@
             session.gelar_belakang = "";
             session.role = "";
             session.fakultas = "";
+            session.expiresAt = 0;
             try { localStorage.removeItem(SESSION_STORAGE_KEY); } catch (_) {}
         }
 
@@ -1815,7 +1896,7 @@
                 <div><label class="text-[11px] text-slate-600 font-semibold block mb-1">Gelar Depan</label><input type="text" id="${prefix}GelarDepan" placeholder="Contoh: Dr., Ir., Prof." class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm"></div>
                 <div><label class="text-[11px] text-slate-600 font-semibold block mb-1">Gelar Belakang</label><input type="text" id="${prefix}GelarBelakang" placeholder="Contoh: S.Pd., M.Pd." class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm"></div>
                 <div><label class="text-[11px] text-slate-600 font-semibold block mb-1">Email Aktif*</label><input type="email" id="${prefix}User" ${isEdit ? 'readonly class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm bg-slate-100 text-slate-500 cursor-not-allowed"' : 'placeholder="nama@ulm.ac.id" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm"'}></div>
-                <div><label class="text-[11px] text-slate-600 font-semibold block mb-1">${isEdit ? 'Password Baru (Opsional)' : 'Password*'}</label><div class="relative"><input type="password" id="${prefix}Pass" placeholder="${isEdit ? 'Kosongkan jika tidak mengubah' : 'Minimal 4 karakter'}" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm pr-10"><button type="button" onclick="togglePassword('${prefix}Pass', this)" title="Tampilkan / Sembunyikan Password" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-oceanBlue transition-colors cursor-pointer"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></div></div>
+                <div><label class="text-[11px] text-slate-600 font-semibold block mb-1">${isEdit ? 'Password Baru (Opsional)' : 'Password*'}</label><div class="relative"><input type="password" id="${prefix}Pass" autocomplete="new-password" placeholder="${isEdit ? 'Kosongkan jika tidak mengubah (min. 8 kar, huruf+angka)' : 'Min. 8 karakter (huruf & angka)'}" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm pr-10"><button type="button" onclick="togglePassword('${prefix}Pass', this)" title="Tampilkan / Sembunyikan Password" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-oceanBlue transition-colors cursor-pointer"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></div></div>
                 <div><label class="text-[11px] text-slate-600 font-semibold block mb-1">Nomor HP</label><input type="tel" inputmode="numeric" id="${prefix}HP" placeholder="08xxxxxxxxxx" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm"></div>
                 <div><label class="text-[11px] text-slate-600 font-semibold block mb-1">NIP*</label><input type="text" id="${prefix}NIP" placeholder="Masukkan NIP" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm"></div>
                 <div><label class="text-[11px] text-slate-600 font-semibold block mb-1">NIDN / NIDK*</label><input type="text" id="${prefix}NIDN" placeholder="Masukkan NIDN / NIDK" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm"><p class="text-[10px] text-slate-400 mt-1">Isi angka <b>0</b> jika belum/tidak memiliki NIDN/NIDK.</p></div>
@@ -2107,6 +2188,9 @@
             if (['adminJadwalScreen', 'adminPesertaScreen', 'adminRewardScreen', 'adminRekapScreen', 'adminPengaturanScreen'].includes(idLayar)) {
                 muatDaftarPelatihanAdmin();
                 terapkanModeReadOnlyAdminBiasa();
+                if (idLayar === 'adminPengaturanScreen' && session.role === 'super_admin') {
+                    muatStatusWifiAdmin();
+                }
             }
 			tutupNotifikasiDropdown();
         }
@@ -2837,10 +2921,51 @@
         }
 
         const SESSION_STORAGE_KEY = "siplpmpp_user_session";
-        const SESSION_DURATION_MS = 7 * 24 * 60 * 60 * 1000; // Masa aktif sesi: 7 hari
+        const SESSION_DURATION_MS = 7 * 24 * 60 * 60 * 1000; // Masa aktif sesi peserta: 7 hari
+        const PRIVILEGED_SESSION_MS = 24 * 60 * 60 * 1000; // Masa aktif sesi pengelola: 24 jam
+        const PRIVILEGED_IDLE_TIMEOUT_MS = 60 * 60 * 1000; // Auto-logout pengelola jika tidak aktif 60 menit
+        let privilegedIdleTimer = null;
+        let idleListenersBound = false;
+
+        function resetTimerIdlePengelola() {
+            if (privilegedIdleTimer) { clearTimeout(privilegedIdleTimer); privilegedIdleTimer = null; }
+            const isPriv = session.token && (session.role === "super_admin" || session.role === "admin" || session.role === "operator");
+            if (!isPriv) return;
+            privilegedIdleTimer = setTimeout(async () => {
+                if (!session.token) return;
+                hentikanKameraAktif();
+                try { await apiPost({ action: "logout" }, { skipAuthRedirect: true }); } catch (_) {}
+                bersihkanSesiLokal();
+                tampilLayar('loginScreen');
+                const msg = document.getElementById('loginMsg');
+                if (msg) {
+                    msg.innerText = "Sesi pengelola otomatis berakhir karena tidak ada aktivitas selama 60 menit.";
+                    msg.classList.remove('hidden');
+                }
+            }, PRIVILEGED_IDLE_TIMEOUT_MS);
+        }
+
+        function aktifkanPengawasIdlePengelola() {
+            if (!idleListenersBound) {
+                idleListenersBound = true;
+                let lastPing = 0;
+                const onAct = () => {
+                    const now = Date.now();
+                    if (now - lastPing < 5000) return;
+                    lastPing = now;
+                    resetTimerIdlePengelola();
+                };
+                ['click', 'keydown', 'touchstart', 'scroll'].forEach(ev => window.addEventListener(ev, onAct, { passive: true }));
+            }
+            resetTimerIdlePengelola();
+        }
 
         function simpanSesiLogin() {
             try {
+                const isPriv = (session.role === "super_admin" || session.role === "admin" || session.role === "operator");
+                const defaultExp = Date.now() + (isPriv ? PRIVILEGED_SESSION_MS : SESSION_DURATION_MS);
+                const exp = (session.expiresAt && session.expiresAt > Date.now()) ? session.expiresAt : defaultExp;
+                session.expiresAt = exp;
                 const dataSesi = {
                     token: session.token || "",
                     username: session.username,
@@ -2849,13 +2974,14 @@
                     gelar_belakang: session.gelar_belakang || "",
                     role: session.role,
                     fakultas: session.fakultas,
-                    expiresAt: Date.now() + SESSION_DURATION_MS
+                    expiresAt: exp
                 };
                 localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(dataSesi));
             } catch (_) {}
         }
 
         function masukKeDasborSesuaiRole() {
+            aktifkanPengawasIdlePengelola();
             if (session.role === "super_admin" || session.role === "admin") {
                 document.getElementById('adminNameDisplay').innerText = session.nama;
                 const isSuper = (session.role === "super_admin");
@@ -2909,6 +3035,7 @@
             session.gelar_belakang = saved.gelar_belakang || "";
             session.role = saved.role || "user";
             session.fakultas = saved.fakultas || "";
+            session.expiresAt = saved.expiresAt || 0;
             const prevRole = session.role;
             masukKeDasborSesuaiRole();
 
@@ -2922,6 +3049,7 @@
                     session.gelar_belakang = res.gelar_belakang || "";
                     session.role = res.role || "user";
                     session.fakultas = res.fakultas || "";
+                    if (res.expires_at) session.expiresAt = res.expires_at;
                     simpanSesiLogin();
 
                     if (session.role !== prevRole) {
@@ -2955,10 +3083,23 @@
 
         async function logout() {
             hentikanKameraAktif();
+            if (privilegedIdleTimer) { clearTimeout(privilegedIdleTimer); privilegedIdleTimer = null; }
             if (session.token) {
                 try { await apiPost({ action: "logout" }, { skipAuthRedirect: true }); } catch (_) {}
             }
             bersihkanSesiLokal();
+            location.reload();
+        }
+
+        async function logoutSemuaPerangkat() {
+            if (!confirm("Keluar dari SEMUA perangkat (termasuk HP/komputer lain yang sedang login dengan akun ini)?")) return;
+            hentikanKameraAktif();
+            if (privilegedIdleTimer) { clearTimeout(privilegedIdleTimer); privilegedIdleTimer = null; }
+            if (session.token) {
+                try { await apiPost({ action: "logout_all" }, { skipAuthRedirect: true }); } catch (_) {}
+            }
+            bersihkanSesiLokal();
+            alert("✅ Semua sesi login di seluruh perangkat berhasil diakhiri.");
             location.reload();
         }
 
@@ -2970,6 +3111,7 @@
             try {
                 const res = await apiPost({ action: "login", username: user, password: pass }, { skipAuthRedirect: true });
                 if (res.status === "success" && res.token) {
+                    document.getElementById('password').value = "";
                     session.token = res.token;
                     session.username = res.username || user;
                     session.nama = res.nama || user;
@@ -2977,6 +3119,7 @@
                     session.gelar_belakang = res.gelar_belakang || "";
                     session.role = res.role || "user";
                     session.fakultas = res.fakultas || "";
+                    session.expiresAt = res.expires_at || 0;
                     simpanSesiLogin();
                     masukKeDasborSesuaiRole();
                 } else { msg.innerText = res.message || "Login gagal."; msg.classList.remove('hidden'); }
@@ -3129,13 +3272,32 @@
                 );
                 return;
             }
-            navigator.geolocation.getCurrentPosition(pos => {
+            navigator.geolocation.getCurrentPosition(async pos => {
                 session.lat = pos.coords.latitude; session.lng = pos.coords.longitude;
                 const tLat = session.targetLat || TARGET_LAT, tLng = session.targetLng || TARGET_LNG, tRad = session.targetRadius || RADIUS_MAX;
                 const c = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin((session.lat - tLat) * Math.PI / 360), 2) + Math.cos(tLat * Math.PI / 180) * Math.cos(session.lat * Math.PI / 180) * Math.pow(Math.sin((session.lng - tLng) * Math.PI / 360), 2)));
                 const jarak = Math.floor(6371e3 * c);
-                if (jarak <= tRad) aktifkanTombolKamera(`✅ Radius Valid (${jarak}m). Silakan Selfie.`);
-                else ubahStatusMsg(`❌ Terlalu Jauh (${jarak}m dari titik lokasi pelatihan, maks ${tRad}m).`, "text-red-500");
+                if (jarak > tRad) {
+                    ubahStatusMsg(`❌ Terlalu Jauh (${jarak}m dari titik lokasi pelatihan, maks ${tRad}m).`, "text-red-500");
+                    return;
+                }
+                ubahStatusMsg(`GPS valid (${jarak}m). Memeriksa validasi jaringan Wi-Fi ruangan...`, "text-oceanBlue");
+                try {
+                    const wRes = await apiPost({ action: "check_wifi_access", pelatihan: session.pelatihan });
+                    if (wRes && wRes.status === "success" && wRes.allowed) {
+                        aktifkanTombolKamera(
+                            wRes.wifi_enabled
+                                ? `✅ Radius (${jarak}m) & Wi-Fi Ruangan Valid. Silakan Selfie.`
+                                : `✅ Radius Valid (${jarak}m). Silakan Selfie.`
+                        );
+                    } else {
+                        const btnKam = document.getElementById('btnKamera');
+                        if (btnKam) { btnKam.disabled = true; btnKam.classList.add('opacity-50'); }
+                        ubahStatusMsg(`❌ ${wRes?.message || "Anda belum terhubung ke jaringan Wi-Fi ruangan pelatihan LPMPP."}`, "text-red-500");
+                    }
+                } catch (_) {
+                    ubahStatusMsg("❌ Gagal memeriksa jaringan Wi-Fi ruangan. Pastikan koneksi stabil lalu coba lagi.", "text-red-500");
+                }
             }, () => ubahStatusMsg("❌ Gagal akses GPS. Mohon izinkan pemakaian Lokasi pada browser HP/Laptop Anda.", "text-red-500"), { enableHighAccuracy: true });
         }
 
@@ -3625,8 +3787,9 @@
             if (!data.nama.trim() || !data.nip.trim() || !data.nidn.trim() || !data.nuptk.trim() || !data.status_pegawai || !data.jk || !data.fakultas || !data.prodi) {
                 return alert("Kolom bertanda bintang (*) tidak boleh dikosongkan, termasuk NIP, NIDN/NIDK (isi angka 0 jika tidak memiliki), dan NUPTK.");
             }
-            if (passBaru && passBaru.length < 4) {
-                return alert("Password baru minimal 4 karakter.");
+            if (passBaru) {
+                const errPwd = validasiKataSandiKuat(passBaru);
+                if (errPwd) return alert(errPwd);
             }
             const editNamaEl = document.getElementById('editNama');
             if (deteksiGelar(data.nama) && editNamaEl.dataset.gelarOverride !== '1') {
@@ -3639,7 +3802,12 @@
             try {
                 const res = await apiPost(data);
                 if (res.status === "success") {
-                    alert("✅ Biodata berhasil diperbarui!");
+                    document.getElementById('editPass').value = "";
+                    if (res.new_token) {
+                        session.token = res.new_token;
+                        if (res.expires_at) session.expiresAt = res.expires_at;
+                    }
+                    alert("✅ " + (res.message || "Biodata berhasil diperbarui!"));
                     session.nama = data.nama.trim();
                     session.gelar_depan = data.gelar_depan || "";
                     session.gelar_belakang = data.gelar_belakang || "";
@@ -3823,8 +3991,9 @@
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.username)) {
                 return alert("Mohon masukkan alamat Email Aktif yang valid (contoh: nama@ulm.ac.id).");
             }
-            if (data.password.length < 4) {
-                return alert("Password minimal 4 karakter.");
+            const errRegPwd = validasiKataSandiKuat(data.password);
+            if (errRegPwd) {
+                return alert(errRegPwd);
             }
             const regNamaEl = document.getElementById('regNama');
             if (deteksiGelar(data.nama) && regNamaEl.dataset.gelarOverride !== '1') {
@@ -4008,7 +4177,165 @@
             btnJepret.disabled = false;
         }
 
-        function bukaSpreadsheet() { window.open("https://docs.google.com/spreadsheets/d/1d3jMjww3PinwN1U1v-yVKz79YcLp_-56jSOATBPQi9U/edit", '_blank', 'noopener,noreferrer'); }
+        // =========================================================================
+        // PENGATURAN VALIDASI WI-FI RUANGAN (KHUSUS SUPER ADMIN)
+        // =========================================================================
+        let cachedAdminWifiStatus = { enabled: false, proxy_configured: false, proxy_verified: false, current_ip: '' };
+
+        function updateTampilanToggleWifi() {
+            const chk = document.getElementById('toggleWifiAktif');
+            const badge = document.getElementById('wifiStatusBadge');
+            const hint = document.getElementById('wifiToggleHint');
+            const btnDarurat = document.getElementById('btnMatikanWifiDarurat');
+            const isChecked = Boolean(chk && chk.checked);
+
+            if (badge) {
+                if (isChecked) {
+                    badge.innerText = "● AKTIF (Wajib Wi-Fi)";
+                    badge.className = "text-[10px] font-extrabold px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0";
+                } else {
+                    badge.innerText = "○ NONAKTIF (Bebas Jaringan)";
+                    badge.className = "text-[10px] font-extrabold px-3 py-1 rounded-full bg-slate-100 text-slate-600 border border-slate-200 shrink-0";
+                }
+            }
+            if (hint) {
+                hint.innerText = isChecked
+                    ? "Aktif: peserta sesi Offline wajib tersambung ke IP Wi-Fi ruangan yang terdaftar di bawah."
+                    : "Nonaktif: peserta bebas menggunakan Wi-Fi atau paket data seluler (cocok saat Wi-Fi gangguan).";
+            }
+            if (btnDarurat) {
+                btnDarurat.classList.toggle('hidden', !cachedAdminWifiStatus.enabled);
+            }
+        }
+
+        async function muatStatusWifiAdmin() {
+            const box = document.getElementById('wifiProxyStatusBox');
+            const chk = document.getElementById('toggleWifiAktif');
+            const area = document.getElementById('setWifiAllowedIps');
+            if (box) {
+                box.className = "rounded-2xl p-3.5 border border-slate-200 bg-slate-50 text-xs text-slate-500";
+                box.innerText = "Memeriksa status Proxy IP (HMAC) & IP Wi-Fi saat ini...";
+            }
+            try {
+                const res = await apiPost({ action: "get_wifi_status" });
+                if (res && res.status === "success") {
+                    cachedAdminWifiStatus = {
+                        enabled: Boolean(res.wifi_enabled),
+                        proxy_configured: Boolean(res.proxy_configured),
+                        proxy_verified: Boolean(res.proxy_verified),
+                        current_ip: res.current_ip || ""
+                    };
+                    if (chk) chk.checked = cachedAdminWifiStatus.enabled;
+                    if (area) area.value = res.wifi_allowed_ips || "";
+                    updateTampilanToggleWifi();
+
+                    if (box) {
+                        if (res.proxy_verified && res.current_ip) {
+                            box.className = "rounded-2xl p-3.5 border border-emerald-200 bg-emerald-50/70 text-xs text-emerald-800";
+                            box.innerHTML = `<div class="font-bold">✅ Proxy IP Terverifikasi (HMAC Aktif)</div><div class="text-[11px] mt-0.5">IP Publik jaringan Anda saat ini: <code class="font-mono font-extrabold bg-white px-2 py-0.5 rounded border border-emerald-200">${escapeHtml(res.current_ip)}</code></div>`;
+                        } else if (!res.proxy_configured) {
+                            box.className = "rounded-2xl p-3.5 border border-amber-200 bg-amber-50/80 text-xs text-amber-800";
+                            box.innerHTML = `<div class="font-bold">⚠️ Proxy IP Belum Dikonfigurasi di Server</div><div class="text-[11px] mt-0.5 leading-relaxed">Tambahkan <code class="font-mono font-bold">PROXY_HMAC_SECRET</code> di <b>Script Properties</b> Apps Script, pasang <b>Cloudflare Worker / PHP Proxy</b>, lalu arahkan <code class="font-mono font-bold">API_URL</code> ke proxy tersebut agar IP tidak bisa dipalsukan klien.</div>`;
+                        } else {
+                            box.className = "rounded-2xl p-3.5 border border-amber-200 bg-amber-50/80 text-xs text-amber-800";
+                            box.innerHTML = `<div class="font-bold">⚠️ Koneksi Belum Melewati Proxy IP (${escapeHtml(res.proxy_reason || 'UNVERIFIED')})</div><div class="text-[11px] mt-0.5 leading-relaxed">Pastikan konstanta <code class="font-mono font-bold">API_URL</code> pada HTML sudah diarahkan ke URL Cloudflare Worker / <code class="font-mono font-bold">./api-proxy.php</code> dan kunci <code class="font-mono font-bold">PROXY_HMAC_SECRET</code> sama persis.</div>`;
+                        }
+                    }
+                }
+            } catch (_) {
+                if (box) {
+                    box.className = "rounded-2xl p-3.5 border border-rose-200 bg-rose-50 text-xs text-rose-700";
+                    box.innerText = "Gagal memeriksa status Wi-Fi dari server.";
+                }
+            }
+        }
+
+        async function tambahkanIpWifiSaatIni() {
+            if (!cachedAdminWifiStatus.proxy_verified || !cachedAdminWifiStatus.current_ip) {
+                await muatStatusWifiAdmin();
+            }
+            const curIp = cachedAdminWifiStatus.current_ip;
+            if (!curIp) {
+                return alert("IP publik belum terdeteksi karena koneksi belum melewati Proxy IP bertanda tangan (HMAC). Pasang Cloudflare Worker atau api-proxy.php terlebih dahulu.");
+            }
+            const area = document.getElementById('setWifiAllowedIps');
+            const existing = area.value.split(/[\r\n,;]+/).map(s => s.trim()).filter(Boolean);
+            if (!existing.includes(curIp)) {
+                existing.push(curIp);
+                area.value = existing.join('\n');
+                alert(`✅ IP Publik Wi-Fi saat ini (${curIp}) ditambahkan ke daftar. Jangan lupa klik "Simpan Pengaturan Wi-Fi Ruangan".`);
+            } else {
+                alert(`ℹ️ IP Publik (${curIp}) sudah ada di dalam daftar.`);
+            }
+        }
+
+        async function simpanPengaturanWifi(btn) {
+            const enabled = Boolean(document.getElementById('toggleWifiAktif')?.checked);
+            const allowedIps = (document.getElementById('setWifiAllowedIps')?.value || '').trim();
+            if (enabled && !allowedIps) {
+                return alert("Masukkan minimal 1 IP Publik Wi-Fi ruangan terlebih dahulu sebelum mengaktifkan validasi Wi-Fi.");
+            }
+            const teksAsli = btn ? btn.innerText : "Simpan Pengaturan Wi-Fi Ruangan";
+            if (btn) { btn.innerText = "Menyimpan..."; btn.disabled = true; }
+            try {
+                const res = await apiPost({
+                    action: "save_wifi_setting",
+                    wifi_enabled: enabled,
+                    wifi_allowed_ips: allowedIps
+                });
+                if (res.status === "success") {
+                    alert("✅ " + res.message);
+                    await muatStatusWifiAdmin();
+                } else {
+                    alert("❌ " + (res.message || "Gagal menyimpan pengaturan Wi-Fi."));
+                }
+            } catch (_) {
+                alert("Kesalahan koneksi saat menyimpan pengaturan Wi-Fi.");
+            }
+            if (btn) { btn.innerText = teksAsli; btn.disabled = false; }
+        }
+
+        async function matikanWifiDarurat(btn) {
+            if (!confirm("Matikan validasi jaringan Wi-Fi ruangan sekarang (Mode Darurat Gangguan Wi-Fi)?\n\nPeserta akan langsung dapat melakukan presensi menggunakan paket data seluler maupun jaringan lain.")) return;
+            const teksAsli = btn ? btn.innerText : "⚡ Matikan Cepat (Darurat Wi-Fi)";
+            if (btn) { btn.innerText = "Mematikan..."; btn.disabled = true; }
+            try {
+                const allowedIps = (document.getElementById('setWifiAllowedIps')?.value || '').trim();
+                const res = await apiPost({
+                    action: "save_wifi_setting",
+                    wifi_enabled: false,
+                    wifi_allowed_ips: allowedIps
+                });
+                if (res.status === "success") {
+                    alert("✅ " + res.message);
+                    await muatStatusWifiAdmin();
+                } else {
+                    alert("❌ " + (res.message || "Gagal mematikan validasi Wi-Fi."));
+                }
+            } catch (_) {
+                alert("Kesalahan koneksi.");
+            }
+            if (btn) { btn.innerText = teksAsli; btn.disabled = false; }
+        }
+
+        async function bukaSpreadsheet() {
+            if (session.role !== "super_admin") return alert("Akses ditolak! Menu ini khusus Super Admin.");
+            const tab = window.open('about:blank', '_blank');
+            if (tab) { try { tab.opener = null; } catch (_) {} }
+            try {
+                const res = await apiPost({ action: "get_spreadsheet_url" });
+                if (res && res.status === "success" && typeof res.url === "string" && res.url.startsWith("https://docs.google.com/spreadsheets/")) {
+                    if (tab && !tab.closed) tab.location.href = res.url;
+                    else window.open(res.url, '_blank', 'noopener,noreferrer');
+                } else {
+                    if (tab && !tab.closed) tab.close();
+                    alert("❌ " + (res?.message || "Gagal mengambil tautan database."));
+                }
+            } catch (_) {
+                if (tab && !tab.closed) tab.close();
+                alert("Gagal menghubungi server untuk membuka database.");
+            }
+        }
         function tambahSesiUI() {
             const wadah = document.getElementById('wadahSesi');
             if (!wadah || !wadah.firstElementChild) return;
@@ -4097,27 +4424,27 @@
 
             const rows = cachedDetailPesertaAdmin.map((d, idx) => ({
                 "No": idx + 1,
-                "Email": d.email || "",
-                "Nama Lengkap (Tanpa Gelar)": d.nama || "",
-                "Gelar Depan": d.gelar_depan || "",
-                "Gelar Belakang": d.gelar_belakang || "",
-                "Nama Lengkap & Gelar": formatNamaDenganGelar(d.nama, d.gelar_depan, d.gelar_belakang),
-                "NIP": String(d.nip || ""),
-                "NIDN/NIDK": String(d.nidn || ""),
-                "NUPTK": String(d.nuptk || ""),
-                "Tempat Lahir": d.tempat_lahir || "",
-                "Tanggal Lahir": String(d.tanggal_lahir || ""),
-                "Status Kepegawaian": d.status_pegawai || "",
-                "Jenis Kelamin": d.jk || "",
-                "Pangkat/Golongan": d.pangkat || "",
-                "Jabatan Fungsional": d.jabatan || "",
-                "Instansi": d.instansi || "",
-                "Nama Instansi": d.nama_instansi || "",
-                "Fakultas": d.fakultas || "",
-                "Program Studi": d.prodi || "",
-                "Pendidikan Terakhir": d.pendidikan || "",
-                "Nomor HP": String(d.hp || ""),
-                "Alamat": d.alamat || ""
+                "Email": safeExcelCell(d.email),
+                "Nama Lengkap (Tanpa Gelar)": safeExcelCell(d.nama),
+                "Gelar Depan": safeExcelCell(d.gelar_depan),
+                "Gelar Belakang": safeExcelCell(d.gelar_belakang),
+                "Nama Lengkap & Gelar": safeExcelCell(formatNamaDenganGelar(d.nama, d.gelar_depan, d.gelar_belakang)),
+                "NIP": safeExcelCell(d.nip),
+                "NIDN/NIDK": safeExcelCell(d.nidn),
+                "NUPTK": safeExcelCell(d.nuptk),
+                "Tempat Lahir": safeExcelCell(d.tempat_lahir),
+                "Tanggal Lahir": safeExcelCell(d.tanggal_lahir),
+                "Status Kepegawaian": safeExcelCell(d.status_pegawai),
+                "Jenis Kelamin": safeExcelCell(d.jk),
+                "Pangkat/Golongan": safeExcelCell(d.pangkat),
+                "Jabatan Fungsional": safeExcelCell(d.jabatan),
+                "Instansi": safeExcelCell(d.instansi),
+                "Nama Instansi": safeExcelCell(d.nama_instansi),
+                "Fakultas": safeExcelCell(d.fakultas),
+                "Program Studi": safeExcelCell(d.prodi),
+                "Pendidikan Terakhir": safeExcelCell(d.pendidikan),
+                "Nomor HP": safeExcelCell(d.hp),
+                "Alamat": safeExcelCell(d.alamat)
             }));
 
             const ws = XLSX.utils.json_to_sheet(rows);
@@ -4374,7 +4701,7 @@
             document.getElementById('staffUsername').value = "";
             document.getElementById('staffUsername').readOnly = false;
             document.getElementById('staffPassword').value = "";
-            document.getElementById('staffPassword').placeholder = "Masukkan kata sandi (min. 4 karakter)";
+            document.getElementById('staffPassword').placeholder = "Min. 8 karakter (huruf & angka)";
             const pwdLabel = document.getElementById('staffPasswordLabel');
             const pwdHint = document.getElementById('staffPasswordHint');
             if (pwdLabel) pwdLabel.innerText = "Kata Sandi*";
@@ -4446,12 +4773,20 @@
 
             if (!username || !nama) return alert("Email/Username dan Nama wajib diisi!");
             if (!isEditStaffMode && !password) return alert("Kata Sandi wajib diisi untuk membuat akun baru!");
-            if (password && password.length < 4) return alert("Kata Sandi minimal 4 karakter!");
+            if (password) {
+                const errPwd = validasiKataSandiKuat(password);
+                if (errPwd) return alert(errPwd);
+            }
             if (role === 'operator' && !fakultas) return alert("Pilih Fakultas untuk akun Operator Fakultas!");
 
             const teksAsli = btn.innerText; btn.innerText = "Menyimpan..."; btn.disabled = true;
             try {
                 const res = await apiPost({ action: "save_staff_user", username, password, nama, role, fakultas, is_edit: isEditStaffMode });
+                if (res.status === "success" && res.new_token) {
+                    session.token = res.new_token;
+                    if (res.expires_at) session.expiresAt = res.expires_at;
+                    simpanSesiLogin();
+                }
                 alert(res.message);
                 if (res.status === "success") { resetFormStaff(); muatDaftarStaff(); }
             } catch (e) { alert("Koneksi gagal."); }
