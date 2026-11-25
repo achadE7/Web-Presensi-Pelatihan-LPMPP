@@ -1276,9 +1276,9 @@
                 <button type="button" onclick="tampilLayar('adminScreen')" class="bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 px-3.5 py-2 rounded-xl text-xs font-bold shadow-sm cursor-pointer shrink-0">‹ Dasbor</button>
             </div>
 
-            <!-- FILTER & BULK ACTION -->
-            <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200/80 mb-4 space-y-3">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5">
+            <!-- FILTER, TAB STATUS & BULK ACTION -->
+            <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200/80 mb-4 space-y-3.5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
                     <div>
                         <label class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Pilih Pelatihan</label>
                         <select id="filterPelPengajuan" onchange="muatPengajuanAdmin()" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50/70 focus:bg-white"><option value="">-- Pilih Pelatihan --</option></select>
@@ -1287,23 +1287,29 @@
                         <label class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Filter Fakultas</label>
                         <select id="filterFakPengajuan" onchange="renderDaftarPengajuanAdmin()" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50/70 focus:bg-white"><option value="">Semua Fakultas</option></select>
                     </div>
-                    <div>
-                        <label class="text-[10px] font-bold text-slate-400 uppercase block mb-1">Filter Status</label>
-                        <select id="filterStatusPengajuan" onchange="renderDaftarPengajuanAdmin()" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50/70 focus:bg-white">
-                            <option value="">Semua Status</option>
-                            <option value="Pending">Menunggu Persetujuan</option>
-                            <option value="Pending_Replace">Permohonan Pergantian</option>
-                            <option value="Approved">Disetujui (Approved)</option>
-                            <option value="Rejected">Ditolak (Rejected)</option>
-                        </select>
-                    </div>
                 </div>
 
-                <!-- TOOLBAR BULK -->
-                <div class="bg-slate-50 border border-slate-200/80 px-4 py-2.5 rounded-2xl flex flex-wrap items-center justify-between gap-2">
+                <!-- TAB PEMISAH DAFTAR CALON PESERTA -->
+                <div id="tabsPengajuanAdmin" class="grid grid-cols-3 gap-1.5 bg-slate-100/90 p-1 rounded-2xl border border-slate-200/70">
+                    <button type="button" id="tabPengajuanPending" onclick="setTabPengajuanAdmin('pending')" class="flex items-center justify-center gap-1.5 px-2.5 py-2 rounded-xl text-[11px] font-extrabold transition-all cursor-pointer bg-white text-oceanDark shadow-sm">
+                        <span class="truncate">Menunggu Verifikasi</span>
+                        <span id="badgeCountPending" class="px-1.5 py-0.5 rounded-full text-[10px] font-extrabold bg-sky-100 text-oceanBlue">0</span>
+                    </button>
+                    <button type="button" id="tabPengajuanApproved" onclick="setTabPengajuanAdmin('approved')" class="flex items-center justify-center gap-1.5 px-2.5 py-2 rounded-xl text-[11px] font-bold transition-all cursor-pointer text-slate-500 hover:text-slate-700">
+                        <span class="truncate">Sudah Disetujui</span>
+                        <span id="badgeCountApproved" class="px-1.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-700">0</span>
+                    </button>
+                    <button type="button" id="tabPengajuanRejected" onclick="setTabPengajuanAdmin('rejected')" class="flex items-center justify-center gap-1.5 px-2.5 py-2 rounded-xl text-[11px] font-bold transition-all cursor-pointer text-slate-500 hover:text-slate-700">
+                        <span class="truncate">Ditolak</span>
+                        <span id="badgeCountRejected" class="px-1.5 py-0.5 rounded-full text-[10px] font-extrabold bg-rose-100 text-rose-600">0</span>
+                    </button>
+                </div>
+
+                <!-- TOOLBAR BULK (KHUSUS TAB MENUNGGU VERIFIKASI) -->
+                <div id="toolbarBulkPengajuan" class="hidden bg-slate-50 border border-slate-200/80 px-4 py-2.5 rounded-2xl flex flex-wrap items-center justify-between gap-2">
                     <label class="flex items-center space-x-2 text-xs font-bold text-slate-700 cursor-pointer">
                         <input type="checkbox" id="cekSemuaPengajuan" onchange="togglePilihSemuaPengajuan(this)" class="w-4 h-4 rounded text-oceanBlue">
-                        <span>Pilih Semua Tampil</span>
+                        <span>Pilih Semua Menunggu</span>
                     </label>
                     <div class="flex flex-wrap gap-2">
                         <button type="button" onclick="prosesBulkPengajuan('Approved')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold px-3.5 py-1.5 rounded-xl cursor-pointer">✓ Approve Terpilih</button>
@@ -1311,7 +1317,7 @@
                     </div>
                 </div>
 
-                <div id="wadahPengajuanAdmin" class="space-y-2.5 overflow-y-auto max-h-[42vh] pr-1">
+                <div id="wadahPengajuanAdmin" class="space-y-2.5 overflow-y-auto max-h-[45vh] pr-1">
                     <p class="text-center text-slate-400 text-xs py-6">Pilih pelatihan di atas untuk melihat daftar pengajuan peserta.</p>
                 </div>
             </div>
@@ -4619,9 +4625,44 @@
         // VALIDASI PENGAJUAN FAKULTAS OLEH ADMIN & SUPER ADMIN
         // =========================================================================
         let cachedPengajuanAdmin = [];
+        let tabPengajuanAdminAktif = 'pending';
+        let lastPelPengajuanAdmin = '';
+
+        function updateTabPengajuanUI(cntPending, cntApproved, cntRejected) {
+            const bPend = document.getElementById('badgeCountPending');
+            const bAppr = document.getElementById('badgeCountApproved');
+            const bRej = document.getElementById('badgeCountRejected');
+            if (bPend) bPend.innerText = String(cntPending);
+            if (bAppr) bAppr.innerText = String(cntApproved);
+            if (bRej) bRej.innerText = String(cntRejected);
+
+            const tabs = [
+                { id: 'tabPengajuanPending', key: 'pending', activeCls: 'bg-white text-oceanDark shadow-sm font-extrabold' },
+                { id: 'tabPengajuanApproved', key: 'approved', activeCls: 'bg-white text-emerald-700 shadow-sm font-extrabold' },
+                { id: 'tabPengajuanRejected', key: 'rejected', activeCls: 'bg-white text-rose-600 shadow-sm font-extrabold' }
+            ];
+            tabs.forEach(t => {
+                const el = document.getElementById(t.id);
+                if (!el) return;
+                const isActive = (tabPengajuanAdminAktif === t.key);
+                el.className = `flex items-center justify-center gap-1.5 px-2.5 py-2 rounded-xl text-[11px] transition-all cursor-pointer ${isActive ? t.activeCls : 'font-bold text-slate-500 hover:text-slate-700'}`;
+            });
+        }
+
+        function setTabPengajuanAdmin(tab) {
+            tabPengajuanAdminAktif = tab;
+            renderDaftarPengajuanAdmin();
+        }
 
         async function bukaHalamanPengajuanAdmin() {
             tampilLayar('adminPengajuanScreen');
+            tabPengajuanAdminAktif = 'pending';
+            lastPelPengajuanAdmin = '';
+            cachedPengajuanAdmin = [];
+            updateTabPengajuanUI(0, 0, 0);
+            const toolbarBulk = document.getElementById('toolbarBulkPengajuan');
+            if (toolbarBulk) toolbarBulk.classList.add('hidden');
+
             await muatDaftarPelatihanAdmin();
             const selPel = document.getElementById('filterPelPengajuan');
             if (window.pelatihanData && selPel) {
@@ -4631,6 +4672,7 @@
             document.getElementById('docTanggalSurat').value = todayStr;
             document.getElementById('docHariTglPresensi').value = "";
             document.getElementById('docTempatKegiatan').value = "AULA LPMPP BJM";
+            document.getElementById('filterFakPengajuan').innerHTML = '<option value="">Semua Fakultas</option>';
             document.getElementById('wadahPengajuanAdmin').innerHTML = '<p class="text-center text-slate-400 text-xs py-6">Pilih pelatihan di atas untuk melihat daftar pengajuan peserta.</p>';
             renderChecklistPanitia();
         }
@@ -4638,36 +4680,50 @@
         async function muatPengajuanAdmin() {
             const pel = document.getElementById('filterPelPengajuan').value;
             const wadah = document.getElementById('wadahPengajuanAdmin');
+            const toolbarBulk = document.getElementById('toolbarBulkPengajuan');
+            const isPelChanged = (pel !== lastPelPengajuanAdmin);
+            const prevFak = isPelChanged ? '' : document.getElementById('filterFakPengajuan').value;
+            lastPelPengajuanAdmin = pel;
+
             if (!pel) {
                 cachedPengajuanAdmin = [];
+                updateTabPengajuanUI(0, 0, 0);
+                if (toolbarBulk) toolbarBulk.classList.add('hidden');
                 document.getElementById('docHariTglPresensi').value = "";
                 document.getElementById('docTempatKegiatan').value = "AULA LPMPP BJM";
+                document.getElementById('filterFakPengajuan').innerHTML = '<option value="">Semua Fakultas</option>';
                 wadah.innerHTML = '<p class="text-center text-slate-400 text-xs py-6">Pilih pelatihan di atas.</p>';
                 return;
             }
 
-            // Reset lalu auto-fill Tempat & Tanggal Kegiatan dari database Jadwal_Pelatihan
-            document.getElementById('docHariTglPresensi').value = "";
-            document.getElementById('docTempatKegiatan').value = "AULA LPMPP BJM";
-            if (window.pelatihanData) {
-                const found = window.pelatihanData.find(p => p.nama === pel);
-                if (found && found.info && found.info !== "-") {
-                    const parts = found.info.split("|").map(s => s.trim());
-                    document.getElementById('docHariTglPresensi').value = parts[0] || "";
-                    const offPart = parts.find(s => s.toLowerCase().startsWith("offline:"));
-                    const onPart = parts.find(s => s.toLowerCase().startsWith("online:"));
-                    if (offPart) document.getElementById('docTempatKegiatan').value = offPart.split(":").slice(1).join(":").trim() || "AULA LPMPP BJM";
-                    else if (onPart) document.getElementById('docTempatKegiatan').value = onPart.split(":").slice(1).join(":").trim() || "AULA LPMPP BJM";
+            if (isPelChanged) {
+                tabPengajuanAdminAktif = 'pending';
+                // Reset lalu auto-fill Tempat & Tanggal Kegiatan dari database Jadwal_Pelatihan
+                document.getElementById('docHariTglPresensi').value = "";
+                document.getElementById('docTempatKegiatan').value = "AULA LPMPP BJM";
+                if (window.pelatihanData) {
+                    const found = window.pelatihanData.find(p => p.nama === pel);
+                    if (found && found.info && found.info !== "-") {
+                        const parts = found.info.split("|").map(s => s.trim());
+                        document.getElementById('docHariTglPresensi').value = parts[0] || "";
+                        const offPart = parts.find(s => s.toLowerCase().startsWith("offline:"));
+                        const onPart = parts.find(s => s.toLowerCase().startsWith("online:"));
+                        if (offPart) document.getElementById('docTempatKegiatan').value = offPart.split(":").slice(1).join(":").trim() || "AULA LPMPP BJM";
+                        else if (onPart) document.getElementById('docTempatKegiatan').value = onPart.split(":").slice(1).join(":").trim() || "AULA LPMPP BJM";
+                    }
                 }
             }
 
+            if (toolbarBulk) toolbarBulk.classList.add('hidden');
             wadah.innerHTML = '<p class="text-center text-oceanBlue text-xs font-semibold py-6">Memuat pengajuan...</p>';
             try {
                 const res = await apiPost({ action: "get_pengajuan_fakultas", pelatihan: pel });
                 if (res.status === "success") {
                     cachedPengajuanAdmin = res.data || [];
                     const faks = [...new Set(cachedPengajuanAdmin.map(x => x.fakultas))].sort();
-                    document.getElementById('filterFakPengajuan').innerHTML = '<option value="">Semua Fakultas</option>' + faks.map(f => `<option value="${escapeHtml(f)}">${escapeHtml(f)}</option>`).join('');
+                    const selFak = document.getElementById('filterFakPengajuan');
+                    selFak.innerHTML = '<option value="">Semua Fakultas</option>' + faks.map(f => `<option value="${escapeHtml(f)}">${escapeHtml(f)}</option>`).join('');
+                    if (prevFak && faks.includes(prevFak)) selFak.value = prevFak;
                     renderDaftarPengajuanAdmin();
                 } else {
                     wadah.innerHTML = `<p class="text-center text-red-500 text-xs py-6">${escapeHtml(res.message || 'Gagal memuat data pengajuan.')}</p>`;
@@ -4677,56 +4733,109 @@
 
         function renderDaftarPengajuanAdmin() {
             const fFak = document.getElementById('filterFakPengajuan').value;
-            const fStat = document.getElementById('filterStatusPengajuan').value;
             const wadah = document.getElementById('wadahPengajuanAdmin');
-            document.getElementById('cekSemuaPengajuan').checked = false;
+            const toolbarBulk = document.getElementById('toolbarBulkPengajuan');
+            const cekSemua = document.getElementById('cekSemuaPengajuan');
+            if (cekSemua) cekSemua.checked = false;
 
-            const list = cachedPengajuanAdmin.filter(item => {
-                if (fFak && item.fakultas !== fFak) return false;
-                if (fStat && item.status !== fStat) return false;
-                return true;
-            });
+            const filteredByFak = cachedPengajuanAdmin.filter(item => !fFak || item.fakultas === fFak);
 
-            if (list.length === 0) {
-                wadah.innerHTML = '<p class="text-center text-slate-400 text-xs py-6">Tidak ada data pengajuan yang cocok.</p>';
+            const listPending = filteredByFak
+                .filter(item => item.status === "Pending" || item.status === "Pending_Replace")
+                .sort((a, b) => (a.status === "Pending_Replace" ? -1 : 1) - (b.status === "Pending_Replace" ? -1 : 1));
+            const listApproved = filteredByFak.filter(item => item.status === "Approved");
+            const listRejected = filteredByFak.filter(item => item.status === "Rejected");
+
+            updateTabPengajuanUI(listPending.length, listApproved.length, listRejected.length);
+
+            if (toolbarBulk) {
+                toolbarBulk.classList.toggle('hidden', tabPengajuanAdminAktif !== 'pending' || listPending.length === 0);
+            }
+
+            // TAB 1: MENUNGGU VERIFIKASI (Pending & Pending_Replace)
+            if (tabPengajuanAdminAktif === 'pending') {
+                if (listPending.length === 0) {
+                    const btnLihatApproved = listApproved.length > 0
+                        ? `<button type="button" onclick="setTabPengajuanAdmin('approved')" class="mt-2.5 inline-flex items-center gap-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-[11px] font-bold px-3.5 py-1.5 rounded-xl transition-colors cursor-pointer">Lihat ${listApproved.length} Peserta Sudah Disetujui →</button>`
+                        : '';
+                    wadah.innerHTML = `<div class="bg-slate-50/80 border border-dashed border-slate-200 rounded-2xl p-6 text-center"><p class="text-slate-500 text-xs font-semibold">${cachedPengajuanAdmin.length > 0 ? 'Tidak ada calon peserta yang menunggu verifikasi.' : 'Belum ada data pengajuan untuk pelatihan ini.'}</p>${btnLihatApproved}</div>`;
+                    return;
+                }
+
+                wadah.innerHTML = listPending.map(item => {
+                    const origIdx = cachedPengajuanAdmin.indexOf(item);
+                    const isReplace = (item.status === "Pending_Replace");
+                    const badge = isReplace
+                        ? '<span class="bg-amber-100 text-amber-800 border border-amber-300 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shrink-0">Permohonan Pergantian</span>'
+                        : '<span class="bg-sky-50 text-oceanBlue border border-sky-200 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shrink-0">Menunggu</span>';
+                    const infoGanti = isReplace
+                        ? `<div class="mt-2 ml-6 bg-amber-50 border border-amber-200 p-2.5 rounded-xl text-[11px] text-amber-900"><b>Diajukan diganti menjadi:</b> ${escapeHtml(item.nama_pengganti)}<br><b>Alasan:</b> "${escapeHtml(item.alasan_ganti)}"</div>`
+                        : '';
+
+                    return `
+                    <div class="${isReplace ? 'bg-amber-50/30 border-amber-200/90' : 'bg-slate-50/70 border-slate-200/90'} hover:bg-white border p-3.5 rounded-2xl transition-all">
+                        <div class="flex items-start justify-between gap-2">
+                            <label class="flex items-start space-x-2.5 cursor-pointer">
+                                <input type="checkbox" value="${escapeHtml(item.id)}" class="cek-item-pengajuan w-4 h-4 mt-0.5 rounded text-oceanBlue cursor-pointer">
+                                <div>
+                                    <span class="text-[10px] font-extrabold text-oceanBlue uppercase">${escapeHtml(item.fakultas)}</span>
+                                    <h4 class="text-xs sm:text-sm font-extrabold text-slate-800">${escapeHtml(item.nama)}</h4>
+                                    ${item.catatan ? `<p class="text-[10px] text-slate-500 mt-0.5">${escapeHtml(item.catatan)}</p>` : ''}
+                                </div>
+                            </label>
+                            ${badge}
+                        </div>
+                        ${infoGanti}
+                        <div class="flex gap-2 mt-2.5 pl-6">
+                            <button type="button" onclick="prosesSatuPengajuanIndex(${origIdx}, 'Approved', this)" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold px-3.5 py-1.5 rounded-lg cursor-pointer">${isReplace ? 'Setujui Pergantian' : 'Approve'}</button>
+                            <button type="button" onclick="prosesSatuPengajuanIndex(${origIdx}, 'Rejected', this)" class="bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 text-[11px] font-bold px-3.5 py-1.5 rounded-lg cursor-pointer">${isReplace ? 'Tolak Pergantian' : 'Reject'}</button>
+                        </div>
+                    </div>`;
+                }).join('');
                 return;
             }
 
-            wadah.innerHTML = list.map(item => {
-                const origIdx = cachedPengajuanAdmin.indexOf(item);
-                const isActionableBulk = (item.status === "Pending" || item.status === "Pending_Replace");
-                let badge = "", infoGanti = "";
-                if (item.status === "Approved") badge = '<span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shrink-0">✓ Approved</span>';
-                else if (item.status === "Rejected") badge = '<span class="bg-rose-50 text-rose-700 border border-rose-200 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shrink-0">✕ Rejected</span>';
-                else if (item.status === "Pending_Replace") {
-                    badge = '<span class="bg-amber-100 text-amber-800 border border-amber-300 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shrink-0">Permohonan Pergantian</span>';
-                    infoGanti = `<div class="mt-2 ml-6 bg-amber-50 border border-amber-200 p-2.5 rounded-xl text-[11px] text-amber-900"><b>Diajukan diganti menjadi:</b> ${escapeHtml(item.nama_pengganti)}<br><b>Alasan:</b> "${escapeHtml(item.alasan_ganti)}"</div>`;
-                } else badge = '<span class="bg-sky-50 text-oceanBlue border border-sky-200 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shrink-0">Menunggu</span>';
+            // TAB 2: SUDAH DISETUJUI (Approved — TANPA tombol Approve/Reject)
+            if (tabPengajuanAdminAktif === 'approved') {
+                if (listApproved.length === 0) {
+                    wadah.innerHTML = '<div class="bg-slate-50/80 border border-dashed border-slate-200 rounded-2xl p-6 text-center"><p class="text-slate-400 text-xs font-medium">Belum ada calon peserta yang disetujui.</p></div>';
+                    return;
+                }
 
-                const cbHtml = isActionableBulk
-                    ? `<input type="checkbox" value="${escapeHtml(item.id)}" class="cek-item-pengajuan w-4 h-4 mt-0.5 rounded text-oceanBlue cursor-pointer">`
-                    : `<span class="w-4 shrink-0"></span>`;
-
-                return `
-                <div class="bg-slate-50/70 hover:bg-white border border-slate-200/90 p-3.5 rounded-2xl transition-all">
-                    <div class="flex items-start justify-between gap-2">
-                        <label class="flex items-start space-x-2.5 ${isActionableBulk ? 'cursor-pointer' : ''}">
-                            ${cbHtml}
-                            <div>
-                                <span class="text-[10px] font-extrabold text-oceanBlue uppercase">${escapeHtml(item.fakultas)}</span>
-                                <h4 class="text-xs sm:text-sm font-extrabold text-slate-800">${escapeHtml(item.nama)}</h4>
-                                ${item.catatan ? `<p class="text-[10px] text-slate-500 mt-0.5">${escapeHtml(item.catatan)}</p>` : ''}
+                const headerInfo = `<div class="bg-emerald-50/70 border border-emerald-200/80 px-3.5 py-2 rounded-xl flex items-center justify-between text-[11px] text-emerald-800 font-semibold"><span>Total <b>${listApproved.length}</b> peserta disetujui</span><span class="text-[10px] text-emerald-700">Siap cetak Surat & Presensi</span></div>`;
+                wadah.innerHTML = headerInfo + listApproved.map((item, idx) => `
+                    <div class="bg-white border border-emerald-100 hover:border-emerald-200 p-3.5 rounded-2xl transition-all flex items-start justify-between gap-2">
+                        <div class="flex items-start space-x-2.5 min-w-0">
+                            <span class="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200/70 text-[10px] font-extrabold flex items-center justify-center shrink-0 mt-0.5">${idx + 1}</span>
+                            <div class="min-w-0">
+                                <span class="text-[10px] font-extrabold text-oceanBlue uppercase block">${escapeHtml(item.fakultas)}</span>
+                                <h4 class="text-xs sm:text-sm font-extrabold text-slate-800 break-words">${escapeHtml(item.nama)}</h4>
+                                ${item.catatan ? `<p class="text-[10px] text-emerald-700 mt-0.5">${escapeHtml(item.catatan)}</p>` : ''}
                             </div>
-                        </label>
-                        ${badge}
+                        </div>
+                        <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shrink-0">✓ Approved</span>
+                    </div>`).join('');
+                return;
+            }
+
+            // TAB 3: DITOLAK (Rejected — TANPA tombol Approve/Reject)
+            if (listRejected.length === 0) {
+                wadah.innerHTML = '<div class="bg-slate-50/80 border border-dashed border-slate-200 rounded-2xl p-6 text-center"><p class="text-slate-400 text-xs font-medium">Tidak ada pengajuan yang ditolak.</p></div>';
+                return;
+            }
+
+            wadah.innerHTML = listRejected.map((item, idx) => `
+                <div class="bg-white border border-rose-100 p-3.5 rounded-2xl transition-all flex items-start justify-between gap-2">
+                    <div class="flex items-start space-x-2.5 min-w-0">
+                        <span class="w-6 h-6 rounded-lg bg-rose-50 text-rose-600 border border-rose-200/70 text-[10px] font-extrabold flex items-center justify-center shrink-0 mt-0.5">${idx + 1}</span>
+                        <div class="min-w-0">
+                            <span class="text-[10px] font-extrabold text-oceanBlue uppercase block">${escapeHtml(item.fakultas)}</span>
+                            <h4 class="text-xs sm:text-sm font-extrabold text-slate-800 break-words">${escapeHtml(item.nama)}</h4>
+                            ${item.catatan ? `<p class="text-[10px] text-rose-600 mt-0.5"><b>Alasan:</b> ${escapeHtml(item.catatan)}</p>` : ''}
+                        </div>
                     </div>
-                    ${infoGanti}
-                    <div class="flex gap-2 mt-2.5 pl-6">
-                        <button type="button" onclick="prosesSatuPengajuanIndex(${origIdx}, 'Approved', this)" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold px-3.5 py-1.5 rounded-lg cursor-pointer">${item.status === 'Pending_Replace' ? 'Setujui Pergantian' : 'Approve'}</button>
-                        <button type="button" onclick="prosesSatuPengajuanIndex(${origIdx}, 'Rejected', this)" class="bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 text-[11px] font-bold px-3.5 py-1.5 rounded-lg cursor-pointer">${item.status === 'Pending_Replace' ? 'Tolak Pergantian' : 'Reject'}</button>
-                    </div>
-                </div>`;
-            }).join('');
+                    <span class="bg-rose-50 text-rose-700 border border-rose-200 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shrink-0">✕ Rejected</span>
+                </div>`).join('');
         }
 
         function togglePilihSemuaPengajuan(master) {
