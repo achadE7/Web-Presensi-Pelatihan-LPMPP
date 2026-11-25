@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://i.ibb.co.com https://drive.google.com https://lh3.googleusercontent.com https://*.googleusercontent.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://*.workers.dev https://*.siplpmpp.my.id; media-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://i.ibb.co.com https://drive.google.com https://lh3.googleusercontent.com https://*.googleusercontent.com; connect-src 'self' https://siplpmpp-proxy.fs91reza.workers.dev https://script.google.com https://script.googleusercontent.com https://*.siplpmpp.my.id; media-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self';">
     <title>Sistem Informasi Pelatihan</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1653,7 +1653,7 @@
     </div>
 
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbzkeGOglouiCbiAq5VNRXt7Wfie2NDQ8DqcJnMMZ-cOwkeokbRGCpL-W4gizcGn0IdZ/exec";
+        const API_URL = "https://siplpmpp-proxy.fs91reza.workers.dev";
         let TARGET_LAT = -3.29687, TARGET_LNG = 114.58823, RADIUS_MAX = 50;
         const session = { token: "", username: "", nama: "", gelar_depan: "", gelar_belakang: "", role: "", fakultas: "", pelatihan: "", hari: "", sesi: "", lat: 0, lng: 0, targetLat: -3.29687, targetLng: 114.58823, targetRadius: 50, mode: "Offline" };
         function formatNamaDenganGelar(nama, gelarDepan, gelarBelakang) {
