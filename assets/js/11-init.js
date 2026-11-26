@@ -6,6 +6,8 @@
     const formEdit = document.getElementById('formFieldsEdit');
     if (formEdit) formEdit.innerHTML = buildBiodataFields('edit');
     setTanggalHariIni();
-    muatDataFakultasProdi();
     pulihkanSesiLogin();
+    if (!session.token && (window.location.hash || '').replace(/^#/, '') === 'daftar') {
+        bukaHalamanRegister();
+    }
 })();

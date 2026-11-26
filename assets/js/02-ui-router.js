@@ -423,6 +423,24 @@ function tampilLayar(idLayar, opts = {}) {
     if (idLayar === 'adminScreen') {
         muatRingkasanAdmin();
     }
+    if (!window._fakultasProdiLoaded && ['registerScreen', 'userProfileScreen', 'adminProdiScreen', 'adminManageUsersScreen'].includes(idLayar)) {
+        window._fakultasProdiLoaded = true;
+        if (typeof muatDataFakultasProdi === 'function') {
+            muatDataFakultasProdi().then(() => {
+                if (idLayar === 'adminProdiScreen' && typeof renderDropdownFakultasAdmin === 'function') {
+                    renderDropdownFakultasAdmin();
+                }
+                if (idLayar === 'adminManageUsersScreen') {
+                    const selFak = document.getElementById('staffFakultas');
+                    if (selFak && typeof prodiMap === 'object') {
+                        const prev = selFak.value;
+                        selFak.innerHTML = '<option value="">-- Pilih Fakultas --</option>' + Object.keys(prodiMap).map(f => `<option value="${escapeHtml(f)}">${escapeHtml(f)}</option>`).join('');
+                        selFak.value = prev;
+                    }
+                }
+            });
+        }
+    }
     tutupNotifikasiDropdown();
 
     if (!opts.skipHistory) {
@@ -436,12 +454,26 @@ function tampilLayar(idLayar, opts = {}) {
     }
 }
 
-window.addEventListener('popstate', () => {
+function getDefaultScreenForSession() {
+    if (!session.token) return 'loginScreen';
+    if (session.role === 'super_admin' || session.role === 'admin') return 'adminScreen';
+    if (session.role === 'operator') return 'operatorScreen';
+    return 'presensiScreen';
+}
+
+function handleHistoryNavigation() {
     const h = (window.location.hash || '').replace(/^#/, '');
-    const targetScreen = HASH_TO_SCREEN[h];
+    const targetScreen = h ? HASH_TO_SCREEN[h] : getDefaultScreenForSession();
     if (!targetScreen || targetScreen === currentScreenId) return;
     if (!session.token) {
-        if (targetScreen === 'registerScreen') { tampilLayar('registerScreen', { skipHistory: true }); return; }
+        if (targetScreen === 'registerScreen') {
+            tampilLayar('registerScreen', { skipHistory: true });
+            const wadah = document.getElementById('wadahBoxRegPelatihan');
+            if (wadah && (!wadah.children.length || wadah.innerText.includes('Memuat')) && typeof bukaHalamanRegister === 'function') {
+                bukaHalamanRegister();
+            }
+            return;
+        }
         tampilLayar('loginScreen', { skipHistory: true });
         return;
     }
@@ -469,7 +501,10 @@ window.addEventListener('popstate', () => {
     } else {
         tampilLayar('presensiScreen', { skipHistory: true });
     }
-});
+}
+
+window.addEventListener('popstate', handleHistoryNavigation);
+window.addEventListener('hashchange', handleHistoryNavigation);
 
 function ubahStatusMsg(text, colorClass) { 
     const el = document.getElementById('statusMsg'); el.innerText = text; 
